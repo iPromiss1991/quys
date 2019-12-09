@@ -1,0 +1,806 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		526B426A8316BE26CEB10C60 /* Pods_quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C7376E1911634BB08B664E /* Pods_quysAdvice.framework */; };
+		805858834BE25BE479227C0C /* Pods_quysAdvice_quysAdviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A190B78E49BDB501C66F69 /* Pods_quysAdvice_quysAdviceTests.framework */; };
+		FB848CF6239DE2D50092A260 /* quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB848CEC239DE2D50092A260 /* quysAdvice.framework */; };
+		FB848CFB239DE2D60092A260 /* quysAdviceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848CFA239DE2D60092A260 /* quysAdviceTests.m */; };
+		FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848CEF239DE2D50092A260 /* quysAdvice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */; };
+		FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */; };
+		FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D0F239DE9EB0092A260 /* QuysSAMKeychain.h */; };
+		FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */; };
+		FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */; };
+		FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */; };
+		FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */; };
+		FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */; };
+		FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D2D239DFC410092A260 /* QuysAdSplash.h */; };
+		FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D2E239DFC410092A260 /* QuysAdSplash.m */; };
+		FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */; };
+		FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */; };
+		FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D36239E1C820092A260 /* QuysAdviceConfigModel.h */; };
+		FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */; };
+		FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D47239E24540092A260 /* QuysAdviceBaseDelegate.h */; };
+		FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D49239E24760092A260 /* QuysAdSplashDelegate.h */; };
+		FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D4C239E25E20092A260 /* QuysBaseNetworkApi.h */; };
+		FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */; };
+		FB848D53239E26380092A260 /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D51239E26380092A260 /* UIDevice+Hardware.m */; };
+		FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D52239E26380092A260 /* UIDevice+Hardware.h */; };
+		FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D55239E26CD0092A260 /* QuysAdSplashApi.h */; };
+		FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */; };
+		FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D5A239E2AA50092A260 /* QuysAdviceModel.h */; };
+		FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D5B239E2AA50092A260 /* QuysAdviceModel.m */; };
+		FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D5E239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h */; };
+		FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D5F239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m */; };
+		FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */; };
+		FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D64239E2DD20092A260 /* QuysAdSplashVM.m */; };
+		FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D6C239E54B90092A260 /* QuysMD5.h */; };
+		FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D6D239E54B90092A260 /* QuysMD5.m */; };
+		FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D74239E56540092A260 /* NSDate+QuysTimestamp.h */; };
+		FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FB848CF7239DE2D60092A260 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB848CE3239DE2D50092A260 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB848CEB239DE2D50092A260;
+			remoteInfo = quysAdvice;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		283508AD5A847D985C86D6DC /* Pods-quysAdvice-quysAdviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysAdviceTests.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysAdviceTests/Pods-quysAdvice-quysAdviceTests.release.xcconfig"; sourceTree = "<group>"; };
+		76A190B78E49BDB501C66F69 /* Pods_quysAdvice_quysAdviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice_quysAdviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79DBBDB82F8E3A0C135C1837 /* Pods-quysAdvice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.release.xcconfig"; sourceTree = "<group>"; };
+		A863BE0D39C476F2AA333A0A /* Pods-quysAdvice-quysAdviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysAdviceTests.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysAdviceTests/Pods-quysAdvice-quysAdviceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E5C7376E1911634BB08B664E /* Pods_quysAdvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB848CEC239DE2D50092A260 /* quysAdvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = quysAdvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB848CEF239DE2D50092A260 /* quysAdvice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quysAdvice.h; sourceTree = "<group>"; };
+		FB848CF0239DE2D50092A260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB848CF5239DE2D50092A260 /* quysAdviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = quysAdviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB848CFA239DE2D60092A260 /* quysAdviceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = quysAdviceTests.m; sourceTree = "<group>"; };
+		FB848CFC239DE2D60092A260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceManager.m; sourceTree = "<group>"; };
+		FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysAdviceManager.h; sourceTree = "<group>"; };
+		FB848D0F239DE9EB0092A260 /* QuysSAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysSAMKeychain.h; sourceTree = "<group>"; };
+		FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysSAMKeychainQuery.h; sourceTree = "<group>"; };
+		FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysSAMKeychain.m; sourceTree = "<group>"; };
+		FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysSAMKeychainQuery.m; sourceTree = "<group>"; };
+		FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceBaseSevice.h; sourceTree = "<group>"; };
+		FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceBaseSevice.m; sourceTree = "<group>"; };
+		FB848D2D239DFC410092A260 /* QuysAdSplash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplash.h; sourceTree = "<group>"; };
+		FB848D2E239DFC410092A260 /* QuysAdSplash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdSplash.m; sourceTree = "<group>"; };
+		FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplashService.h; sourceTree = "<group>"; };
+		FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdSplashService.m; sourceTree = "<group>"; };
+		FB848D36239E1C820092A260 /* QuysAdviceConfigModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceConfigModel.h; sourceTree = "<group>"; };
+		FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceConfigModel.m; sourceTree = "<group>"; };
+		FB848D47239E24540092A260 /* QuysAdviceBaseDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceBaseDelegate.h; sourceTree = "<group>"; };
+		FB848D49239E24760092A260 /* QuysAdSplashDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplashDelegate.h; sourceTree = "<group>"; };
+		FB848D4C239E25E20092A260 /* QuysBaseNetworkApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseNetworkApi.h; sourceTree = "<group>"; };
+		FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseNetworkApi.m; sourceTree = "<group>"; };
+		FB848D51239E26380092A260 /* UIDevice+Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Hardware.m"; sourceTree = "<group>"; };
+		FB848D52239E26380092A260 /* UIDevice+Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Hardware.h"; sourceTree = "<group>"; };
+		FB848D55239E26CD0092A260 /* QuysAdSplashApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplashApi.h; sourceTree = "<group>"; };
+		FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdSplashApi.m; sourceTree = "<group>"; };
+		FB848D5A239E2AA50092A260 /* QuysAdviceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceModel.h; sourceTree = "<group>"; };
+		FB848D5B239E2AA50092A260 /* QuysAdviceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceModel.m; sourceTree = "<group>"; };
+		FB848D5E239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceOuterlayerDataModel.h; sourceTree = "<group>"; };
+		FB848D5F239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceOuterlayerDataModel.m; sourceTree = "<group>"; };
+		FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplashVM.h; sourceTree = "<group>"; };
+		FB848D64239E2DD20092A260 /* QuysAdSplashVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdSplashVM.m; sourceTree = "<group>"; };
+		FB848D67239E31B70092A260 /* QuysPCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysPCH.h; sourceTree = "<group>"; };
+		FB848D69239E33D30092A260 /* GlobalMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalMacro.h; sourceTree = "<group>"; };
+		FB848D6C239E54B90092A260 /* QuysMD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysMD5.h; sourceTree = "<group>"; };
+		FB848D6D239E54B90092A260 /* QuysMD5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysMD5.m; sourceTree = "<group>"; };
+		FB848D74239E56540092A260 /* NSDate+QuysTimestamp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+QuysTimestamp.h"; sourceTree = "<group>"; };
+		FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QuysTimestamp.m"; sourceTree = "<group>"; };
+		FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FB848CE9239DE2D50092A260 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				526B426A8316BE26CEB10C60 /* Pods_quysAdvice.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB848CF2239DE2D50092A260 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB848CF6239DE2D50092A260 /* quysAdvice.framework in Frameworks */,
+				805858834BE25BE479227C0C /* Pods_quysAdvice_quysAdviceTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		05C409A1373AB44A3EA6D48F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */,
+				79DBBDB82F8E3A0C135C1837 /* Pods-quysAdvice.release.xcconfig */,
+				A863BE0D39C476F2AA333A0A /* Pods-quysAdvice-quysAdviceTests.debug.xcconfig */,
+				283508AD5A847D985C86D6DC /* Pods-quysAdvice-quysAdviceTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C5779DD56AD81B4BD46EE2DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5C7376E1911634BB08B664E /* Pods_quysAdvice.framework */,
+				76A190B78E49BDB501C66F69 /* Pods_quysAdvice_quysAdviceTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB848CE2239DE2D50092A260 = {
+			isa = PBXGroup;
+			children = (
+				FB848CEE239DE2D50092A260 /* quysAdvice */,
+				FB848CF9239DE2D60092A260 /* quysAdviceTests */,
+				FB848CED239DE2D50092A260 /* Products */,
+				05C409A1373AB44A3EA6D48F /* Pods */,
+				C5779DD56AD81B4BD46EE2DA /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FB848CED239DE2D50092A260 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB848CEC239DE2D50092A260 /* quysAdvice.framework */,
+				FB848CF5239DE2D50092A260 /* quysAdviceTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB848CEE239DE2D50092A260 /* quysAdvice */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D6B239E54A60092A260 /* MD5 */,
+				FB848D68239E33AD0092A260 /* Macro */,
+				FB848D59239E2A770092A260 /* Models */,
+				FB848D50239E261F0092A260 /* Catrgory */,
+				FB848D4B239E25C30092A260 /* Network */,
+				FB848D42239E23BF0092A260 /* Protocls */,
+				FB848D27239DEDD50092A260 /* AdviceViews */,
+				FB848D19239DEBFF0092A260 /* ViewModels */,
+				FB848D18239DEBF70092A260 /* DataLayers */,
+				FB848D17239DEBEC0092A260 /* Services */,
+				FB848D0E239DE9D90092A260 /* Keychain */,
+				FB848D35239E1C600092A260 /* AdviceModel */,
+				FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */,
+				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
+				FB848CEF239DE2D50092A260 /* quysAdvice.h */,
+				FB848CF0239DE2D50092A260 /* Info.plist */,
+				FB848D67239E31B70092A260 /* QuysPCH.h */,
+			);
+			path = quysAdvice;
+			sourceTree = "<group>";
+		};
+		FB848CF9239DE2D60092A260 /* quysAdviceTests */ = {
+			isa = PBXGroup;
+			children = (
+				FB848CFA239DE2D60092A260 /* quysAdviceTests.m */,
+				FB848CFC239DE2D60092A260 /* Info.plist */,
+			);
+			path = quysAdviceTests;
+			sourceTree = "<group>";
+		};
+		FB848D0E239DE9D90092A260 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D0F239DE9EB0092A260 /* QuysSAMKeychain.h */,
+				FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */,
+				FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */,
+				FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
+		FB848D17239DEBEC0092A260 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D22239DEC580092A260 /* QuysAdSplash */,
+				FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */,
+				FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FB848D18239DEBF70092A260 /* DataLayers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataLayers;
+			sourceTree = "<group>";
+		};
+		FB848D19239DEBFF0092A260 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */,
+				FB848D64239E2DD20092A260 /* QuysAdSplashVM.m */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FB848D22239DEC580092A260 /* QuysAdSplash */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */,
+				FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */,
+			);
+			path = QuysAdSplash;
+			sourceTree = "<group>";
+		};
+		FB848D27239DEDD50092A260 /* AdviceViews */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D2C239DFC2C0092A260 /* QuysAdSplash */,
+			);
+			path = AdviceViews;
+			sourceTree = "<group>";
+		};
+		FB848D2C239DFC2C0092A260 /* QuysAdSplash */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D2D239DFC410092A260 /* QuysAdSplash.h */,
+				FB848D2E239DFC410092A260 /* QuysAdSplash.m */,
+			);
+			path = QuysAdSplash;
+			sourceTree = "<group>";
+		};
+		FB848D35239E1C600092A260 /* AdviceModel */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D36239E1C820092A260 /* QuysAdviceConfigModel.h */,
+				FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */,
+			);
+			path = AdviceModel;
+			sourceTree = "<group>";
+		};
+		FB848D42239E23BF0092A260 /* Protocls */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D47239E24540092A260 /* QuysAdviceBaseDelegate.h */,
+				FB848D49239E24760092A260 /* QuysAdSplashDelegate.h */,
+			);
+			path = Protocls;
+			sourceTree = "<group>";
+		};
+		FB848D4B239E25C30092A260 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D4C239E25E20092A260 /* QuysBaseNetworkApi.h */,
+				FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */,
+				FB848D55239E26CD0092A260 /* QuysAdSplashApi.h */,
+				FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FB848D50239E261F0092A260 /* Catrgory */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D52239E26380092A260 /* UIDevice+Hardware.h */,
+				FB848D51239E26380092A260 /* UIDevice+Hardware.m */,
+				FB848D74239E56540092A260 /* NSDate+QuysTimestamp.h */,
+				FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */,
+			);
+			path = Catrgory;
+			sourceTree = "<group>";
+		};
+		FB848D59239E2A770092A260 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D5A239E2AA50092A260 /* QuysAdviceModel.h */,
+				FB848D5B239E2AA50092A260 /* QuysAdviceModel.m */,
+				FB848D5E239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h */,
+				FB848D5F239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB848D68239E33AD0092A260 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D69239E33D30092A260 /* GlobalMacro.h */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		FB848D6B239E54A60092A260 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				FB848D6C239E54B90092A260 /* QuysMD5.h */,
+				FB848D6D239E54B90092A260 /* QuysMD5.m */,
+			);
+			path = MD5;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FB848CE7239DE2D50092A260 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
+				FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */,
+				FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */,
+				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
+				FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */,
+				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
+				FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */,
+				FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */,
+				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
+				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
+				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
+				FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */,
+				FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */,
+				FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */,
+				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
+				FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */,
+				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
+				FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FB848CEB239DE2D50092A260 /* quysAdvice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB848D00239DE2D60092A260 /* Build configuration list for PBXNativeTarget "quysAdvice" */;
+			buildPhases = (
+				B3A25D48300B48C141794BC1 /* [CP] Check Pods Manifest.lock */,
+				FB848CE7239DE2D50092A260 /* Headers */,
+				FB848CE8239DE2D50092A260 /* Sources */,
+				FB848CE9239DE2D50092A260 /* Frameworks */,
+				FB848CEA239DE2D50092A260 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = quysAdvice;
+			productName = quysAdvice;
+			productReference = FB848CEC239DE2D50092A260 /* quysAdvice.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FB848CF4239DE2D50092A260 /* quysAdviceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB848D03239DE2D60092A260 /* Build configuration list for PBXNativeTarget "quysAdviceTests" */;
+			buildPhases = (
+				0B196FCBE7C9658F7A78E33D /* [CP] Check Pods Manifest.lock */,
+				FB848CF1239DE2D50092A260 /* Sources */,
+				FB848CF2239DE2D50092A260 /* Frameworks */,
+				FB848CF3239DE2D50092A260 /* Resources */,
+				C8DDB893303C389112183372 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB848CF8239DE2D60092A260 /* PBXTargetDependency */,
+			);
+			name = quysAdviceTests;
+			productName = quysAdviceTests;
+			productReference = FB848CF5239DE2D50092A260 /* quysAdviceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB848CE3239DE2D50092A260 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Quys;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = Quys;
+				TargetAttributes = {
+					FB848CEB239DE2D50092A260 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					FB848CF4239DE2D50092A260 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = FB848CE6239DE2D50092A260 /* Build configuration list for PBXProject "quysAdvice" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FB848CE2239DE2D50092A260;
+			productRefGroup = FB848CED239DE2D50092A260 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FB848CEB239DE2D50092A260 /* quysAdvice */,
+				FB848CF4239DE2D50092A260 /* quysAdviceTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB848CEA239DE2D50092A260 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB848CF3239DE2D50092A260 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B196FCBE7C9658F7A78E33D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-quysAdvice-quysAdviceTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B3A25D48300B48C141794BC1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-quysAdvice-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8DDB893303C389112183372 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysAdviceTests/Pods-quysAdvice-quysAdviceTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysAdviceTests/Pods-quysAdvice-quysAdviceTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysAdviceTests/Pods-quysAdvice-quysAdviceTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB848CE8239DE2D50092A260 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB848D53239E26380092A260 /* UIDevice+Hardware.m in Sources */,
+				FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */,
+				FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */,
+				FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */,
+				FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */,
+				FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */,
+				FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */,
+				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
+				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
+				FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */,
+				FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */,
+				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
+				FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */,
+				FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */,
+				FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB848CF1239DE2D50092A260 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB848CFB239DE2D60092A260 /* quysAdviceTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FB848CF8239DE2D60092A260 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB848CEB239DE2D50092A260 /* quysAdvice */;
+			targetProxy = FB848CF7239DE2D60092A260 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FB848CFE239DE2D60092A260 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FB848CFF239DE2D60092A260 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FB848D01239DE2D60092A260 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3LW46M37JG;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = /Users/quys/Desktop/quysAdvice/quysAdvice/quysAdvice/QuysPCH.h;
+				INFOPLIST_FILE = quysAdvice/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = quyuansu.com.quysAdvice;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FB848D02239DE2D60092A260 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79DBBDB82F8E3A0C135C1837 /* Pods-quysAdvice.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3LW46M37JG;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = /Users/quys/Desktop/quysAdvice/quysAdvice/quysAdvice/QuysPCH.h;
+				INFOPLIST_FILE = quysAdvice/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = quyuansu.com.quysAdvice;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FB848D04239DE2D60092A260 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A863BE0D39C476F2AA333A0A /* Pods-quysAdvice-quysAdviceTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3LW46M37JG;
+				INFOPLIST_FILE = quysAdviceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = quyuansu.com.quysAdviceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB848D05239DE2D60092A260 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 283508AD5A847D985C86D6DC /* Pods-quysAdvice-quysAdviceTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3LW46M37JG;
+				INFOPLIST_FILE = quysAdviceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = quyuansu.com.quysAdviceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FB848CE6239DE2D50092A260 /* Build configuration list for PBXProject "quysAdvice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB848CFE239DE2D60092A260 /* Debug */,
+				FB848CFF239DE2D60092A260 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB848D00239DE2D60092A260 /* Build configuration list for PBXNativeTarget "quysAdvice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB848D01239DE2D60092A260 /* Debug */,
+				FB848D02239DE2D60092A260 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB848D03239DE2D60092A260 /* Build configuration list for PBXNativeTarget "quysAdviceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB848D04239DE2D60092A260 /* Debug */,
+				FB848D05239DE2D60092A260 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FB848CE3239DE2D50092A260 /* Project object */;
+}
