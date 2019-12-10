@@ -23,7 +23,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdSplashVM *)viewModel
 {
-    if (self == [super initWithFrame:frame])
+    if (self = [super initWithFrame:frame])
     {
         [self createUI];
     }

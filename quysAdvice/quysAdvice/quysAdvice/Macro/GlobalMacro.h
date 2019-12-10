@@ -189,4 +189,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #endif
 
 
+#pragma mark -解决category冲突
+#define TT_FIX_CATEGORY_BUG(name) @interface TT_FIX_CATEGORY_BUG_##name: NSObject @end \
+@implementation TT_FIX_CATEGORY_BUG_##name @end
 #endif /* GlobalMacro_h */

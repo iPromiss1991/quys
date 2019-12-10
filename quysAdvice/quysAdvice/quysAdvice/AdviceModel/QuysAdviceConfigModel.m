@@ -12,7 +12,7 @@
 
 - (instancetype)initWithID:(NSString *)businessID key:(NSString *)businessKey
 {
-    if (self == [super init])
+    if (self = [super init])
     {
         self.businessID = businessID;
         self.businessKey = businessKey;

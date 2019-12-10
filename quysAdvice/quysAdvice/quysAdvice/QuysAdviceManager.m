@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "QuysAdviceManager.h"
 #import "QuysAdviceConfigModel.h"
-#import "QuysAdSplashService.h"
 
 @interface QuysAdviceManager()
 @property (nonatomic,strong) QuysAdviceConfigModel *splashBusinessModel;//!< 插屏广告
@@ -46,13 +45,13 @@
 
 
 
-- (void)configSplashAdvice:(NSString*)businessID :(NSString*)businessKey
+- (void)configSplashAdvice:(NSString*)businessID key:(NSString*)businessKey
 {
     QuysAdviceConfigModel *model = [[QuysAdviceConfigModel alloc]initWithID:businessID key:businessKey];
     self.splashBusinessModel = model;
 }
 
-- (QuysAdSplash*)createSplashAdvice:(id <QuysAdSplashDelegate>)deleagte;
+- (QuysAdSplash*)createSplashAdvice:(id <QuysAdSplashDelegate>)deleagte
 {
     QuysAdSplashService *service = [[QuysAdSplashService alloc]initWithID:self.splashBusinessModel.businessID key:self.splashBusinessModel.businessKey];
     service.delegate = deleagte;

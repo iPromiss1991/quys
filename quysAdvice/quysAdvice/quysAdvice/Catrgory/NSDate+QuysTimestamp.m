@@ -8,7 +8,7 @@
 
 #import "NSDate+QuysTimestamp.h"
 
-
+TT_FIX_CATEGORY_BUG(qys_QuysTimestamp)
 @implementation NSDate (QuysTimestamp)
 +(NSString *)getNowTimeTimestamp
 {

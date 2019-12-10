@@ -23,7 +23,7 @@
 @implementation QuysAdSplashService
 - (instancetype)initWithID:businessID key:bussinessKey
 {
-    if (self == [super init])
+    if (self = [super init])
     {
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
@@ -32,6 +32,7 @@
 }
 
 #pragma mark - PrivateMethod
+
 
 - (void)config
 {
@@ -45,8 +46,10 @@
 
 - (QuysAdSplash*)startCreateAdviceView
 {
-    QuysAdSplash *splashview = [[QuysAdSplash alloc]init];
+    QuysAdSplashVM *vm = [[QuysAdSplashVM alloc] init];
+    QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:CGRectZero viewModel:vm];
     self.splashview = splashview;
+    [self.api start];
     return splashview;
 }
 
@@ -55,13 +58,19 @@
 
 -(void)requestFinished:(__kindof YTKBaseRequest *)request
 {
-    
+    NSLog(@"%s\n",__PRETTY_FUNCTION__);
+    NSLog(@"%@\n",request.responseObject);
+
+    [self.splashview setNeedsUpdateConstraints];
+    [self.splashview updateConstraintsIfNeeded];
 }
 
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
-    
+    NSLog(@"%s\n",__PRETTY_FUNCTION__);
+    NSLog(@"%@\n",request.responseObject);
+    [self.splashview setNeedsUpdateConstraints];
+    [self.splashview updateConstraintsIfNeeded];
 }
-
 @end

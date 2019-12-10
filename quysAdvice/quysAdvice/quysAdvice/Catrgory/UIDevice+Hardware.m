@@ -18,7 +18,7 @@
 #import "Reachability.h"
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
-
+TT_FIX_CATEGORY_BUG(qys_Hardware)
 @implementation UIDevice (Hardware)
 #pragma mark sysctlbyname utils
 - (NSString *) getSysInfoByName:(char *)typeSpecifier
@@ -635,11 +635,12 @@
 - (NSString*)createUUID
 {
     // 如果没有UUID 则保存设备号
-    CFUUIDRef deviceId = CFUUIDCreate(NULL);
-    assert(deviceId != NULL);
-    CFStringRef deviceIdStr = CFUUIDCreateString(NULL, deviceId);
-    NSString *strDeviceId = (__bridge NSString *)deviceIdStr;
-    return  strDeviceId;
+    CFUUIDRef uuid_ref = CFUUIDCreate(NULL);
+    CFStringRef uuid_string_ref= CFUUIDCreateString(NULL, uuid_ref);
+    NSString *uuid = [NSString stringWithString:(__bridge NSString *)uuid_string_ref];
+    CFRelease(uuid_ref);
+    CFRelease(uuid_string_ref);
+    return [uuid lowercaseString];
 }
 
 

@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QuysAdSplashService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysAdviceManager : NSObject
+
++ (instancetype)shareManager;
+
+
+
+- (void)configSplashAdvice:(NSString*)businessID key:(NSString*)businessKey;
+
+- (QuysAdSplash*)createSplashAdvice:(id <QuysAdSplashDelegate>)deleagte;
 
 @end
 
