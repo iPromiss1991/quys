@@ -18,15 +18,15 @@
 		FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */; };
 		FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */; };
 		FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */; };
-		FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */; };
+		FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */; };
 		FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D2D239DFC410092A260 /* QuysAdSplash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D2E239DFC410092A260 /* QuysAdSplash.m */; };
-		FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */; };
+		FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */; };
 		FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D36239E1C820092A260 /* QuysAdviceConfigModel.h */; };
 		FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */; };
-		FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D47239E24540092A260 /* QuysAdviceBaseDelegate.h */; };
+		FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D47239E24540092A260 /* QuysAdviceBaseDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D49239E24760092A260 /* QuysAdSplashDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D4C239E25E20092A260 /* QuysBaseNetworkApi.h */; };
 		FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */; };
@@ -38,7 +38,7 @@
 		FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D5B239E2AA50092A260 /* QuysAdviceModel.m */; };
 		FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D5E239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h */; };
 		FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D5F239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m */; };
-		FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */; };
+		FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D64239E2DD20092A260 /* QuysAdSplashVM.m */; };
 		FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D6C239E54B90092A260 /* QuysMD5.h */; };
 		FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D6D239E54B90092A260 /* QuysMD5.m */; };
@@ -169,6 +169,9 @@
 		FB848CEE239DE2D50092A260 /* quysAdvice */ = {
 			isa = PBXGroup;
 			children = (
+				FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */,
+				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
+				FB848CEF239DE2D50092A260 /* quysAdvice.h */,
 				FB848D6B239E54A60092A260 /* MD5 */,
 				FB848D68239E33AD0092A260 /* Macro */,
 				FB848D59239E2A770092A260 /* Models */,
@@ -181,9 +184,6 @@
 				FB848D17239DEBEC0092A260 /* Services */,
 				FB848D0E239DE9D90092A260 /* Keychain */,
 				FB848D35239E1C600092A260 /* AdviceModel */,
-				FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */,
-				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
-				FB848CEF239DE2D50092A260 /* quysAdvice.h */,
 				FB848CF0239DE2D50092A260 /* Info.plist */,
 				FB848D67239E31B70092A260 /* QuysPCH.h */,
 			);
@@ -341,17 +341,17 @@
 				FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
 				FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */,
-				FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */,
 				FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */,
+				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
 				FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */,
+				FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */,
+				FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */,
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
 				FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */,
 				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
 				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
 				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
 				FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */,
-				FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */,
-				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
 				FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */,
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
 				FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */,
