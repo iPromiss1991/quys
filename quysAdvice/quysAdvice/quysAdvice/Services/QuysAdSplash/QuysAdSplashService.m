@@ -36,8 +36,10 @@
 
 - (void)config
 {
-    //TODO:配置api 并请求数据（使用类别）
+    //配置api 并请求数据
     QuysAdSplashApi *api = [[QuysAdSplashApi alloc]init];
+    api.businessID = self.businessID;
+    api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
     
@@ -46,10 +48,14 @@
 
 - (QuysAdSplash*)startCreateAdviceView
 {
+    kWeakSelf(self)
     QuysAdSplashVM *vm = [[QuysAdSplashVM alloc] init];
     QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:CGRectZero viewModel:vm];
     self.splashview = splashview;
-    [self.api start];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [weakself.api start];
+    });
+    
     return splashview;
 }
 
@@ -72,5 +78,10 @@
     NSLog(@"%@\n",request.responseObject);
     [self.splashview setNeedsUpdateConstraints];
     [self.splashview updateConstraintsIfNeeded];
+}
+
+-(void)dealloc
+{
+    
 }
 @end

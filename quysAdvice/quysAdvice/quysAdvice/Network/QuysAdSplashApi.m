@@ -13,17 +13,18 @@
 @implementation QuysAdSplashApi
 - (NSString *)baseUrl
 {
-    return @"http://adx.quyuansu.com/api/spread/detail";
+//    return @"http://adx.quyuansu.com/api/spread/detail";
+    return @"http://192.168.1.7/advert/test.php?tid=245";
 }
 
-- (NSString *)requestUrl
-{
-    NSString *strTimestam = [NSDate getNowTimeTimestamp];
-    NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
-    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];//TODO:位数？大小写
-    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"?id=%@&apiToken=%@&timestamp=%@",self.businessID,strMd5ApiToken,strTimestam];
-    return strUrl;
-}
+//- (NSString *)requestUrl
+//{
+//    NSString *strTimestam = [NSDate getNowTimeTimestamp];
+//    NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
+//    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];//TODO:位数？大小写
+//    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"?id=%@&apiToken=%@&timestamp=%@",self.businessID,strMd5ApiToken,strTimestam];
+//    return strUrl;
+//}
 
 
 - (id)requestArgument
@@ -62,7 +63,6 @@
 
     return dicM;
 }
-
 
 
 @end

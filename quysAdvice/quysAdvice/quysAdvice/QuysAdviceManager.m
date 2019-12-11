@@ -18,6 +18,8 @@
 @property (nonatomic,strong) QuysAdviceConfigModel *informationflowBusinessModel;//!< 信息流广告
 @property (nonatomic,strong) QuysAdviceConfigModel *applicationBusinessModel;//!< 应用类型广告
 
+@property (nonatomic,strong) NSMapTable *mapTable;
+
 
 @end
 
@@ -55,8 +57,17 @@
 {
     QuysAdSplashService *service = [[QuysAdSplashService alloc]initWithID:self.splashBusinessModel.businessID key:self.splashBusinessModel.businessKey];
     service.delegate = deleagte;
+    [self.mapTable setObject:service forKey:kStringFormat(@"%ld",service.hash)];
     return   [service startCreateAdviceView];
     
+}
+
+- (NSMapTable *)mapTable
+{
+    if (_mapTable == nil) {
+        _mapTable = [[NSMapTable alloc] initWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory capacity:6];
+    }
+    return _mapTable;
 }
 
 @end

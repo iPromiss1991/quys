@@ -368,7 +368,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 网络ip地址
 - (NSString*)getIPAdderss
 {
-    return [[self getIPAdderss] valueForKey:@"ip"];
+    return [[self deviceWANIPAdress] valueForKey:@"ip"];
 }
 
 ///自定义mac
@@ -415,15 +415,17 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 ///手机屏幕方向：1 竖屏，2 横屏
 - (NSString*)screenOritation
 {
-    NSString *screenOritation = @"";
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        screenOritation = @"1";
-    }else
-    {
-        screenOritation = @"2";
-    }
+   __block NSString *screenOritation = @"";
+    dispatch_sync(dispatch_get_main_queue(), ^{
+         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+            {
+                screenOritation = @"1";
+            }else
+            {
+                screenOritation = @"2";
+            }
+    });
     return screenOritation;
 }
 
@@ -628,8 +630,15 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 {
     NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
     NSData *data = [NSData dataWithContentsOfURL:ipURL];
-    NSDictionary *ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    return ipDic;
+    if (data)
+    {
+         NSDictionary *ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+         return ipDic[@"data"];
+    }else
+    {
+        NSDictionary *ipDic = @{@"ip":@"null"};
+        return ipDic;
+    }
 }
 
 - (NSString*)createUUID

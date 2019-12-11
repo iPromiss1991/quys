@@ -81,13 +81,15 @@
 #define kSystemVersion [[UIDevice currentDevice] systemVersion]
 //APP BundleID 
 #define kBundleID [[NSBundle mainBundle] bundleIdentifier]
+//自定义bundle
+#define MYBUNDLE [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"quysBundle" withExtension:@"bundle"]]
 
 
 #pragma mark -简单调用
 //加载图片
 #define kGetImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
 //弱引用
-#define kWeakSelf(type)  __weak typeof(type) weak##type = type
+#define kWeakSelf(type)  __weak typeof(type) weak##type = type;
 //强引用
 #define kStrongSelf(type)  __strong typeof(type) type = weak##type
 //安全调用Block
