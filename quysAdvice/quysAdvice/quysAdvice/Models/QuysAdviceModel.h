@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * appName;
 @property (nonatomic , assign) NSInteger              ctype;
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
+
+@property (nonatomic , copy) NSString              * imgUrl;
+
 @end
 
 NS_ASSUME_NONNULL_END

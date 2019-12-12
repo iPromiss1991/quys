@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class QuysAdviceModel;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysAdSplashVM : NSObject
+@property (nonatomic,strong) NSString *strImgUrl;
+
+
+
+
+- (instancetype)initWithModel:(QuysAdviceModel*)model;
 
 @end
 

@@ -9,8 +9,9 @@
 #import "ViewController.h"
 #import <quysAdvice/QuysAdviceManager.h>
 #import <Masonry/Masonry.h>
+#import "QuysViewController.h"
 @interface ViewController ()<QuysAdSplashDelegate>
-@property (nonatomic,strong) QuysAdSplash *SplashView;
+@property (nonatomic,strong) QuysAdSplashService *service;
 
 @end
 
@@ -21,25 +22,48 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor purpleColor];
     
-    [[QuysAdviceManager shareManager] configSplashAdvice:@"quystest-cp" key:@"quystest-cp"];
-    QuysAdSplash*SplashView=  [[QuysAdviceManager shareManager] createSplashAdvice:self];
-    [self.view addSubview:SplashView];
-    self.SplashView = SplashView;
-    
-
+    QuysAdSplashService *service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp" key:@"quystest-cp" cGrect:CGRectMake(0, 100, 300, 100) eventDelegate:self parentView:self.view];
+    [service loadAdViewNow];
+    self.service = service;
     // Do any additional setup after loading the view.
 }
 
 -(void)updateViewConstraints
 {
-    [self.SplashView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view).offset(100);
-        make.left.right.bottom.mas_equalTo(self.view);
-
-    }];
     [super updateViewConstraints];
 }
 
+-(void)quys_requestStart
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+}
+-(void)quys_requestSuccess
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    [self.service showAdView];
 
+
+}
+-(void)quys_requestFial:(NSError *)error
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+
+}
+-(void)quys_interstitialOnExposure
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+
+}
+-(void)quys_interstitialOnClick
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    [self presentViewController:[QuysViewController new] animated:YES completion:nil];
+
+}
+-(void)quys_interstitialOnAdClose
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+
+}
 
 @end

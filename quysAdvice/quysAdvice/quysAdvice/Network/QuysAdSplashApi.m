@@ -10,6 +10,7 @@
 #import "NSDate+QuysTimestamp.h"
 #import "UIDevice+Hardware.h"
 #import "QuysMD5.h"
+#import "QuysAdviceOuterlayerDataModel.h"
 @implementation QuysAdSplashApi
 - (NSString *)baseUrl
 {
@@ -32,37 +33,36 @@
     UIDevice *device = [[UIDevice alloc] init];
     NSMutableDictionary *dicM = [NSMutableDictionary new];
     [dicM setObject:kBundleID forKey:@"pkgName"];
-    [dicM setObject:[device appVersionByFloat] forKey:@"versionName"];
-    [dicM setObject:[device appVersionWithoutFloat] forKey:@"versionCode"];
+    [dicM setObject:[device quys_appVersionByFloat] forKey:@"versionName"];
+    [dicM setObject:[device quys_appVersionWithoutFloat] forKey:@"versionCode"];
 
-    [dicM setObject:[device getIPAdderss] forKey:@"ip"];
-    [dicM setObject:[device customMacAddress] forKey:@"mac"];
-    [dicM setObject:[device customImei] forKey:@"imei"];
+    [dicM setObject:[device quys_getIPAdderss] forKey:@"ip"];
+    [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
+    [dicM setObject:[device quys_customImei] forKey:@"imei"];
     
-    [dicM setObject:[device customImsi] forKey:@"imsi"];
-    [dicM setObject:[device deviceBrand] forKey:@"brand"];
-    [dicM setObject:[device deviceManufacturer] forKey:@"manufacturer"];
+    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
+    [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
+    [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
     
-    [dicM setObject:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%lf",[device iOSVersion]]] forKey:@"osv"];
-    [dicM setObject:[device serialno] forKey:@"serialno"];
+    [dicM setObject:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%lf",[device quys_iOSVersion]]] forKey:@"osv"];
+    [dicM setObject:[device quys_serialno] forKey:@"serialno"];
     [dicM setObject:kStringFormat(@"%lf",kScreenWidth) forKey:@"sw"];
     
     [dicM setObject:kStringFormat(@"%lf",kScreenHeight) forKey:@"sh"];
-    [dicM setObject:[device screenOritation] forKey:@"so"];
-    [dicM setObject:[device getNetconnType] forKey:@"net"];
+    [dicM setObject:[device quys_screenOritation] forKey:@"so"];
+    [dicM setObject:[device quys_getNetconnType] forKey:@"net"];
 
-    [dicM setObject:[device carrierName] forKey:@"operatorType"];
-    [dicM setObject:[device deviceType] forKey:@"osType"];
-    [dicM setObject:[device idFa] forKey:@"idFa"];
+    [dicM setObject:[device quys_carrierName] forKey:@"operatorType"];
+    [dicM setObject:[device quys_deviceType] forKey:@"osType"];
+    [dicM setObject:[device quys_idFa] forKey:@"idFa"];
 
-    [dicM setObject:[device screenResolution] forKey:@"dpi"];
-    [dicM setObject:[device screenResolution] forKey:@"screenResolution"];
-    [dicM setObject:[device country] forKey:@"country"];
+    [dicM setObject:[device quys_screenResolution] forKey:@"dpi"];
+    [dicM setObject:[device quys_screenResolution] forKey:@"screenResolution"];
+    [dicM setObject:[device quys_country] forKey:@"country"];
     
-    [dicM setObject:[device preferredLanguage] forKey:@"language"];
+    [dicM setObject:[device quys_preferredLanguage] forKey:@"language"];
 
     return dicM;
 }
-
 
 @end

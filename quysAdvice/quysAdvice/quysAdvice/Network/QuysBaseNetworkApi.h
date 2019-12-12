@@ -7,10 +7,11 @@
 //
 
 #import <YTKNetwork/YTKNetwork.h>
-
+#import "QuysBaseJsonResponseSerializer.h"
 NS_ASSUME_NONNULL_BEGIN
 ///基础网络请求Api
 @interface QuysBaseNetworkApi : YTKRequest
+@property (nonatomic,strong) QuysBaseJsonResponseSerializer *jsonResponseSerializer;
 
 @end
 

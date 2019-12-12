@@ -5,11 +5,11 @@
 
 
 /// 机型
-- (NSString *)platform;
-- (NSString *)platformString;//!< 常用这个方法
+- (NSString *)quys_platform;
+- (NSString *)quys_platformString;//!< 常用这个方法
 
 /// 系统版本 ：浮点数
-- (float)iOSVersion;
+- (float)quys_iOSVersion;
 
 - (NSUInteger)cpuFrequency;
 - (NSUInteger)busFrequency;
@@ -19,99 +19,99 @@
 
 
 /// 磁盘空间
-- (NSNumber *)totalDiskSpace;
-- (NSNumber *)freeDiskSpace;
+- (NSNumber *)quys_totalDiskSpace;
+- (NSNumber *)quys_freeDiskSpace;
 
 
 /// 地址
-- (NSString *)macAddress;
-- (NSString *)ipAddresses;
+- (NSString *)quys_macAddress;
+- (NSString *)quys_ipAddresses;
 
 
 #pragma mark - 广告
 
 
 /// 获取app版本:eg:3.0.1
-- (NSString*)appVersionByFloat;
+- (NSString*)quys_appVersionByFloat;
 
 
 
 /// 获取app版本号:eg:301
-- (NSString*)appVersionWithoutFloat;
+- (NSString*)quys_appVersionWithoutFloat;
 
 
 /// 网络ip地址
-- (NSString*)getIPAdderss;
+- (NSString*)quys_getIPAdderss;
 
 ///自定义mac
-- (NSString*)customMacAddress;
+- (NSString*)quys_customMacAddress;
 
 
 ///自定义Imei
-- (NSString*)customImei;
+- (NSString*)quys_customImei;
 
 
 ///自定义Imsi
-- (NSString*)customImsi;
+- (NSString*)quys_customImsi;
 
 
 ///手机品牌
-- (NSString*)deviceBrand;
+- (NSString*)quys_deviceBrand;
 
 
 ///手机厂商
-- (NSString*)deviceManufacturer;
+- (NSString*)quys_deviceManufacturer;
 
 
 ///手机序列号
-- (NSString*)serialno;
+- (NSString*)quys_serialno;
 
 
 ///手机屏幕方向：1 竖屏，2 横屏
-- (NSString*)screenOritation;
+- (NSString*)quys_screenOritation;
 
 
 /// 网络类型
 /*
 0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
 */
-- (NSString *)getNetconnType;
+- (NSString *)quys_getNetconnType;
 
 
 
 /// 获取运营商
--(NSString*)carrierName;
+-(NSString*)quys_carrierName;
 
 
 
 /// 获取设备类型
 
-- (NSString *)deviceType;
+- (NSString *)quys_deviceType;
 
 
 /// 获取设备类型
-- (NSString*)osType;
+- (NSString*)quys_osType;
 
     
 /// 获取设备类型
-- (NSString*)idFa;
+- (NSString*)quys_idFa;
 
 
 /// 屏幕分辨率
-- (NSString*)screenResolution;
+- (NSString*)quys_screenResolution;
 
 
 /// 国家，使用ISO-3166-1   Alpha-3
-- (NSString*)country;
+- (NSString*)quys_country;
 
 
 /// 设备的语言设置,使用   alpha-2/ISO 6391
-- (NSString*)preferredLanguage;
+- (NSString*)quys_preferredLanguage;
 
 
 
 /// 获取app名称
-- (NSString*)appName;
+- (NSString*)quys_appName;
 
 
 @end

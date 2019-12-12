@@ -32,6 +32,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[super allocWithZone:NULL] init];
+        [[NSNotificationCenter defaultCenter] addObserver:manager selector:@selector(receiveServiceFinishedNotification:) name:kQuysAdServiceFinish object:nil];
     });
     return manager;
 }
@@ -55,11 +56,28 @@
 
 - (QuysAdSplash*)createSplashAdvice:(id <QuysAdSplashDelegate>)deleagte
 {
-    QuysAdSplashService *service = [[QuysAdSplashService alloc]initWithID:self.splashBusinessModel.businessID key:self.splashBusinessModel.businessKey];
-    service.delegate = deleagte;
-    [self.mapTable setObject:service forKey:kStringFormat(@"%ld",service.hash)];
-    return   [service startCreateAdviceView];
+//    QuysAdSplashService *service = [[QuysAdSplashService alloc]initWithID:self.splashBusinessModel.businessID key:self.splashBusinessModel.businessKey cGrect:<#(CGRect)#> eventDelegate:<#(nonnull id<QuysAdSplashDelegate>)#> parentView:<#(nonnull UIView *)#>];
+//    service.delegate = deleagte;
+//    [self.mapTable setObject:service forKey:kStringFormat(@"%ld",service.hash)];
+//    return   [service startCreateAdviceView];
+    return nil;
     
+}
+
+
+#pragma mark - PrivateMethod
+
+- (void)receiveServiceFinishedNotification:(NSNotification*)notify
+{
+    NSLog(@"%@",notify);
+    QuysAdviceBaseSevice *sevice = [notify object];
+    [self removeFinishedService:sevice];
+}
+
+
+- (void)removeFinishedService:(QuysAdviceBaseSevice*)service
+{
+    [self.mapTable removeObjectForKey:kStringFormat(@"%ld",service.hash)];
 }
 
 - (NSMapTable *)mapTable

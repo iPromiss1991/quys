@@ -11,10 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSDate (QuysTimestamp)
+@interface NSDate (QuysTimestamp) 
 
 /// 获取当前时间戳 （以毫秒为单位）
-+(NSString *)getNowTimeTimestamp;
++(NSString *)quys_getNowTimeTimestamp;
 
 @end
 

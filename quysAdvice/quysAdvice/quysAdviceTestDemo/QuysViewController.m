@@ -1,0 +1,33 @@
+//
+//  QuysViewController.m
+//  quysAdviceTestDemo
+//
+//  Created by quys on 2019/12/12.
+//  Copyright © 2019 Quys. All rights reserved.
+//
+
+#import "QuysViewController.h"
+
+@interface QuysViewController ()
+
+@end
+
+@implementation QuysViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor redColor];
+    // Do any additional setup after loading the view.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

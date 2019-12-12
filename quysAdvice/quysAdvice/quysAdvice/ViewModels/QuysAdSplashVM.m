@@ -7,7 +7,20 @@
 //
 
 #import "QuysAdSplashVM.h"
+#import "QuysAdviceModel.h"
 
 @implementation QuysAdSplashVM
+- (instancetype)initWithModel:(QuysAdviceModel *)model
+{
+    if (self = [super init])
+    {
+        [self packingModel:model];
+    }
+    return self;
+}
 
+- (void)packingModel:(QuysAdviceModel*)model
+{
+    self.strImgUrl = model.imgUrl;
+}
 @end

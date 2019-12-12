@@ -9,8 +9,8 @@
 #import "NSDate+QuysTimestamp.h"
 
 TT_FIX_CATEGORY_BUG(qys_QuysTimestamp)
-@implementation NSDate (QuysTimestamp)
-+(NSString *)getNowTimeTimestamp
+@implementation NSDate (QuysTimestamp) 
++(NSString *)quys_getNowTimeTimestamp
 {
 
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式

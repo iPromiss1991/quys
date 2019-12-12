@@ -26,6 +26,7 @@
     if (self = [super initWithFrame:frame])
     {
         [self createUI];
+        self.vm = viewModel;
     }
     return self;
 }
@@ -57,7 +58,8 @@
     [btnClose setImage:[UIImage imageNamed:@"close_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
-    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
 }
 
 - (void)updateConstraints
@@ -67,7 +69,7 @@
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).offset(kScale_H(5)).priorityHigh();
+        make.top.mas_equalTo(self.viewContain).offset(kScale_H(1)).priorityHigh();
         make.right.mas_equalTo(self.viewContain).offset(kScale_W(-10));
         make.width.height.mas_equalTo(kScale_W(44)).priorityHigh();
     }];
@@ -76,7 +78,7 @@
         make.top.mas_equalTo(self.btnClose.mas_bottom).priorityHigh();
         make.centerX.mas_equalTo(self.btnClose);
         make.width.mas_equalTo(kScale_W(1));
-        make.height.mas_equalTo(kScale_H(10)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(3)).priorityHigh();
     }];
     
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -99,13 +101,33 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
+    if (self.quysAdviceClickEventBlockItem)
+    {
+        self.quysAdviceClickEventBlockItem();
+    }
     
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    
+    if (self.quysAdviceCloseEventBlockItem)
+       {
+           self.quysAdviceCloseEventBlockItem();
+       }
 }
 
+- (void)hlj_viewStatisticalCallBack
+{
+    if (self.quysAdviceStatisticalCallBackBlockItem)
+           {
+               self.quysAdviceStatisticalCallBackBlockItem();
+           }
+    }
+ 
+- (void)setVm:(QuysAdSplashVM *)vm
+{
+    _vm = vm;
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+}
 
 @end

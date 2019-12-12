@@ -21,7 +21,7 @@
 TT_FIX_CATEGORY_BUG(qys_Hardware)
 @implementation UIDevice (Hardware)
 #pragma mark sysctlbyname utils
-- (NSString *) getSysInfoByName:(char *)typeSpecifier
+- (NSString *)quys_getSysInfoByName:(char *)typeSpecifier
 {
     size_t size;
     sysctlbyname(typeSpecifier, NULL, &size, NULL, 0);
@@ -35,7 +35,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return results;
 }
 
-- (NSString *)platform
+- (NSString *)quys_platform
 {
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -92,30 +92,30 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
  extern NSString *NSFileSystemNumber;
 */
 
-- (NSNumber *) totalDiskSpace
+- (NSNumber *)quys_totalDiskSpace
 {
     NSDictionary *fattributes = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
     return [fattributes objectForKey:NSFileSystemSize];
 }
 
-- (NSNumber *) freeDiskSpace
+- (NSNumber *)quys_freeDiskSpace
 {
     NSDictionary *fattributes = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
     return [fattributes objectForKey:NSFileSystemFreeSize];
 }
 
-- (NSString *)platformString{
+- (NSString *)quys_platformString{
     
-    NSString *platform = [self platform];
+    NSString *platform = [self quys_platform];
     
     if([platform rangeOfString:@"iPhone"].location != NSNotFound){
-        return [self iPhonePlatform:platform];
+        return [self quys_iPhonePlatform:platform];
     }
     if([platform rangeOfString:@"iPad"].location != NSNotFound){
-        return [self iPadPlatform:platform];
+        return [self quys_iPadPlatform:platform];
     }
     if([platform rangeOfString:@"iPod"].location != NSNotFound){
-        return [self iPodPlatform:platform];
+        return [self quys_iPodPlatform:platform];
     }
     
     if ([platform isEqualToString:@"i386"])             return @"Simulator";
@@ -124,7 +124,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return @"Unknown iOS Device";
 }
 
-- (NSString *)iPhonePlatform:(NSString *)platform{
+- (NSString *)quys_iPhonePlatform:(NSString *)platform{
     
     if ([platform isEqualToString:@"iPhone1,1"])    return @"iPhone 2G";
     if ([platform isEqualToString:@"iPhone1,2"])    return @"iPhone 3G";
@@ -168,7 +168,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return @"Unknown iPhone";
 }
 
-- (NSString *)iPadPlatform:(NSString *)platform{
+- (NSString *)quys_iPadPlatform:(NSString *)platform{
     
     if ([platform isEqualToString:@"iPad1,1"])   return @"iPad";
     if ([platform isEqualToString:@"iPad1,2"])   return @"iPad 3G";
@@ -226,7 +226,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return @"Unknown iPad";
 }
 
-- (NSString *)iPodPlatform:(NSString *)platform{
+- (NSString *)quys_iPodPlatform:(NSString *)platform{
     
     if ([platform isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
     if ([platform isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";
@@ -240,13 +240,13 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return @"Unknown iPod";
 }
 
-- (float)iOSVersion{
+- (float)quys_iOSVersion{
     
     return [[self systemVersion] floatValue];
 }
 
 #pragma mark MAC addy
-- (NSString *)macAddress{
+- (NSString *)quys_macAddress{
     
     int                 mib[6];
     size_t              len;
@@ -291,7 +291,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return outstring;
 }
 
-- (NSString *)ipAddresses{
+- (NSString *)quys_ipAddresses{
     
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     
@@ -351,7 +351,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 获取app版本:eg:3.0.1
-- (NSString*)appVersionByFloat
+- (NSString*)quys_appVersionByFloat
 {
    return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
@@ -359,61 +359,61 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 获取app版本号:eg:301
-- (NSString*)appVersionWithoutFloat
+- (NSString*)quys_appVersionWithoutFloat
 {
    return  [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] stringByReplacingOccurrencesOfString:@"." withString:@""];
 }
 
 
 /// 网络ip地址
-- (NSString*)getIPAdderss
+- (NSString*)quys_getIPAdderss
 {
-    return [[self deviceWANIPAdress] valueForKey:@"ip"];
+    return [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
 }
 
 ///自定义mac
-- (NSString*)customMacAddress
+- (NSString*)quys_customMacAddress
 {
-    return [self getUniqueID];
+    return [self quys_getUniqueID];
 }
 
 
 ///自定义Imei
-- (NSString*)customImei
+- (NSString*)quys_customImei
 {
-    return [self getUniqueID];
+    return [self quys_getUniqueID];
 }
 
 
 ///自定义Imsi
-- (NSString*)customImsi
+- (NSString*)quys_customImsi
 {
-    return [self getUniqueID];
+    return [self quys_getUniqueID];
 }
 
 
 ///手机品牌
-- (NSString*)deviceBrand
+- (NSString*)quys_deviceBrand
 {
     return @"Apple";
 }
 
 
 ///手机厂商
-- (NSString*)deviceManufacturer
+- (NSString*)quys_deviceManufacturer
 {
     return @"Apple";
 }
 
 
 ///手机序列号
-- (NSString*)serialno
+- (NSString*)quys_serialno
 {
-    return [self getUniqueID];
+    return [self quys_getUniqueID];
 }
 
 ///手机屏幕方向：1 竖屏，2 横屏
-- (NSString*)screenOritation
+- (NSString*)quys_screenOritation
 {
    __block NSString *screenOritation = @"";
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -434,7 +434,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /*
 0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
 */
-- (NSString *)getNetconnType
+- (NSString *)quys_getNetconnType
 {
 
     NSString *netconnType = @"";
@@ -513,7 +513,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 获取运营商
--(NSString*)carrierName
+-(NSString*)quys_carrierName
 {
     //获取本机运营商名称
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
@@ -537,10 +537,10 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 /// 获取设备类型
 
-- (NSString *)deviceType
+- (NSString *)quys_deviceType
 {
     
-    NSString *platform = [self platform];
+    NSString *platform = [self quys_platform];
     
     if([platform rangeOfString:@"iPhone"].location != NSNotFound){
         return @"1";
@@ -561,28 +561,28 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 获取设备类型
-- (NSString*)osType
+- (NSString*)quys_osType
 {
    return  @"1";
 }
 
     
 /// 获取设备类型
-- (NSString*)idFa
+- (NSString*)quys_idFa
 {
-   return  [self getUniqueID];
+   return  [self quys_getUniqueID];
 }
 
 
 /// 屏幕分辨率
-- (NSString*)screenResolution
+- (NSString*)quys_screenResolution
 {
     double dbScreenResolution = sqrtl(powf(kScreenWidth, 2) + powf(kScreenHeight, 2));
     return  [NSString stringWithFormat:@"%lf",dbScreenResolution];
 }
 
 /// 国家，使用ISO-3166-1   Alpha-3
-- (NSString*)country
+- (NSString*)quys_country
 {
     // iOS 获取设备当前地区的代码
     NSString *localeIdentifier = [[NSLocale currentLocale] objectForKey:NSLocaleIdentifier];
@@ -591,7 +591,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 设备的语言设置,使用   alpha-2/ISO 6391
-- (NSString*)preferredLanguage
+- (NSString*)quys_preferredLanguage
 {
     // iOS 获取设备当前语言的代码
     NSString *preferredLanguage = [[[NSBundle mainBundle] preferredLocalizations] firstObject];
@@ -601,7 +601,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 获取app名称
-- (NSString*)appName
+- (NSString*)quys_appName
 {
    return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 }
@@ -626,22 +626,24 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     region = "\U798f\U5efa";
     "region_id" = 350000;
 }*/
--(NSDictionary *)deviceWANIPAdress
+-(NSDictionary *)quys_deviceWANIPAdress
 {
-    NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
-    NSData *data = [NSData dataWithContentsOfURL:ipURL];
-    if (data)
-    {
-         NSDictionary *ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-         return ipDic[@"data"];
-    }else
-    {
-        NSDictionary *ipDic = @{@"ip":@"null"};
-        return ipDic;
-    }
+   __block NSDictionary *ipDic ;
+    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
+           NSData *data = [NSData dataWithContentsOfURL:ipURL];
+           if (data)
+           {
+                ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil][@"data"];
+           }else
+           {
+                ipDic = @{@"ip":@"null"};
+           }
+    });
+    return ipDic;
 }
 
-- (NSString*)createUUID
+- (NSString*)quys_createUUID
 {
     // 如果没有UUID 则保存设备号
     CFUUIDRef uuid_ref = CFUUIDCreate(NULL);
@@ -654,13 +656,13 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 
 /// 最大限度的唯一标识符
-- (NSString*)getUniqueID
+- (NSString*)quys_getUniqueID
 {
     NSString *strUniqueID = @"";
     strUniqueID = [QuysSAMKeychain passwordForService:kAdviceServiceIdentifier account:kAdviceDeviceIdentifier];
     if (strUniqueID.length <= 0)
     {
-        strUniqueID = [self createUUID];
+        strUniqueID = [self quys_createUUID];
         [QuysSAMKeychain setPassword:strUniqueID forService:kAdviceServiceIdentifier account:kAdviceDeviceIdentifier];
     }else
     {

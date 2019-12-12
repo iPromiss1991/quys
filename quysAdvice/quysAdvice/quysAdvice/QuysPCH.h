@@ -11,4 +11,7 @@
 #import "GlobalMacro.h"
 #import <UIImageView+WebCache.h>
 #import <Masonry/Masonry.h>
+#import <YYModel.h>
+#import "UIView+Statistical.h"
+#import "NetworkCodeEnum.h"
 #endif /* QuysPCH_h */

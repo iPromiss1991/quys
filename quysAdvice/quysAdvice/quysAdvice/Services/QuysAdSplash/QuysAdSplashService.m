@@ -8,10 +8,16 @@
 
 #import "QuysAdSplashService.h"
 #import "QuysAdSplashApi.h"
-
+#import "QuysAdviceOuterlayerDataModel.h"
+#import "QuysAdviceModel.h"
 @interface QuysAdSplashService()<YTKRequestDelegate>
+@property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
+
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
+@property (nonatomic,assign) CGRect cgFrame;
+
+@property (nonatomic,strong) UIView *parentView;
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
 @property (nonatomic,strong) QuysAdSplash *splashview;
@@ -21,12 +27,15 @@
 
 
 @implementation QuysAdSplashService
-- (instancetype)initWithID:businessID key:bussinessKey
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
     {
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
+        self.delegate = delegate;
+        self.parentView = parentView;
+        self.cgFrame = cgFrame;
         [self config];
     }return self;
 }
@@ -46,39 +55,102 @@
 }
 
 
-- (QuysAdSplash*)startCreateAdviceView
+/// 发起请求
+- (void)loadAdViewNow
 {
     kWeakSelf(self)
-    QuysAdSplashVM *vm = [[QuysAdSplashVM alloc] init];
-    QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:CGRectZero viewModel:vm];
-    self.splashview = splashview;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if ([weakself.delegate respondsToSelector:@selector(quys_requestStart)])
+        {
+            [weakself.delegate quys_requestStart];
+        }
             [weakself.api start];
     });
     
-    return splashview;
 }
 
+
+/// 根据响应数据创建指定view
+/// @param adViewModel 响应数据包装后的viewModel
+- (void)configAdviceView:(QuysAdSplashVM*)adViewModel
+{
+    kWeakSelf(self)
+    //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
+    QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:adViewModel];
+    splashview.quysAdviceClickEventBlockItem = ^{
+         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick)])
+                {
+                    [weakself.delegate quys_interstitialOnClick];
+                }
+    };
+    splashview.quysAdviceCloseEventBlockItem = ^{
+         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
+                {
+                    [weakself.delegate quys_interstitialOnAdClose];
+                }
+    };
+    
+    splashview.quysAdviceStatisticalCallBackBlockItem = ^{
+         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure)])
+                {
+                    [weakself.delegate quys_interstitialOnExposure];
+                }
+    };
+    self.splashview = splashview;
+    self.loadAdViewEnable = YES;
+}
+
+
+- (void)showAdView
+{
+    if (self.loadAdViewEnable)
+    {
+        [self.parentView addSubview:self.splashview];
+    }else
+    {
+        //视图正在创建中。。。
+    }
+}
 
 #pragma mark - YTKRequestDelegate
 
 -(void)requestFinished:(__kindof YTKBaseRequest *)request
 {
-    NSLog(@"%s\n",__PRETTY_FUNCTION__);
-    NSLog(@"%@\n",request.responseObject);
-
-    [self.splashview setNeedsUpdateConstraints];
-    [self.splashview updateConstraintsIfNeeded];
+    QuysAdviceOuterlayerDataModel *outerModel = [QuysAdviceOuterlayerDataModel yy_modelWithJSON:request.responseJSONObject];
+    if (outerModel && outerModel.data.count)
+    {
+        QuysAdviceModel *adviceModel = outerModel.data[0];
+        QuysAdSplashVM *vm = [[QuysAdSplashVM alloc] initWithModel:adviceModel];
+        [self configAdviceView:vm];
+        if ([self.delegate respondsToSelector:@selector(quys_requestSuccess)])
+        {
+            [self.delegate quys_requestSuccess];
+        }
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kQuysAdServiceFinish object:self];
+    }else
+    {
+        // 解析错误或者无数据
+        if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+               {
+                   NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
+                   [self.delegate quys_requestFial:error];
+               }
+       
+    }
 }
 
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
-    NSLog(@"%s\n",__PRETTY_FUNCTION__);
-    NSLog(@"%@\n",request.responseObject);
-    [self.splashview setNeedsUpdateConstraints];
-    [self.splashview updateConstraintsIfNeeded];
+    if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+    {
+        [self.delegate quys_requestFial:request.error];
+    }
+          
 }
+
+
+
 
 -(void)dealloc
 {
