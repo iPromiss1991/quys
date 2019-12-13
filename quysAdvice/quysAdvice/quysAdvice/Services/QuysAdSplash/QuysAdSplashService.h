@@ -21,8 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)frame eventDelegate:(id <QuysAdSplashDelegate>)delegate parentView:(UIView*)parentView;
 
+
 /// 开始加载视图
 - (void)loadAdViewNow;
+
 
 /// 开始展示视图
 - (void)showAdView;

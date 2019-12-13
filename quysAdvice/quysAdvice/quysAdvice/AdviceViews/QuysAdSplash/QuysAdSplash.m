@@ -97,14 +97,33 @@
 }
 
 
+
+
 #pragma mark - PrivateMethod
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
+    //获取触发触摸的点
+    CGPoint cpBegain = [sender locationInView:self];
+    CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+    NSString *strCpX = kStringFormat(@"%f",cpBegainResult.x);
+    NSString *strCpY = kStringFormat(@"%f",cpBegainResult.y);
+    //更新点击坐标
+    [self.vm updateReplaceDictionary:kClickInsideDownX value:strCpX];
+    [self.vm updateReplaceDictionary:kClickInsideDownY value:strCpY];
+    
+    [self.vm updateReplaceDictionary:kClickUPX value:strCpX];
+    [self.vm updateReplaceDictionary:kClickUPY value:strCpY];
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem();
+        self.quysAdviceClickEventBlockItem(cpBegainResult);
     }
+    
     
 }
 
@@ -116,13 +135,16 @@
        }
 }
 
+//根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
 - (void)hlj_viewStatisticalCallBack
 {
+    
     if (self.quysAdviceStatisticalCallBackBlockItem)
            {
                self.quysAdviceStatisticalCallBackBlockItem();
            }
-    }
+}
+
  
 - (void)setVm:(QuysAdSplashVM *)vm
 {

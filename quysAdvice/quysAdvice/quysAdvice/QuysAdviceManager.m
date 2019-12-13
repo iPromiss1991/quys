@@ -10,13 +10,6 @@
 #import "QuysAdviceConfigModel.h"
 
 @interface QuysAdviceManager()
-@property (nonatomic,strong) QuysAdviceConfigModel *splashBusinessModel;//!< 插屏广告
-@property (nonatomic,strong) QuysAdviceConfigModel *spreadScreenBusinessModel;//!< 开屏广告
-@property (nonatomic,strong) QuysAdviceConfigModel *bannerBusinessModel;//!< banner广告
-
-@property (nonatomic,strong) QuysAdviceConfigModel *incentivevideoBusinessModel;//!< 激励视屏广告
-@property (nonatomic,strong) QuysAdviceConfigModel *informationflowBusinessModel;//!< 信息流广告
-@property (nonatomic,strong) QuysAdviceConfigModel *applicationBusinessModel;//!< 应用类型广告
 
 @property (nonatomic,strong) NSMapTable *mapTable;
 
@@ -32,7 +25,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[super allocWithZone:NULL] init];
-        [[NSNotificationCenter defaultCenter] addObserver:manager selector:@selector(receiveServiceFinishedNotification:) name:kQuysAdServiceFinish object:nil];
     });
     return manager;
 }
@@ -48,37 +40,10 @@
 
 
 
-- (void)configSplashAdvice:(NSString*)businessID key:(NSString*)businessKey
-{
-    QuysAdviceConfigModel *model = [[QuysAdviceConfigModel alloc]initWithID:businessID key:businessKey];
-    self.splashBusinessModel = model;
-}
-
-- (QuysAdSplash*)createSplashAdvice:(id <QuysAdSplashDelegate>)deleagte
-{
-//    QuysAdSplashService *service = [[QuysAdSplashService alloc]initWithID:self.splashBusinessModel.businessID key:self.splashBusinessModel.businessKey cGrect:<#(CGRect)#> eventDelegate:<#(nonnull id<QuysAdSplashDelegate>)#> parentView:<#(nonnull UIView *)#>];
-//    service.delegate = deleagte;
-//    [self.mapTable setObject:service forKey:kStringFormat(@"%ld",service.hash)];
-//    return   [service startCreateAdviceView];
-    return nil;
-    
-}
 
 
 #pragma mark - PrivateMethod
 
-- (void)receiveServiceFinishedNotification:(NSNotification*)notify
-{
-    NSLog(@"%@",notify);
-    QuysAdviceBaseSevice *sevice = [notify object];
-    [self removeFinishedService:sevice];
-}
-
-
-- (void)removeFinishedService:(QuysAdviceBaseSevice*)service
-{
-    [self.mapTable removeObjectForKey:kStringFormat(@"%ld",service.hash)];
-}
 
 - (NSMapTable *)mapTable
 {
@@ -88,4 +53,21 @@
     return _mapTable;
 }
 
+-(NSArray *)arrMReplace
+{
+    if (_arrMReplace == nil)
+    {
+      _arrMReplace = @[
+            @"__REQ_WIDTH__",
+            @"__REQ_HEIGHT__",
+            @"__WIDTH__",
+            @"__HEIGHT__",
+            @"__DOWN_X__",
+            @"__DOWN_Y__",
+            @"__UP_X__",
+            @"__UP_Y__"
+        ];
+        
+    }return _arrMReplace;
+}
 @end

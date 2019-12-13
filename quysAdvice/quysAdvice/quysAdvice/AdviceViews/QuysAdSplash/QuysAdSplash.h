@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
-typedef void(^QuysAdviceClickEventBlock)(void);//!< 点击事件
+typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
 typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 @interface QuysAdSplash : UIView
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdSplashVM*)viewModel;
@@ -20,6 +20,7 @@ typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 @property (nonatomic,copy) QuysAdviceCloseEventBlock quysAdviceCloseEventBlockItem;
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,7 @@
 
 //
 #import "QuysSAMKeychain.h"
+#import <AdSupport/Adsupport.h>
 //
 #import "Reachability.h"
 #import <CoreTelephony/CTCarrier.h>
@@ -567,10 +568,36 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 }
 
     
-/// 获取设备类型
+/// 获取IDFA
 - (NSString*)quys_idFa
 {
-   return  [self quys_getUniqueID];
+    NSString *strUniqueID = @"";
+    strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceAdvertisingIdentifier];
+    if (strUniqueID.length <= 0)
+    {
+        strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
+    }else
+    {
+        
+    }
+    return strUniqueID;
+}
+
+/// 获取IDFV
+- (NSString*)quys_idFv
+{
+    NSString *strUniqueID = @"";
+    strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceVenderIdentifier];
+    if (strUniqueID.length <= 0)
+    {
+        strUniqueID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceVenderIdentifier];
+    }else
+    {
+        
+    }
+    return strUniqueID;
 }
 
 
@@ -659,11 +686,11 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString*)quys_getUniqueID
 {
     NSString *strUniqueID = @"";
-    strUniqueID = [QuysSAMKeychain passwordForService:kAdviceServiceIdentifier account:kAdviceDeviceIdentifier];
+    strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceDeviceIdentifier];
     if (strUniqueID.length <= 0)
     {
         strUniqueID = [self quys_createUUID];
-        [QuysSAMKeychain setPassword:strUniqueID forService:kAdviceServiceIdentifier account:kAdviceDeviceIdentifier];
+        [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceDeviceIdentifier];
     }else
     {
         

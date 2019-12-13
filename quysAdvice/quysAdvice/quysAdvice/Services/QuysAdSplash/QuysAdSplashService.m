@@ -21,6 +21,7 @@
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
 @property (nonatomic,strong) QuysAdSplash *splashview;
+@property (nonatomic,weak) id <QuysAdSplashDelegate> innerDelegate;//!< SDK内部处理事件的delegate
 
 
 @end
@@ -72,35 +73,56 @@
 
 /// 根据响应数据创建指定view
 /// @param adViewModel 响应数据包装后的viewModel
-- (void)configAdviceView:(QuysAdSplashVM*)adViewModel
+- (void)configAdviceView:(QuysAdSplashVM<QuysAdSplashDelegate>*)adViewModel
 {
+    self.innerDelegate = adViewModel;
     kWeakSelf(self)
     //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
     QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:adViewModel];
-    splashview.quysAdviceClickEventBlockItem = ^{
-         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick)])
+    adViewModel.cgView = self.cgFrame;
+    //点击事件
+    splashview.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+        if ([weakself.innerDelegate respondsToSelector:@selector(quys_interstitialOnClick:)])
+                       {
+                           [weakself.innerDelegate quys_interstitialOnClick:cp];
+                       }
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:)])
                 {
-                    [weakself.delegate quys_interstitialOnClick];
+                    [weakself.delegate quys_interstitialOnClick:cp];
                 }
     };
+    
+    //关闭事件
     splashview.quysAdviceCloseEventBlockItem = ^{
+        if ([weakself.innerDelegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
+        {
+            [weakself.innerDelegate quys_interstitialOnAdClose];
+        }
          if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
                 {
                     [weakself.delegate quys_interstitialOnAdClose];
                 }
     };
     
+    //曝光事件
     splashview.quysAdviceStatisticalCallBackBlockItem = ^{
+        if ([weakself.innerDelegate respondsToSelector:@selector(quys_interstitialOnExposure)])
+        {
+            [weakself.innerDelegate quys_interstitialOnExposure];
+        }
          if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure)])
                 {
                     [weakself.delegate quys_interstitialOnExposure];
                 }
     };
+    [splashview hlj_setTrackTag:kStringFormat(@"%ld",[splashview hash]) position:0 trackData:@{}];
     self.splashview = splashview;
     self.loadAdViewEnable = YES;
 }
 
 
+
+/// 展示视图
 - (void)showAdView
 {
     if (self.loadAdViewEnable)
@@ -112,6 +134,7 @@
     }
 }
 
+
 #pragma mark - YTKRequestDelegate
 
 -(void)requestFinished:(__kindof YTKBaseRequest *)request
@@ -121,15 +144,19 @@
     {
         QuysAdviceModel *adviceModel = outerModel.data[0];
         QuysAdSplashVM *vm = [[QuysAdSplashVM alloc] initWithModel:adviceModel];
-        [self configAdviceView:vm];
+        [self configAdviceView:vm];//warnning：此处创建innerDelegate！！！
+        //请求成功回调
+        if ([self.innerDelegate respondsToSelector:@selector(quys_requestSuccess)])
+        {
+            [self.innerDelegate quys_requestSuccess];
+        }
+        
         if ([self.delegate respondsToSelector:@selector(quys_requestSuccess)])
         {
             [self.delegate quys_requestSuccess];
         }
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kQuysAdServiceFinish object:self];
     }else
     {
-        // 解析错误或者无数据
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
                {
                    NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];

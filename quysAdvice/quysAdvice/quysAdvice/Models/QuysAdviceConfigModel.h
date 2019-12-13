@@ -11,10 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysAdviceConfigModel : NSObject
-@property (nonatomic,strong) NSString *businessID;//!< 广告ID
-@property (nonatomic,strong) NSString *businessKey;//!< 广告Key
+@property (nonatomic,strong) NSString *replaceKey;//!<替换的key
+@property (nonatomic,strong) NSString *replaceValue;//!<替换的value
 
-- (instancetype)initWithID:(NSString*)businessID key:(NSString*)businessKey;
+- (instancetype)initWithKey:(NSString*)replaceKey value:(NSString*)replaceValue;
 
 
 @end

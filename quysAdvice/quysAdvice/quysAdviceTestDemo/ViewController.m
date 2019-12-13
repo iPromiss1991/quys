@@ -8,8 +8,12 @@
 
 #import "ViewController.h"
 #import <quysAdvice/QuysAdviceManager.h>
+#import <quysAdvice/QuysAdSplash.h>
 #import <Masonry/Masonry.h>
 #import "QuysViewController.h"
+
+#import <objc/runtime.h>
+
 @interface ViewController ()<QuysAdSplashDelegate>
 @property (nonatomic,strong) QuysAdSplashService *service;
 
@@ -25,6 +29,8 @@
     QuysAdSplashService *service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp" key:@"quystest-cp" cGrect:CGRectMake(0, 100, 300, 100) eventDelegate:self parentView:self.view];
     [service loadAdViewNow];
     self.service = service;
+  
+
     // Do any additional setup after loading the view.
 }
 
@@ -32,7 +38,6 @@
 {
     [super updateViewConstraints];
 }
-
 -(void)quys_requestStart
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
@@ -54,7 +59,7 @@
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_interstitialOnClick
+-(void)quys_interstitialOnClick:(CGPoint)cpClick
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
     [self presentViewController:[QuysViewController new] animated:YES completion:nil];

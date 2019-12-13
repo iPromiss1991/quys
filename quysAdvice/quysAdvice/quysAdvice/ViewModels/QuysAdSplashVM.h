@@ -10,13 +10,28 @@
 @class QuysAdviceModel;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
-@interface QuysAdSplashVM : NSObject
+@interface QuysAdSplashVM : NSObject<QuysAdSplashDelegate>
+//输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
+
+
+//上报相关字段
+@property (nonatomic,assign) CGRect cgView;//!< 相关视图的frame
 
 
 
 
 - (instancetype)initWithModel:(QuysAdviceModel*)model;
+
+
+/// 更新宏替换键&值
+/// @param replaceKey key
+/// @param replaceVlue value
+- (void)updateReplaceDictionary:(NSString*)replaceKey value:(NSString*)replaceVlue;
+
+
+
+
 
 @end
 

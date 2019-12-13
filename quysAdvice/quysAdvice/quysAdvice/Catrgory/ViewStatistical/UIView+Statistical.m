@@ -222,7 +222,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
 
 #pragma mark - 记录有效曝光 输出动作
 - (void)hlj_viewStatistical {
-    NSLog(@"hlj_trackTag:%@,position:%zd",self.hlj_trackModel.tag,self.hlj_trackModel.position);
+    NSLog(@"曝光：hlj_trackTag:%@,position:%zd",self.hlj_trackModel.tag,self.hlj_trackModel.position);
     [self hlj_viewStatisticalCallBack];
 }
 

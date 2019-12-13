@@ -93,9 +93,11 @@
 - (NSString*)quys_osType;
 
     
-/// 获取设备类型
+/// 获取IDFA
 - (NSString*)quys_idFa;
 
+/// 获取IDFV
+- (NSString*)quys_idFv;
 
 /// 屏幕分辨率
 - (NSString*)quys_screenResolution;

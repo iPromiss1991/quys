@@ -63,13 +63,13 @@
 		FBBA891123A0EA1C00D0088C /* close_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FBBA890F23A0EA1C00D0088C /* close_press@3x.png */; };
 		FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */; };
 		FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */; };
-		FBBA892423A210F400D0088C /* UIView+QuysUIScreenDisplaying.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892223A210F400D0088C /* UIView+QuysUIScreenDisplaying.h */; };
-		FBBA892523A210F400D0088C /* UIView+QuysUIScreenDisplaying.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892323A210F400D0088C /* UIView+QuysUIScreenDisplaying.m */; settings = {COMPILER_FLAGS = "-ObjC"; }; };
 		FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892623A216E000D0088C /* UIView+Statistical.h */; };
 		FBBA892B23A216E000D0088C /* UIView+Statistical.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892723A216E000D0088C /* UIView+Statistical.m */; };
 		FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892823A216E000D0088C /* HLJViewTrackModel.m */; };
 		FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892923A216E000D0088C /* HLJViewTrackModel.h */; };
 		FBBA893223A2413A00D0088C /* QuysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893123A2413A00D0088C /* QuysViewController.m */; };
+		FBBA893623A38CDC00D0088C /* QuysReportApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893423A38CDC00D0088C /* QuysReportApi.h */; };
+		FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893523A38CDC00D0088C /* QuysReportApi.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,8 +199,6 @@
 		FBBA890F23A0EA1C00D0088C /* close_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_press@3x.png"; sourceTree = "<group>"; };
 		FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseJsonResponseSerializer.h; sourceTree = "<group>"; };
 		FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseJsonResponseSerializer.m; sourceTree = "<group>"; };
-		FBBA892223A210F400D0088C /* UIView+QuysUIScreenDisplaying.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+QuysUIScreenDisplaying.h"; sourceTree = "<group>"; };
-		FBBA892323A210F400D0088C /* UIView+QuysUIScreenDisplaying.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+QuysUIScreenDisplaying.m"; sourceTree = "<group>"; };
 		FBBA892623A216E000D0088C /* UIView+Statistical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Statistical.h"; sourceTree = "<group>"; };
 		FBBA892723A216E000D0088C /* UIView+Statistical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Statistical.m"; sourceTree = "<group>"; };
 		FBBA892823A216E000D0088C /* HLJViewTrackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLJViewTrackModel.m; sourceTree = "<group>"; };
@@ -208,6 +206,8 @@
 		FBBA892F23A22CCB00D0088C /* NetworkCodeEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkCodeEnum.h; sourceTree = "<group>"; };
 		FBBA893023A2413A00D0088C /* QuysViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysViewController.h; sourceTree = "<group>"; };
 		FBBA893123A2413A00D0088C /* QuysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewController.m; sourceTree = "<group>"; };
+		FBBA893423A38CDC00D0088C /* QuysReportApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysReportApi.h; sourceTree = "<group>"; };
+		FBBA893523A38CDC00D0088C /* QuysReportApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysReportApi.m; sourceTree = "<group>"; };
 		FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -427,6 +427,8 @@
 				FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */,
 				FB848D55239E26CD0092A260 /* QuysAdSplashApi.h */,
 				FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */,
+				FBBA893423A38CDC00D0088C /* QuysReportApi.h */,
+				FBBA893523A38CDC00D0088C /* QuysReportApi.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -439,8 +441,6 @@
 				FB848D51239E26380092A260 /* UIDevice+Hardware.m */,
 				FB848D74239E56540092A260 /* NSDate+QuysTimestamp.h */,
 				FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */,
-				FBBA892223A210F400D0088C /* UIView+QuysUIScreenDisplaying.h */,
-				FBBA892323A210F400D0088C /* UIView+QuysUIScreenDisplaying.m */,
 			);
 			path = Catrgory;
 			sourceTree = "<group>";
@@ -607,6 +607,7 @@
 				FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */,
 				FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
+				FBBA893623A38CDC00D0088C /* QuysReportApi.h in Headers */,
 				FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */,
 				FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */,
 				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
@@ -618,7 +619,6 @@
 				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
 				FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */,
 				FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */,
-				FBBA892423A210F400D0088C /* UIView+QuysUIScreenDisplaying.h in Headers */,
 				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
 				FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */,
 				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
@@ -922,7 +922,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBBA892523A210F400D0088C /* UIView+QuysUIScreenDisplaying.m in Sources */,
 				FB848D53239E26380092A260 /* UIDevice+Hardware.m in Sources */,
 				FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */,
 				FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */,
@@ -931,13 +930,14 @@
 				FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */,
 				FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */,
 				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
-				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
 				FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */,
 				FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
+				FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */,
 				FBBA892B23A216E000D0088C /* UIView+Statistical.m in Sources */,
+				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
 				FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */,
 				FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */,
 				FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */,

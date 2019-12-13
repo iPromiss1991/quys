@@ -10,12 +10,12 @@
 
 @implementation QuysAdviceConfigModel
 
-- (instancetype)initWithID:(NSString *)businessID key:(NSString *)businessKey
+- (instancetype)initWithKey:(NSString *)replaceKey value:(NSString *)replaceValue
 {
     if (self = [super init])
     {
-        self.businessID = businessID;
-        self.businessKey = businessKey;
+        self.replaceKey = replaceKey;
+        self.replaceValue = replaceValue;
     }
     return self;
 }

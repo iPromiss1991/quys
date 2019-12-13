@@ -11,7 +11,9 @@
 
 #pragma mark - 屏幕宽高
 #define kAdviceServiceIdentifier @"com.quys.advice"
-#define kAdviceDeviceIdentifier  @"com.quys"
+#define kAdviceDeviceIdentifier  @"com.quys.DeviceID"
+#define kAdviceVenderIdentifier  @"com.quys.VenderID"
+#define kAdviceAdvertisingIdentifier  @"com.quys.kAdviceAdvertisingID"
 
 #pragma mark - 屏幕宽高
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
@@ -194,4 +196,19 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #pragma mark -解决category冲突
 #define TT_FIX_CATEGORY_BUG(name) @interface TT_FIX_CATEGORY_BUG_##name: NSObject @end \
 @implementation TT_FIX_CATEGORY_BUG_##name @end
+
+#pragma mark -宏替换业务Key
+#define kResponeAdWidth @"__REQ_WIDTH__"
+#define kResponeAdHeight @"__REQ_HEIGHT__"
+
+#define kRealAdWidth  @"__WIDTH__"
+#define kRealAdHeight @"__HEIGHT__"
+
+#define kClickInsideDownX @"__DOWN_X__"
+#define kClickInsideDownY @"__DOWN_Y__"
+
+#define kClickUPX @"__UP_X__"
+#define kClickUPY @"__UP_Y__"
+
+
 #endif /* GlobalMacro_h */

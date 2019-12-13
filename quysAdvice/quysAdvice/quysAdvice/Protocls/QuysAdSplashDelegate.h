@@ -7,6 +7,7 @@
 //
 
 #import "QuysAdviceBaseDelegate.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 ///插屏协议
@@ -21,9 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)quys_interstitialOnExposure;
 
-- (void)quys_interstitialOnClick;
+- (void)quys_interstitialOnClick:(CGPoint)cpClick;
 
 - (void)quys_interstitialOnAdClose;
+
 
 @end
 

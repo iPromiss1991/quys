@@ -14,4 +14,5 @@
 #import <YYModel.h>
 #import "UIView+Statistical.h"
 #import "NetworkCodeEnum.h"
+#import "QuysAdviceManager.h"
 #endif /* QuysPCH_h */
