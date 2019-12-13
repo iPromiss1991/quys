@@ -17,7 +17,8 @@
 @end
 
 
-//TOODd：实现ViewModel 业务逻辑、以及数据格式化
+//TOOD：实现ViewModel 业务逻辑、以及数据格式化
+//宏替换：建议以其他的方式实现共享
 @implementation QuysAdSplashVM
 - (instancetype)initWithModel:(QuysAdviceModel *)model
 {
