@@ -15,9 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strImgUrl;
 
 
-//上报相关字段
-@property (nonatomic,assign) CGRect cgView;//!< 相关视图的frame
-
 
 
 

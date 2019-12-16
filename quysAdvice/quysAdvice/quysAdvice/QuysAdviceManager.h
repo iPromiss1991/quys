@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysAdviceManager : NSObject
-@property (nonatomic,strong) NSArray *arrMReplace;//!<需要“宏替换”的字符数组
+@property (nonatomic,strong) NSMutableDictionary *dicMReplace;//!<需要“宏替换”的字符数组
 
 
 + (instancetype)shareManager;

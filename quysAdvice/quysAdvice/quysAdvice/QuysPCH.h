@@ -15,4 +15,5 @@
 #import "UIView+Statistical.h"
 #import "NetworkCodeEnum.h"
 #import "QuysAdviceManager.h"
+#import "QuysUploadApiTaskManager.h"
 #endif /* QuysPCH_h */

@@ -69,20 +69,20 @@
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).offset(kScale_H(1)).priorityHigh();
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-10));
-        make.width.height.mas_equalTo(kScale_W(44)).priorityHigh();
+        make.top.mas_equalTo(self.viewContain).offset(kScale_H(0)).priorityHigh();
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-0));
+        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
     
     [self.viewStrokeLine mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.btnClose.mas_bottom).priorityHigh();
         make.centerX.mas_equalTo(self.btnClose);
         make.width.mas_equalTo(kScale_W(1));
-        make.height.mas_equalTo(kScale_H(3)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(0)).priorityHigh();
     }];
     
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
-           make.top.mas_equalTo(self.viewStrokeLine.mas_bottom);
+           make.top.mas_equalTo(self.viewContain);
            make.left.right.bottom.mas_equalTo(self.viewContain);
        }];
     
@@ -111,14 +111,6 @@
     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
-    NSString *strCpX = kStringFormat(@"%f",cpBegainResult.x);
-    NSString *strCpY = kStringFormat(@"%f",cpBegainResult.y);
-    //更新点击坐标
-    [self.vm updateReplaceDictionary:kClickInsideDownX value:strCpX];
-    [self.vm updateReplaceDictionary:kClickInsideDownY value:strCpY];
-    
-    [self.vm updateReplaceDictionary:kClickUPX value:strCpX];
-    [self.vm updateReplaceDictionary:kClickUPY value:strCpY];
     if (self.quysAdviceClickEventBlockItem)
     {
         self.quysAdviceClickEventBlockItem(cpBegainResult);

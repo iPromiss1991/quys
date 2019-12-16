@@ -70,6 +70,10 @@
 		FBBA893223A2413A00D0088C /* QuysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893123A2413A00D0088C /* QuysViewController.m */; };
 		FBBA893623A38CDC00D0088C /* QuysReportApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893423A38CDC00D0088C /* QuysReportApi.h */; };
 		FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893523A38CDC00D0088C /* QuysReportApi.m */; };
+		FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */; };
+		FBBA893B23A71E8F00D0088C /* QuysUploadStatisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */; };
+		FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */; };
+		FBBA893F23A7288000D0088C /* QuysUploadApiTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +212,10 @@
 		FBBA893123A2413A00D0088C /* QuysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewController.m; sourceTree = "<group>"; };
 		FBBA893423A38CDC00D0088C /* QuysReportApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysReportApi.h; sourceTree = "<group>"; };
 		FBBA893523A38CDC00D0088C /* QuysReportApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysReportApi.m; sourceTree = "<group>"; };
+		FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysUploadStatisticsModel.h; sourceTree = "<group>"; };
+		FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysUploadStatisticsModel.m; sourceTree = "<group>"; };
+		FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysUploadApiTaskManager.h; sourceTree = "<group>"; };
+		FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysUploadApiTaskManager.m; sourceTree = "<group>"; };
 		FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -429,6 +437,8 @@
 				FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */,
 				FBBA893423A38CDC00D0088C /* QuysReportApi.h */,
 				FBBA893523A38CDC00D0088C /* QuysReportApi.m */,
+				FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */,
+				FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -456,6 +466,8 @@
 				FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */,
 				FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */,
 				FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */,
+				FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */,
+				FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -618,6 +630,8 @@
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
 				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
 				FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */,
+				FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */,
+				FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */,
 				FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */,
 				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
 				FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */,
@@ -931,12 +945,14 @@
 				FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */,
 				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
 				FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */,
+				FBBA893B23A71E8F00D0088C /* QuysUploadStatisticsModel.m in Sources */,
 				FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
 				FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */,
 				FBBA892B23A216E000D0088C /* UIView+Statistical.m in Sources */,
+				FBBA893F23A7288000D0088C /* QuysUploadApiTaskManager.m in Sources */,
 				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
 				FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */,
 				FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */,

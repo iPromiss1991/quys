@@ -3,7 +3,7 @@
 //  quysAdvice
 //
 //  Created by quys on 2019/12/9.
-//  Copyright © 2019 Quys. All rights reserved.
+//  Copyright © 2019 Quys. All rights reserved. 
 //
 #define kQuysAdServiceFinish @"kQuysAdServiceFinish"
 

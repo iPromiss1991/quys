@@ -53,21 +53,29 @@
     return _mapTable;
 }
 
--(NSArray *)arrMReplace
+- (NSMutableDictionary*)combineReplaceKeyAndValues
 {
-    if (_arrMReplace == nil)
+    
+    NSMutableDictionary *dicM = [[NSMutableDictionary alloc]initWithObjectsAndKeys:
+                                 kResponeAdWidth,@"",
+                                 kResponeAdHeight,@"",
+                                 kRealAdWidth,@"",
+                                 kRealAdHeight,@"",
+                                 kClickInsideDownX,@"",
+                                 kClickInsideDownY,@"",
+                                 kClickUPX,@"",
+                                 kClickUPY,@"",
+                                 nil];
+    return dicM;
+}
+
+
+-(NSMutableDictionary *)dicMReplace
+{
+    if (_dicMReplace == nil)
     {
-      _arrMReplace = @[
-            @"__REQ_WIDTH__",
-            @"__REQ_HEIGHT__",
-            @"__WIDTH__",
-            @"__HEIGHT__",
-            @"__DOWN_X__",
-            @"__DOWN_Y__",
-            @"__UP_X__",
-            @"__UP_Y__"
-        ];
-        
-    }return _arrMReplace;
+      _dicMReplace = [self combineReplaceKeyAndValues];
+    }
+    return _dicMReplace;
 }
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "QuysAdviceModel.h"
-
 @implementation QuysAdviceModel
 //替换字符：
 + (NSDictionary *)modelCustomPropertyMapper
@@ -16,5 +15,10 @@
   @{
         @"desc" : @"description"
     };
+}
+
++ (NSDictionary *)modelContainerPropertyGenericClass
+{
+    return @{@"statisticsModel":[QuysUploadStatisticsModel class]};
 }
 @end

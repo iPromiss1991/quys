@@ -8,17 +8,13 @@
 
 #import "QuysAdSplashVM.h"
 #import "QuysAdviceModel.h"
-#import "QuysReportApi.h"
 @interface QuysAdSplashVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
-@property (nonatomic,strong) NSMutableDictionary *dicMReplace;
 
 
 @end
 
 
-//TOOD：实现ViewModel 业务逻辑、以及数据格式化
-//宏替换：建议以其他的方式实现共享
 @implementation QuysAdSplashVM
 - (instancetype)initWithModel:(QuysAdviceModel *)model
 {
@@ -40,23 +36,16 @@
     self.strImgUrl = model.imgUrl;
 }
 
-- (NSString*)replaceSpecifiedString:(NSString*)strForReplace
-{
-    __block NSString *strTemp = strForReplace;
-    [self.dicMReplace enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
-        if ([strTemp containsString:key])
-        {
-          strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
-        }
-    }];
-    return strTemp;
-}
-
 
 
 - (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
 {
-    [self.dicMReplace setObject:replaceVlue forKey:replaceKey];
+    [[[QuysAdviceManager shareManager] dicMReplace] setObject:replaceVlue forKey:replaceKey];
+}
+
+- (void)uploadServer:(NSArray*)uploadUrlArr
+{
+    [[QuysUploadApiTaskManager shareManager] addTaskUrls:uploadUrlArr];
 }
 
 
@@ -64,50 +53,37 @@
 
 - (void)quys_interstitialOnClick:(CGPoint)cpClick
 {
-    kWeakSelf(self)
-    [self.adModel.clkTracking enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        //宏替换
-        obj =  [weakself replaceSpecifiedString:obj];
-
-        //发起网络请求
-        QuysReportApi *api = [QuysReportApi new];
-        api.strRequestUrl = obj;
-        NSLog(@"发起请求:%@",obj);
-        [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request) {
-            NSLog(@"请求成功！");
-        } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
-             NSLog(@"请求失败！");
-
-        }];
-    }];
-    
-}
-
-
-
-- (NSMutableDictionary*)combineReplaceKeyAndValues
-{
-    
-    NSMutableDictionary *dicM = [[NSMutableDictionary alloc]initWithObjectsAndKeys:
-                                 kResponeAdWidth,@"",
-                                 kResponeAdHeight,@"",
-                                 kRealAdWidth,@"",
-                                 kRealAdHeight,@"",
-                                 kClickInsideDownX,@"",
-                                 kClickInsideDownY,@"",
-                                 kClickUPX,@"",
-                                 kClickUPY,@"",
-                                 nil];
-    return dicM;
-}
-
-
--(NSMutableDictionary *)dicMReplace
-{
-    if (_dicMReplace == nil)
+    if (!self.adModel.statisticsModel.clicked)
     {
-      _dicMReplace = [self combineReplaceKeyAndValues];
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        [self uploadServer:self.adModel.clkTracking];
+    }else
+    {
+        self.adModel.statisticsModel.clicked = YES;
     }
-    return _dicMReplace;
 }
+
+
+-(void)quys_interstitialOnExposure
+{
+    if (!self.adModel.statisticsModel.exposured)
+    {
+         [self uploadServer:self.adModel.impTracking];
+    }else
+    {
+        self.adModel.statisticsModel.exposured = YES;
+    }
+}
+
+
+
+
 @end
+ 

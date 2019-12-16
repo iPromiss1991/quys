@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "QuysUploadStatisticsModel.h"
 NS_ASSUME_NONNULL_BEGIN
 ///广告模型
 @interface QuysAdviceModel : NSObject
@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 
 @property (nonatomic , copy) NSString              * imgUrl;
+
+@property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
+
 
 @end
 

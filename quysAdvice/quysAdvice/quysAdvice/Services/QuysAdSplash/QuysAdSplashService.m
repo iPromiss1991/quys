@@ -79,7 +79,8 @@
     kWeakSelf(self)
     //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
     QuysAdSplash *splashview = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:adViewModel];
-    adViewModel.cgView = self.cgFrame;
+    [adViewModel updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.cgFrame.size.width)];
+    [adViewModel updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.cgFrame.size.height)];
     //点击事件
     splashview.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
         if ([weakself.innerDelegate respondsToSelector:@selector(quys_interstitialOnClick:)])
