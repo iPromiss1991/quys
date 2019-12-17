@@ -9,6 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "QuysUploadStatisticsModel.h"
 NS_ASSUME_NONNULL_BEGIN
+/*素材类型:
+ 1-图片 2-图文 3-文字 4-html  5-信息流多图  6-大规格插屏(大 图)   7-图文（小图）  8-视频
+*/
+
+typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
+    QuysAdviceCreativeTypeDefault = 0,
+    QuysAdviceCreativeTypePictureOnly = 1,
+    QuysAdviceCreativeTypeImageAndText = 2,
+    QuysAdviceCreativeTypeTextOnly = 3,
+    QuysAdviceCreativeTypeHtml = 4,
+    QuysAdviceCreativeTypeMultiPicture = 5,
+    QuysAdviceCreativeTypeBigPicture = 6,
+    QuysAdviceCreativeTypeSmallPicture = 7,
+    QuysAdviceCreativeTypeVideo = 8
+};
+
 ///广告模型
 @interface QuysAdviceModel : NSObject
 @property (nonatomic , strong) NSArray <NSString *>              * clkTracking;
@@ -28,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * iconUrl;
 @property (nonatomic , copy) NSString              * intro;
 @property (nonatomic , assign) NSInteger              adType;
-@property (nonatomic , assign) NSInteger              creativeType;
+@property (nonatomic , assign) QuysAdviceCreativeType              creativeType;
 @property (nonatomic , copy) NSString              * desc;
 @property (nonatomic , assign) NSInteger              clickPosition;
 @property (nonatomic , strong) NSArray <NSString *>              * reportDeeplinkSuccessUrl;
@@ -44,7 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * imgUrl;
 
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
-
 
 @end
 

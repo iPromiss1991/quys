@@ -7,7 +7,6 @@
 //
 
 #import "QuysUploadApiTaskManager.h"
-#import "QuysReportApi.h"
 
 static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
 @interface QuysUploadApiTaskManager()
@@ -46,25 +45,23 @@ static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
 {
     kWeakSelf(self);
     dispatch_async(self.queue, ^{
-         {
-                 [arrUrlArr enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                     dispatch_semaphore_wait(self.semaphore, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));//注意单位（NSEC_PER_SEC）：不设置NSEC_PER_SEC则可能无法实现同步
-                     //宏替换
-                     obj =  [weakself replaceSpecifiedString:obj];
-                     //发起网络请求
-                     NSURL *requestUrl = [NSURL URLWithString:kStringFormat(@"%@",obj)];
-                     NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
-                     NSURLSession *session =  [NSURLSession sessionWithConfiguration:config];
-                     NSURLSessionDataTask *task =   [session dataTaskWithURL:requestUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             NSLog(@"完成请求:%@==%@",obj,[NSThread currentThread]);
-                            dispatch_semaphore_signal(self.semaphore);
-                         });
-                     }];
-                     [task resume];
-                     NSLog(@"发起请求:%@==%@",obj,[NSThread currentThread]);
-                 }];
-         }
+        {
+            [arrUrlArr enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                dispatch_semaphore_wait(self.semaphore, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));//注意单位（NSEC_PER_SEC）：不设置NSEC_PER_SEC则可能无法实现同步
+                //宏替换
+                obj =  [weakself replaceSpecifiedString:obj];
+                //发起网络请求
+                NSURL *requestUrl = [NSURL URLWithString:kStringFormat(@"%@",obj)];
+                NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
+                NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+                NSURLSessionDataTask *task = [session dataTaskWithURL:requestUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                    NSLog(@"完成请求:%@==%@",obj,[NSThread currentThread]);
+                    dispatch_semaphore_signal(self.semaphore);
+                }];
+                [task resume];
+                NSLog(@"发起请求:%@==%@",obj,[NSThread currentThread]);
+            }];
+        }
     });
 }
 
@@ -74,7 +71,7 @@ static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
     [[[QuysAdviceManager shareManager] dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
         if ([strTemp containsString:key])
         {
-          strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
+            strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
         }
     }];
     return strTemp;

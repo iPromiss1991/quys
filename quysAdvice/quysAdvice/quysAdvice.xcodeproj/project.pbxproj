@@ -18,8 +18,6 @@
 		FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */; };
 		FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */; };
 		FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */; };
-		FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */; };
 		FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D2D239DFC410092A260 /* QuysAdSplash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D2E239DFC410092A260 /* QuysAdSplash.m */; };
 		FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -68,12 +66,22 @@
 		FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892823A216E000D0088C /* HLJViewTrackModel.m */; };
 		FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892923A216E000D0088C /* HLJViewTrackModel.h */; };
 		FBBA893223A2413A00D0088C /* QuysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893123A2413A00D0088C /* QuysViewController.m */; };
-		FBBA893623A38CDC00D0088C /* QuysReportApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893423A38CDC00D0088C /* QuysReportApi.h */; };
-		FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893523A38CDC00D0088C /* QuysReportApi.m */; };
 		FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */; };
 		FBBA893B23A71E8F00D0088C /* QuysUploadStatisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */; };
 		FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */; };
 		FBBA893F23A7288000D0088C /* QuysUploadApiTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */; };
+		FBBA894723A77B8800D0088C /* QuysInformationFlowVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA894523A77B8800D0088C /* QuysInformationFlowVM.h */; };
+		FBBA894823A77B8800D0088C /* QuysInformationFlowVM.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA894623A77B8800D0088C /* QuysInformationFlowVM.m */; };
+		FBBA894B23A77E8700D0088C /* QuysInformationFlowService.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA894923A77E8700D0088C /* QuysInformationFlowService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FBBA894C23A77E8700D0088C /* QuysInformationFlowService.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA894A23A77E8700D0088C /* QuysInformationFlowService.m */; };
+		FBBA895023A7819E00D0088C /* QuysInformationFlowSmallPictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA894E23A7819E00D0088C /* QuysInformationFlowSmallPictureView.h */; };
+		FBBA895123A7819E00D0088C /* QuysInformationFlowSmallPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA894F23A7819E00D0088C /* QuysInformationFlowSmallPictureView.m */; };
+		FBBA895423A7820900D0088C /* QuysInformationFlowMorePictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA895223A7820900D0088C /* QuysInformationFlowMorePictureView.m */; };
+		FBBA895523A7820900D0088C /* QuysInformationFlowMorePictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA895323A7820900D0088C /* QuysInformationFlowMorePictureView.h */; };
+		FBBA895823A7889A00D0088C /* QuysInformationFlowDefaultView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA895623A7889A00D0088C /* QuysInformationFlowDefaultView.h */; };
+		FBBA895923A7889A00D0088C /* QuysInformationFlowDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA895723A7889A00D0088C /* QuysInformationFlowDefaultView.m */; };
+		FBBA895C23A8720800D0088C /* QuysInfomationFlowVideoView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA895A23A8720800D0088C /* QuysInfomationFlowVideoView.h */; };
+		FBBA895D23A8720800D0088C /* QuysInfomationFlowVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA895B23A8720800D0088C /* QuysInfomationFlowVideoView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,8 +140,6 @@
 		FB848D10239DE9EC0092A260 /* QuysSAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysSAMKeychainQuery.h; sourceTree = "<group>"; };
 		FB848D11239DE9EC0092A260 /* QuysSAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysSAMKeychain.m; sourceTree = "<group>"; };
 		FB848D12239DE9EC0092A260 /* QuysSAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysSAMKeychainQuery.m; sourceTree = "<group>"; };
-		FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceBaseSevice.h; sourceTree = "<group>"; };
-		FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdviceBaseSevice.m; sourceTree = "<group>"; };
 		FB848D2D239DFC410092A260 /* QuysAdSplash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplash.h; sourceTree = "<group>"; };
 		FB848D2E239DFC410092A260 /* QuysAdSplash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysAdSplash.m; sourceTree = "<group>"; };
 		FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdSplashService.h; sourceTree = "<group>"; };
@@ -210,12 +216,22 @@
 		FBBA892F23A22CCB00D0088C /* NetworkCodeEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkCodeEnum.h; sourceTree = "<group>"; };
 		FBBA893023A2413A00D0088C /* QuysViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysViewController.h; sourceTree = "<group>"; };
 		FBBA893123A2413A00D0088C /* QuysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewController.m; sourceTree = "<group>"; };
-		FBBA893423A38CDC00D0088C /* QuysReportApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysReportApi.h; sourceTree = "<group>"; };
-		FBBA893523A38CDC00D0088C /* QuysReportApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysReportApi.m; sourceTree = "<group>"; };
 		FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysUploadStatisticsModel.h; sourceTree = "<group>"; };
 		FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysUploadStatisticsModel.m; sourceTree = "<group>"; };
 		FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysUploadApiTaskManager.h; sourceTree = "<group>"; };
 		FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysUploadApiTaskManager.m; sourceTree = "<group>"; };
+		FBBA894523A77B8800D0088C /* QuysInformationFlowVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysInformationFlowVM.h; sourceTree = "<group>"; };
+		FBBA894623A77B8800D0088C /* QuysInformationFlowVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysInformationFlowVM.m; sourceTree = "<group>"; };
+		FBBA894923A77E8700D0088C /* QuysInformationFlowService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysInformationFlowService.h; sourceTree = "<group>"; };
+		FBBA894A23A77E8700D0088C /* QuysInformationFlowService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysInformationFlowService.m; sourceTree = "<group>"; };
+		FBBA894E23A7819E00D0088C /* QuysInformationFlowSmallPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysInformationFlowSmallPictureView.h; sourceTree = "<group>"; };
+		FBBA894F23A7819E00D0088C /* QuysInformationFlowSmallPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysInformationFlowSmallPictureView.m; sourceTree = "<group>"; };
+		FBBA895223A7820900D0088C /* QuysInformationFlowMorePictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysInformationFlowMorePictureView.m; sourceTree = "<group>"; };
+		FBBA895323A7820900D0088C /* QuysInformationFlowMorePictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysInformationFlowMorePictureView.h; sourceTree = "<group>"; };
+		FBBA895623A7889A00D0088C /* QuysInformationFlowDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysInformationFlowDefaultView.h; sourceTree = "<group>"; };
+		FBBA895723A7889A00D0088C /* QuysInformationFlowDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysInformationFlowDefaultView.m; sourceTree = "<group>"; };
+		FBBA895A23A8720800D0088C /* QuysInfomationFlowVideoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysInfomationFlowVideoView.h; sourceTree = "<group>"; };
+		FBBA895B23A8720800D0088C /* QuysInfomationFlowVideoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysInfomationFlowVideoView.m; sourceTree = "<group>"; };
 		FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -370,8 +386,6 @@
 			isa = PBXGroup;
 			children = (
 				FB848D22239DEC580092A260 /* QuysAdSplash */,
-				FB848D1A239DEC250092A260 /* QuysAdviceBaseSevice.h */,
-				FB848D1B239DEC250092A260 /* QuysAdviceBaseSevice.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -388,6 +402,8 @@
 			children = (
 				FB848D63239E2DD20092A260 /* QuysAdSplashVM.h */,
 				FB848D64239E2DD20092A260 /* QuysAdSplashVM.m */,
+				FBBA894523A77B8800D0088C /* QuysInformationFlowVM.h */,
+				FBBA894623A77B8800D0088C /* QuysInformationFlowVM.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -397,6 +413,8 @@
 			children = (
 				FB848D31239DFC6D0092A260 /* QuysAdSplashService.h */,
 				FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */,
+				FBBA894923A77E8700D0088C /* QuysInformationFlowService.h */,
+				FBBA894A23A77E8700D0088C /* QuysInformationFlowService.m */,
 			);
 			path = QuysAdSplash;
 			sourceTree = "<group>";
@@ -404,6 +422,7 @@
 		FB848D27239DEDD50092A260 /* AdviceViews */ = {
 			isa = PBXGroup;
 			children = (
+				FBBA894023A77AD300D0088C /* InformationFlow */,
 				FB848D2C239DFC2C0092A260 /* QuysAdSplash */,
 			);
 			path = AdviceViews;
@@ -435,8 +454,6 @@
 				FB848D4D239E25E20092A260 /* QuysBaseNetworkApi.m */,
 				FB848D55239E26CD0092A260 /* QuysAdSplashApi.h */,
 				FB848D56239E26CD0092A260 /* QuysAdSplashApi.m */,
-				FBBA893423A38CDC00D0088C /* QuysReportApi.h */,
-				FBBA893523A38CDC00D0088C /* QuysReportApi.m */,
 				FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */,
 				FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */,
 			);
@@ -609,6 +626,21 @@
 			path = ViewStatistical;
 			sourceTree = "<group>";
 		};
+		FBBA894023A77AD300D0088C /* InformationFlow */ = {
+			isa = PBXGroup;
+			children = (
+				FBBA895623A7889A00D0088C /* QuysInformationFlowDefaultView.h */,
+				FBBA895723A7889A00D0088C /* QuysInformationFlowDefaultView.m */,
+				FBBA895323A7820900D0088C /* QuysInformationFlowMorePictureView.h */,
+				FBBA895223A7820900D0088C /* QuysInformationFlowMorePictureView.m */,
+				FBBA894E23A7819E00D0088C /* QuysInformationFlowSmallPictureView.h */,
+				FBBA894F23A7819E00D0088C /* QuysInformationFlowSmallPictureView.m */,
+				FBBA895A23A8720800D0088C /* QuysInfomationFlowVideoView.h */,
+				FBBA895B23A8720800D0088C /* QuysInfomationFlowVideoView.m */,
+			);
+			path = InformationFlow;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -619,26 +651,30 @@
 				FB848D2F239DFC410092A260 /* QuysAdSplash.h in Headers */,
 				FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
-				FBBA893623A38CDC00D0088C /* QuysReportApi.h in Headers */,
-				FB848D1C239DEC250092A260 /* QuysAdviceBaseSevice.h in Headers */,
+				FBBA895C23A8720800D0088C /* QuysInfomationFlowVideoView.h in Headers */,
+				FBBA894723A77B8800D0088C /* QuysInformationFlowVM.h in Headers */,
 				FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */,
 				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
 				FB848D65239E2DD20092A260 /* QuysAdSplashVM.h in Headers */,
+				FBBA894B23A77E8700D0088C /* QuysInformationFlowService.h in Headers */,
 				FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */,
 				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
 				FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */,
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
 				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
 				FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */,
+				FBBA895823A7889A00D0088C /* QuysInformationFlowDefaultView.h in Headers */,
 				FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */,
 				FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */,
 				FB848D57239E26CD0092A260 /* QuysAdSplashApi.h in Headers */,
 				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
 				FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */,
 				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
+				FBBA895523A7820900D0088C /* QuysInformationFlowMorePictureView.h in Headers */,
 				FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */,
 				FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */,
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
+				FBBA895023A7819E00D0088C /* QuysInformationFlowSmallPictureView.h in Headers */,
 				FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -942,18 +978,22 @@
 				FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */,
 				FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */,
 				FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */,
-				FB848D1D239DEC250092A260 /* QuysAdviceBaseSevice.m in Sources */,
 				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
+				FBBA894C23A77E8700D0088C /* QuysInformationFlowService.m in Sources */,
+				FBBA895423A7820900D0088C /* QuysInformationFlowMorePictureView.m in Sources */,
 				FB848D16239DE9EC0092A260 /* QuysSAMKeychainQuery.m in Sources */,
 				FBBA893B23A71E8F00D0088C /* QuysUploadStatisticsModel.m in Sources */,
 				FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */,
+				FBBA895923A7889A00D0088C /* QuysInformationFlowDefaultView.m in Sources */,
+				FBBA895D23A8720800D0088C /* QuysInfomationFlowVideoView.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
-				FBBA893723A38CDC00D0088C /* QuysReportApi.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */,
+				FBBA894823A77B8800D0088C /* QuysInformationFlowVM.m in Sources */,
 				FBBA892B23A216E000D0088C /* UIView+Statistical.m in Sources */,
 				FBBA893F23A7288000D0088C /* QuysUploadApiTaskManager.m in Sources */,
 				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
+				FBBA895123A7819E00D0088C /* QuysInformationFlowSmallPictureView.m in Sources */,
 				FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */,
 				FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */,
 				FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */,

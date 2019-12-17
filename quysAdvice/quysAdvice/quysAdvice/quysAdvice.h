@@ -19,7 +19,7 @@ FOUNDATION_EXPORT const unsigned char quysAdviceVersionString[];
 #import <quysAdvice/QuysAdSplash.h>
 #import <quysAdvice/QuysAdSplashDelegate.h>
 #import <quysAdvice/QuysAdSplashService.h>
-#import <quysAdvice/QuysAdviceBaseSevice.h>
+#import <quysAdvice/QuysInformationFlowService.h>
 #import <quysAdvice/QuysAdviceBaseDelegate.h>
 #import <quysAdvice/QuysAdSplashVM.h>
 #import <quysAdvice/UIDevice+Hardware.h>

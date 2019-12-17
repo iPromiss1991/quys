@@ -6,13 +6,14 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdSplashService.h"
+#import "QuysInformationFlowService.h"
 #import "QuysAdSplashApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
-#import "QuysAdSplash.h"
+#import "QuysInformationFlowDefaultView.h"
+#import "QuysInformationFlowVM.h"
 
-@interface QuysAdSplashService()<YTKRequestDelegate>
+@interface QuysInformationFlowService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
@@ -22,13 +23,13 @@
 @property (nonatomic,strong) UIView *parentView;
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
-@property (nonatomic,strong) UIView *adviceView;
+@property (nonatomic,strong) UIView *adviceView;//!<
 
 
 @end
 
 
-@implementation QuysAdSplashService
+@implementation QuysInformationFlowService
 - (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
@@ -76,24 +77,24 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdSplashVM *vm =  [[QuysAdSplashVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
+    QuysInformationFlowVM *vm =  [[QuysInformationFlowVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }
 
 
-
 /// 展示视图
-- (UIView*)showAdView;{
+- (UIView*)showAdView
+{
     if (self.loadAdViewEnable)
     {
         [self.parentView addSubview:self.adviceView];
         return self.adviceView;
-        }else
-        {
-            //视图正在创建中。。。
-            return nil;
-        }
+    }else
+    {
+        //视图正在创建中。。。
+        return nil;
+    }
 }
 
 

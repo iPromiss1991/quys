@@ -1,16 +1,15 @@
 //
-//  QuysAdSplashService.h
+//  QuysInformationFlowDefaultService.h
 //  quysAdvice
 //
-//  Created by quys on 2019/12/9.
-//  Copyright © 2019 Quys. All rights reserved. 
+//  Created by quys on 2019/12/16.
+//  Copyright © 2019 Quys. All rights reserved.
 //
 
 #import "QuysAdSplashDelegate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
-@interface QuysAdSplashService : NSObject
+@interface QuysInformationFlowService : NSObject
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 @property (nonatomic,assign,readonly) BOOL loadAdViewEnable;
 
@@ -31,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 开始展示视图
 - (UIView*)showAdView;
+
 @end
 
 NS_ASSUME_NONNULL_END
