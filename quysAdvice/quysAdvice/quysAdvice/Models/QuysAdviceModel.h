@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
     QuysAdviceCreativeTypeImageAndText = 2,
     QuysAdviceCreativeTypeTextOnly = 3,
     QuysAdviceCreativeTypeHtml = 4,
-    QuysAdviceCreativeTypeMultiPicture = 5,
+    QuysAdviceCreativeTypeMultiPicture = 5,//!< TODO：后台确认该字段？
     QuysAdviceCreativeTypeBigPicture = 6,
     QuysAdviceCreativeTypeSmallPicture = 7,
     QuysAdviceCreativeTypeVideo = 8
@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 
 @property (nonatomic , copy) NSString              * imgUrl;
+@property (nonatomic , strong) NSArray <NSString *>              * imgUrlList;
 
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
 

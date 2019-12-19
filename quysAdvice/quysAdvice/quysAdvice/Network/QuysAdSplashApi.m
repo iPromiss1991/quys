@@ -15,7 +15,7 @@
 - (NSString *)baseUrl
 {
 //    return @"http://adx.quyuansu.com/api/spread/detail";
-    return @"http://192.168.1.7/advert/test.php?tid=245";
+    return @"http://192.168.1.7/advert/test.php?tid=246";
 }
 
 //- (NSString *)requestUrl
@@ -36,7 +36,7 @@
     [dicM setObject:[device quys_appVersionByFloat] forKey:@"versionName"];
     [dicM setObject:[device quys_appVersionWithoutFloat] forKey:@"versionCode"];
 
-    [dicM setObject:[device quys_getIPAdderss] forKey:@"ip"];
+    [dicM setObject:[[QuysAdviceManager shareManager] strIPAddress] forKey:@"ip"];
     [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
     [dicM setObject:[device quys_customImei] forKey:@"imei"];
     
@@ -53,6 +53,7 @@
     [dicM setObject:[device quys_getNetconnType] forKey:@"net"];
 
     [dicM setObject:[device quys_carrierName] forKey:@"operatorType"];
+    [dicM setObject:[[QuysAdviceManager shareManager] strUserAgent] forKey:@"ua"];
     [dicM setObject:[device quys_deviceType] forKey:@"osType"];
     [dicM setObject:[device quys_idFa] forKey:@"idFa"];
 

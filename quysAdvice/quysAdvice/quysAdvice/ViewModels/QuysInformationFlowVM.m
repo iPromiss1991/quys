@@ -12,7 +12,6 @@
 #import "QuysInformationFlowDefaultView.h"
 #import "QuysInformationFlowMorePictureView.h"
 #import "QuysInformationFlowSmallPictureView.h"
-#import "QuysInfomationFlowVideoView.h"
 
 @interface QuysInformationFlowVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
@@ -171,15 +170,6 @@
             }
         
             break;
-        case QuysAdviceCreativeTypeVideo:
-        {
-            QuysInfomationFlowVideoView *adView = [QuysInfomationFlowVideoView new];
-            
-            self.adView = adView;
-            return adView;
-            
-        }
-            break;
         default:
             return nil;
             break;
@@ -222,6 +212,28 @@
     }
 }
 
+
+#pragma mark - Init
+
+- (NSString *)strImgUrl
+{
+    if (_strImgUrl ==nil) {
+        _strImgUrl = self.adModel.imgUrl;
+    }return _strImgUrl;
+}
+
+- (NSArray *)arrImgUrl
+{
+    if (_arrImgUrl == nil) {
+        if (self.adModel.imgUrlList.count >= 3)
+        {
+             _arrImgUrl = [self.adModel.imgUrlList subarrayWithRange:NSMakeRange(0, 3) ];
+        }else if (self.adModel.imgUrlList.count >= 1 )
+        {
+            _arrImgUrl = @[self.adModel.imgUrlList[0],self.adModel.imgUrlList[0],self.adModel.imgUrlList[0]];
+        }
+    }return _arrImgUrl;
+}
 
 
 

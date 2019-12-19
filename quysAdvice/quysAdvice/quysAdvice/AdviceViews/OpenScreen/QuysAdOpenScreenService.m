@@ -6,13 +6,13 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdSplashService.h"
+#import "QuysAdOpenScreenService.h"
 #import "QuysAdSplashApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
-#import "QuysAdSplash.h"
+#import "QuysAdOpenScreen.h"
 
-@interface QuysAdSplashService()<YTKRequestDelegate>
+@interface QuysAdOpenScreenService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
@@ -28,7 +28,7 @@
 @end
 
 
-@implementation QuysAdSplashService
+@implementation QuysAdOpenScreenService
 - (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
@@ -60,7 +60,7 @@
 /// 发起请求
 - (void)loadAdViewNow
 {
-    if ([[QuysAdviceManager shareManager] strUserAgent])
+    if (!kISNullString([[QuysAdviceManager shareManager] strUserAgent]) )
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -79,7 +79,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdSplashVM *vm =  [[QuysAdSplashVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
+    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }
@@ -92,11 +92,11 @@
     {
         [self.parentView addSubview:self.adviceView];
         return self.adviceView;
-        }else
-        {
-            //视图正在创建中。。。
-            return nil;
-        }
+    }else
+    {
+        //视图正在创建中。。。
+        return nil;
+    }
 }
 
 

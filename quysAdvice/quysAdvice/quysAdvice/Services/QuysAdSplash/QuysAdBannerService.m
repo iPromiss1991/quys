@@ -6,13 +6,13 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdSplashService.h"
+#import "QuysAdBannerService.h"
 #import "QuysAdSplashApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
-#import "QuysAdSplash.h"
+#import "QuysAdBanner.h"
 
-@interface QuysAdSplashService()<YTKRequestDelegate>
+@interface QuysAdBannerService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
@@ -28,7 +28,7 @@
 @end
 
 
-@implementation QuysAdSplashService
+@implementation QuysAdBannerService
 - (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
@@ -79,7 +79,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdSplashVM *vm =  [[QuysAdSplashVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
+    QuysAdBannerVM *vm =  [[QuysAdBannerVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }

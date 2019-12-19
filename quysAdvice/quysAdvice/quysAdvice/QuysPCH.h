@@ -16,4 +16,6 @@
 #import "NetworkCodeEnum.h"
 #import "QuysAdviceManager.h"
 #import "QuysUploadApiTaskManager.h"
+#import "QuysFileManager.h"
+
 #endif /* QuysPCH_h */

@@ -19,6 +19,7 @@
 #import "Reachability.h"
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
+
 TT_FIX_CATEGORY_BUG(qys_Hardware)
 @implementation UIDevice (Hardware)
 #pragma mark sysctlbyname utils
@@ -366,12 +367,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 }
 
 
-/// 网络ip地址
-- (NSString*)quys_getIPAdderss
-{
-    return [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
-}
-
 ///自定义mac
 - (NSString*)quys_customMacAddress
 {
@@ -534,8 +529,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 }
 
 
-
-
 /// 获取设备类型
 
 - (NSString *)quys_deviceType
@@ -637,38 +630,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 #pragma mark - PrivateMethod
 
 
-/// 获取网络信息
-/*返回字段如下：{
-    area = "";
-    "area_id" = "";
-    city = "\U53a6\U95e8";
-    "city_id" = 350200;
-    country = "\U4e2d\U56fd";
-    "country_id" = CN;
-    county = XX;
-    "county_id" = xx;
-    ip = "183.250.89.75";
-    isp = "\U79fb\U52a8";
-    "isp_id" = 100025;
-    region = "\U798f\U5efa";
-    "region_id" = 350000;
-}*/
--(NSDictionary *)quys_deviceWANIPAdress
-{
-   __block NSDictionary *ipDic ;
-    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
-           NSData *data = [NSData dataWithContentsOfURL:ipURL];
-           if (data)
-           {
-                ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil][@"data"];
-           }else
-           {
-                ipDic = @{@"ip":@"null"};
-           }
-    });
-    return ipDic;
-}
 
 - (NSString*)quys_createUUID
 {

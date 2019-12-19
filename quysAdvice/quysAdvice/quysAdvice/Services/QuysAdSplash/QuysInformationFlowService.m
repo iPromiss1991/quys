@@ -61,14 +61,17 @@
 /// 发起请求
 - (void)loadAdViewNow
 {
-    kWeakSelf(self)
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        if ([weakself.delegate respondsToSelector:@selector(quys_requestStart)])
-        {
-            [weakself.delegate quys_requestStart];
-        }
-        [weakself.api start];
-    });
+    if ([[QuysAdviceManager shareManager] strUserAgent])
+    {
+        kWeakSelf(self)
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            if ([weakself.delegate respondsToSelector:@selector(quys_requestStart)])
+            {
+                [weakself.delegate quys_requestStart];
+            }
+            [weakself.api start];
+        });
+    }
     
 }
 

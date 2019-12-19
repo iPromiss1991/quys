@@ -30,7 +30,7 @@
 #define kISiPhoneX (kISiPhone && kScreenMaxLength == 812.0)
 #define kISiPhoneXr (kISiPhone && kScreenMaxLength == 896.0)
 #define kISiPhoneXX (kISiPhone && kScreenMaxLength > 811.0)
-#define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
+#define kIOS8Later ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
 
 
 #pragma mark -适配相关

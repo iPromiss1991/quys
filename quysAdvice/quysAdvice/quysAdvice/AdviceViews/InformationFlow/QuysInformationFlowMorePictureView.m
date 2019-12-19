@@ -17,7 +17,6 @@
 @property (nonatomic,strong) UIImageView *imgViewTwo;
 @property (nonatomic,strong) UIImageView *imgViewThree;
 
-@property (nonatomic,strong) UIView *viewStrokeLine;
 @property (nonatomic,strong) UILabel *lblTag;
 @property (nonatomic,strong) UILabel *lblType;
 @property (nonatomic,strong) UIButton *btnClose;
@@ -206,9 +205,9 @@
 - (void)setVm:(QuysInformationFlowVM *)vm
 {
     _vm = vm;
-    [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-    [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-    [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+    [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+    [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
+    [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[2]]];
 }
 
 @end

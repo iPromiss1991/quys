@@ -40,8 +40,7 @@
 - (NSString*)quys_appVersionWithoutFloat;
 
 
-/// 网络ip地址
-- (NSString*)quys_getIPAdderss;
+
 
 ///自定义mac
 - (NSString*)quys_customMacAddress;

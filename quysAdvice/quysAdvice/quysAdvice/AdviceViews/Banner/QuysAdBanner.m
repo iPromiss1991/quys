@@ -6,8 +6,8 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdSplash.h"
-@interface QuysAdSplash()
+#import "QuysAdBanner.h"
+@interface QuysAdBanner()
 @property (nonatomic,strong) UIView *viewContain;
 @property (nonatomic,strong) UIImageView *imgView;
 
@@ -18,9 +18,9 @@
 
 
 
-@implementation QuysAdSplash
+@implementation QuysAdBanner
 
-- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdSplashVM *)viewModel
+- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdBannerVM *)viewModel
 {
     if (self = [super initWithFrame:frame])
     {
@@ -43,6 +43,7 @@
     imgView.userInteractionEnabled = YES;
     [self.viewContain addSubview:imgView];
     self.imgView = imgView;
+
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -126,7 +127,7 @@
 }
 
  
-- (void)setVm:(QuysAdSplashVM *)vm
+- (void)setVm:(QuysAdBannerVM *)vm
 {
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
