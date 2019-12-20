@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame;
 
 
-- (UIView *)createAdviceView;
+- (UIWindow *)createAdviceView;
 
 /// 更新宏替换键&值
 /// @param replaceKey key

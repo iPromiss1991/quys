@@ -205,9 +205,17 @@
 - (void)setVm:(QuysInformationFlowVM *)vm
 {
     _vm = vm;
-    [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
-    [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
-    [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[2]]];
+    if (self.vm.arrImgUrl.count >= 1)
+    {
+         [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+
+    }else if (self.vm.arrImgUrl.count >= 2)
+    {
+        [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
+    }else
+    {
+        [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[2]]];
+    }
 }
 
 @end

@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysAdviceManager : NSObject
 @property (nonatomic,strong) NSMutableDictionary *dicMReplace;//!<需要“宏替换”的字符数组
+@property (nonatomic,assign) BOOL loadAdviceEnable;//!< 是否可以加载广告
+
 @property (nonatomic,strong) NSString *strUserAgent;//!<浏览器信息
 @property (nonatomic,strong) NSString *strIPAddress;//!<ip信息
 

@@ -43,11 +43,8 @@
 		FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */ = {isa = PBXBuildFile; fileRef = FB848D74239E56540092A260 /* NSDate+QuysTimestamp.h */; };
 		FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */; };
 		FBBA889223A090CA00D0088C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA889123A090CA00D0088C /* AppDelegate.m */; };
-		FBBA889523A090CA00D0088C /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA889423A090CA00D0088C /* SceneDelegate.m */; };
 		FBBA889823A090CA00D0088C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA889723A090CA00D0088C /* ViewController.m */; };
-		FBBA889B23A090CA00D0088C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBBA889923A090CA00D0088C /* Main.storyboard */; };
 		FBBA889D23A090CB00D0088C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBBA889C23A090CB00D0088C /* Assets.xcassets */; };
-		FBBA88A023A090CB00D0088C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBBA889E23A090CB00D0088C /* LaunchScreen.storyboard */; };
 		FBBA88A323A090CB00D0088C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA88A223A090CB00D0088C /* main.m */; };
 		FBBA88AD23A090CC00D0088C /* quysAdviceTestDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA88AC23A090CC00D0088C /* quysAdviceTestDemoTests.m */; };
 		FBBA88B823A090CC00D0088C /* quysAdviceTestDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA88B723A090CC00D0088C /* quysAdviceTestDemoUITests.m */; };
@@ -94,6 +91,7 @@
 		FBBA897923AB1F2700D0088C /* QuysAdOpenScreenVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA897323AB1F2700D0088C /* QuysAdOpenScreenVM.h */; };
 		FBBA897D23AB781300D0088C /* QuysFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA897B23AB781300D0088C /* QuysFileManager.h */; };
 		FBBA897E23AB781300D0088C /* QuysFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA897C23AB781300D0088C /* QuysFileManager.m */; };
+		FBBA898123ACB88700D0088C /* QuysWindowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA898023ACB88600D0088C /* QuysWindowViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,13 +178,8 @@
 		FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QuysTimestamp.m"; sourceTree = "<group>"; };
 		FBBA885623A086E100D0088C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FBBA885723A086E100D0088C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FBBA885923A086E100D0088C /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		FBBA885A23A086E100D0088C /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		FBBA885C23A086E100D0088C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		FBBA885D23A086E100D0088C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		FBBA886023A086E100D0088C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FBBA886223A086E300D0088C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FBBA886523A086E300D0088C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBBA886723A086E300D0088C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBBA886823A086E300D0088C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FBBA887223A086E300D0088C /* quysAdviceTestDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = quysAdviceTestDemoTests.m; sourceTree = "<group>"; };
@@ -256,6 +249,9 @@
 		FBBA897323AB1F2700D0088C /* QuysAdOpenScreenVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysAdOpenScreenVM.h; sourceTree = "<group>"; };
 		FBBA897B23AB781300D0088C /* QuysFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysFileManager.h; sourceTree = "<group>"; };
 		FBBA897C23AB781300D0088C /* QuysFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysFileManager.m; sourceTree = "<group>"; };
+		FBBA897F23ACB88600D0088C /* QuysWindowViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysWindowViewController.h; sourceTree = "<group>"; };
+		FBBA898023ACB88600D0088C /* QuysWindowViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysWindowViewController.m; sourceTree = "<group>"; };
+		FBBA89D023ACE28700D0088C /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		FD8095E8F603F3539FB16726 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -542,17 +538,15 @@
 			children = (
 				FBBA885623A086E100D0088C /* AppDelegate.h */,
 				FBBA885723A086E100D0088C /* AppDelegate.m */,
-				FBBA885923A086E100D0088C /* SceneDelegate.h */,
-				FBBA885A23A086E100D0088C /* SceneDelegate.m */,
-				FBBA885C23A086E100D0088C /* ViewController.h */,
+				FBBA89D023ACE28700D0088C /* ViewController.h */,
 				FBBA885D23A086E100D0088C /* ViewController.m */,
-				FBBA885F23A086E100D0088C /* Main.storyboard */,
 				FBBA886223A086E300D0088C /* Assets.xcassets */,
-				FBBA886423A086E300D0088C /* LaunchScreen.storyboard */,
 				FBBA886723A086E300D0088C /* Info.plist */,
 				FBBA886823A086E300D0088C /* main.m */,
 				FBBA893023A2413A00D0088C /* QuysViewController.h */,
 				FBBA893123A2413A00D0088C /* QuysViewController.m */,
+				FBBA897F23ACB88600D0088C /* QuysWindowViewController.h */,
+				FBBA898023ACB88600D0088C /* QuysWindowViewController.m */,
 			);
 			path = quysAdviceTestDemo;
 			sourceTree = "<group>";
@@ -936,9 +930,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBA890923A0E7E600D0088C /* quysBundle.bundle in Resources */,
-				FBBA88A023A090CB00D0088C /* LaunchScreen.storyboard in Resources */,
 				FBBA889D23A090CB00D0088C /* Assets.xcassets in Resources */,
-				FBBA889B23A090CA00D0088C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1086,9 +1078,9 @@
 			files = (
 				FBBA889823A090CA00D0088C /* ViewController.m in Sources */,
 				FBBA889223A090CA00D0088C /* AppDelegate.m in Sources */,
+				FBBA898123ACB88700D0088C /* QuysWindowViewController.m in Sources */,
 				FBBA893223A2413A00D0088C /* QuysViewController.m in Sources */,
 				FBBA88A323A090CB00D0088C /* main.m in Sources */,
-				FBBA889523A090CA00D0088C /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,22 +1138,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FBBA885F23A086E100D0088C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FBBA886023A086E100D0088C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		FBBA886423A086E300D0088C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FBBA886523A086E300D0088C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		FBBA889923A090CA00D0088C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1468,6 +1444,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LW46M37JG;
+				IBSC_FLATTEN_NIBS = YES;
 				INFOPLIST_FILE = quysAdviceTestDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1521,6 +1498,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LW46M37JG;
+				IBSC_FLATTEN_NIBS = YES;
 				INFOPLIST_FILE = quysAdviceTestDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (

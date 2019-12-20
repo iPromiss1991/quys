@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysAdOpenScreenService : NSObject
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 @property (nonatomic,assign,readonly) BOOL loadAdViewEnable;
+@property (nonatomic,strong) UIWindow *adviceView;
 
 
 
@@ -21,16 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param bussinessKey 业务Key
 /// @param frame 弹窗frame
 /// @param delegate 回调代理
-/// @param parentView 弹窗父视图（展示弹窗的容器视图）
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)frame eventDelegate:(id <QuysAdSplashDelegate>)delegate parentView:(UIView*)parentView;
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)frame eventDelegate:(id <QuysAdSplashDelegate>)delegate ;
 
 
-/// 开始加载视图
-- (void)loadAdViewNow;
 
-
-/// 开始展示视图
-- (UIView*)showAdView;
 @end
 
 NS_ASSUME_NONNULL_END

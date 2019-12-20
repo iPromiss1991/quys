@@ -58,13 +58,12 @@
 
 #pragma mark - QuysAdSplashDelegate
 
-- (UIView *)createAdviceView
+- (UIWindow *)createAdviceView
 {
     switch (self.adModel.creativeType) {
         case QuysAdviceCreativeTypeDefault:
         {
             kWeakSelf(self)
-            //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
             QuysAdOpenScreen *adView = [[QuysAdOpenScreen alloc]initWithFrame:self.cgFrame viewModel:self];
             [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
             

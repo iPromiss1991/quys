@@ -7,6 +7,7 @@
 //
 
 #import "QuysAdOpenScreen.h"
+#import "QuysWindowViewController.h"
 @interface QuysAdOpenScreen()
 @property (nonatomic,strong) UIView *viewContain;
 @property (nonatomic,strong) UIImageView *imgView;
@@ -28,7 +29,9 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self createUI];
+        self.windowLevel = UIWindowLevelAlert+1;
+        self.rootViewController = [QuysWindowViewController new];
+//        [self createUI];
         self.vm = viewModel;
     }
     return self;
@@ -36,8 +39,8 @@
 
 - (void)createUI
 {
-    UIView *viewContain = [[UIView alloc]init];
-    viewContain.backgroundColor = [UIColor blueColor];
+    UIView *viewContain = [[UIView alloc]initWithFrame:self.frame];
+    viewContain.backgroundColor = [UIColor orangeColor];
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];

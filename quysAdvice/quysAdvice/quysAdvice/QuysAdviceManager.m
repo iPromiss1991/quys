@@ -200,8 +200,10 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 
 - (NSString *)strUserAgent
 {
-    if (_strUserAgent == nil) {
-        _strUserAgent = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];//获取本地存储的
+    if (_strUserAgent == nil)
+    {
+        NSString *strTemp = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
+        _strUserAgent = strTemp?strTemp:@"" ;//获取本地存储的
     }
     return _strUserAgent;
 }
@@ -209,9 +211,21 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 -(NSString *)strIPAddress
 
 {
-    if (_strIPAddress == nil) {
-        _strIPAddress = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];//获取本地存储的
+    if (_strIPAddress == nil)
+    {
+        NSString *strTemp = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];
+        _strIPAddress = strTemp?strTemp:@"" ;//获取本地存储的
     }
     return _strIPAddress;
+}
+
+- (BOOL)loadAdviceEnable
+{
+    if (self.strIPAddress.length && self.strUserAgent.length) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
 }
 @end

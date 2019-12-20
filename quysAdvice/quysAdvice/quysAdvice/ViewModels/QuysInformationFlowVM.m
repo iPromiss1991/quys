@@ -224,13 +224,11 @@
 
 - (NSArray *)arrImgUrl
 {
-    if (_arrImgUrl == nil) {
+    if (_arrImgUrl == nil)
+    {
         if (self.adModel.imgUrlList.count >= 3)
         {
              _arrImgUrl = [self.adModel.imgUrlList subarrayWithRange:NSMakeRange(0, 3) ];
-        }else if (self.adModel.imgUrlList.count >= 1 )
-        {
-            _arrImgUrl = @[self.adModel.imgUrlList[0],self.adModel.imgUrlList[0],self.adModel.imgUrlList[0]];
         }
     }return _arrImgUrl;
 }

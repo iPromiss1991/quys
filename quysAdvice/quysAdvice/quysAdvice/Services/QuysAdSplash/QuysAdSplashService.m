@@ -60,7 +60,7 @@
 /// 发起请求
 - (void)loadAdViewNow
 {
-    if ([[QuysAdviceManager shareManager] strUserAgent])
+    if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{

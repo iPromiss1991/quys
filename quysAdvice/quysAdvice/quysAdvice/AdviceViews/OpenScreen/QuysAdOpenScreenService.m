@@ -19,24 +19,20 @@
 @property (nonatomic,strong) NSString *bussinessKey;
 @property (nonatomic,assign) CGRect cgFrame;
 
-@property (nonatomic,strong) UIView *parentView;
-
 @property (nonatomic,strong) QuysAdSplashApi *api;
-@property (nonatomic,strong) UIView *adviceView;
 
 
 @end
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate
 {
     if (self = [super init])
     {
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
-        self.parentView = parentView;
         self.cgFrame = cgFrame;
         [self config];
     }return self;
@@ -53,14 +49,14 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    
+    [self loadAdViewNow];
 }
 
 
-/// 发起请求
+/// 开始加载视图
 - (void)loadAdViewNow
 {
-    if (!kISNullString([[QuysAdviceManager shareManager] strUserAgent]) )
+    if ([[QuysAdviceManager shareManager] loadAdviceEnable]) 
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -87,15 +83,14 @@
 
 
 /// 展示视图
-- (UIView*)showAdView;{
+- (void)showAdView
+{
     if (self.loadAdViewEnable)
     {
-        [self.parentView addSubview:self.adviceView];
-        return self.adviceView;
+        self.adviceView.hidden = NO;
     }else
     {
         //视图正在创建中。。。
-        return nil;
     }
 }
 
@@ -113,6 +108,7 @@
         {
             [self.delegate quys_requestSuccess];
         }
+        [self showAdView];
     }else
     {
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
