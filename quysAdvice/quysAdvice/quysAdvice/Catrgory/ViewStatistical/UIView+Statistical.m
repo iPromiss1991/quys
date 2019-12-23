@@ -141,58 +141,110 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
 }
 
 // 判断是否显示在屏幕上
-- (BOOL)hlj_isDisplayedInScreen {
-    if (self == nil) return NO;
+- (BOOL)hlj_isDisplayedInScreen
+{
     
-    if (self.bounds.size.width <= 0 || self.bounds.size.height <= 0) return NO;
-    
-    if (self.hidden) return NO;
-    
-    if (self.alpha <= 0.1) return NO;
-    
-    if (!self.window) return NO;
-    
-    if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {
+    if ([self isKindOfClass:[UIWindow class]])
+    {
+        if (self == nil) return NO;
+        
+        if (self.bounds.size.width <= 0 || self.bounds.size.height <= 0) return NO;
+        
+        if (self.hidden) return NO;
+        
+        if (self.alpha <= 0.1) return NO;
+        
+        //iOS11 以下 特殊处理 UITableViewWrapperView 需要使用的supview
+        //UITableviewWrapperview 的大小为tableView 在屏幕中出现第一个完整的屏幕大小的视图
+        //并且会因为contentOffset的改变而改变，所以UITableviewWrapperview会滑出屏幕，这样因为self.superview.hlj_viewVisible 这个条件导致 他下面的子试图都被判定为不可见，因此将cell的父试图为UITableViewWrapperView的时候，使用tableView 计算
+        UIView *view = self;
+        if ([NSStringFromClass([self class]) isEqualToString:@"UITableViewWrapperView"]) {
+            view = self.superview;
+        }
+        
+        // 与 window 的关系判断
+        BOOL showInWidow = NO;
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        CGRect rect = [view convertRect:view.bounds toView:window];
+        CGRect screenRect = [UIScreen mainScreen].bounds;
+        
+        // 包含：算有效显示
+        BOOL isContained = CGRectContainsRect(screenRect, rect);
+        BOOL isViewRectValid = !CGRectIsEmpty(rect) || !CGRectIsNull(rect);
+        if (isContained && isViewRectValid) {
+            showInWidow = YES;
+        }
+        
+        // 与 shieldView 关系判断
+        BOOL coverByShieldV = NO;
+        if (self.hlj_trackModel.shieldView) {
+            CGRect shieldViewRect = [self.hlj_trackModel.shieldView convertRect:self.hlj_trackModel.shieldView.bounds toView:window];
+            NSLog(@"%@ ===== %@ ==== %ld", NSStringFromCGRect(shieldViewRect), NSStringFromCGRect(self.hlj_trackModel.shieldView.bounds), self.hlj_trackModel.position);
+            BOOL isShieldVRectValid = !CGRectIsEmpty(shieldViewRect) || !CGRectIsNull(shieldViewRect);
+            coverByShieldV = (CGRectContainsRect(shieldViewRect, rect) && isShieldVRectValid);
+            
+        }
+        
+        // 根据 window 和 shieldview关系返回结果
+        if (!coverByShieldV && showInWidow) {
+            return YES;
+        }
         return NO;
-    }
-    
-    //iOS11 以下 特殊处理 UITableViewWrapperView 需要使用的supview
-    //UITableviewWrapperview 的大小为tableView 在屏幕中出现第一个完整的屏幕大小的视图
-    //并且会因为contentOffset的改变而改变，所以UITableviewWrapperview会滑出屏幕，这样因为self.superview.hlj_viewVisible 这个条件导致 他下面的子试图都被判定为不可见，因此将cell的父试图为UITableViewWrapperView的时候，使用tableView 计算
-    UIView *view = self;
-    if ([NSStringFromClass([self class]) isEqualToString:@"UITableViewWrapperView"]) {
-        view = self.superview;
-    }
-    
-    // 与 window 的关系判断
-    BOOL showInWidow = NO;
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    CGRect rect = [view convertRect:view.bounds toView:window];
-    CGRect screenRect = [UIScreen mainScreen].bounds;
-    
-    // 包含：算有效显示
-    BOOL isContained = CGRectContainsRect(screenRect, rect);
-    BOOL isViewRectValid = !CGRectIsEmpty(rect) || !CGRectIsNull(rect);
-    if (isContained && isViewRectValid) {
-        showInWidow = YES;
-    }
-    
-    // 与 shieldView 关系判断
-    BOOL coverByShieldV = NO;
-    if (self.hlj_trackModel.shieldView) {
-        CGRect shieldViewRect = [self.hlj_trackModel.shieldView convertRect:self.hlj_trackModel.shieldView.bounds toView:window];
-        NSLog(@"%@ ===== %@ ==== %ld", NSStringFromCGRect(shieldViewRect), NSStringFromCGRect(self.hlj_trackModel.shieldView.bounds), self.hlj_trackModel.position);
-        BOOL isShieldVRectValid = !CGRectIsEmpty(shieldViewRect) || !CGRectIsNull(shieldViewRect);
-        coverByShieldV = (CGRectContainsRect(shieldViewRect, rect) && isShieldVRectValid);
+        
+    }else
+    {
+        if (self == nil) return NO;
+        
+        if (self.bounds.size.width <= 0 || self.bounds.size.height <= 0) return NO;
+        
+        if (self.hidden) return NO;
+        
+        if (self.alpha <= 0.1) return NO;
+        
+        if (!self.window) return NO;
+        
+        if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {
+            return NO;
+        }
+        
+        //iOS11 以下 特殊处理 UITableViewWrapperView 需要使用的supview
+        //UITableviewWrapperview 的大小为tableView 在屏幕中出现第一个完整的屏幕大小的视图
+        //并且会因为contentOffset的改变而改变，所以UITableviewWrapperview会滑出屏幕，这样因为self.superview.hlj_viewVisible 这个条件导致 他下面的子试图都被判定为不可见，因此将cell的父试图为UITableViewWrapperView的时候，使用tableView 计算
+        UIView *view = self;
+        if ([NSStringFromClass([self class]) isEqualToString:@"UITableViewWrapperView"]) {
+            view = self.superview;
+        }
+        
+        // 与 window 的关系判断
+        BOOL showInWidow = NO;
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        CGRect rect = [view convertRect:view.bounds toView:window];
+        CGRect screenRect = [UIScreen mainScreen].bounds;
+        
+        // 包含：算有效显示
+        BOOL isContained = CGRectContainsRect(screenRect, rect);
+        BOOL isViewRectValid = !CGRectIsEmpty(rect) || !CGRectIsNull(rect);
+        if (isContained && isViewRectValid) {
+            showInWidow = YES;
+        }
+        
+        // 与 shieldView 关系判断
+        BOOL coverByShieldV = NO;
+        if (self.hlj_trackModel.shieldView) {
+            CGRect shieldViewRect = [self.hlj_trackModel.shieldView convertRect:self.hlj_trackModel.shieldView.bounds toView:window];
+            NSLog(@"%@ ===== %@ ==== %ld", NSStringFromCGRect(shieldViewRect), NSStringFromCGRect(self.hlj_trackModel.shieldView.bounds), self.hlj_trackModel.position);
+            BOOL isShieldVRectValid = !CGRectIsEmpty(shieldViewRect) || !CGRectIsNull(shieldViewRect);
+            coverByShieldV = (CGRectContainsRect(shieldViewRect, rect) && isShieldVRectValid);
+            
+        }
+        
+        // 根据 window 和 shieldview关系返回结果
+        if (!coverByShieldV && showInWidow) {
+            return YES;
+        }
+        return NO;
         
     }
-    
-    // 根据 window 和 shieldview关系返回结果
-    if (!coverByShieldV && showInWidow) {
-        return YES;
-    }
-    return NO;
-    
 }
 
 

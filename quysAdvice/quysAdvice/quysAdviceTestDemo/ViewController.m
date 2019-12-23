@@ -36,17 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor purpleColor];
-    UIWindow *wid = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    wid.rootViewController = [QuysViewController new];
-    wid.rootViewController.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor redColor];
 
-    wid.windowLevel = UIWindowLevelAlert + 1;
-    wid.hidden = NO;
-    wid.alpha = 1;
-    wid.backgroundColor = [UIColor blueColor];
-    self.wid = wid;
-    NSLog(@"click:%@",self.wid);
     
 //    QuysAdSplashService *service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp" key:@"quystest-cp" cGrect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64) eventDelegate:self parentView:self.view];
 //    [service loadAdViewNow];
@@ -103,19 +94,7 @@
 -(void)quys_interstitialOnClick:(CGPoint)cpClick
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
-//    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) eventDelegate:self ];
-//    self.serviceScreen = service;
-    
-    UIWindow *wid = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    wid.rootViewController = [UIViewController new];
-    wid.rootViewController.view.backgroundColor = [UIColor redColor];
 
-    wid.windowLevel = UIWindowLevelAlert + 1;
-    wid.hidden = NO;
-    wid.alpha = 1;
-    wid.backgroundColor = [UIColor blueColor];
-    self.wid = wid;
-    NSLog(@"click:%@",self.wid);
     
 }
 -(void)quys_interstitialOnAdClose

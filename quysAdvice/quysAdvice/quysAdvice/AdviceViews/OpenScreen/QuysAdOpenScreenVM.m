@@ -9,6 +9,7 @@
 #import "QuysAdOpenScreenVM.h"
 #import "QuysAdviceModel.h"
 #import "QuysAdOpenScreen.h"
+#import "QuysFullScreenReplaceView.h"
 @interface QuysAdOpenScreenVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
@@ -78,6 +79,7 @@
             
             //关闭事件
             adView.quysAdviceCloseEventBlockItem = ^{
+                [weakself removeBackgroundImageView];
                 if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
                 {
                     [weakself.delegate quys_interstitialOnAdClose];
@@ -138,6 +140,17 @@
     }
 }
 
+
+- (void)removeBackgroundImageView
+{
+    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
+    {
+        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
+        {
+            [subObj removeFromSuperview];
+        }
+    }
+}
 
 @end
  

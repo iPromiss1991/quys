@@ -11,6 +11,7 @@
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
 #import "QuysAdOpenScreen.h"
+#import "QuysFullScreenReplaceView.h"
 
 @interface QuysAdOpenScreenService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
@@ -26,7 +27,7 @@
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate;
 {
     if (self = [super init])
     {
@@ -34,14 +35,14 @@
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
         self.cgFrame = cgFrame;
-        [self config];
+        [self config:imgReplace];
     }return self;
 }
 
 #pragma mark - PrivateMethod
 
 
-- (void)config
+- (void)config:(UIImage*)imgReplace
 {
     //配置api 并请求数据
     QuysAdSplashApi *api = [[QuysAdSplashApi alloc]init];
@@ -49,14 +50,15 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    [self loadAdViewNow];
+    [self loadAdViewNow:imgReplace];
 }
 
 
 /// 开始加载视图
-- (void)loadAdViewNow
+- (void)loadAdViewNow:(UIImage*)imgReplace
 {
-    if ([[QuysAdviceManager shareManager] loadAdviceEnable]) 
+    [self addBackgroundImageView:imgReplace];
+    if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -88,11 +90,36 @@
     if (self.loadAdViewEnable)
     {
         self.adviceView.hidden = NO;
+        //        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        //        animation.duration = .3;
+        //        animation.fromValue = @(0.5);
+        //        animation.toValue = @(1);
+        //        [self.adviceView.layer addAnimation:animation forKey:@"animation"];
     }else
     {
         //视图正在创建中。。。
     }
 }
+
+
+- (void)addBackgroundImageView:(UIImage*)imgBackground
+{
+    QuysFullScreenReplaceView *vBack = [[QuysFullScreenReplaceView alloc]initWithFrame:[UIScreen mainScreen].bounds  image:imgBackground];
+    [[UIApplication sharedApplication].delegate.window addSubview:vBack];
+}
+
+
+- (void)removeBackgroundImageView
+{
+    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
+    {
+        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
+        {
+            [subObj removeFromSuperview];
+        }
+    }
+}
+
 
 
 #pragma mark - YTKRequestDelegate
@@ -111,6 +138,7 @@
         [self showAdView];
     }else
     {
+        [self removeBackgroundImageView];
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
         {
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
@@ -123,6 +151,7 @@
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
+    [self removeBackgroundImageView];
     if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
     {
         [self.delegate quys_requestFial:request.error];
@@ -130,7 +159,15 @@
     
 }
 
-
+-(UIWindow *)adviceView
+{
+    if (_adviceView == nil)
+    {
+        _adviceView.windowLevel = UIWindowLevelAlert+1;
+        UIViewController *rootVC = [UIViewController new];
+        _adviceView.rootViewController = rootVC;
+    }return _adviceView;
+}
 
 
 -(void)dealloc

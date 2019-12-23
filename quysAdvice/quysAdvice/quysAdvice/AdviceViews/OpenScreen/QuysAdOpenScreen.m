@@ -30,8 +30,11 @@
     if (self = [super initWithFrame:frame])
     {
         self.windowLevel = UIWindowLevelAlert+1;
-        self.rootViewController = [QuysWindowViewController new];
-//        [self createUI];
+        QuysWindowViewController *rootVC = [QuysWindowViewController new];
+        [rootVC.view hlj_setTrackTag:kStringFormat(@"%ld",[rootVC.view hash]) position:0 trackData:@{}];
+        rootVC.view.frame = CGRectMake(0, 0, 0, 1);
+        self.rootViewController = rootVC;
+        [self createUI];
         self.vm = viewModel;
     }
     return self;
@@ -46,7 +49,7 @@
     [self addSubview:viewContain];
     self.viewContain = viewContain;
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"" ]];
     imgView.userInteractionEnabled = YES;
     [self.viewContain addSubview:imgView];
     self.imgView = imgView;
@@ -92,7 +95,7 @@
     
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.viewContain);
-       }];
+    }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
@@ -109,22 +112,22 @@
         make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-20));
         make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
-
+    
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_greaterThanOrEqualTo(self.viewContain).mas_offset(kScale_H(200));
         make.left.mas_equalTo(self.imgSmallIcon.mas_right).mas_offset(kScale_W(5));
         make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-10));
     }];
-
-
+    
+    
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.imgSmallIcon).priorityHigh();
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
         make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20)).priorityHigh();
         make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
-
-
+    
+    
     [super updateConstraints];
 }
 
@@ -160,10 +163,18 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
+    CABasicAnimation *animation = [CABasicAnimation animation];
+    animation.keyPath = @"opacity";
+    animation.toValue = @(.0);
+    animation.duration = .3;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    [self.layer addAnimation:animation forKey:@"opacity"];
+    self.hidden = YES;
     if (self.quysAdviceCloseEventBlockItem)
-       {
-           self.quysAdviceCloseEventBlockItem();
-       }
+    {
+        self.quysAdviceCloseEventBlockItem();
+    }
 }
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
@@ -171,19 +182,21 @@
 {
     
     if (self.quysAdviceStatisticalCallBackBlockItem)
-           {
-               self.quysAdviceStatisticalCallBackBlockItem();
-           }
+    {
+        self.quysAdviceStatisticalCallBackBlockItem();
+    }
 }
 
- 
+
 - (void)setVm:(QuysAdOpenScreenVM *)vm
 {
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgSmallIcon sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-
+    
 }
+
+
 
 @end

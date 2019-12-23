@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor brownColor];
+    self.view.backgroundColor = [UIColor yellowColor];
 
     // Do any additional setup after loading the view.
 }
@@ -31,5 +31,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.view.frame = CGRectMake(0, 0, 0, 330);
+
+    
+}
 
 @end

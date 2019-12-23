@@ -27,6 +27,9 @@ FOUNDATION_EXPORT const unsigned char quysAdviceVersionString[];
 #import <quysAdvice/QuysAdBannerService.h>
 #import <quysAdvice/QuysAdOpenScreenService.h>
 
+#import <quysAdvice/QuysAdOpenScreen.h>
+#import <quysAdvice/QuysAdOpenScreenVM.h>
+
 
 
 
