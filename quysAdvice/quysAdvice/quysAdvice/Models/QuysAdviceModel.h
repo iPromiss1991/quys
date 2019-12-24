@@ -25,6 +25,20 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
     QuysAdviceCreativeTypeVideo = 8
 };
 
+/*广告行为类型:
+ 1-html(源码)  2-图片url  3-文字链*(html:TODO:不确认)  4-下载app*(下载地址)   5-android 应用市场下载  6-ios:appstore(下载地址)   8-请求下载地址，见4.8 请求下载类型处理方式
+*/
+
+typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
+    QuysAdviceActiveTypeHtml = 1,
+   QuysAdviceActiveTypeImageUrl = 2,
+    QuysAdviceActiveTypeWebURL = 3,
+   QuysAdviceActiveTypeDownAppAppstore = 4,//4&6
+   QuysAdviceActiveTypeDownAppWebUrl = 8,
+};
+
+
+
 ///广告模型
 @interface QuysAdviceModel : NSObject
 @property (nonatomic , strong) NSArray <NSString *>              * clkTracking;
@@ -54,13 +68,16 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 @property (nonatomic , copy) NSString              * videoCoverUrl;
 @property (nonatomic , assign) NSInteger              videoDuration;
 @property (nonatomic , copy) NSString              * appName;
-@property (nonatomic , assign) NSInteger              ctype;
+@property (nonatomic , assign) QuysAdviceActiveType              ctype;
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 
 @property (nonatomic , copy) NSString              * imgUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * imgUrlList;
 
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
+@property (nonatomic , copy) NSString              * htmStr;
+
+
 
 @end
 

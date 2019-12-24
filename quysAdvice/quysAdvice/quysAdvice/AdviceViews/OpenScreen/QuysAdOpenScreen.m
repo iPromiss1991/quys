@@ -7,7 +7,6 @@
 //
 
 #import "QuysAdOpenScreen.h"
-#import "QuysWindowViewController.h"
 @interface QuysAdOpenScreen()
 @property (nonatomic,strong) UIView *viewContain;
 @property (nonatomic,strong) UIImageView *imgView;
@@ -17,6 +16,9 @@
 @property (nonatomic,strong) UIImageView *imgLogo;
 
 @property (nonatomic,strong) UILabel *lblContent;
+@property (nonatomic,assign) NSInteger countdownLeft;
+
+@property (nonatomic,strong) dispatch_source_t source_t;
 
 
 @end
@@ -29,11 +31,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.windowLevel = UIWindowLevelAlert+1;
-        QuysWindowViewController *rootVC = [QuysWindowViewController new];
-        [rootVC.view hlj_setTrackTag:kStringFormat(@"%ld",[rootVC.view hash]) position:0 trackData:@{}];
-        rootVC.view.frame = CGRectMake(0, 0, 0, 1);
-        self.rootViewController = rootVC;
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
         [self createUI];
         self.vm = viewModel;
     }
@@ -58,8 +56,7 @@
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
     [btnClose setTitle:@"" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
@@ -101,7 +98,8 @@
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.viewContain);
         make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20));
-        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
+        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
+        make.height.mas_equalTo(kScale_W(22)).priorityHigh();
         make.bottom.mas_lessThanOrEqualTo(self.viewContain).priorityHigh();
     }];
     
@@ -139,8 +137,6 @@
 }
 
 
-
-
 #pragma mark - PrivateMethod
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -157,20 +153,11 @@
     {
         self.quysAdviceClickEventBlockItem(cpBegainResult);
     }
-    
-    
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    CABasicAnimation *animation = [CABasicAnimation animation];
-    animation.keyPath = @"opacity";
-    animation.toValue = @(.0);
-    animation.duration = .3;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    [self.layer addAnimation:animation forKey:@"opacity"];
-    self.hidden = YES;
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
@@ -180,7 +167,8 @@
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
 - (void)hlj_viewStatisticalCallBack
 {
-    
+    //倒计时
+    [self countdownEvevt];
     if (self.quysAdviceStatisticalCallBackBlockItem)
     {
         self.quysAdviceStatisticalCallBackBlockItem();
@@ -188,12 +176,37 @@
 }
 
 
+- (void)countdownEvevt
+{
+    
+    kWeakSelf(self)
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        if (self.countdownLeft >= 1)
+        {
+            weakself.countdownLeft--;
+            [weakself.btnClose setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+        }else
+        {
+            dispatch_source_cancel(weakself.source_t );
+            [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            [self clickCloseBtEvent:nil];
+        }
+        
+    });
+    dispatch_resume(timer);
+    self.source_t = timer;
+    
+}
+
 - (void)setVm:(QuysAdOpenScreenVM *)vm
 {
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgSmallIcon sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+    self.countdownLeft = vm.showDuration;
     
 }
 

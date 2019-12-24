@@ -211,4 +211,11 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kClickUPY @"__UP_Y__"
 
 
+
+#pragma mark - 业务通知
+
+#define kRemoveBackgroundImageViewNotify  @"kRemoveBackgroundImageViewNotify"//移除广告window
+
+
+
 #endif /* GlobalMacro_h */

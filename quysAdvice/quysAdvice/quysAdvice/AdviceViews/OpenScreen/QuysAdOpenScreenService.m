@@ -10,7 +10,7 @@
 #import "QuysAdSplashApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
-#import "QuysAdOpenScreen.h"
+#import "QuysOpenScreenWindow.h"
 #import "QuysFullScreenReplaceView.h"
 
 @interface QuysAdOpenScreenService()<YTKRequestDelegate>
@@ -19,6 +19,8 @@
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
 @property (nonatomic,assign) CGRect cgFrame;
+@property (nonatomic,strong) UIWindow *window;
+
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
 
@@ -27,14 +29,16 @@
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate;
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate window:(UIWindow*)window;
 {
     if (self = [super init])
     {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageView) name:kRemoveBackgroundImageViewNotify object:nil];
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
         self.cgFrame = cgFrame;
+        self.window = window;
         [self config:imgReplace];
     }return self;
 }
@@ -77,7 +81,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
+    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }
@@ -111,6 +115,17 @@
 
 - (void)removeBackgroundImageView
 {
+    //TODO:移除window
+    CABasicAnimation *animation = [CABasicAnimation animation];
+    animation.keyPath = @"opacity";
+    animation.toValue = @(.0);
+    animation.duration = .3;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    [self.adviceView.layer addAnimation:animation forKey:@"opacity"];
+    self.adviceView.hidden = YES;
+    self.adviceView = nil;
+    
     for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
     {
         if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
@@ -172,6 +187,6 @@
 
 -(void)dealloc
 {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoveBackgroundImageViewNotify object:nil];
 }
 @end

@@ -8,17 +8,35 @@
 //
 
 #import "QuysWindowViewController.h"
-
 @interface QuysWindowViewController ()
+@property (nonatomic,strong) QuysAdOpenScreenVM *vm;
 
 @end
 
 @implementation QuysWindowViewController
 
-- (void)viewDidLoad {
+-(instancetype)initWithVM:(QuysAdOpenScreenVM *)vm
+{
+    if (self == [super init])
+    {
+        self.vm = vm;
+    }
+    return self;
+}
+- (void)loadView
+{
+   QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
+    self.view = view;
+    view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
+    view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
+    view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+}
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor yellowColor];
 
+    
     // Do any additional setup after loading the view.
 }
 
@@ -35,9 +53,18 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.view.frame = CGRectMake(0, 0, 0, 330);
+//    self.view.frame = CGRectMake(0, 0, 0, 330);
 
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
 @end

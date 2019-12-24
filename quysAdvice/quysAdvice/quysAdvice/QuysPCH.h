@@ -17,5 +17,5 @@
 #import "QuysAdviceManager.h"
 #import "QuysUploadApiTaskManager.h"
 #import "QuysFileManager.h"
-
+#import "QuysNavigationController.h"
 #endif /* QuysPCH_h */

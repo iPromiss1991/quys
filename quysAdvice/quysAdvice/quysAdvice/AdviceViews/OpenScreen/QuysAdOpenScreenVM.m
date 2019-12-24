@@ -8,28 +8,35 @@
 
 #import "QuysAdOpenScreenVM.h"
 #import "QuysAdviceModel.h"
-#import "QuysAdOpenScreen.h"
+#import "QuysOpenScreenWindow.h"
 #import "QuysFullScreenReplaceView.h"
+#import "QuysNavigationController.h"
+#import "QuysWebViewController.h"
+#import "QuysPictureViewController.h"
+#import "QuysAppDownUrlApi.h"
 @interface QuysAdOpenScreenVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
+@property (nonatomic,strong) UIWindow *window;
 
 @end
 
 
 
 @implementation QuysAdOpenScreenVM
-- (instancetype)initWithModel:(QuysAdviceModel *)model delegate:(nonnull id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame
+- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window
 {
     if (self = [super init])
     {
         self.delegate = delegate;
+        self.window = window;
         [self packingModel:model frame:cgFrame];
     }
     return self;
 }
+
 
 #pragma mark - PrivateMethod
 
@@ -59,13 +66,13 @@
 
 #pragma mark - QuysAdSplashDelegate
 
-- (UIWindow *)createAdviceView
+- (UIView *)createAdviceView
 {
     switch (self.adModel.creativeType) {
         case QuysAdviceCreativeTypeDefault:
         {
             kWeakSelf(self)
-            QuysAdOpenScreen *adView = [[QuysAdOpenScreen alloc]initWithFrame:self.cgFrame viewModel:self];
+            QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self];
             [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
             
             //点击事件
@@ -107,9 +114,11 @@
 
 #pragma mark - Event
 
+#pragma mark - QuysOpenScreenWindow
+
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
-    if (!self.adModel.statisticsModel.clicked)
+    if (self.clickedAdvice)
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
@@ -121,15 +130,69 @@
         [self updateReplaceDictionary:kClickUPY value:strCpY];
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.clkTracking];
+        self.adModel.statisticsModel.clicked = YES;
+        
+        if ([self.adView isMemberOfClass:[QuysOpenScreenWindow class]])
+        {
+            switch (self.adModel.ctype) {
+                case QuysAdviceActiveTypeHtml:
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
+                    [self.window.rootViewController presentViewController:webVC animated:YES completion:nil];
+                }
+                    break;
+                case QuysAdviceActiveTypeImageUrl:
+                {
+                    QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
+                    QuysOpenScreenWindow *window = (QuysOpenScreenWindow*)self.adView;
+                    QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
+                    [nav pushViewController:webVC animated:YES];
+                }
+                    break;
+                case QuysAdviceActiveTypeWebURL:
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.imgUrl];
+                    QuysOpenScreenWindow *window = (QuysOpenScreenWindow*)self.adView;
+                    QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
+                    [nav pushViewController:webVC animated:YES];
+                }
+                    break;
+                case QuysAdviceActiveTypeDownAppAppstore:
+                {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.adModel.downUrl]];
+                    
+                }
+                    break;
+                case QuysAdviceActiveTypeDownAppWebUrl:
+                {
+                    [self getRealDownUrl:self.adModel.downUrl];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
     }else
     {
+        
     }
 }
 
 
+- (void)getRealDownUrl:(NSString*)strWebUrl
+{
+    QuysAppDownUrlApi *api = [QuysAppDownUrlApi new];
+    api.downUrl = strWebUrl;
+    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request) {
+        
+    } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
+        
+    }];
+}
+
 -(void)interstitialOnExposure
 {
-    if (!self.adModel.statisticsModel.exposured)
+    if (self.exposuredAdvice)
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
@@ -152,5 +215,52 @@
     }
 }
 
+- (void)validateWindow
+{
+    self.adView.hidden = YES;
+    self.adView = nil;
+}
+
+- (NSInteger)showDuration
+{
+    return self.adModel.showDuration <= 0?5:self.adModel.showDuration;
+}
+
+
+-(BOOL)clickedAdvice
+{
+    if (self.adModel.statisticsModel.clicked)
+    {
+        if (self.adModel.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+-(BOOL)exposuredAdvice
+{
+    if (self.adModel.statisticsModel.exposured)
+    {
+        if (self.adModel.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+
 @end
- 
+
