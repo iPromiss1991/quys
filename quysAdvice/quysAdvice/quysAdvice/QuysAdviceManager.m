@@ -177,6 +177,18 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 }
 
 
+- (NSString*)replaceSpecifiedString:(NSString*)strForReplace
+{
+    __block NSString *strTemp = strForReplace;
+    [[self dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
+        if ([strTemp containsString:key])
+        {
+            strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
+        }
+    }];
+    return strTemp;
+}
+
 #pragma mark - Init
 
 

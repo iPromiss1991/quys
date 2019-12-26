@@ -7,147 +7,61 @@
 //
 
 #import "QuysNavigationController.h"
-#import "UIViewController+QuysGetRootController.h"
-#import "QuysOpenScreenWindow.h"
-@interface QuysNavigationController ()
-@property (nonatomic,strong) UIView *viewContain;
-@property (nonatomic,strong) UIButton *btnLeft;
-@property (nonatomic,strong) UILabel *lblTitle;
-@property (nonatomic,strong) UIButton *btnright;
+@interface QuysNavigationController ()<UIGestureRecognizerDelegate>
+
 
 
 @end
 
 @implementation QuysNavigationController
 
+- (void)dealloc
+{
+    self.interactivePopGestureRecognizer.delegate = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navigationBarHidden = YES;
-    self.view.backgroundColor = [UIColor greenColor];
     
-    UIView *viewContain = [[UIView alloc]init];
-    viewContain.backgroundColor = [UIColor purpleColor];
-    [self.view addSubview:viewContain];
-    self.viewContain = viewContain;
-    
-    UIButton *btnLeft = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnLeft addTarget:self action:@selector(clickLeftBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnLeft setTitle:@"返回" forState:UIControlStateNormal];
-    [btnLeft setTitle:@"" forState:UIControlStateHighlighted];
-    [btnLeft setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    [btnLeft setImage:[UIImage imageNamed:@""] forState:UIControlStateHighlighted];
-    [self.viewContain addSubview:btnLeft];
-    self.btnLeft = btnLeft;
-    
-    
-    UIButton *btnright = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnright addTarget:self action:@selector(clickRightBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnright setTitle:@"下一步" forState:UIControlStateNormal];
-    [btnright setTitle:@"" forState:UIControlStateHighlighted];
-    [btnright setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    [btnright setImage:[UIImage imageNamed:@""] forState:UIControlStateHighlighted];
-    [self.viewContain addSubview:btnright];
-    self.btnright = btnright;
-    
-    
-    UILabel *lblTitle = [[UILabel alloc] init];
-    lblTitle.textAlignment = NSTextAlignmentCenter;
-    lblTitle.text = @"导航栏";
-    [self.viewContain addSubview:lblTitle];
-    self.lblTitle = lblTitle;
-    
-    [self.view bringSubviewToFront:self.viewContain];
-    [self.view setNeedsUpdateConstraints];
-    [self.view updateConstraintsIfNeeded];
+    self.view.backgroundColor = [UIColor whiteColor];
+    // 重新响应侧滑返回手势
+    self.interactivePopGestureRecognizer.delegate = self;
 }
-
--(void)updateViewConstraints
+- (void)viewDidAppear:(BOOL)animated
 {
-    [self.viewContain mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(kNavBarHeight);
-    }];
-    
-    [self.btnLeft mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).offset(kStatusBarHeight);
-        make.left.mas_equalTo(self.viewContain).offset(kScale_W(20)).priorityHigh();
-        make.bottom.mas_equalTo(self.viewContain);
-        make.width.mas_greaterThanOrEqualTo(kScale_W(100));
-    }];
-    
-    [self.lblTitle mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).offset(kStatusBarHeight);
-        make.left.mas_greaterThanOrEqualTo(self.btnLeft.mas_right).offset(kScale_W(5));
-        make.bottom.mas_equalTo(self.viewContain);
-        make.centerX.mas_equalTo(self.viewContain);
-    }];
-    
-    [self.btnright mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).offset(kStatusBarHeight);
-        make.left.mas_equalTo(self.lblTitle.mas_right).offset(kScale_W(5));
-        make.bottom.mas_equalTo(self.viewContain);
-        make.width.mas_greaterThanOrEqualTo(kScale_W(100));
-        make.right.mas_equalTo(self.viewContain).priorityHigh();
-    }];
-    
-    [super updateViewConstraints];
+    [super viewDidAppear:animated];
+    self.interactivePopGestureRecognizer.enabled = YES;
 }
-
-#pragma mark - PrivateMethod
-
-- (void)clickLeftBtnEvent:(UIButton*)sender
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+}
+#pragma mark - 侧滑手势 - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    UIViewController *currentVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]];
-    if ([currentVC respondsToSelector:@selector(clickLeftBtnRespond)])
+    if (self.viewControllers.count <= 1)
     {
-        [currentVC performSelector:@selector(clickLeftBtnRespond)];
+        return NO;
     }
-}
-
-
-- (void)clickRightBtnEvent:(UIButton*)sender
-{
-    UIViewController *currentVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]];
-    if ([currentVC respondsToSelector:@selector(clickRightBtnRespond)])
+    if ([[self valueForKey:@"_isTransitioning"] boolValue])
     {
-        [currentVC performSelector:@selector(clickRightBtnRespond)];
+        return NO;
     }
+    return YES;
 }
-
-
-#pragma mark - 给ViewController 实现的方法
-
-
-
-- (void)clickLeftBtnRespond
+// 允许同时响应多个手势
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    
+    return YES;
 }
-
-
-
-- (void)clickRightBtnRespond
+// 禁止响应手势 是否和ViewController中scrollView跟着滚动
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer
 {
-    
-    
+    return YES;
+    //return [gestureRecognizer isKindOfClass:UIScreenEdgePanGestureRecognizer.class];
 }
-
-
-
-
-
-- (void)setHideNavbar:(BOOL)hideNavbar
+- (BOOL)prefersStatusBarHidden
 {
-    _hideNavbar = hideNavbar;
-    [self.view setNeedsUpdateConstraints];
-    [self.view updateConstraintsIfNeeded];
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    
+    return [self.topViewController prefersStatusBarHidden];
 }
 
 @end

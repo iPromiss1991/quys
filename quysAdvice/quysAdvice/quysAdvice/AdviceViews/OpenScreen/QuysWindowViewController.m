@@ -30,13 +30,18 @@
     view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
     view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
     view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+    
+    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor yellowColor];
+//    self.navigationController.navigationBarHidden = YES;
+    [self vhl_setStatusBarHidden:YES];
+    [self vhl_setNavBarShadowImageHidden:YES];
+    [self vhl_setNavBarHidden:YES];
 
-    
     // Do any additional setup after loading the view.
 }
 
@@ -58,13 +63,4 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    
-}
 @end

@@ -94,6 +94,7 @@
     if (self.loadAdViewEnable)
     {
         self.adviceView.hidden = NO;
+        //TODO
         //        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
         //        animation.duration = .3;
         //        animation.fromValue = @(0.5);
@@ -123,9 +124,8 @@
     animation.removedOnCompletion = NO;
     animation.fillMode = kCAFillModeForwards;
     [self.adviceView.layer addAnimation:animation forKey:@"opacity"];
-    self.adviceView.hidden = YES;
-    self.adviceView = nil;
-    
+    [self removeWindow:self.adviceView];
+    //移除delegate.window的遮罩图
     for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
     {
         if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
@@ -135,6 +135,12 @@
     }
 }
 
+
+- (void)removeWindow:(UIWindow*)window
+{
+   window.hidden = YES;
+   window = nil;
+}
 
 
 #pragma mark - YTKRequestDelegate

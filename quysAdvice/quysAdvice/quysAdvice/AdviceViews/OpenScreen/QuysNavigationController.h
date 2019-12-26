@@ -14,10 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,assign) BOOL hideNavbar;
 
- 
-- (void)clickLeftBtnRespond:(UIButton*)sender;
 
-- (void)clickRightBtnRespond:(UIButton*)sender;
 
 @end
 

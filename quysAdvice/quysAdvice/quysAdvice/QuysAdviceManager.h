@@ -21,7 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shareManager;
 
+
+/// 初始化设置（使用广告服务之前必须调用该方法）
 - (void)configSettings;
+
+
+/// 宏替换
+/// @param strForReplace 待替换的字符串
+- (NSString*)replaceSpecifiedString:(NSString*)strForReplace;
 @end
 
 NS_ASSUME_NONNULL_END

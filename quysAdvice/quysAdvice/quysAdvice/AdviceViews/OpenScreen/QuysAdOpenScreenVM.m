@@ -14,6 +14,7 @@
 #import "QuysWebViewController.h"
 #import "QuysPictureViewController.h"
 #import "QuysAppDownUrlApi.h"
+#import "QuysDownAddressModel.h"
 @interface QuysAdOpenScreenVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
@@ -159,7 +160,7 @@
                     break;
                 case QuysAdviceActiveTypeDownAppAppstore:
                 {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.adModel.downUrl]];
+                    [self openUrl:self.adModel.downUrl];
                     
                 }
                     break;
@@ -179,11 +180,29 @@
 }
 
 
+- (void)openUrl:(NSString*)strUrl
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+    
+}
+
 - (void)getRealDownUrl:(NSString*)strWebUrl
 {
+    kWeakSelf(self)
+    strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
     QuysAppDownUrlApi *api = [QuysAppDownUrlApi new];
     api.downUrl = strWebUrl;
-    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request) {
+    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request)
+    {
+        if ( request.responseJSONObject[@"data"])
+        {
+            QuysDownAddressModel *model = [QuysDownAddressModel yy_modelWithJSON:request.responseJSONObject[@"data"]];
+            if (!kISNullString(model.dstlink))
+            {
+                [weakself openUrl:model.dstlink];
+            }
+
+        }
         
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         

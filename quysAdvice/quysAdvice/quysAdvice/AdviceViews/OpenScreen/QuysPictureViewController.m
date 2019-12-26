@@ -27,8 +27,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    QuysNavigationController *nav= (QuysNavigationController*)self.navigationController;
-    nav.hideNavbar = YES;
+    [self vhl_setNavBarBackgroundColor:[UIColor colorWithRed:(rand() % 100 * 0.01) green:(rand() % 100 * 0.01) blue:0.86 alpha:1.00]];
+    [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleFakeNavBar];
+    //[self vhl_setNavBarBackgroundImage:[UIImage imageNamed:@"millcolorGrad"]];
+    //[self vhl_setNavBarBackgroundAlpha:0.f];
+    [self vhl_setStatusBarHidden:YES];
+    [self vhl_setNavBarShadowImageHidden:YES];
+    [self vhl_setNavBarBackgroundAlpha:1.0f];
+    [self vhl_setNavBarHidden:NO];
+    [self setQus_navBackButtonTitle:@"存储"];
+    [self vhl_setInteractivePopGestureRecognizerEnable:NO];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     [self.view addSubview:imgView];
@@ -48,22 +56,10 @@
 }
 
 
-
-- (void)clickLeftBtnRespond
+-(void)qus_navigationItemHandleBack:(UIButton *)button
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
     
 }
-
-
-
-- (void)clickRightBtnRespond
-{
-    [self.navigationController popViewControllerAnimated:YES];
-
-}
-
 
 @end

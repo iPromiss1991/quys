@@ -9,5 +9,8 @@
 #import "QuysBaseNetworkApi.h"
 
 @implementation QuysBaseNetworkApi
-
+- (NSTimeInterval)requestTimeoutInterval
+{
+    return 2;
+}
 @end

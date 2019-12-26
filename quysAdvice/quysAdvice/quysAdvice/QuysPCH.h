@@ -18,4 +18,6 @@
 #import "QuysUploadApiTaskManager.h"
 #import "QuysFileManager.h"
 #import "QuysNavigationController.h"
+#import "VHLNavigation.h"
+#import "UIViewController+QuysNavBar.h"
 #endif /* QuysPCH_h */

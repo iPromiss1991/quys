@@ -10,7 +10,7 @@ target 'quysAdvice' do
  pod 'SDWebImage'
  pod 'Reachability'
 
-  target 'quysAdviceTestDemo' do
+  target 'quysDevDemo' do
     pod 'Masonry'
   end
 

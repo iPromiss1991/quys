@@ -1,14 +1,14 @@
 //
 //  AppDelegate.m
-//  quysAdviceTestDemo
+//  quysDevDemo
 //
-//  Created by quys on 2019/12/11.
+//  Created by quys on 2019/12/26.
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import <quysAdvice/quysAdvice.h>
 #import "ViewController.h"
+#import <quysAdvice/quysAdvice.h>
 @interface AppDelegate ()<QuysAdSplashDelegate>
 @property (nonatomic,strong) QuysAdOpenScreenService *service;
 
@@ -28,7 +28,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
-    self.window.rootViewController = [[ViewController alloc] init];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc] init]];
     [self.window makeKeyAndVisible];
 
     [[QuysAdviceManager shareManager] configSettings] ;

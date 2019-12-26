@@ -67,14 +67,8 @@ static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
 
 - (NSString*)replaceSpecifiedString:(NSString*)strForReplace
 {
-    __block NSString *strTemp = strForReplace;
-    [[[QuysAdviceManager shareManager] dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
-        if ([strTemp containsString:key])
-        {
-            strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
-        }
-    }];
-    return strTemp;
+     
+    return [[QuysAdviceManager shareManager] replaceSpecifiedString:strForReplace];
 }
 
 @end
