@@ -71,6 +71,8 @@
 #define kApplication [UIApplication sharedApplication]
 //主窗口 （keyWindow）
 #define kKeyWindow [UIApplication sharedApplication].keyWindow
+//delegate.window
+#define kDelegateWindow [UIApplication sharedApplication].delegate.window
 //NSUserDefaults实例化
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 //通知中心 （单例对象）

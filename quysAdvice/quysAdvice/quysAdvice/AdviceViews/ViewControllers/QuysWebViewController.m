@@ -39,7 +39,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = NO;
+    [self vhl_setNavBarBackgroundColor:[UIColor colorWithRed:(rand() % 100 * 0.01) green:(rand() % 100 * 0.01) blue:0.86 alpha:1.00]];
+    [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleFakeNavBar];
+    //[self vhl_setNavBarBackgroundImage:[UIImage imageNamed:@"millcolorGrad"]];
+    //[self vhl_setNavBarBackgroundAlpha:0.f];
+    [self vhl_setStatusBarHidden:YES];
+    [self vhl_setNavBarShadowImageHidden:YES];
+    [self vhl_setNavBarBackgroundAlpha:1.0f];
+    [self vhl_setNavBarHidden:NO];
+    [self setQus_navBackButtonTitle:@"存储"];
+    [self vhl_setInteractivePopGestureRecognizerEnable:NO];
+    
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
     //这个类主要用来做native与JavaScript的交互管理

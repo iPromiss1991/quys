@@ -31,7 +31,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
         [self createUI];
         self.vm = viewModel;
     }
@@ -146,6 +146,8 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
+    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
+    dispatch_suspend(self.source_t);
     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
@@ -210,6 +212,9 @@
     
 }
 
-
+- (void)dealloc
+{
+    
+}
 
 @end

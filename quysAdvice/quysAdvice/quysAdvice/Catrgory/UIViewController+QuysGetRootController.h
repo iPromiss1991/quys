@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (QuysGetRootController)
 + (UIViewController *)quys_findVisibleViewController:(id)windowClass;
+
+- (void)quys_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion;
 @end
 
 NS_ASSUME_NONNULL_END

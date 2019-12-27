@@ -28,44 +28,58 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc] init]];
+    UIViewController *rootVC = [[ViewController alloc] init];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:rootVC];
+//
+//    UITabBarController *tabBarVC = [[UITabBarController alloc]init];
+//    [tabBarVC addChildViewController:rootVC];
+//    self.window.rootViewController = tabBarVC;
+
     [self.window makeKeyAndVisible];
 
-    [[QuysAdviceManager shareManager] configSettings] ;
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
-    self.service = service;
+//    [[QuysAdviceManager shareManager] configSettings] ;
+//    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
+//    self.service = service;
+    
+ 
     return YES;
 }
 
 
--(void)quys_requestStart
+-(void)quys_requestStart:(QuysAdOpenScreenService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 }
--(void)quys_requestSuccess
+-(void)quys_requestSuccess:(QuysAdOpenScreenService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 //    [self.service showAdView];
 
 }
--(void)quys_requestFial:(NSError *)error
+-(void)quys_requestFial:(QuysAdOpenScreenService *)service error:(NSError *)error
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_interstitialOnExposure
+-(void)quys_interstitialOnExposure:(QuysAdOpenScreenService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_interstitialOnClick:(CGPoint)cpClick
+-(void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdOpenScreenService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 }
--(void)quys_interstitialOnAdClose
+-(void)quys_interstitialOnAdClose:(QuysAdOpenScreenService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
 
+- (void)removeBackgroundImageView
+
+{
+    
+    self.service = nil;
+}
 @end

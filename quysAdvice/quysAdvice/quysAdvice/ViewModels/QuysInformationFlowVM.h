@@ -7,22 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class QuysAdviceModel;
+#import "QuysAdSplashDelegate.h"
+ @class QuysAdviceModel,QuysInformationFlowService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysInformationFlowVM : NSObject
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;//!> 单图展示
-
 @property (nonatomic,strong) NSArray *arrImgUrl;//!> 多图展示
 
+@property (nonatomic,assign) BOOL clickedAdvice;//!< 是否触发点击事件
+@property (nonatomic,assign) BOOL exposuredAdvice;
 
 
 
 
 
-- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame;
+- (instancetype)initWithModel:(QuysAdviceModel *)model delegate:( id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame service:(QuysInformationFlowService*)service;
 
 - (UIView *)createAdviceView;
 

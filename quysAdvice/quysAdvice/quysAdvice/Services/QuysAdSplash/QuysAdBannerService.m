@@ -64,9 +64,9 @@
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            if ([weakself.delegate respondsToSelector:@selector(quys_requestStart)])
+            if ([weakself.delegate respondsToSelector:@selector(quys_requestStart:)])
             {
-                [weakself.delegate quys_requestStart];
+                [weakself.delegate quys_requestStart:self];
             }
             [weakself.api start];
         });
@@ -109,16 +109,16 @@
     {
         QuysAdviceModel *adviceModel = outerModel.data[0];
         [self configAdviceViewVM:adviceModel];
-        if ([self.delegate respondsToSelector:@selector(quys_requestSuccess)])
+        if ([self.delegate respondsToSelector:@selector(quys_requestSuccess:)])
         {
-            [self.delegate quys_requestSuccess];
+            [self.delegate quys_requestSuccess:self];
         }
     }else
     {
-        if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+        if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
-            [self.delegate quys_requestFial:error];
+            [self.delegate quys_requestFial:self error:error];
         }
         
     }
@@ -127,9 +127,9 @@
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
-    if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+    if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
     {
-        [self.delegate quys_requestFial:request.error];
+        [self.delegate quys_requestFial:self error:request.error];
     }
     
 }

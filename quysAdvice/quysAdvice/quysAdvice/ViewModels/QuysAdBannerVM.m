@@ -9,11 +9,17 @@
 #import "QuysAdBannerVM.h"
 #import "QuysAdviceModel.h"
 #import "QuysAdBanner.h"
+#import "QuysNavigationController.h"
+#import "QuysWebViewController.h"
+#import "QuysPictureViewController.h"
+#import "QuysAppDownUrlApi.h"
+#import "QuysDownAddressModel.h"
 @interface QuysAdBannerVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
+@property (nonatomic,strong) QuysAdBannerService *service;
 
 @end
 
@@ -61,7 +67,7 @@
 - (UIView *)createAdviceView
 {
     switch (self.adModel.creativeType) {
-        case QuysAdviceCreativeTypePictureOnly:
+        case QuysAdviceCreativeTypeDefault:
         {
             kWeakSelf(self)
             //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
@@ -71,26 +77,26 @@
             //点击事件
             adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
                 [weakself interstitialOnClick:cp];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:)])
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
                 {
-                    [weakself.delegate quys_interstitialOnClick:cp];
+                    [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
                 }
             };
             
             //关闭事件
             adView.quysAdviceCloseEventBlockItem = ^{
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
                 {
-                    [weakself.delegate quys_interstitialOnAdClose];
+                    [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
                 }
             };
             
             //曝光事件
             adView.quysAdviceStatisticalCallBackBlockItem = ^{
                 [weakself interstitialOnExposure];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure)])
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
                 {
-                    [weakself.delegate quys_interstitialOnExposure];
+                    [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
                 }
             };
             self.adView = adView;
@@ -108,7 +114,7 @@
 
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
-    if (!self.adModel.statisticsModel.clicked)
+    if (self.clickedAdvice)
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
@@ -120,11 +126,82 @@
         [self updateReplaceDictionary:kClickUPY value:strCpY];
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.clkTracking];
+        
+        if ([self.adView isMemberOfClass:[QuysAdBanner class]])
+        {
+            switch (self.adModel.ctype) {
+                case QuysAdviceActiveTypeHtml:
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    }];
+                }
+                    break;
+                case QuysAdviceActiveTypeImageUrl:
+                {
+                    QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    }];
+                }
+                    break;
+                case QuysAdviceActiveTypeWebURL:
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                            }];
+                        }
+                    break;
+                case QuysAdviceActiveTypeDownAppAppstore:
+                {
+                    [self openUrl:self.adModel.downUrl];
+                    
+                }
+                    break;
+                case QuysAdviceActiveTypeDownAppWebUrl:
+                {
+                    [self getRealDownUrl:self.adModel.downUrl];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
     }else
     {
+        
     }
 }
 
+- (void)openUrl:(NSString*)strUrl
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+    
+}
+
+- (void)getRealDownUrl:(NSString*)strWebUrl
+{
+    kWeakSelf(self)
+    strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
+    QuysAppDownUrlApi *api = [QuysAppDownUrlApi new];
+    api.downUrl = strWebUrl;
+    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request)
+     {
+        if ( request.responseJSONObject[@"data"])
+        {
+            QuysDownAddressModel *model = [QuysDownAddressModel yy_modelWithJSON:request.responseJSONObject[@"data"]];
+            if (!kISNullString(model.dstlink))
+            {
+                [weakself openUrl:model.dstlink];
+            }
+        }
+        
+    } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
+        
+    }];
+}
 
 -(void)interstitialOnExposure
 {
@@ -140,13 +217,50 @@
 }
 
 
+-(BOOL)clickedAdvice
+{
+    if (self.adModel.statisticsModel.clicked)
+    {
+        if (self.adModel.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+-(BOOL)exposuredAdvice
+{
+    if (self.adModel.statisticsModel.exposured)
+    {
+        if (self.adModel.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+
+
 #pragma mark - Init
 
 - (NSString *)strImgUrl
 {
-    if (_strImgUrl ==nil) {
+    if (_strImgUrl == nil)
+    {
         _strImgUrl = self.adModel.imgUrl;
     }return _strImgUrl;
 }
 @end
- 
+

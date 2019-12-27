@@ -21,6 +21,7 @@
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
 @property (nonatomic,strong) UIWindow *window;
+@property (nonatomic,strong) QuysAdOpenScreenService *service;
 
 @end
 
@@ -76,39 +77,39 @@
             QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self];
             [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
             
-            //点击事件
-            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                [weakself interstitialOnClick:cp];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:)])
-                {
-                    [weakself.delegate quys_interstitialOnClick:cp];
-                }
-            };
+           //点击事件
+                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+                    [weakself interstitialOnClick:cp];
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+                    {
+                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                
+                //关闭事件
+                adView.quysAdviceCloseEventBlockItem = ^{
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                    {
+                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                
+                //曝光事件
+                adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                    [weakself interstitialOnExposure];
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                    {
+                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                self.adView = adView;
+                return adView;
+                
+            }
+            default:
+                return nil;
+                break;
             
-            //关闭事件
-            adView.quysAdviceCloseEventBlockItem = ^{
-                [weakself removeBackgroundImageView];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose)])
-                {
-                    [weakself.delegate quys_interstitialOnAdClose];
-                }
-            };
-            
-            //曝光事件
-            adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                [weakself interstitialOnExposure];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure)])
-                {
-                    [weakself.delegate quys_interstitialOnExposure];
-                }
-            };
-            self.adView = adView;
-            return adView;
-            
-        }
-        default:
-            return nil;
-            break;
     }
 }
 
@@ -131,7 +132,6 @@
         [self updateReplaceDictionary:kClickUPY value:strCpY];
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.clkTracking];
-        self.adModel.statisticsModel.clicked = YES;
         
         if ([self.adView isMemberOfClass:[QuysOpenScreenWindow class]])
         {
@@ -139,8 +139,9 @@
                 case QuysAdviceActiveTypeHtml:
                 {
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                    [self.window.rootViewController presentViewController:webVC animated:YES completion:nil];
-                }
+                    QuysOpenScreenWindow *window = (QuysOpenScreenWindow*)self.adView;
+                    QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
+                    [nav pushViewController:webVC animated:YES];                }
                     break;
                 case QuysAdviceActiveTypeImageUrl:
                 {
@@ -201,7 +202,6 @@
             {
                 [weakself openUrl:model.dstlink];
             }
-
         }
         
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
@@ -278,6 +278,12 @@
     {
         return YES;
     }
+}
+
+
+- (void)dealloc
+{
+    
 }
 
 

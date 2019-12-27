@@ -52,4 +52,9 @@
     _quysAdviceStatisticalCallBackBlockItem = quysAdviceStatisticalCallBackBlockItem;
     self.rootVC.quysAdviceStatisticalCallBackBlockItem = quysAdviceStatisticalCallBackBlockItem;
 }
+
+- (void)dealloc
+{
+    
+}
 @end

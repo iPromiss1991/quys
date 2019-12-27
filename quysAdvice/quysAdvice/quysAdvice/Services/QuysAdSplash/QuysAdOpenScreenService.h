@@ -6,11 +6,10 @@
 //  Copyright © 2019 Quys. All rights reserved. 
 //
 
-#import "QuysAdSplashDelegate.h"
-
+#import "QuysAdBaseService.h"
 NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
-@interface QuysAdOpenScreenService : NSObject
+@interface QuysAdOpenScreenService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 @property (nonatomic,assign,readonly) BOOL loadAdViewEnable;
 @property (nonatomic,strong) UIWindow *adviceView;

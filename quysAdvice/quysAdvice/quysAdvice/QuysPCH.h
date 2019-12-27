@@ -20,4 +20,5 @@
 #import "QuysNavigationController.h"
 #import "VHLNavigation.h"
 #import "UIViewController+QuysNavBar.h"
+#import "UIViewController+QuysGetRootController.h"
 #endif /* QuysPCH_h */

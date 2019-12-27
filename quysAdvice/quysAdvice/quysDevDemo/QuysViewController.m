@@ -24,8 +24,12 @@
     [self vhl_setStatusBarHidden:YES];
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarBackgroundAlpha:1.0f];
-    [self vhl_setNavBarHidden:YES];
-    [self setQus_navBackButtonTitle:@"测试2"];}
+//    [self vhl_setNavBarHidden:YES];
+    [self setQus_navBackButtonTitle:@"测试2"];
+    self.view.backgroundColor = [UIColor cyanColor];
+    
+    
+}
 
 /*
 #pragma mark - Navigation
@@ -36,5 +40,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)dealloc
+{
+    
+}
+
 
 @end

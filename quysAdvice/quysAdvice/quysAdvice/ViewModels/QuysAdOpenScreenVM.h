@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class QuysAdviceModel;
+#import "QuysAdSplashDelegate.h"
+@class QuysAdviceModel,QuysAdOpenScreenService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
-@interface QuysAdOpenScreenVM : NSObject<QuysAdSplashDelegate>
+@interface QuysAdOpenScreenVM : NSObject
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
 @property (nonatomic,assign) NSInteger showDuration;

@@ -11,13 +11,13 @@
 #import <Masonry/Masonry.h>
 //#import "QuysViewController.h"
 #import <objc/runtime.h>
-
+#import "QuysViewController.h"
 @interface ViewController ()<QuysAdSplashDelegate>
 //@property (nonatomic,strong) QuysAdSplashService *service;
 //@property (nonatomic,strong) QuysInformationFlowService *service;
-//@property (nonatomic,strong) QuysAdBannerService *service;
+@property (nonatomic,strong) QuysAdBannerService *service;
 //@property (nonatomic,strong) QuysAdOpenScreenService *service;
-@property (nonatomic,strong) QuysAdOpenScreenService *service;
+//@property (nonatomic,strong) QuysAdOpenScreenService *service;
 
 
 @property (nonatomic,strong) UIView *adView;
@@ -29,7 +29,7 @@
 /*
  1、重新设计开屏广告的实现逻辑
  2、优化所有广告回调准确性问题（同一类广告多个实类回调）
- 3、封住并实现行为逻辑
+ 3、封装并实现行为逻辑
  */
 @implementation ViewController
 
@@ -74,9 +74,9 @@
 //    [service loadAdViewNow];
 //    self.service = service;
     
-//    QuysAdBannerService *service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cGrect:CGRectMake(0, 300, [UIScreen mainScreen].bounds.size.width, 600) eventDelegate:self parentView:self.view];
-//    [service loadAdViewNow];
-//    self.service = service;
+    QuysAdBannerService *service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cGrect:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 300) eventDelegate:self parentView:self.view];
+    [service loadAdViewNow];
+    self.service = service;
 //        QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) eventDelegate:self ];
 //        self.service = service;
     
@@ -100,36 +100,37 @@
     
     [super updateViewConstraints];
 }
--(void)quys_requestStart
+
+-(void)quys_requestStart:(QuysAdBannerService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 }
--(void)quys_requestSuccess
+-(void)quys_requestSuccess:(QuysAdBannerService *)service
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    [self.service showAdView];
+
+}
+-(void)quys_requestFial:(QuysAdBannerService *)service error:(NSError *)error
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_requestFial:(NSError *)error
+-(void)quys_interstitialOnExposure:(QuysAdBannerService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_interstitialOnExposure
+-(void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdBannerService *)service
+{
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+}
+-(void)quys_interstitialOnAdClose:(QuysAdBannerService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
 }
--(void)quys_interstitialOnClick:(CGPoint)cpClick
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
 
-    
-}
--(void)quys_interstitialOnAdClose
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-
-}
 
 
 // - (void)NormalWindow
@@ -175,8 +176,9 @@
 {
     NSLog(@"1");
     
-    [[QuysAdviceManager shareManager] configSettings] ;
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
-    self.service = service;
-}
+//    [[QuysAdviceManager shareManager] configSettings] ;
+//    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
+//    self.service = service;
+    
+ }
 @end

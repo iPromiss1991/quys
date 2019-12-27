@@ -8,7 +8,7 @@
 
 #import "UIViewController+QuysGetRootController.h"
 
- 
+
 
 @implementation UIViewController (QuysGetRootController)
 
@@ -19,14 +19,14 @@
     UIViewController *frontUIViewController = nil;
     UIWindow *defaultWindow = [[UIApplication sharedApplication] keyWindow];
     NSArray *windows = [[UIApplication sharedApplication] windows];
-           for(UIWindow *tmpWin in windows)
-           {
-               if ([tmpWin isKindOfClass:[windowClass class]] )
-               {
-                   defaultWindow = tmpWin;
-                   break;
-               }
-           }
+    for(UIWindow *tmpWin in windows)
+    {
+        if ([tmpWin isKindOfClass:[windowClass class]] )
+        {
+            defaultWindow = tmpWin;
+            break;
+        }
+    }
     if (defaultWindow && [[defaultWindow subviews] count] > 0)
     {
         UIView *frontView = [[defaultWindow subviews] objectAtIndex:0];
@@ -50,7 +50,7 @@
     return frontUIViewController;
     
 }
- 
+
 + (UIViewController *)topDisplayViewController:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[UINavigationController class]])
@@ -64,6 +64,23 @@
         return viewController;
     }
     return nil;
+}
+
+
+- (void)quys_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion
+{
+    if ([self.parentViewController isKindOfClass:[UITabBarController class]])
+    {
+        [self presentViewController:viewControllerToPresent animated:flag completion:completion];
+    }else
+    {
+        [self.navigationController pushViewController:viewControllerToPresent animated:flag];
+        if (completion)
+        {
+            completion();
+        }
+    }
+    
 }
 
 

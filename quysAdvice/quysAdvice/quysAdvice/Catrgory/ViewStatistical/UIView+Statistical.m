@@ -164,7 +164,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         
         // 与 window 的关系判断
         BOOL showInWidow = NO;
-        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
         CGRect rect = [view convertRect:view.bounds toView:window];
         CGRect screenRect = [UIScreen mainScreen].bounds;
         
@@ -203,8 +203,11 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         
         if (!self.window) return NO;
         
-        if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {
-            return NO;
+        if (![self.nextResponder isKindOfClass:[UIViewController class]])
+        {
+             if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {
+                 return NO;
+             }
         }
         
         //iOS11 以下 特殊处理 UITableViewWrapperView 需要使用的supview
@@ -217,7 +220,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         
         // 与 window 的关系判断
         BOOL showInWidow = NO;
-        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
         CGRect rect = [view convertRect:view.bounds toView:window];
         CGRect screenRect = [UIScreen mainScreen].bounds;
         
@@ -274,7 +277,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
 
 #pragma mark - 记录有效曝光 输出动作
 - (void)hlj_viewStatistical {
-    NSLog(@"曝光：hlj_trackTag:%@,position:%zd",self.hlj_trackModel.tag,self.hlj_trackModel.position);
+    NSLog(@"曝光：class:%@    hlj_trackTag:%@,       position:%zd",[self class],self.hlj_trackModel.tag,self.hlj_trackModel.position);
     [self hlj_viewStatisticalCallBack];
 }
 

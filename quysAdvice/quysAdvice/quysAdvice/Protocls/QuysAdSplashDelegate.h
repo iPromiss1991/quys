@@ -8,25 +8,24 @@
 
 #import "QuysAdviceBaseDelegate.h"
 #import <UIKit/UIKit.h>
+@class QuysAdBaseService;
 
 NS_ASSUME_NONNULL_BEGIN
-///插屏协议
+
 @protocol QuysAdSplashDelegate <QuysAdviceBaseDelegate>
 
 @optional
-- (void)quys_requestStart;
+- (void)quys_requestStart:(QuysAdBaseService*)service;
 
-- (void)quys_requestSuccess;
+- (void)quys_requestSuccess:(QuysAdBaseService*)service;
 
-- (void)quys_requestFial:(NSError*)error;
+- (void)quys_requestFial:(QuysAdBaseService*)service error:(NSError*)error;
 
-- (void)quys_interstitialOnExposure;
+- (void)quys_interstitialOnExposure:(QuysAdBaseService*)service;
 
-- (void)quys_interstitialOnClick:(CGPoint)cpClick;
+- (void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdBaseService*)service;
 
-- (void)quys_interstitialOnAdClose;
-
+- (void)quys_interstitialOnAdClose:(QuysAdBaseService*)service;
 
 @end
-
 NS_ASSUME_NONNULL_END

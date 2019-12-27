@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-@class QuysAdviceModel;
+#import "QuysAdSplashDelegate.h"
+@class QuysAdviceModel,QuysAdBannerService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysAdBannerVM : NSObject<QuysAdSplashDelegate>
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
-
+@property (nonatomic,assign) BOOL clickedAdvice;//!< 是否触发点击事件
+@property (nonatomic,assign) BOOL exposuredAdvice;
 
 
 

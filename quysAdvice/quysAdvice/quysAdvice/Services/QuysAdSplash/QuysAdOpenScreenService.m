@@ -12,7 +12,7 @@
 #import "QuysAdviceModel.h"
 #import "QuysOpenScreenWindow.h"
 #import "QuysFullScreenReplaceView.h"
-
+#import "QuysAdOpenScreenVM.h"
 @interface QuysAdOpenScreenService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
@@ -66,9 +66,9 @@
     {
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            if ([weakself.delegate respondsToSelector:@selector(quys_requestStart)])
+            if ([weakself.delegate respondsToSelector:@selector(quys_requestStart:)])
             {
-                [weakself.delegate quys_requestStart];
+                [weakself.delegate quys_requestStart:weakself];
             }
             [weakself.api start];
         });
@@ -81,7 +81,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window];
+    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }
@@ -152,18 +152,18 @@
     {
         QuysAdviceModel *adviceModel = outerModel.data[0];
         [self configAdviceViewVM:adviceModel];
-        if ([self.delegate respondsToSelector:@selector(quys_requestSuccess)])
+        if ([self.delegate respondsToSelector:@selector(quys_requestSuccess:)])
         {
-            [self.delegate quys_requestSuccess];
+            [self.delegate quys_requestSuccess:self];
         }
         [self showAdView];
     }else
     {
         [self removeBackgroundImageView];
-        if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+        if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
-            [self.delegate quys_requestFial:error];
+            [self.delegate quys_requestFial:self error:error];
         }
         
     }
@@ -173,9 +173,9 @@
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
     [self removeBackgroundImageView];
-    if ([self.delegate respondsToSelector:@selector(quys_requestFial:)])
+    if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
     {
-        [self.delegate quys_requestFial:request.error];
+        [self.delegate quys_requestFial:self error:request.error];
     }
     
 }
