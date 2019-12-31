@@ -77,7 +77,8 @@ typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
 @property (nonatomic , copy) NSString              * htmStr;
 
-
+@property (nonatomic,assign) BOOL clickeUploadEnable;//!< 是否触上报事件
+@property (nonatomic,assign) BOOL exposuredUploadEnable;
 
 @end
 

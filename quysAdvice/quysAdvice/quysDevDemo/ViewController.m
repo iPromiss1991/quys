@@ -12,12 +12,12 @@
 //#import "QuysViewController.h"
 #import <objc/runtime.h>
 #import "QuysViewController.h"
-@interface ViewController ()<QuysAdSplashDelegate>
+@interface ViewController ()<QuysAdSplashDelegate,QuysIncentiveVideoDelegate,QuysAdviceOpeenScreenDelegate>
 //@property (nonatomic,strong) QuysAdSplashService *service;
 //@property (nonatomic,strong) QuysInformationFlowService *service;
-@property (nonatomic,strong) QuysAdBannerService *service;
+//@property (nonatomic,strong) QuysAdBannerService *service;
 //@property (nonatomic,strong) QuysAdOpenScreenService *service;
-//@property (nonatomic,strong) QuysAdOpenScreenService *service;
+ @property (nonatomic,strong) QuysIncentiveVideoService *service;
 
 
 @property (nonatomic,strong) UIView *adView;
@@ -74,13 +74,16 @@
 //    [service loadAdViewNow];
 //    self.service = service;
     
-    QuysAdBannerService *service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cGrect:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 300) eventDelegate:self parentView:self.view];
-    [service loadAdViewNow];
-    self.service = service;
+//    QuysAdBannerService *service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cGrect:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 300) eventDelegate:self parentView:self.view];
+//    [service loadAdViewNow];
+//    self.service = service;
 //        QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) eventDelegate:self ];
 //        self.service = service;
     
-
+    
+    
+    QuysIncentiveVideoService *service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
+        self.service = service;
     // Do any additional setup after loading the view.
     
 }
@@ -108,7 +111,7 @@
 -(void)quys_requestSuccess:(QuysAdBannerService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
-    [self.service showAdView];
+//    [self.service showAdView];
 
 }
 -(void)quys_requestFial:(QuysAdBannerService *)service error:(NSError *)error

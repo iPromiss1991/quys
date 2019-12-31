@@ -242,6 +242,54 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return @"Unknown iPod";
 }
 
+
+
+/// 获取屏幕尺寸
+/// @param platform 设备名称
+- (NSString *)quys_iPhoneDiagonalByPlatform:(NSString *)platform{
+    
+    if ([platform isEqualToString:@"iPhone1,1"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone1,2"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone2,1"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone3,1"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone3,2"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone3,3"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone4,1"])    return @"3.5";
+    if ([platform isEqualToString:@"iPhone5,1"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone5,2"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone5,3"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone5,4"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone6,1"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone6,2"])    return @"4.0";
+    if ([platform isEqualToString:@"iPhone7,2"])    return @"4.7";
+    if ([platform isEqualToString:@"iPhone7,1"])    return @"5.5";
+    if ([platform isEqualToString:@"iPhone8,1"])    return @"4.7";
+    if ([platform isEqualToString:@"iPhone8,2"])    return @"5.5";
+    if ([platform isEqualToString:@"iPhone8,4"])    return @"4.0 ";
+    if ([platform isEqualToString:@"iPhone9,1"])    return @"4.7";
+    if ([platform isEqualToString:@"iPhone9,3"])    return @"4.7";
+    if ([platform isEqualToString:@"iPhone9,2"])    return @"5.5";
+    if ([platform isEqualToString:@"iPhone9,4"])    return @"5.5";
+    //2017年9月发布，更新三种机型：iPhone 8、iPhone 8 Plus、iPhone X
+    if ([platform isEqualToString:@"iPhone10,1"])  return @"4.7";
+    if ([platform isEqualToString:@"iPhone10,4"])  return @"4.7";
+    if ([platform isEqualToString:@"iPhone10,2"])  return @"5.5";
+    if ([platform isEqualToString:@"iPhone10,5"])  return @"5.5";
+    if ([platform isEqualToString:@"iPhone10,3"])  return @"5.8";
+    if ([platform isEqualToString:@"iPhone10,6"])  return @"5.8";
+    //2018年10月发布，更新三种机型：iPhone XR、iPhone XS、iPhone XS Max
+    if ([platform isEqualToString:@"iPhone11,8"])  return  @"6.1";
+    if ([platform isEqualToString:@"iPhone11,2"])  return @"5.8";
+    if ([platform isEqualToString:@"iPhone11,4"])  return @"6.5";
+    if ([platform isEqualToString:@"iPhone11,6"])  return @"6.5";
+    //2019年9月发布，更新三种机型：iPhone 11、iPhone 11 Pro、iPhone 11 Pro Max
+    if ([platform isEqualToString:@"iPhone12,1"])  return  @"6.1";
+    if ([platform isEqualToString:@"iPhone12,3"])  return  @"5.8";
+    if ([platform isEqualToString:@"iPhone12,5"])  return  @"6.5";
+    
+    return @"6.5";
+}
+
 - (float)quys_iOSVersion{
     
     return [[self systemVersion] floatValue];
@@ -435,7 +483,88 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
     NSString *netconnType = @"";
 
-    Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+
+    switch ([reach currentReachabilityStatus])
+    {
+        case NotReachable:// 没有网络
+        {
+
+            netconnType = @"0";//no network
+        }
+            break;
+
+        case ReachableViaWiFi:// Wifi
+        {
+            netconnType = @"100";
+        }
+            break;
+
+        case ReachableViaWWAN:// 手机自带网络
+        {
+            // 获取手机网络类型
+            CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+
+            NSString *currentStatus = info.currentRadioAccessTechnology;
+
+            if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyGPRS"]) {
+
+                netconnType = @"2";//@"GPRS"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyEdge"]) {
+
+                netconnType = @"2";// @"2.75G EDGE"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyWCDMA"]){
+
+                netconnType = @"3";// @"3G"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSDPA"]){
+
+                netconnType = @"3";//@"3.5G HSDPA"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSUPA"]){
+
+                netconnType = @"3";//@"3.5G HSUPA";
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMA1x"]){
+
+                netconnType = @"2";//@"2G"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORev0"]){
+
+                netconnType = @"3";// @"3G"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevA"]){
+
+                netconnType = @"3";// @"3G"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevB"]){
+
+                netconnType = @"3";// @"3G"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyeHRPD"]){
+
+                netconnType = @"3";//@"HRPD"
+            }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyLTE"]){
+
+                netconnType = @"4";//@"4G"
+            }else{
+                netconnType = @"1";//@"未知"
+
+            }
+        }
+            break;
+
+        default:
+            break;
+    }
+
+    return netconnType;
+}
+
+
+/// 网络类型
+/*
+0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
+*/
+- (NSString *)quys_getNetconnTypeForIncentiveVideo
+{
+
+    NSString *netconnType = @"";
+
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
 
     switch ([reach currentReachabilityStatus])
     {
@@ -461,39 +590,39 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
             if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyGPRS"]) {
 
-                netconnType = @"GPRS";
+                netconnType = @"2";//@"GPRS"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyEdge"]) {
 
-                netconnType = @"2.75G EDGE";
+                netconnType = @"2";// @"2.75G EDGE"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyWCDMA"]){
 
-                netconnType = @"3G";
+                netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSDPA"]){
 
-                netconnType = @"3.5G HSDPA";
+                netconnType = @"3";//@"3.5G HSDPA"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSUPA"]){
 
-                netconnType = @"3.5G HSUPA";
+                netconnType = @"3";//@"3.5G HSUPA";
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMA1x"]){
 
-                netconnType = @"2G";
+                netconnType = @"2";//@"2G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORev0"]){
 
-                netconnType = @"3G";
+                netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevA"]){
 
-                netconnType = @"3G";
+                netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevB"]){
 
-                netconnType = @"3G";
+                netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyeHRPD"]){
 
-                netconnType = @"HRPD";
+                netconnType = @"3";//@"HRPD"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyLTE"]){
 
-                netconnType = @"4G";
+                netconnType = @"4";//@"4G"
             }else{
-                netconnType = @"未知";
+                netconnType = @"999";//@"未知"
 
             }
         }
@@ -505,7 +634,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
     return netconnType;
 }
-
 
 
 /// 获取运营商
@@ -594,11 +722,27 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 }
 
 
-/// 屏幕分辨率
+/// 屏幕分辨率（像素）
 - (NSString*)quys_screenResolution
 {
-    double dbScreenResolution = sqrtl(powf(kScreenWidth, 2) + powf(kScreenHeight, 2));
+    double dbScreenResolution = kScreenWidth * kScreenHeight*powf([UIScreen mainScreen].scale, 2);
     return  [NSString stringWithFormat:@"%lf",dbScreenResolution];
+}
+
+/// 屏幕像素密度（该属性是按照android理解的，如：3.0）               相关资料：https://www.cnblogs.com/weekbo/p/9013388.html
+- (NSString*)quys_screenPixelDensity
+{
+    //TODO
+    float screenInch = [[self quys_iPhoneDiagonalByPlatform:[self quys_platformString]] floatValue];
+    double dbScreenResolution = sqrtl(powf(kScreenWidth*[UIScreen mainScreen].nativeScale, 2) + powf(kScreenHeight*[UIScreen mainScreen].scale, 2))/screenInch/160.0;
+    return  [NSString stringWithFormat:@"%lf",dbScreenResolution];
+}
+
+/// 屏幕密度（屏幕像素密度 * 标准dpi（160））
+- (NSString*)quys_screenDensity
+{
+    CGFloat screenDensity = [[self quys_screenPixelDensity] floatValue]*160.0;
+    return [NSString stringWithFormat:@"%f",screenDensity];
 }
 
 /// 国家，使用ISO-3166-1   Alpha-3

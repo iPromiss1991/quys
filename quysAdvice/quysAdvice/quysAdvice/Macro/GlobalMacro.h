@@ -212,6 +212,8 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kClickUPX @"__UP_X__"
 #define kClickUPY @"__UP_Y__"
 
+#define kClickClickID @"__CLICK_ID__"
+
 
 
 #pragma mark - 业务通知

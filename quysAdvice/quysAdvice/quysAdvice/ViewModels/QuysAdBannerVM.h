@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysAdBannerVM : NSObject<QuysAdSplashDelegate>
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
-@property (nonatomic,assign) BOOL clickedAdvice;//!< 是否触发点击事件
-@property (nonatomic,assign) BOOL exposuredAdvice;
 
 
 

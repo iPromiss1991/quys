@@ -6,14 +6,13 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdOpenScreenService.h"
-#import "QuysAdSplashApi.h"
-#import "QuysAdviceOuterlayerDataModel.h"
-#import "QuysAdviceModel.h"
-#import "QuysOpenScreenWindow.h"
+#import "QuysIncentiveVideoService.h"
+#import "QuysIncentiveVideoApi.h"
+#import "QuysIncentiveVideoOutLayerDataModel.h"
+#import "QuysIncentiveVideoWindow.h"
 #import "QuysFullScreenReplaceView.h"
-#import "QuysAdOpenScreenVM.h"
-@interface QuysAdOpenScreenService()<YTKRequestDelegate>
+#import "QuysIncentiveVideoVM.h"
+@interface QuysIncentiveVideoService()<YTKRequestDelegate>
 @property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
@@ -22,14 +21,14 @@
 @property (nonatomic,strong) UIWindow *window;
 
 
-@property (nonatomic,strong) QuysAdSplashApi *api;
+@property (nonatomic,strong) QuysIncentiveVideoApi *api;
 
 
 @end
 
 
-@implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate window:(UIWindow*)window;
+@implementation QuysIncentiveVideoService
+- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate window:(UIWindow*)window;
 {
     if (self = [super init])
     {
@@ -49,7 +48,7 @@
 - (void)config:(UIImage*)imgReplace
 {
     //配置api 并请求数据
-    QuysAdSplashApi *api = [[QuysAdSplashApi alloc]init];
+    QuysIncentiveVideoApi *api = [[QuysIncentiveVideoApi alloc]init];
     api.businessID = self.businessID;
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
@@ -79,9 +78,9 @@
 
 /// 根据响应数据创建指定view
 /// @param adViewModel 响应数据包装后的viewModel
-- (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
+- (void)configAdviceViewVM:(QuysIncentiveVideoDataModel*)adViewModel
 {
-    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
+    QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
     self.adviceView = [vm createAdviceView];
     self.loadAdViewEnable = YES;
 }
@@ -147,10 +146,10 @@
 
 -(void)requestFinished:(__kindof YTKBaseRequest *)request
 {
-    QuysAdviceOuterlayerDataModel *outerModel = [QuysAdviceOuterlayerDataModel yy_modelWithJSON:request.responseJSONObject];
+    QuysIncentiveVideoOutLayerDataModel *outerModel = [QuysIncentiveVideoOutLayerDataModel yy_modelWithJSON:request.responseJSONObject];
     if (outerModel && outerModel.data.count)
     {
-        QuysAdviceModel *adviceModel = outerModel.data[0];
+        QuysIncentiveVideoDataModel *adviceModel = outerModel.data[0];
         [self configAdviceViewVM:adviceModel];
         if ([self.delegate respondsToSelector:@selector(quys_requestSuccess:)])
         {

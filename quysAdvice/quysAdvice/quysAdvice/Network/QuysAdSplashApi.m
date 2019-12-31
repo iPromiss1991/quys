@@ -10,7 +10,6 @@
 #import "NSDate+QuysTimestamp.h"
 #import "UIDevice+Hardware.h"
 #import "QuysMD5.h"
-#import "QuysAdviceOuterlayerDataModel.h"
 @implementation QuysAdSplashApi
 - (NSString *)baseUrl
 {
@@ -43,10 +42,11 @@
     [dicM setObject:[device quys_customImei] forKey:@"imei"];
     
     [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
+    [dicM setObject:[[device quys_platformString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
     [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
     
-    [dicM setObject:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%lf",[device quys_iOSVersion]]] forKey:@"osv"];
+    [dicM setObject:[device systemVersion] forKey:@"osv"];
     [dicM setObject:[device quys_serialno] forKey:@"serialno"];
     [dicM setObject:kStringFormat(@"%lf",kScreenWidth) forKey:@"sw"];
     

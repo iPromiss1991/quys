@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "QuysAdSplashDelegate.h"
+#import "QuysAdviceOpeenScreenDelegate.h"
 @class QuysAdviceModel,QuysAdOpenScreenService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
@@ -16,13 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strImgUrl;
 @property (nonatomic,assign) NSInteger showDuration;
 
-@property (nonatomic,assign) BOOL clickedAdvice;//!< 是否触发点击事件
-@property (nonatomic,assign) BOOL exposuredAdvice;
 
 
 
 
-- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window;
+- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdviceOpeenScreenDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window;
 
 
 - (UIWindow *)createAdviceView;

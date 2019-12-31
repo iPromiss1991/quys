@@ -7,7 +7,7 @@
 /// 机型
 - (NSString *)quys_platform;
 - (NSString *)quys_platformString;//!< 常用这个方法
-
+- (NSString *)quys_iPhoneDiagonalByPlatform:(NSString *)platform;//屏幕尺寸
 /// 系统版本 ：浮点数
 - (float)quys_iOSVersion;
 
@@ -76,7 +76,11 @@
 */
 - (NSString *)quys_getNetconnType;
 
-
+/// 网络类型
+/*
+0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
+*/
+- (NSString *)quys_getNetconnTypeForIncentiveVideo;
 
 /// 获取运营商
 -(NSString*)quys_carrierName;
@@ -98,9 +102,14 @@
 /// 获取IDFV
 - (NSString*)quys_idFv;
 
-/// 屏幕分辨率
+/// 屏幕分辨率（像素）
 - (NSString*)quys_screenResolution;
 
+/// 屏幕像素密度
+- (NSString*)quys_screenPixelDensity;
+
+/// 屏幕密度（屏幕像素密度 * 标准dpi（160））
+- (NSString*)quys_screenDensity;
 
 /// 国家，使用ISO-3166-1   Alpha-3
 - (NSString*)quys_country;

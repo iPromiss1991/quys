@@ -114,19 +114,9 @@
 
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
-    if (self.clickedAdvice)
+    kWeakSelf(self)
+    if (self.adModel.clickeUploadEnable)
     {
-        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-        //更新点击坐标
-        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-        
-        [self updateReplaceDictionary:kClickUPX value:strCpX];
-        [self updateReplaceDictionary:kClickUPY value:strCpY];
-        self.adModel.statisticsModel.clicked = YES;
-        [self uploadServer:self.adModel.clkTracking];
-        
         if ([self.adView isMemberOfClass:[QuysAdBanner class]])
         {
             switch (self.adModel.ctype) {
@@ -135,6 +125,7 @@
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                        [weakself updateClickAndUpload:cpClick];
                     }];
                 }
                     break;
@@ -143,6 +134,7 @@
                     QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                        [weakself updateClickAndUpload:cpClick];
                     }];
                 }
                     break;
@@ -151,18 +143,19 @@
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                        [weakself updateClickAndUpload:cpClick];
                             }];
                         }
                     break;
                 case QuysAdviceActiveTypeDownAppAppstore:
                 {
                     [self openUrl:self.adModel.downUrl];
-                    
+                    [self updateClickAndUpload:cpClick];
                 }
                     break;
                 case QuysAdviceActiveTypeDownAppWebUrl:
                 {
-                    [self getRealDownUrl:self.adModel.downUrl];
+                    [self getRealDownUrl:self.adModel.downUrl point:cpClick];
                 }
                     break;
                 default:
@@ -181,7 +174,25 @@
     
 }
 
-- (void)getRealDownUrl:(NSString*)strWebUrl
+- (void)updateClickAndUpload:(CGPoint)cpClick
+{
+    if (self.adModel.clickeUploadEnable)
+    {
+    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+    //更新点击坐标
+    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+    
+    [self updateReplaceDictionary:kClickUPX value:strCpX];
+    [self updateReplaceDictionary:kClickUPY value:strCpY];
+    self.adModel.statisticsModel.clicked = YES;
+    [self uploadServer:self.adModel.clkTracking];
+    }
+}
+
+
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -196,8 +207,13 @@
             {
                 [weakself openUrl:model.dstlink];
             }
+            if (!kISNullString(model.clickid))
+                {
+                    [weakself openUrl:model.dstlink];
+                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                    [weakself updateClickAndUpload:cpClick];
+                }
         }
-        
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         
     }];
@@ -205,7 +221,7 @@
 
 -(void)interstitialOnExposure
 {
-    if (!self.adModel.statisticsModel.exposured)
+    if (self.adModel.exposuredUploadEnable)
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
@@ -217,39 +233,6 @@
 }
 
 
--(BOOL)clickedAdvice
-{
-    if (self.adModel.statisticsModel.clicked)
-    {
-        if (self.adModel.isReportRepeatAble)
-        {
-            return YES;
-        }else
-        {
-            return NO;
-        }
-    }else
-    {
-        return YES;
-    }
-}
-
--(BOOL)exposuredAdvice
-{
-    if (self.adModel.statisticsModel.exposured)
-    {
-        if (self.adModel.isReportRepeatAble)
-        {
-            return YES;
-        }else
-        {
-            return NO;
-        }
-    }else
-    {
-        return YES;
-    }
-}
 
 
 

@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import <quysAdvice/quysAdvice.h>
-@interface AppDelegate ()<QuysAdSplashDelegate>
+@interface AppDelegate ()<QuysAdSplashDelegate,QuysAdviceOpeenScreenDelegate>
 @property (nonatomic,strong) QuysAdOpenScreenService *service;
 
 
@@ -46,40 +46,9 @@
 }
 
 
--(void)quys_requestStart:(QuysAdOpenScreenService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-}
--(void)quys_requestSuccess:(QuysAdOpenScreenService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-//    [self.service showAdView];
-
-}
--(void)quys_requestFial:(QuysAdOpenScreenService *)service error:(NSError *)error
+- (void)quys_requestStart:(QuysAdBaseService *)service
 {
     NSLog(@"%s",__PRETTY_FUNCTION__);
 
-}
--(void)quys_interstitialOnExposure:(QuysAdOpenScreenService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-
-}
--(void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdOpenScreenService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-}
--(void)quys_interstitialOnAdClose:(QuysAdOpenScreenService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-
-}
-
-- (void)removeBackgroundImageView
-
-{
-    
-    self.service = nil;
 }
 @end

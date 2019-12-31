@@ -1,18 +1,18 @@
 //
-//  QuysAdviceModel.m
+//  QuysIncentiveVideoDataModel.m
 //  quysAdvice
 //
-//  Created by quys on 2019/12/9.
+//  Created by quys on 2019/12/31.
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdviceModel.h"
-@implementation QuysAdviceModel
-//替换字符：
-+ (NSDictionary *)modelCustomPropertyMapper
-{
+#import "QuysIncentiveVideoDataModel.h"
+
+@implementation QuysIncentiveVideoDataModel
+////替换字符：
++ (NSDictionary *)modelCustomPropertyMapper {
     return
-    @{
+  @{
         @"desc" : @"description"
     };
 }
@@ -28,6 +28,7 @@
         _statisticsModel = [QuysUploadStatisticsModel new];
     }return _statisticsModel;
 }
+
 
 -(BOOL)clickeUploadEnable
 {
@@ -62,5 +63,6 @@
         return YES;
     }
 }
+
 
 @end
