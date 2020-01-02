@@ -31,6 +31,8 @@
     view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
     view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
     
+    //TODO:视频尾帧view在此回调加载
+    
     
 }
 - (void)viewDidLoad

@@ -50,7 +50,9 @@
     [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%@",_adModel.videoHeight)];
     [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
     [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
-    //    self.strImgUrl = model.fileUrl;
+    self.strImgUrl = model.icon;
+    self.videoUrl = model.videoUrl;
+    self.isClickable = model.isClickable;
 }
 
 
@@ -111,46 +113,42 @@
 
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
-    if (self.adModel.isClickable)//播放完成设置：isClickable=yes
+    if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
     {
-        if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
+        /*点击事件优先级：
+         1\deep:
+         2\isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
+         */
+        if (self.adModel.isDownLoadType)
         {
-            /*点击事件优先级：
-             1\deep:
-             2\isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
-             */
-            if (self.adModel.isDownLoadType)
+            //TODO
+            if (self.adModel.clickPosition == 1)
             {
-                //TODO
-                if (self.adModel.clickPosition == 1)
-                {
-                    [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
-                }else
-                {
-                    NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
-                     [self openUrl:strMacroReplace];
-                    [self updateClickAndUpload:cpClick];
-                }
-
+                [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
             }else
             {
-                if ([self.adModel.landingPageUrl containsString:@"ipa"])
-                {
-                    NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
-                    [self openUrl:strMacroReplace];
-                    [self updateClickAndUpload:cpClick];
-                }else
-                {
-                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
-                    QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
-                    QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
-                    [nav pushViewController:webVC animated:YES];
-                    [self updateClickAndUpload:cpClick];
-                }
+                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
+                 [self openUrl:strMacroReplace];
+                [self updateClickAndUpload:cpClick];
+            }
+
+        }else
+        {
+            if ([self.adModel.landingPageUrl containsString:@"ipa"])
+            {
+                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
+                [self openUrl:strMacroReplace];
+                [self updateClickAndUpload:cpClick];
+            }else
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
+                QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
+                QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
+                [nav pushViewController:webVC animated:YES];
+                [self updateClickAndUpload:cpClick];
             }
         }
     }
-
 }
 
 

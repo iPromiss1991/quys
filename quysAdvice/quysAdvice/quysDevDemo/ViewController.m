@@ -82,8 +82,8 @@
     
     
     
-    QuysIncentiveVideoService *service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
-        self.service = service;
+//    QuysIncentiveVideoService *service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
+//        self.service = service;
     // Do any additional setup after loading the view.
     
 }
@@ -182,6 +182,8 @@
 //    [[QuysAdviceManager shareManager] configSettings] ;
 //    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
 //    self.service = service;
+    
+    [self.navigationController pushViewController:[QuysViewController new] animated:YES];
     
  }
 @end

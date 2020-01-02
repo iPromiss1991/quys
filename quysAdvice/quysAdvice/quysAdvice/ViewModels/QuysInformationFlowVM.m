@@ -190,56 +190,50 @@
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
     kWeakSelf(self)
-    if (self.adModel.clickeUploadEnable)
+    if ([self.adView isMemberOfClass:[QuysInformationFlowDefaultView class]] ||[self.adView isMemberOfClass:[QuysInformationFlowSmallPictureView class]]||[self.adView isMemberOfClass:[QuysInformationFlowMorePictureView class]])
     {
-        if ([self.adView isMemberOfClass:[QuysInformationFlowDefaultView class]] ||[self.adView isMemberOfClass:[QuysInformationFlowSmallPictureView class]]||[self.adView isMemberOfClass:[QuysInformationFlowMorePictureView class]])
-        {
-            switch (self.adModel.ctype) {
-                case QuysAdviceActiveTypeHtml:
-                {
-                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                        [weakself updateClickAndUpload:cpClick];
-                    }];
-                }
-                    break;
-                case QuysAdviceActiveTypeImageUrl:
-                {
-                    QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
-                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                        [weakself updateClickAndUpload:cpClick];
-                    }];
-                }
-                    break;
-                case QuysAdviceActiveTypeWebURL:
-                {
-                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                        [weakself updateClickAndUpload:cpClick];
-                            }];
-                        }
-                    break;
-                case QuysAdviceActiveTypeDownAppAppstore:
-                {
-                    [self openUrl:self.adModel.downUrl];
-                    [self updateClickAndUpload:cpClick];
-                }
-                    break;
-                case QuysAdviceActiveTypeDownAppWebUrl:
-                {
-                    [self getRealDownUrl:self.adModel.downUrl point:cpClick];
-                }
-                    break;
-                default:
-                    break;
+        switch (self.adModel.ctype) {
+            case QuysAdviceActiveTypeHtml:
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    [weakself updateClickAndUpload:cpClick];
+                }];
             }
+                break;
+            case QuysAdviceActiveTypeImageUrl:
+            {
+                QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    [weakself updateClickAndUpload:cpClick];
+                }];
+            }
+                break;
+            case QuysAdviceActiveTypeWebURL:
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    [weakself updateClickAndUpload:cpClick];
+                        }];
+                    }
+                break;
+            case QuysAdviceActiveTypeDownAppAppstore:
+            {
+                [self openUrl:self.adModel.downUrl];
+                [self updateClickAndUpload:cpClick];
+            }
+                break;
+            case QuysAdviceActiveTypeDownAppWebUrl:
+            {
+                [self getRealDownUrl:self.adModel.downUrl point:cpClick];
+            }
+                break;
+            default:
+                break;
         }
-    }else
-    {
-        
     }
 }
 

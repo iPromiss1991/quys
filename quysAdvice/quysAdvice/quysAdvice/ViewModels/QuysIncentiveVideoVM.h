@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strImgUrl;
 @property (nonatomic,assign) NSInteger showDuration;
 
+@property (nonatomic,strong) NSString *videoUrl;//!< 视频播放地址
+@property (nonatomic,assign) BOOL isClickable;
 
 
 

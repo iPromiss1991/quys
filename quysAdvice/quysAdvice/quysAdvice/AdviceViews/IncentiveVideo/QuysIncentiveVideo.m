@@ -7,17 +7,23 @@
 //
 
 #import "QuysIncentiveVideo.h"
-@interface QuysIncentiveVideo()
+#import "QuysVideoPlayerView.h"
+@interface QuysIncentiveVideo()<QuysVideoPlayerDelegate>
 @property (nonatomic,strong) UIView *viewContain;
-@property (nonatomic,strong) UIImageView *imgView;
 
+@property (nonatomic,strong) UIButton *btnCounntdown;//!< 倒计时
 @property (nonatomic,strong) UIButton *btnClose;
-@property (nonatomic,strong) UIImageView *imgSmallIcon;
+
+//TODO:videoPlayerView
+@property (nonatomic,strong) QuysVideoPlayerView *playerView;
+
+@property (nonatomic,strong) UIView *viewFootContain;
 @property (nonatomic,strong) UIImageView *imgLogo;
-
 @property (nonatomic,strong) UILabel *lblContent;
-@property (nonatomic,assign) NSInteger countdownLeft;
+@property (nonatomic,strong) UIButton *btnVoice;//!< 声音
 
+//倒计时
+@property (nonatomic,assign) NSInteger countdownLeft;
 @property (nonatomic,strong) dispatch_source_t source_t;
 
 
@@ -40,30 +46,47 @@
 
 - (void)createUI
 {
-    UIView *viewContain = [[UIView alloc]initWithFrame:self.frame];
+    UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
     viewContain.backgroundColor = [UIColor orangeColor];
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"" ]];
-    imgView.userInteractionEnabled = YES;
-    [self.viewContain addSubview:imgView];
-    self.imgView = imgView;
+    
+    QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    playerView.delegate = self;
+    [self.viewContain addSubview:playerView];
+    self.playerView = playerView;
+    
+    //
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"" forState:UIControlStateNormal];
+    [btnClose setTitle:@"关闭" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
     [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
-    UIImageView *imgSmallIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-    imgSmallIcon.userInteractionEnabled = YES;
-    [self.viewContain addSubview:imgSmallIcon];
-    self.imgSmallIcon = imgSmallIcon;
+    UIButton *btnCounntdown = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnCounntdown.userInteractionEnabled = NO;
+    [btnCounntdown setTitle:@"倒计时" forState:UIControlStateNormal];
+    [btnCounntdown setTitle:@"" forState:UIControlStateHighlighted];
+    [btnCounntdown setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.viewContain addSubview:btnCounntdown];
+    self.btnCounntdown = btnCounntdown;
+    
+    //
+    UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
+    viewFootContain.backgroundColor = [UIColor orangeColor];
+    [self.viewContain addSubview:viewFootContain];
+    self.viewFootContain = viewFootContain;
+    
+    UIImageView *imgLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    imgLogo.userInteractionEnabled = YES;
+    [self.viewFootContain addSubview:imgLogo];
+    self.imgLogo = imgLogo;
     
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 0;
@@ -71,13 +94,16 @@
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     self.lblContent = lblContent;
-    [self.viewContain addSubview:lblContent];
+    [self.viewFootContain addSubview:lblContent];
     
+    UIButton *btnVoice = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnVoice addTarget:self action:@selector(clickVoiceBtEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [btnVoice setTitle:@"声音" forState:UIControlStateNormal];
+    [btnVoice setTitle:@"" forState:UIControlStateHighlighted];
+    [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.viewFootContain addSubview:btnVoice];
+    self.btnVoice = btnVoice;
     
-    UIImageView *imgLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-    imgLogo.userInteractionEnabled = YES;
-    [self.viewContain addSubview:imgLogo];
-    self.imgLogo = imgLogo;
     
     
     [self setNeedsUpdateConstraints];
@@ -90,39 +116,54 @@
         make.edges.mas_equalTo(self);
     }];
     
-    [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.viewContain);
+    [self.btnCounntdown mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
+        make.left.mas_equalTo(self.viewContain).offset(kScale_W(20));
+        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
+        make.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
-        make.left.mas_greaterThanOrEqualTo(self.viewContain);
+        make.left.mas_greaterThanOrEqualTo(self.btnCounntdown.mas_right);
         make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20));
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_W(22)).priorityHigh();
-        make.bottom.mas_lessThanOrEqualTo(self.viewContain).priorityHigh();
+        make.height.mas_equalTo(kScale_H(22)).priorityHigh();
     }];
     
+    [self.playerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.viewContain).priorityHigh();
+        make.left.right.mas_equalTo(self.viewContain);
+    }];
     
-    [self.imgSmallIcon mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_greaterThanOrEqualTo(self.viewContain);
-        make.left.mas_equalTo(self.viewContain).mas_offset(kScale_W(20));
-        make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-20));
-        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
+    //
+    [self.viewFootContain mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.playerView.mas_bottom).priorityHigh();
+        make.left.right.bottom.mas_equalTo(self.viewContain);
+        make.height.mas_equalTo(kScale_H(200)).priorityHigh();
+    }];
+    
+    [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.viewFootContain).priorityHigh();
+        make.left.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(5));
+        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(60)).priorityHigh();
     }];
     
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_greaterThanOrEqualTo(self.viewContain).mas_offset(kScale_H(200));
-        make.left.mas_equalTo(self.imgSmallIcon.mas_right).mas_offset(kScale_W(5));
-        make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-10));
+        make.top.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(5));
+        make.left.mas_equalTo(self.imgLogo.mas_right).mas_offset(kScale_W(5));
+        make.bottom.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(-10));
     }];
     
-    
-    [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.imgSmallIcon).priorityHigh();
+    //TODO：音量按钮布局待确认！
+    [self.btnVoice mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.imgLogo).priorityHigh();
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
-        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20)).priorityHigh();
-        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
+        make.right.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(-5)).priorityHigh();
+        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(22)).priorityHigh();
+        
     }];
     
     
@@ -146,31 +187,50 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
-    dispatch_suspend(self.source_t);
-    //获取触发触摸的点
-    CGPoint cpBegain = [sender locationInView:self];
-    CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
-    if (self.quysAdviceClickEventBlockItem)
+    if (!self.vm.isClickable)
     {
-        self.quysAdviceClickEventBlockItem(cpBegainResult);
+         [self suspend];
+         //获取触发触摸的点
+         CGPoint cpBegain = [sender locationInView:self];
+         CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+         if (self.quysAdviceClickEventBlockItem)
+         {
+             self.quysAdviceClickEventBlockItem(cpBegainResult);
+         }
     }
 }
 
+
+/// 关闭广告
+/// @param sender UIButton
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    [self closeAndRemovePlayer];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
 }
 
+- (void)closeAndRemovePlayer
+{
+    [self suspend];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
+}
+
+/// 静音设置
+/// @param sender UIButton
+- (void)clickVoiceBtEvent:(UIButton*)sender
+{
+    [self.playerView setMute];
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+}
+
+
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
 - (void)hlj_viewStatisticalCallBack
 {
     //倒计时
-    [self countdownEvevt];
     if (self.quysAdviceStatisticalCallBackBlockItem)
     {
         self.quysAdviceStatisticalCallBackBlockItem();
@@ -188,12 +248,16 @@
         if (self.countdownLeft >= 1)
         {
             weakself.countdownLeft--;
-            [weakself.btnClose setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+            [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+            [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateHighlighted];
+            NSLog(@"%lds",weakself.countdownLeft);
         }else
         {
             dispatch_source_cancel(weakself.source_t );
-            [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
-            [self clickCloseBtEvent:nil];
+            [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateHighlighted];
+            NSLog(@"%lds",weakself.countdownLeft);
+        //TODO:加载尾帧，同时继续播放剩余内容（方案：1、post 通知。  2、监听页面显示）
         }
         
     });
@@ -202,13 +266,57 @@
     
 }
 
+- (void)suspend
+{
+    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
+    if (self.source_t)
+    {
+        dispatch_suspend(self.source_t);
+    }
+}
+
+
+- (void)resume
+{
+    //重启倒计时（因为倒计时完毕会移除当前的自定义window）
+    if (self.source_t) {
+        dispatch_resume(self.source_t);
+        
+    }
+}
+
+
+#pragma mark -QuysVideoPlayerDelegate
+
+- (void)quys_videoPlay:(NSDictionary *)playItemInfo isCorrectStatus:(BOOL)status
+{
+    if (status)
+    {
+        self.countdownLeft = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]] - [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]];
+        [self countdownEvevt];
+    }
+}
+
+- (NSInteger)translateMediaTimeToSeconds:(NSString*)mediaTime
+{
+    NSArray *arrTimes = [mediaTime componentsSeparatedByString:@":"];
+    NSInteger totalTime ;
+    if (arrTimes.count == 2)
+    {
+        totalTime = [arrTimes[0] integerValue]*60 + [arrTimes[1] integerValue] ;
+    }else
+    {
+        totalTime = [arrTimes[0] integerValue];
+    }
+    return totalTime;
+}
+
 - (void)setVm:(QuysIncentiveVideoVM *)vm
 {
     _vm = vm;
-    [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-    [self.imgSmallIcon sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-    self.countdownLeft = vm.showDuration;
+    
+    self.playerView.urlVideo = vm.videoUrl;
     
 }
 

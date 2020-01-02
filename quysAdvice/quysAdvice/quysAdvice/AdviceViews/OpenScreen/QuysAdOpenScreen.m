@@ -193,7 +193,6 @@
         {
             dispatch_source_cancel(weakself.source_t );
             [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
-            [self clickCloseBtEvent:nil];
         }
         
     });
