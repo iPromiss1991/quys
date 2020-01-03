@@ -11,9 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
-typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
-typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
+
 @interface QuysIncentiveVideo : UIView
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysIncentiveVideoVM*)viewModel;
 
@@ -22,6 +20,21 @@ typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
 
+@property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayEndCallBackBlock quysAdvicePlayEndCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceProgressEventBlock quysAdviceProgressEventBlockItem;
+
+@property (nonatomic,copy) QuysAdviceMuteCallBackBlock quysAdviceMuteCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceCloseMuteCallBackBlock quysAdviceCloseMuteCallBackBlockItemItem;
+
+@property (nonatomic,copy) QuysAdviceEndViewCloseEventBlock quysAdviceEndViewCloseEventBlockItem;
+@property (nonatomic,copy) QuysAdviceEndViewClickEventBlock quysAdviceEndViewClickEventBlockItem;
+@property (nonatomic,copy) QuysAdviceEndViewStatisticalCallBackBlock quysAdviceEndViewStatisticalCallBackBlockItem;
+
+
+
+@property (nonatomic,copy) QuysAdviceSuspendCallBackBlock quysAdviceSuspendCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayagainCallBackBlock quysAdvicePlayagainCallBackBlockItem;
 @end
 
 NS_ASSUME_NONNULL_END

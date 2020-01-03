@@ -7,7 +7,6 @@
 //
 
 #import "QuysIncentiveVideoVM.h"
-#import "QuysIncentiveVideoDataModel.h"
 #import "QuysIncentiveVideoWindow.h"
 #import "QuysFullScreenReplaceView.h"
 #import "QuysNavigationController.h"
@@ -101,6 +100,47 @@
             [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
     };
+    
+    //静音
+    adView.quysAdviceMuteCallBackBlockItem = ^{
+         
+    };
+    
+    //关闭静音
+    adView.quysAdviceCloseMuteCallBackBlockItemItem = ^{
+         
+    };
+    
+    //关闭尾帧
+    adView.quysAdviceEndViewCloseEventBlockItem = ^{
+         
+    };
+    
+    //尾帧点击
+    adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
+         
+    };
+    
+    
+    //视频暂停
+    adView.quysAdviceSuspendCallBackBlockItem = ^{
+         
+    };
+    
+    //视频再次播放
+    adView.quysAdvicePlayagainCallBackBlockItem = ^{
+         
+    };
+    
+    //尾帧曝光事件
+    adView.quysAdviceEndViewStatisticalCallBackBlockItem = ^{
+        [weakself interstitialOnExposureEndView];
+        if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnExposure:)])
+        {
+            [weakself.delegate quys_endViewInterstitialOnExposure:(QuysAdBaseService*)weakself.service];
+        }
+    };
+
     self.adView = adView;
     return adView;
     
@@ -213,6 +253,20 @@
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
         [self uploadServer:self.adModel.reportVideoShowUrl];
         self.adModel.statisticsModel.exposured = YES;
+    }else
+    {
+    }
+}
+
+
+-(void)interstitialOnExposureEndView
+{
+    if (self.adModel.exposuredUploadEnableEndView)
+    {
+        [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
+        [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
+        [self uploadServer:self.adModel.reportLandingPageShowUrl];
+        self.adModel.statisticsModelEndView.exposured = YES;
     }else
     {
     }

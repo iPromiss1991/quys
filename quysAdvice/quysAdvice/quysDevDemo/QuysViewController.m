@@ -27,7 +27,7 @@
     [self vhl_setNavBarBackgroundAlpha:1.0f];
 //    [self vhl_setNavBarHidden:YES];
     [self setQus_navBackButtonTitle:@"测试2"];
-    self.view.backgroundColor = [UIColor cyanColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     QuysIncentiveVideoService *service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
         self.service = service;

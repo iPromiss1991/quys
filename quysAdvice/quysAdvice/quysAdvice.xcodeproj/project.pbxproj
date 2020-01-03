@@ -79,7 +79,6 @@
 		FB955A5323B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A4D23B9ECA400AFA427 /* QuysIncentiveVideoWindowVC.h */; };
 		FB955A5423B9ECA500AFA427 /* QuysIncentiveVideoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A4E23B9ECA400AFA427 /* QuysIncentiveVideoWindow.m */; };
 		FB955A5523B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A4F23B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.m */; };
-		FB955A5723B9EEDD00AFA427 /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A5623B9EEDD00AFA427 /* nav_back@2x.png */; };
 		FB955A5A23B9FF8500AFA427 /* QuysIncentiveVideoApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A5823B9FF8500AFA427 /* QuysIncentiveVideoApi.h */; };
 		FB955A5B23B9FF8500AFA427 /* QuysIncentiveVideoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A5923B9FF8500AFA427 /* QuysIncentiveVideoApi.m */; };
 		FB955A5E23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A5C23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h */; };
@@ -89,6 +88,14 @@
 		FB955A6523BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A6423BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB955A7023BD8DE400AFA427 /* QuysVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A6E23BD8DE400AFA427 /* QuysVideoPlayerView.h */; };
 		FB955A7123BD8DE400AFA427 /* QuysVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A6F23BD8DE400AFA427 /* QuysVideoPlayerView.m */; };
+		FB955A8023BEE7A400AFA427 /* voice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A7523BEE70300AFA427 /* voice@2x.png */; };
+		FB955A8123BEE7A400AFA427 /* voice@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A7223BEE70200AFA427 /* voice@3x.png */; };
+		FB955A8923BEE83000AFA427 /* back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A8723BEE83000AFA427 /* back@3x.png */; };
+		FB955A8A23BEE83000AFA427 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A8823BEE83000AFA427 /* back@2x.png */; };
+		FB955A8D23BEEA4E00AFA427 /* mute@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A8B23BEEA4E00AFA427 /* mute@2x.png */; };
+		FB955A8E23BEEA4E00AFA427 /* mute@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A8C23BEEA4E00AFA427 /* mute@3x.png */; };
+		FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */; };
+		FB955A9223BEEB8D00AFA427 /* QuysImgPlayendCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */; };
 		FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */; };
 		FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */; };
 		FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892623A216E000D0088C /* UIView+Statistical.h */; };
@@ -240,7 +247,6 @@
 		FB955A4D23B9ECA400AFA427 /* QuysIncentiveVideoWindowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysIncentiveVideoWindowVC.h; sourceTree = "<group>"; };
 		FB955A4E23B9ECA400AFA427 /* QuysIncentiveVideoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysIncentiveVideoWindow.m; sourceTree = "<group>"; };
 		FB955A4F23B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysIncentiveVideoWindowVC.m; sourceTree = "<group>"; };
-		FB955A5623B9EEDD00AFA427 /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_back@2x.png"; path = "../nav_back@2x.png"; sourceTree = "<group>"; };
 		FB955A5823B9FF8500AFA427 /* QuysIncentiveVideoApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysIncentiveVideoApi.h; sourceTree = "<group>"; };
 		FB955A5923B9FF8500AFA427 /* QuysIncentiveVideoApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysIncentiveVideoApi.m; sourceTree = "<group>"; };
 		FB955A5C23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysIncentiveVideoOutLayerDataModel.h; sourceTree = "<group>"; };
@@ -250,6 +256,14 @@
 		FB955A6423BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdviceOpeenScreenDelegate.h; sourceTree = "<group>"; };
 		FB955A6E23BD8DE400AFA427 /* QuysVideoPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysVideoPlayerView.h; sourceTree = "<group>"; };
 		FB955A6F23BD8DE400AFA427 /* QuysVideoPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysVideoPlayerView.m; sourceTree = "<group>"; };
+		FB955A7223BEE70200AFA427 /* voice@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voice@3x.png"; sourceTree = "<group>"; };
+		FB955A7523BEE70300AFA427 /* voice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voice@2x.png"; sourceTree = "<group>"; };
+		FB955A8723BEE83000AFA427 /* back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@3x.png"; sourceTree = "<group>"; };
+		FB955A8823BEE83000AFA427 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
+		FB955A8B23BEEA4E00AFA427 /* mute@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mute@2x.png"; sourceTree = "<group>"; };
+		FB955A8C23BEEA4E00AFA427 /* mute@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mute@3x.png"; sourceTree = "<group>"; };
+		FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysImgPlayendCoverView.h; sourceTree = "<group>"; };
+		FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysImgPlayendCoverView.m; sourceTree = "<group>"; };
 		FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseJsonResponseSerializer.h; sourceTree = "<group>"; };
 		FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseJsonResponseSerializer.m; sourceTree = "<group>"; };
 		FBBA892623A216E000D0088C /* UIView+Statistical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Statistical.h"; sourceTree = "<group>"; };
@@ -616,6 +630,8 @@
 				FB955A4F23B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.m */,
 				FB955A6E23BD8DE400AFA427 /* QuysVideoPlayerView.h */,
 				FB955A6F23BD8DE400AFA427 /* QuysVideoPlayerView.m */,
+				FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */,
+				FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */,
 			);
 			path = IncentiveVideo;
 			sourceTree = "<group>";
@@ -697,7 +713,12 @@
 		FBC4CE6323B4570200AF86B1 /* quysBundle */ = {
 			isa = PBXGroup;
 			children = (
-				FB955A5623B9EEDD00AFA427 /* nav_back@2x.png */,
+				FB955A8B23BEEA4E00AFA427 /* mute@2x.png */,
+				FB955A8C23BEEA4E00AFA427 /* mute@3x.png */,
+				FB955A8823BEE83000AFA427 /* back@2x.png */,
+				FB955A8723BEE83000AFA427 /* back@3x.png */,
+				FB955A7523BEE70300AFA427 /* voice@2x.png */,
+				FB955A7223BEE70200AFA427 /* voice@3x.png */,
 				FBC4CE6A23B457AE00AF86B1 /* close_press@2x.png */,
 				FBC4CE6923B457AE00AF86B1 /* close_press@3x.png */,
 				FBC4CE6C23B457AE00AF86B1 /* close@2x.png */,
@@ -716,6 +737,7 @@
 			files = (
 				FB955A3F23B9EAB000AFA427 /* QuysIncentiveVideoService.h in Headers */,
 				FB955A3C23B9E9E700AFA427 /* QuysIncentiveVideoDelegate.h in Headers */,
+				FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */,
 				FB955A6523BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h in Headers */,
 				FB955A5E23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
@@ -925,11 +947,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB955A5723B9EEDD00AFA427 /* nav_back@2x.png in Resources */,
+				FB955A8023BEE7A400AFA427 /* voice@2x.png in Resources */,
+				FB955A8D23BEEA4E00AFA427 /* mute@2x.png in Resources */,
+				FB955A8123BEE7A400AFA427 /* voice@3x.png in Resources */,
 				FBC4CE7123B457AE00AF86B1 /* close@2x.png in Resources */,
 				FBC4CE7023B457AE00AF86B1 /* close@3x.png in Resources */,
 				FBC4CE6E23B457AE00AF86B1 /* close_press@3x.png in Resources */,
+				FB955A8A23BEE83000AFA427 /* back@2x.png in Resources */,
 				FBC4CE6F23B457AE00AF86B1 /* close_press@2x.png in Resources */,
+				FB955A8E23BEEA4E00AFA427 /* mute@3x.png in Resources */,
+				FB955A8923BEE83000AFA427 /* back@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1047,7 @@
 				FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */,
 				FB955A5223B9ECA500AFA427 /* QuysIncentiveVideo.m in Sources */,
 				FBBA897823AB1F2700D0088C /* QuysAdOpenScreenService.m in Sources */,
+				FB955A9223BEEB8D00AFA427 /* QuysImgPlayendCoverView.m in Sources */,
 				FB955A1823B48CE200AFA427 /* VHLNavigation.m in Sources */,
 				FB955A1D23B48E7E00AFA427 /* UIViewController+QuysNavBar.m in Sources */,
 				FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */,

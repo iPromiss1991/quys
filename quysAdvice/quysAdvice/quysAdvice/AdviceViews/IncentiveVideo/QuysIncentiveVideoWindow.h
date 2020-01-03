@@ -17,9 +17,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysIncentiveVideoVM*)viewModel;
 
 @property (nonatomic,strong) QuysIncentiveVideoVM *vm;
+
 @property (nonatomic,copy) QuysAdviceCloseEventBlock quysAdviceCloseEventBlockItem;
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
+
+@property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayEndCallBackBlock quysAdvicePlayEndCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceProgressEventBlock quysAdviceProgressClickEventBlockItem;
+
+@property (nonatomic,copy) QuysAdviceMuteCallBackBlock quysAdviceMuteCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceCloseMuteCallBackBlock quysAdviceCloseMuteCallBackBlockItemItem;
+
+@property (nonatomic,copy) QuysAdviceEndViewCloseEventBlock quysAdviceEndViewCloseEventBlockItem;
+@property (nonatomic,copy) QuysAdviceEndViewClickEventBlock quysAdviceEndViewClickEventBlockItem;
+
+@property (nonatomic,copy) QuysAdviceSuspendCallBackBlock quysAdviceSuspendCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayagainCallBackBlock quysAdvicePlayagainCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceEndViewStatisticalCallBackBlock quysAdviceEndViewStatisticalCallBackBlockItem;
+
 
 @end
 

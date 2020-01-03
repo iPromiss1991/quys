@@ -76,7 +76,10 @@
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
     [self.player play];//开始播放视频
-        
+    if (self.quysAdvicePlayStartCallBackBlockItem)
+    {
+        self.quysAdvicePlayStartCallBackBlockItem();
+    }
     AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlVideo]];
     [self vpc_addObserverToPlayerItem:item];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -91,15 +94,24 @@
 #pragma mark - PrivateMethod
 
 
--(void)playButtonWithStates:(BOOL)state
+-(void)playStates:(BOOL)state
 {
     
     if (state)
     {
         [self.player pause];
+        if (self.quysAdviceSuspendCallBackBlockItem)
+        {
+            self.quysAdviceSuspendCallBackBlockItem();
+        }
+        
     }else
     {
         [self.player play];
+        if (self.quysAdvicePlayagainCallBackBlockItem)
+        {
+            self.quysAdvicePlayagainCallBackBlockItem();
+        }
     }
     
 }
@@ -177,11 +189,20 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"status"]) {
+    if ([keyPath isEqualToString:@"status"])
+    {
         AVPlayerStatus status= [[change objectForKey:@"new"] intValue];
         if (status == AVPlayerStatusReadyToPlay)
         {
             [self quys_videoPlay];
+            if (self.quysAdviceLoadSucessCallBackBlockItem) {
+                self.quysAdviceLoadSucessCallBackBlockItem();
+            }
+        }else if(status == AVPlayerStatusFailed)
+        {
+            if (self.quysAdviceLoadFailCallBackBlockItem) {
+                 self.quysAdviceLoadFailCallBackBlockItem();
+             }
         }
     } else if ([keyPath isEqualToString:@"loadedTimeRanges"])
     {
@@ -203,7 +224,7 @@
             }
             self.playProgress = progress;
         }
-        NSLog(@"yon = %@",self.buffered ? @"yes" : @"no");
+        NSLog(@"buffered = %@",self.buffered ? @"yes" : @"no");
     }
 }
 
@@ -217,9 +238,33 @@
 
 - (void)setMute
 {
-   (self.player.volume == 0.0)?(self.player.volume = 1.0):(self.player.volume = 0.0f);
+     if (self.player.volume == 0.0)
+     {
+         self.player.volume = 1.0;
+         if (self.quysAdviceCloseMuteCallBackBlockItem)
+         {
+             self.quysAdviceCloseMuteCallBackBlockItem();
+         }
+    }else
+    {
+        self.player.volume = 0.0f;
+        if (self.quysAdviceMuteCallBackBlockItem)
+        {
+            self.quysAdviceMuteCallBackBlockItem();
+        }
+    }
 }
 
+
+//根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
+- (void)hlj_viewStatisticalCallBack
+{
+    
+    if (self.quysAdviceStatisticalCallBackBlockItem)
+           {
+               self.quysAdviceStatisticalCallBackBlockItem();
+           }
+}
 - (void)dealloc
 {
     [self validatePlayer];

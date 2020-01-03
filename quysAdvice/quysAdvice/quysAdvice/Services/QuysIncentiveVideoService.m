@@ -60,7 +60,6 @@
 /// 开始加载视图
 - (void)loadAdViewNow:(UIImage*)imgReplace
 {
-    [self addBackgroundImageView:imgReplace];
     if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {
         kWeakSelf(self)
@@ -106,13 +105,6 @@
 }
 
 
-- (void)addBackgroundImageView:(UIImage*)imgBackground
-{
-    QuysFullScreenReplaceView *vBack = [[QuysFullScreenReplaceView alloc]initWithFrame:[UIScreen mainScreen].bounds  image:imgBackground];
-    [[UIApplication sharedApplication].delegate.window addSubview:vBack];
-}
-
-
 - (void)removeBackgroundImageView
 {
     //TODO:移除window
@@ -124,14 +116,6 @@
     animation.fillMode = kCAFillModeForwards;
     [self.adviceView.layer addAnimation:animation forKey:@"opacity"];
     [self removeWindow:self.adviceView];
-    //移除delegate.window的遮罩图
-    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
-    {
-        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
-        {
-            [subObj removeFromSuperview];
-        }
-    }
 }
 
 

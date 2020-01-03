@@ -22,9 +22,6 @@
     {
         self.windowLevel = UIWindowLevelAlert+1;
         QuysIncentiveVideoWindowVC *rootVC = [[QuysIncentiveVideoWindowVC alloc] initWithVM:viewModel];
-        rootVC.quysAdviceClickEventBlockItem =  self.quysAdviceClickEventBlockItem;
-        rootVC.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
-        rootVC.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
         QuysNavigationController *nav= [[QuysNavigationController alloc]initWithRootViewController:rootVC];
         nav.hideNavbar = YES;
         self.rootVC = rootVC;
@@ -52,6 +49,77 @@
     _quysAdviceStatisticalCallBackBlockItem = quysAdviceStatisticalCallBackBlockItem;
     self.rootVC.quysAdviceStatisticalCallBackBlockItem = quysAdviceStatisticalCallBackBlockItem;
 }
+//
+- (void)setQuysAdvicePlayStartCallBackBlockItem:(QuysAdvicePlayStartCallBackBlock)quysAdvicePlayStartCallBackBlockItem
+{
+    _quysAdvicePlayStartCallBackBlockItem = quysAdvicePlayStartCallBackBlockItem;
+    self.rootVC.quysAdvicePlayStartCallBackBlockItem = quysAdvicePlayStartCallBackBlockItem;
+}
+
+- (void)setQuysAdvicePlayEndCallBackBlockItem:(QuysAdvicePlayEndCallBackBlock)quysAdvicePlayEndCallBackBlockItem
+{
+    _quysAdvicePlayEndCallBackBlockItem = quysAdvicePlayEndCallBackBlockItem;
+    self.rootVC.quysAdvicePlayEndCallBackBlockItem = quysAdvicePlayEndCallBackBlockItem;
+}
+
+- (void)setQuysAdviceProgressClickEventBlockItem:(QuysAdviceProgressEventBlock)quysAdviceProgressClickEventBlockItem
+{
+    _quysAdviceProgressClickEventBlockItem = quysAdviceProgressClickEventBlockItem;
+    self.rootVC.quysAdviceProgressClickEventBlockItem = quysAdviceProgressClickEventBlockItem;
+}
+
+//
+- (void)setQuysAdviceMuteCallBackBlockItem:(QuysAdviceMuteCallBackBlock)quysAdviceMuteCallBackBlockItem
+{
+    _quysAdviceMuteCallBackBlockItem = quysAdviceMuteCallBackBlockItem;
+    self.rootVC.quysAdviceMuteCallBackBlockItem = quysAdviceMuteCallBackBlockItem;
+}
+
+
+- (void)setQuysAdviceCloseMuteCallBackBlockItemItem:(QuysAdviceCloseMuteCallBackBlock)quysAdviceCloseMuteCallBackBlockItemItem
+{
+    _quysAdviceCloseMuteCallBackBlockItemItem = quysAdviceCloseMuteCallBackBlockItemItem;
+    self.rootVC.quysAdviceCloseMuteCallBackBlockItemItem = quysAdviceCloseMuteCallBackBlockItemItem;
+}
+
+//
+- (void)setQuysAdviceEndViewCloseEventBlockItem:(QuysAdviceEndViewCloseEventBlock)quysAdviceEndViewCloseEventBlockItem
+{
+    _quysAdviceEndViewCloseEventBlockItem = quysAdviceEndViewCloseEventBlockItem;
+    self.rootVC.quysAdviceEndViewCloseEventBlockItem = quysAdviceEndViewCloseEventBlockItem;
+}
+
+- (void)setQuysAdviceEndViewClickEventBlockItem:(QuysAdviceEndViewClickEventBlock)quysAdviceEndViewClickEventBlockItem
+{
+    _quysAdviceEndViewClickEventBlockItem = quysAdviceEndViewClickEventBlockItem;
+    self.rootVC.quysAdviceEndViewClickEventBlockItem = quysAdviceEndViewClickEventBlockItem;
+}
+
+
+
+
+//
+
+- (void)setQuysAdviceSuspendCallBackBlockItem:(QuysAdviceSuspendCallBackBlock)quysAdviceSuspendCallBackBlockItem
+{
+    _quysAdviceSuspendCallBackBlockItem = quysAdviceSuspendCallBackBlockItem;
+    self.rootVC.quysAdviceSuspendCallBackBlockItem = quysAdviceSuspendCallBackBlockItem;
+}
+
+- (void)setQuysAdvicePlayagainCallBackBlockItem:(QuysAdvicePlayagainCallBackBlock)quysAdvicePlayagainCallBackBlockItem
+{
+    _quysAdvicePlayagainCallBackBlockItem = quysAdvicePlayagainCallBackBlockItem;
+    self.rootVC.quysAdvicePlayagainCallBackBlockItem = quysAdvicePlayagainCallBackBlockItem;
+}
+
+
+- (void)setQuysAdviceEndViewStatisticalCallBackBlockItem:(QuysAdviceEndViewStatisticalCallBackBlock)quysAdviceEndViewStatisticalCallBackBlockItem
+{
+    _quysAdviceEndViewStatisticalCallBackBlockItem = quysAdviceEndViewStatisticalCallBackBlockItem;
+    self.rootVC.quysAdviceEndViewStatisticalCallBackBlockItem = quysAdviceEndViewStatisticalCallBackBlockItem;
+}
+
+
 
 - (void)dealloc
 {

@@ -8,6 +8,7 @@
 
 #import "QuysIncentiveVideo.h"
 #import "QuysVideoPlayerView.h"
+#import "QuysImgPlayendCoverView.h"
 @interface QuysIncentiveVideo()<QuysVideoPlayerDelegate>
 @property (nonatomic,strong) UIView *viewContain;
 
@@ -16,6 +17,8 @@
 
 //TODO:videoPlayerView
 @property (nonatomic,strong) QuysVideoPlayerView *playerView;
+@property (nonatomic,strong) QuysImgPlayendCoverView *imgPlayendCover;
+
 
 @property (nonatomic,strong) UIView *viewFootContain;
 @property (nonatomic,strong) UIImageView *imgLogo;
@@ -24,7 +27,6 @@
 
 //倒计时
 @property (nonatomic,assign) NSInteger countdownLeft;
-@property (nonatomic,strong) dispatch_source_t source_t;
 
 
 @end
@@ -46,6 +48,7 @@
 
 - (void)createUI
 {
+    kWeakSelf(self)
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
     viewContain.backgroundColor = [UIColor orangeColor];
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
@@ -56,22 +59,53 @@
     
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
+    [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+    playerView.quysAdviceStatisticalCallBackBlockItem = ^{
+         //曝光：自动播放视频
+        [weakself resume];
+    };
+    self.quysAdviceSuspendCallBackBlockItem = playerView.quysAdviceSuspendCallBackBlockItem;
+    self.quysAdvicePlayagainCallBackBlockItem = playerView.quysAdvicePlayagainCallBackBlockItem ;
+    
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
     
     //
     
+    QuysImgPlayendCoverView *imgPlayendCover = [[QuysImgPlayendCoverView alloc] init];
+    imgPlayendCover.userInteractionEnabled = YES;
+    imgPlayendCover.hidden = YES;
+    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+    [self.playerView addSubview:imgPlayendCover];
+    imgPlayendCover.quysAdviceStatisticalCallBackBlockItem = ^{
+         //尾帧曝光
+        weakself.quysAdviceEndViewStatisticalCallBackBlockItem();
+    };
+    
+    imgPlayendCover.quysAdviceCloseEventBlockItem = ^{
+        //尾帧关闭
+         weakself.quysAdviceEndViewCloseEventBlockItem();//TODO：关闭window
+    };
+    
+    imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+        //尾帧点击
+         weakself.quysAdviceEndViewClickEventBlockItem(cp);
+    };
+    self.imgPlayendCover = imgPlayendCover;
+    
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"关闭" forState:UIControlStateNormal];
+    [btnClose setTitle:@"" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
     [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
     UIButton *btnCounntdown = [UIButton buttonWithType:UIButtonTypeCustom];
     btnCounntdown.userInteractionEnabled = NO;
-    [btnCounntdown setTitle:@"倒计时" forState:UIControlStateNormal];
+    [btnCounntdown setTitle:@"0s" forState:UIControlStateNormal];
     [btnCounntdown setTitle:@"" forState:UIControlStateHighlighted];
     [btnCounntdown setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnCounntdown];
@@ -89,7 +123,7 @@
     self.imgLogo = imgLogo;
     
     UILabel *lblContent = [[UILabel alloc] init];
-    lblContent.numberOfLines = 0;
+    lblContent.numberOfLines = 3;
     lblContent.text = @"优化完黑屏现象后，我们发现还存在一个现象，那就是广告展示完进入首页后，首页才刚开始加载，需要一段等待时间.    我们可以利用展示广告这段时间对首页内容进行预加载，在广告展示完毕后进入首页可以看到已经就绪的首页。调用VC的view属性触发VC的预加载，如下所示。";
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
@@ -98,9 +132,11 @@
     
     UIButton *btnVoice = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnVoice addTarget:self action:@selector(clickVoiceBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnVoice setTitle:@"声音" forState:UIControlStateNormal];
+    [btnVoice setTitle:@"" forState:UIControlStateNormal];
     [btnVoice setTitle:@"" forState:UIControlStateHighlighted];
     [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewFootContain addSubview:btnVoice];
     self.btnVoice = btnVoice;
     
@@ -117,7 +153,7 @@
     }];
     
     [self.btnCounntdown mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
+        make.centerY.mas_equalTo(self.btnClose);
         make.left.mas_equalTo(self.viewContain).offset(kScale_W(20));
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
         make.height.mas_equalTo(kScale_W(22)).priorityHigh();
@@ -128,7 +164,7 @@
         make.left.mas_greaterThanOrEqualTo(self.btnCounntdown.mas_right);
         make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20));
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(22)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(40)).priorityHigh();
     }];
     
     [self.playerView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -136,11 +172,15 @@
         make.left.right.mas_equalTo(self.viewContain);
     }];
     
+    [self.imgPlayendCover mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.playerView);
+    }];
+    
     //
     [self.viewFootContain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.playerView.mas_bottom).priorityHigh();
         make.left.right.bottom.mas_equalTo(self.viewContain);
-        make.height.mas_equalTo(kScale_H(200)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(100)).priorityHigh();
     }];
     
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -162,7 +202,7 @@
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
         make.right.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(-5)).priorityHigh();
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(22)).priorityHigh();
+        make.height.mas_equalTo(kScale_H(40)).priorityHigh();
         
     }];
     
@@ -187,16 +227,16 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    if (!self.vm.isClickable)
+    if (self.vm.isClickable)
     {
-         [self suspend];
-         //获取触发触摸的点
-         CGPoint cpBegain = [sender locationInView:self];
-         CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
-         if (self.quysAdviceClickEventBlockItem)
-         {
-             self.quysAdviceClickEventBlockItem(cpBegainResult);
-         }
+        [self suspend];
+        //获取触发触摸的点
+        CGPoint cpBegain = [sender locationInView:self];
+        CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+        if (self.quysAdviceClickEventBlockItem)
+        {
+            self.quysAdviceClickEventBlockItem(cpBegainResult);
+        }
     }
 }
 
@@ -216,12 +256,23 @@
 {
     [self suspend];
     [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
 }
 
 /// 静音设置
 /// @param sender UIButton
 - (void)clickVoiceBtEvent:(UIButton*)sender
 {
+    sender.selected = !sender.selected;
+    if (sender.selected)
+    {
+         [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+         [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }else
+    {
+        [self.btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }
     [self.playerView setMute];
     NSLog(@"%s",__PRETTY_FUNCTION__);
 }
@@ -240,60 +291,83 @@
 
 - (void)countdownEvevt
 {
-    
     kWeakSelf(self)
-    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
-    dispatch_source_set_event_handler(timer, ^{
-        if (self.countdownLeft >= 1)
-        {
-            weakself.countdownLeft--;
-            [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
-            [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateHighlighted];
-            NSLog(@"%lds",weakself.countdownLeft);
-        }else
-        {
-            dispatch_source_cancel(weakself.source_t );
-            [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateNormal];
-            [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateHighlighted];
-            NSLog(@"%lds",weakself.countdownLeft);
+    if (self.countdownLeft >= 1)
+    {
+        weakself.countdownLeft--;
+        [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+        [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateHighlighted];
+        NSLog(@"%lds",weakself.countdownLeft);
+    }else
+    {
+        [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+        [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateHighlighted];
+        NSLog(@"%lds",weakself.countdownLeft);
         //TODO:加载尾帧，同时继续播放剩余内容（方案：1、post 通知。  2、监听页面显示）
+        switch (self.vm.videoEndShowType) {
+            case QuysAdviceVideoEndShowTypeNone:
+            {
+                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue  ;
+                self.imgPlayendCover.hidden = NO;
+            }
+                break;
+            case QuysAdviceVideoEndShowTypeImageUrl:
+            {
+                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue  ;
+                self.imgPlayendCover.hidden = NO;
+            }
+                break;
+            case QuysAdviceVideoEndShowTypeHtmlCode:
+            {
+                if (self.quysAdvicePlayEndCallBackBlockItem) {
+                    self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlCode);
+                }
+            }
+                break;
+            case QuysAdviceVideoEndShowTypeHtmlUrl:
+            {     if (self.quysAdvicePlayEndCallBackBlockItem) {
+                self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlUrl);
+            }
+                
+            }
+                break;
+                
+            default:
+                break;
         }
-        
-    });
-    dispatch_resume(timer);
-    self.source_t = timer;
+    }
     
 }
 
 - (void)suspend
 {
-    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
-    if (self.source_t)
-    {
-        dispatch_suspend(self.source_t);
-    }
+    
+    [self.playerView playStates:NO];
+
 }
 
 
 - (void)resume
 {
-    //重启倒计时（因为倒计时完毕会移除当前的自定义window）
-    if (self.source_t) {
-        dispatch_resume(self.source_t);
-        
-    }
+    [self.playerView playStates:YES];
 }
 
 
 #pragma mark -QuysVideoPlayerDelegate
 
+//进度
 - (void)quys_videoPlay:(NSDictionary *)playItemInfo isCorrectStatus:(BOOL)status
 {
     if (status)
     {
         self.countdownLeft = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]] - [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]];
         [self countdownEvevt];
+        
+        if (self.quysAdviceProgressEventBlockItem)
+        {
+            NSInteger progress = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]]/[self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]];
+            self.quysAdviceProgressEventBlockItem(progress);
+        }
     }
 }
 

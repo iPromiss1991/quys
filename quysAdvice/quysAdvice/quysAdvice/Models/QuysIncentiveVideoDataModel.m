@@ -65,4 +65,50 @@
 }
 
 
+//
+
+-(QuysUploadStatisticsModel *)statisticsModelEndView
+{
+    if (_statisticsModelEndView == nil) {
+        _statisticsModelEndView = [QuysUploadStatisticsModel new];
+    }return _statisticsModelEndView;
+}
+
+
+-(BOOL)clickeUploadEnableEndView
+{
+    if (self.statisticsModelEndView.clicked)
+    {
+        if (self.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+-(BOOL)exposuredUploadEnableEndView
+{
+    if (self.statisticsModelEndView.exposured)
+    {
+        if (self.isReportRepeatAble)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }else
+    {
+        return YES;
+    }
+}
+
+
+
 @end

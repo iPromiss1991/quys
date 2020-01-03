@@ -8,6 +8,7 @@
 
 #ifndef GlobalMacro_h
 #define GlobalMacro_h
+#import <UIKit/UIKit.h>
 
 #pragma mark - 屏幕宽高
 #define kAdviceServiceIdentifier @"com.quys.advice"
@@ -219,6 +220,44 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #pragma mark - 业务通知
 
 #define kRemoveBackgroundImageViewNotify  @"kRemoveBackgroundImageViewNotify"//移除广告window
+
+
+#pragma mark - 业务枚举
+
+typedef NS_ENUM(NSInteger,QuysAdviceVideoEndShowType) {
+   QuysAdviceVideoEndShowTypeNone = 0,
+  QuysAdviceVideoEndShowTypeImageUrl = 1,
+   QuysAdviceVideoEndShowTypeHtmlCode = 2,
+  QuysAdviceVideoEndShowTypeHtmlUrl = 3
+};
+
+
+
+#pragma mark - 事件回调
+
+typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
+typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
+typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
+
+typedef void(^QuysAdviceLoadSucessCallBackBlock)(void);//!< 加载成功事件
+typedef void(^QuysAdviceLoadFailCallBackBlock)(void);//!< 加载失败事件
+
+typedef void(^QuysAdvicePlayStartCallBackBlock)(void);//!< 播放开始事件
+typedef void(^QuysAdvicePlayEndCallBackBlock)(QuysAdviceVideoEndShowType endType);//!< 播放完成事件
+typedef void(^QuysAdviceProgressEventBlock)(NSInteger progress);//!< 进度事件
+
+typedef void(^QuysAdviceSuspendCallBackBlock)(void);//!< 暂停事件
+typedef void(^QuysAdvicePlayagainCallBackBlock)(void);//!< 再次播放事件
+
+typedef void(^QuysAdviceCloseMuteCallBackBlock)(void);//!< 关闭静音事件
+typedef void(^QuysAdviceMuteCallBackBlock)(void);//!< 静音事件
+
+
+// 尾帧
+typedef void(^QuysAdviceEndViewCloseEventBlock)(void);//!< 关闭事件
+typedef void(^QuysAdviceEndViewClickEventBlock)(CGPoint cp);//!< 点击事件
+typedef void(^QuysAdviceEndViewStatisticalCallBackBlock)(void);//!< 尾帧 曝光事件
+
 
 
 

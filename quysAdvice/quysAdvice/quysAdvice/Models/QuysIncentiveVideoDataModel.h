@@ -10,6 +10,8 @@
 #import "QuysUploadStatisticsModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 @interface QuysIncentiveVideoDataModel : NSObject
 @property (nonatomic , copy) NSString              * channel;
 @property (nonatomic , assign) NSInteger              status;
@@ -29,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * fileUrl;
 @property (nonatomic , copy) NSString              * landingPageUrl;
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
-@property (nonatomic , assign) NSInteger              videoEndShowType;
+@property (nonatomic , assign) QuysAdviceVideoEndShowType              videoEndShowType;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoShowUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoClickUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoStartUrl;
@@ -63,6 +65,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型
 @property (nonatomic,assign) BOOL clickeUploadEnable;//!< 是否触上报事件
 @property (nonatomic,assign) BOOL exposuredUploadEnable;
+
+
+@property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModelEndView;//!<上报统计模型
+@property (nonatomic,assign) BOOL clickeUploadEnableEndView;//!< 尾帧是否触上报事件
+@property (nonatomic,assign) BOOL exposuredUploadEnableEndView;
+
 
 
 @end

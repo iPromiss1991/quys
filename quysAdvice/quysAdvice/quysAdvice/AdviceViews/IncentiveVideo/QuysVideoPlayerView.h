@@ -11,6 +11,8 @@
 #define kAVPlayerItemTotalTime @"kAVPlayerItemTotalTime"
 #define kAVPlayerItemCurrentTime @"kAVPlayerItemCurrentTime"
 
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol QuysVideoPlayerDelegate <NSObject>
@@ -30,8 +32,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,weak) id<QuysVideoPlayerDelegate> delegate;
 
 
+@property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceLoadSucessCallBackBlock quysAdviceLoadSucessCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceLoadFailCallBackBlock quysAdviceLoadFailCallBackBlockItem;
+
+@property (nonatomic,copy) QuysAdviceMuteCallBackBlock quysAdviceMuteCallBackBlockItem;
+@property (nonatomic,copy) QuysAdviceCloseMuteCallBackBlock quysAdviceCloseMuteCallBackBlockItem;
+
+@property (nonatomic,copy) QuysAdviceSuspendCallBackBlock quysAdviceSuspendCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayagainCallBackBlock quysAdvicePlayagainCallBackBlockItem;
+
+
+
 - (void)setMute;
--(void)playButtonWithStates:(BOOL)state;
+
+/// 播放、暂停
+/// @param state state
+-(void)playStates:(BOOL)state;
 
 
 @end

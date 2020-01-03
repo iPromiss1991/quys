@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "QuysIncentiveVideoDelegate.h"
-@class QuysIncentiveVideoDataModel,QuysIncentiveVideoService;
+#import "QuysIncentiveVideoDataModel.h"
+
+@class QuysIncentiveVideoService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysIncentiveVideoVM : NSObject
@@ -20,7 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL isClickable;
 
 
-
+@property (nonatomic,assign) QuysAdviceVideoEndShowType videoEndShowType;
+@property (nonatomic,strong) NSString *videoEndShowValue;
 
 - (instancetype)initWithModel:(QuysIncentiveVideoDataModel*)model delegate:(id<QuysIncentiveVideoDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window;
 

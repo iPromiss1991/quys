@@ -8,6 +8,7 @@
 //
 
 #import "QuysIncentiveVideoWindowVC.h"
+#import "QuysWebViewController.h"
 @interface QuysIncentiveVideoWindowVC ()
 @property (nonatomic,strong) QuysIncentiveVideoVM *vm;
 
@@ -25,43 +26,80 @@
 }
 - (void)loadView
 {
-   QuysIncentiveVideo *view = [[QuysIncentiveVideo alloc] initWithFrame:CGRectMake(0, 100, kScreenWidth, kScreenHeight -100) viewModel:self.vm];
+    kWeakSelf(self)
+    QuysIncentiveVideo *view = [[QuysIncentiveVideo alloc] initWithFrame:CGRectMake(0, 100, kScreenWidth, kScreenHeight -100) viewModel:self.vm];
     self.view = view;
-    view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
-    view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
-    view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+    self.quysAdviceCloseEventBlockItem  = view.quysAdviceCloseEventBlockItem;
+    self.quysAdviceClickEventBlockItem = view.quysAdviceEndViewClickEventBlockItem ;
+    self.quysAdviceStatisticalCallBackBlockItem = view.quysAdviceStatisticalCallBackBlockItem;
+    
+    self.quysAdvicePlayStartCallBackBlockItem = view.quysAdvicePlayStartCallBackBlockItem;
+    self.quysAdvicePlayEndCallBackBlockItem = view.quysAdvicePlayEndCallBackBlockItem;
+    self.quysAdviceProgressClickEventBlockItem = view.quysAdviceProgressEventBlockItem;
+
+    self.quysAdviceMuteCallBackBlockItem = view.quysAdviceMuteCallBackBlockItem;
+    self.quysAdviceCloseMuteCallBackBlockItemItem = view.quysAdviceCloseMuteCallBackBlockItemItem;
+
+    self.quysAdviceEndViewCloseEventBlockItem = view.quysAdviceEndViewCloseEventBlockItem;
+    self.quysAdviceEndViewClickEventBlockItem = view.quysAdviceEndViewClickEventBlockItem;
+    self.quysAdviceEndViewStatisticalCallBackBlockItem = view.quysAdviceEndViewStatisticalCallBackBlockItem;
+    
+    
+    self.quysAdviceSuspendCallBackBlockItem = view.quysAdviceSuspendCallBackBlockItem;
+    self.quysAdvicePlayagainCallBackBlockItem = view.quysAdvicePlayagainCallBackBlockItem ;
     
     //TODO:视频尾帧view在此回调加载
-    
-    
+    view.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType) {
+        switch (endType) {
+            case QuysAdviceVideoEndShowTypeHtmlCode:
+            {
+                QuysWebViewController *vc = [[QuysWebViewController alloc] initWithHtml:weakself.vm.videoEndShowValue];
+                [weakself.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case QuysAdviceVideoEndShowTypeHtmlUrl:
+            {
+                QuysWebViewController *vc = [[QuysWebViewController alloc] initWithUrl:weakself.vm.videoEndShowValue];
+                [weakself.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+        if (weakself.quysAdvicePlayEndCallBackBlockItem)
+        {
+            weakself.quysAdvicePlayEndCallBackBlockItem(endType);
+        }
+    };
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor yellowColor];
-//    self.navigationController.navigationBarHidden = YES;
+    //    self.navigationController.navigationBarHidden = YES;
     [self vhl_setStatusBarHidden:YES];
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarHidden:YES];
-
+    
     // Do any additional setup after loading the view.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-//    self.view.frame = CGRectMake(0, 0, 0, 330);
-
+    //    self.view.frame = CGRectMake(0, 0, 0, 330);
+    
     
 }
 
