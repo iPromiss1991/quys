@@ -13,7 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysUploadStatisticsModel : NSObject
 @property (nonatomic,assign) BOOL exposured;//!<是否已经曝光
 @property (nonatomic,assign) BOOL clicked;//!<是否已经点击
-@property (nonatomic,assign) BOOL beginDownload;//!<是否开始下载
+
+
+@property (nonatomic,assign) BOOL closeMute;//!< 静音
+@property (nonatomic,assign) BOOL mute;
+
+@property (nonatomic,assign) BOOL suspend;//!< 暂停
+@property (nonatomic,assign) BOOL resum;
 
 
 @end

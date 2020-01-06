@@ -25,7 +25,7 @@
 }
 - (void)loadView
 {
-   QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:CGRectMake(0, 100, kScreenWidth, kScreenHeight -100) viewModel:self.vm];
+   QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
     self.view = view;
     view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
     view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;

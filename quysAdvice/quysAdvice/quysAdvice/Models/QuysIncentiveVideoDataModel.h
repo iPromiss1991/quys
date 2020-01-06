@@ -9,6 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "QuysUploadStatisticsModel.h"
 NS_ASSUME_NONNULL_BEGIN
+@interface QuysVideoCheckPoint: NSObject
+@property (nonatomic , strong) NSArray <NSString *>              * urls;
+@property (nonatomic,assign) CGFloat checkPoint;
+@property (nonatomic,assign) BOOL isReportRepeat;
+
+
+@end
+
 
 
 
@@ -32,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * landingPageUrl;
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 @property (nonatomic , assign) QuysAdviceVideoEndShowType              videoEndShowType;
+@property (nonatomic , copy) NSString              * videoEndShowValue;
+
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoShowUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoClickUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoStartUrl;
@@ -50,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoMuteUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoUnMuteUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportAppActivationUrl;
-@property (nonatomic , strong) NSArray <NSString *>              * videoCheckPointList;
+@property (nonatomic , strong) NSArray <QuysVideoCheckPoint *>              * videoCheckPointList;//
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoPauseUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoContinueUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportVideoFullScreenUrl;
@@ -66,8 +76,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL clickeUploadEnable;//!< 是否触上报事件
 @property (nonatomic,assign) BOOL exposuredUploadEnable;
 
+@property (nonatomic,assign) BOOL closeMuteUploadEnable;//!< 静音
+@property (nonatomic,assign) BOOL muteUploadEnable;
 
-@property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModelEndView;//!<上报统计模型
+@property (nonatomic,assign) BOOL suspendMuteUploadEnable;//!< 暂停
+@property (nonatomic,assign) BOOL resumUploadEnable;
+
+
+
+
+//尾帧
+@property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModelEndView;//!<尾帧上报统计模型
 @property (nonatomic,assign) BOOL clickeUploadEnableEndView;//!< 尾帧是否触上报事件
 @property (nonatomic,assign) BOOL exposuredUploadEnableEndView;
 

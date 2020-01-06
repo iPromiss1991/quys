@@ -17,10 +17,7 @@
     };
 }
 
-+ (NSDictionary *)modelContainerPropertyGenericClass
-{
-    return @{@"statisticsModel":[QuysUploadStatisticsModel class]};
-}
+
 
 -(QuysUploadStatisticsModel *)statisticsModel
 {

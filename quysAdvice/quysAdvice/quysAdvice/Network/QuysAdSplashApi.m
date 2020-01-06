@@ -14,8 +14,8 @@
 - (NSString *)baseUrl
 {
 //    return @"http://adx.quyuansu.com/api/spread/detail";
-//    return @"http://192.168.1.7/advert/test.php?tid=246";//开屏
-    return @"http://192.168.1.2/advert/test.php?tid=71";//
+    return @"http://192.168.1.2/advert/test.php?tid=246";//开屏
+//    return @"http://192.168.1.2/advert/test.php?tid=71";//
 
 }
 

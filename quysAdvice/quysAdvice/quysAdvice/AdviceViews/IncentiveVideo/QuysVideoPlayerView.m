@@ -7,7 +7,8 @@
 //
 
 #import "QuysVideoPlayerView.h"
-#import <AVKit/AVKit.h>
+#import "QuysVidoePlayButtonView.h"
+ #import <AVKit/AVKit.h>
 
 @interface QuysVideoPlayerView ()
 
@@ -17,6 +18,8 @@
 
 @property (nonatomic, strong) id playbackObserver;
 @property (nonatomic) BOOL buffered;//是否缓冲完毕
+ 
+@property (nonatomic,strong) QuysVidoePlayButtonView *playButtonView;
 
 @end
 
@@ -25,15 +28,26 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     
     self = [super initWithFrame:frame];
-    if (self) {
-        
-        self.backgroundColor = [UIColor cyanColor];
-        [self.layer addSublayer:self.playerLayer];
-        [self addSubview:self.speedTextLabel];
-
+    if (self)
+    {
+        [self createUI];
     }
     return self;
     
+}
+
+- (void)createUI
+{
+    kWeakSelf(self)
+     self.backgroundColor = [UIColor cyanColor];
+    [self.layer addSublayer:self.playerLayer];
+    QuysVidoePlayButtonView *playButtonView = [[QuysVidoePlayButtonView alloc]initWithFrame:CGRectMake(0, 0, kScale_W(100), kScale_W(100))];
+    playButtonView.center = self.center;
+    playButtonView.quysAdviceClickPlayButtonBlockItem = ^(BOOL playEnable) {
+        [weakself rerunPlayVideo];
+    };
+    [self addSubview:playButtonView];
+    self.playButtonView = playButtonView;
 }
 
 - (void)layoutSubviews
@@ -94,10 +108,10 @@
 #pragma mark - PrivateMethod
 
 
--(void)playStates:(BOOL)state
+-(void)playStatesChanged
 {
     
-    if (state)
+    if (self.player.rate)
     {
         [self.player pause];
         if (self.quysAdviceSuspendCallBackBlockItem)
@@ -117,10 +131,7 @@
 }
 
 
-- (void)vpc_sliderTouchBegin:(UISlider *)sender {
-    [self.player pause];
-}
-
+ 
 
 #pragma mark - lTime
 
@@ -133,6 +144,7 @@
     // 切换视频源时totalTime/currentTime的值会出现nan导致时间错乱
     if (!(totalTime >= 0) || !(currentTime >= 0))
     {
+        [self.playButtonView playStart];
         totalTime = 0;
         currentTime = 0;
     }else
@@ -168,8 +180,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(vpc_playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.player.currentItem];
 }
 
--(void)vpc_playbackFinished:(NSNotification *)noti{
+-(void)vpc_playbackFinished:(NSNotification *)noti
+{
     [self.player pause];
+    [self.playButtonView playEnd];
+
 }
 
 - (void)vpc_addObserverToPlayerItem:(AVPlayerItem *)playerItem {
@@ -194,13 +209,15 @@
         AVPlayerStatus status= [[change objectForKey:@"new"] intValue];
         if (status == AVPlayerStatusReadyToPlay)
         {
-            [self quys_videoPlay];
-            if (self.quysAdviceLoadSucessCallBackBlockItem) {
+             [self quys_videoPlay];
+            if (self.quysAdviceLoadSucessCallBackBlockItem)
+            {
                 self.quysAdviceLoadSucessCallBackBlockItem();
             }
         }else if(status == AVPlayerStatusFailed)
         {
-            if (self.quysAdviceLoadFailCallBackBlockItem) {
+            if (self.quysAdviceLoadFailCallBackBlockItem)
+            {
                  self.quysAdviceLoadFailCallBackBlockItem();
              }
         }
@@ -234,6 +251,22 @@
     [self vpc_playerItemRemoveObserver];
     [self.player replaceCurrentItemWithPlayerItem:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+//视频重播
+-(void)rerunPlayVideo
+{
+    if (!self.player)
+    {
+        return;
+        
+    }
+    CGFloat a=0;
+    NSInteger dragedSeconds = floorf(a);
+    CMTime dragedCMTime = CMTimeMake(dragedSeconds, 1);
+    [self.player seekToTime:dragedCMTime];
+    [self.player play];
 }
 
 - (void)setMute

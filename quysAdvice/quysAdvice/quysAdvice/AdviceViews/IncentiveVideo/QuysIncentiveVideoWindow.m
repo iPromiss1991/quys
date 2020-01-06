@@ -76,10 +76,10 @@
 }
 
 
-- (void)setQuysAdviceCloseMuteCallBackBlockItemItem:(QuysAdviceCloseMuteCallBackBlock)quysAdviceCloseMuteCallBackBlockItemItem
+- (void)setQuysAdviceCloseMuteCallBackBlockItem:(QuysAdviceCloseMuteCallBackBlock)quysAdviceCloseMuteCallBackBlockItem
 {
-    _quysAdviceCloseMuteCallBackBlockItemItem = quysAdviceCloseMuteCallBackBlockItemItem;
-    self.rootVC.quysAdviceCloseMuteCallBackBlockItemItem = quysAdviceCloseMuteCallBackBlockItemItem;
+    quysAdviceCloseMuteCallBackBlockItem = quysAdviceCloseMuteCallBackBlockItem;
+    self.rootVC.quysAdviceCloseMuteCallBackBlockItem = quysAdviceCloseMuteCallBackBlockItem;
 }
 
 //
@@ -119,7 +119,17 @@
     self.rootVC.quysAdviceEndViewStatisticalCallBackBlockItem = quysAdviceEndViewStatisticalCallBackBlockItem;
 }
 
+-(void)setQuysAdviceLoadSucessCallBackBlockItem:(QuysAdviceLoadSucessCallBackBlock)quysAdviceLoadSucessCallBackBlockItem
+{
+    _quysAdviceLoadSucessCallBackBlockItem = quysAdviceLoadSucessCallBackBlockItem;
+    self.rootVC.quysAdviceLoadSucessCallBackBlockItem = quysAdviceLoadSucessCallBackBlockItem;
+}
 
+-(void)setQuysAdviceLoadFailCallBackBlockItem:(QuysAdviceLoadSucessCallBackBlock)quysAdviceLoadFailCallBackBlockItem
+{
+    _quysAdviceLoadFailCallBackBlockItem = quysAdviceLoadFailCallBackBlockItem;
+    self.rootVC.quysAdviceLoadFailCallBackBlockItem = quysAdviceLoadFailCallBackBlockItem;
+}
 
 - (void)dealloc
 {

@@ -8,6 +8,14 @@
 
 #import "QuysIncentiveVideoDataModel.h"
 
+
+@implementation QuysVideoCheckPoint
+
+
+
+@end
+
+
 @implementation QuysIncentiveVideoDataModel
 ////替换字符：
 + (NSDictionary *)modelCustomPropertyMapper {
@@ -17,9 +25,11 @@
     };
 }
 
+
+
 + (NSDictionary *)modelContainerPropertyGenericClass
 {
-    return @{@"statisticsModel":[QuysUploadStatisticsModel class]};
+    return @{@"videoCheckPointList":[QuysVideoCheckPoint class]};
 }
 
 -(QuysUploadStatisticsModel *)statisticsModel

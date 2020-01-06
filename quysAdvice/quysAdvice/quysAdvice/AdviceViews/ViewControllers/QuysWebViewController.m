@@ -48,7 +48,7 @@
     [self vhl_setNavBarBackgroundAlpha:1.0f];
     [self vhl_setNavBarHidden:NO];
     [self setQus_navBackButtonTitle:@"存储"];
-    [self vhl_setInteractivePopGestureRecognizerEnable:NO];
+    [self vhl_setInteractivePopGestureRecognizerEnable:NO];//TODO
     
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];

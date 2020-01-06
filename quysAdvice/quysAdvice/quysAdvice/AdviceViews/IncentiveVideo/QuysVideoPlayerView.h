@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
 @property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
+
 @property (nonatomic,copy) QuysAdviceLoadSucessCallBackBlock quysAdviceLoadSucessCallBackBlockItem;
 @property (nonatomic,copy) QuysAdviceLoadFailCallBackBlock quysAdviceLoadFailCallBackBlockItem;
 
@@ -48,8 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMute;
 
 /// 播放、暂停
-/// @param state state
--(void)playStates:(BOOL)state;
+ -(void)playStatesChanged;
 
 
 @end

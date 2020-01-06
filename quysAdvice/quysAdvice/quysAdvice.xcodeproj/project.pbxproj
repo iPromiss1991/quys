@@ -96,6 +96,10 @@
 		FB955A8E23BEEA4E00AFA427 /* mute@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A8C23BEEA4E00AFA427 /* mute@3x.png */; };
 		FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */; };
 		FB955A9223BEEB8D00AFA427 /* QuysImgPlayendCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */; };
+		FB955A9923C31F8D00AFA427 /* QuysVidoePlayButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A9723C31F8D00AFA427 /* QuysVidoePlayButtonView.m */; };
+		FB955A9A23C31F8D00AFA427 /* QuysVidoePlayButtonView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */; };
+		FB955A9D23C334E700AFA427 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A9B23C334E000AFA427 /* play@2x.png */; };
+		FB955A9E23C334E700AFA427 /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A9C23C334E300AFA427 /* play@3x.png */; };
 		FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */; };
 		FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */; };
 		FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892623A216E000D0088C /* UIView+Statistical.h */; };
@@ -264,6 +268,10 @@
 		FB955A8C23BEEA4E00AFA427 /* mute@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mute@3x.png"; sourceTree = "<group>"; };
 		FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysImgPlayendCoverView.h; sourceTree = "<group>"; };
 		FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysImgPlayendCoverView.m; sourceTree = "<group>"; };
+		FB955A9723C31F8D00AFA427 /* QuysVidoePlayButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuysVidoePlayButtonView.m; sourceTree = "<group>"; };
+		FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysVidoePlayButtonView.h; sourceTree = "<group>"; };
+		FB955A9B23C334E000AFA427 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		FB955A9C23C334E300AFA427 /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
 		FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseJsonResponseSerializer.h; sourceTree = "<group>"; };
 		FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseJsonResponseSerializer.m; sourceTree = "<group>"; };
 		FBBA892623A216E000D0088C /* UIView+Statistical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Statistical.h"; sourceTree = "<group>"; };
@@ -622,6 +630,8 @@
 		FB955A4523B9EC0A00AFA427 /* IncentiveVideo */ = {
 			isa = PBXGroup;
 			children = (
+				FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */,
+				FB955A9723C31F8D00AFA427 /* QuysVidoePlayButtonView.m */,
 				FB955A4B23B9ECA400AFA427 /* QuysIncentiveVideo.h */,
 				FB955A4C23B9ECA400AFA427 /* QuysIncentiveVideo.m */,
 				FB955A4A23B9ECA400AFA427 /* QuysIncentiveVideoWindow.h */,
@@ -713,6 +723,8 @@
 		FBC4CE6323B4570200AF86B1 /* quysBundle */ = {
 			isa = PBXGroup;
 			children = (
+				FB955A9B23C334E000AFA427 /* play@2x.png */,
+				FB955A9C23C334E300AFA427 /* play@3x.png */,
 				FB955A8B23BEEA4E00AFA427 /* mute@2x.png */,
 				FB955A8C23BEEA4E00AFA427 /* mute@3x.png */,
 				FB955A8823BEE83000AFA427 /* back@2x.png */,
@@ -786,6 +798,7 @@
 				FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */,
 				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
 				FBBA895523A7820900D0088C /* QuysInformationFlowMorePictureView.h in Headers */,
+				FB955A9A23C31F8D00AFA427 /* QuysVidoePlayButtonView.h in Headers */,
 				FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */,
 				FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */,
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
@@ -955,8 +968,10 @@
 				FBC4CE6E23B457AE00AF86B1 /* close_press@3x.png in Resources */,
 				FB955A8A23BEE83000AFA427 /* back@2x.png in Resources */,
 				FBC4CE6F23B457AE00AF86B1 /* close_press@2x.png in Resources */,
+				FB955A9D23C334E700AFA427 /* play@2x.png in Resources */,
 				FB955A8E23BEEA4E00AFA427 /* mute@3x.png in Resources */,
 				FB955A8923BEE83000AFA427 /* back@3x.png in Resources */,
+				FB955A9E23C334E700AFA427 /* play@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,6 +1068,7 @@
 				FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */,
 				FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */,
 				FB955A2E23B4B3AD00AFA427 /* QuysDownAddressModel.m in Sources */,
+				FB955A9923C31F8D00AFA427 /* QuysVidoePlayButtonView.m in Sources */,
 				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
 				FBBA894C23A77E8700D0088C /* QuysInformationFlowService.m in Sources */,
 				FBBA895423A7820900D0088C /* QuysInformationFlowMorePictureView.m in Sources */,

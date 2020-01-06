@@ -33,7 +33,7 @@
 {
     if (self = [super init])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageView) name:kRemoveBackgroundImageViewNotify object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageViewAndWindow) name:kRemoveBackgroundImageViewNotify object:nil];
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
@@ -114,17 +114,14 @@
 }
 
 
+- (void)removeBackgroundImageViewAndWindow
+{
+    [self removeBackgroundImageView];
+    [self removeWindow:self.adviceView];
+}
+
 - (void)removeBackgroundImageView
 {
-    //TODO:移除window
-    CABasicAnimation *animation = [CABasicAnimation animation];
-    animation.keyPath = @"opacity";
-    animation.toValue = @(.0);
-    animation.duration = .3;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    [self.adviceView.layer addAnimation:animation forKey:@"opacity"];
-    [self removeWindow:self.adviceView];
     //移除delegate.window的遮罩图
     for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
     {
@@ -157,9 +154,10 @@
             [self.delegate quys_requestSuccess:self];
         }
         [self showAdView];
+        [self removeBackgroundImageView];
     }else
     {
-        [self removeBackgroundImageView];
+        [self removeBackgroundImageViewAndWindow];
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
@@ -172,7 +170,7 @@
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
-    [self removeBackgroundImageView];
+    [self removeBackgroundImageViewAndWindow];
     if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
     {
         [self.delegate quys_requestFial:self error:request.error];

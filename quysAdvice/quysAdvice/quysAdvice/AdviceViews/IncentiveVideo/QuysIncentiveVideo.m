@@ -48,7 +48,6 @@
 
 - (void)createUI
 {
-    kWeakSelf(self)
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
     viewContain.backgroundColor = [UIColor orangeColor];
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
@@ -60,37 +59,16 @@
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
     [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
-    playerView.quysAdviceStatisticalCallBackBlockItem = ^{
-         //曝光：自动播放视频
-        [weakself resume];
-    };
-    self.quysAdviceSuspendCallBackBlockItem = playerView.quysAdviceSuspendCallBackBlockItem;
-    self.quysAdvicePlayagainCallBackBlockItem = playerView.quysAdvicePlayagainCallBackBlockItem ;
     
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
     
     //
-    
     QuysImgPlayendCoverView *imgPlayendCover = [[QuysImgPlayendCoverView alloc] init];
     imgPlayendCover.userInteractionEnabled = YES;
     imgPlayendCover.hidden = YES;
     [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
     [self.playerView addSubview:imgPlayendCover];
-    imgPlayendCover.quysAdviceStatisticalCallBackBlockItem = ^{
-         //尾帧曝光
-        weakself.quysAdviceEndViewStatisticalCallBackBlockItem();
-    };
-    
-    imgPlayendCover.quysAdviceCloseEventBlockItem = ^{
-        //尾帧关闭
-         weakself.quysAdviceEndViewCloseEventBlockItem();//TODO：关闭window
-    };
-    
-    imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        //尾帧点击
-         weakself.quysAdviceEndViewClickEventBlockItem(cp);
-    };
     self.imgPlayendCover = imgPlayendCover;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -162,7 +140,7 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.btnCounntdown.mas_right);
-        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20));
+        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-5));
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
         make.height.mas_equalTo(kScale_H(40)).priorityHigh();
     }];
@@ -229,7 +207,6 @@
 {
     if (self.vm.isClickable)
     {
-        [self suspend];
         //获取触发触摸的点
         CGPoint cpBegain = [sender locationInView:self];
         CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
@@ -266,8 +243,8 @@
     sender.selected = !sender.selected;
     if (sender.selected)
     {
-         [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-         [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+        [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     }else
     {
         [self.btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
@@ -307,13 +284,12 @@
         switch (self.vm.videoEndShowType) {
             case QuysAdviceVideoEndShowTypeNone:
             {
-                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue  ;
-                self.imgPlayendCover.hidden = NO;
+                 self.imgPlayendCover.hidden = YES;
             }
                 break;
             case QuysAdviceVideoEndShowTypeImageUrl:
             {
-                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue  ;
+                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue;
                 self.imgPlayendCover.hidden = NO;
             }
                 break;
@@ -336,20 +312,21 @@
                 break;
         }
     }
-    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
 }
 
 - (void)suspend
 {
     
-    [self.playerView playStates:NO];
-
+    [self.playerView playStatesChanged];
+    
 }
 
 
 - (void)resume
 {
-    [self.playerView playStates:YES];
+    [self.playerView playStatesChanged];
 }
 
 
@@ -389,8 +366,45 @@
 {
     _vm = vm;
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+}
+
+- (void)updateBlockItemsAndPalyStart
+{
+    kWeakSelf(self)
+    self.playerView.quysAdvicePlayStartCallBackBlockItem = ^{
+        weakself.quysAdvicePlayStartCallBackBlockItem();
+    };
+    self.playerView.quysAdviceLoadSucessCallBackBlockItem = self.quysAdviceLoadSucessCallBackBlockItem;
+    self.playerView.quysAdviceLoadFailCallBackBlockItem = self.quysAdviceLoadFailCallBackBlockItem;
     
-    self.playerView.urlVideo = vm.videoUrl;
+    self.playerView.quysAdviceMuteCallBackBlockItem = self.quysAdviceMuteCallBackBlockItem;
+    self.playerView.quysAdviceCloseMuteCallBackBlockItem = self.quysAdviceCloseMuteCallBackBlockItem;
+    
+    self.playerView.quysAdviceSuspendCallBackBlockItem = self.quysAdviceSuspendCallBackBlockItem;
+    self.playerView.quysAdvicePlayagainCallBackBlockItem = self.quysAdvicePlayagainCallBackBlockItem;
+    
+    
+    //
+    self.imgPlayendCover.quysAdviceStatisticalCallBackBlockItem = ^{
+        //尾帧曝光
+        weakself.quysAdviceEndViewStatisticalCallBackBlockItem();
+    };
+    
+    self.imgPlayendCover.quysAdviceCloseEventBlockItem = ^{
+        //尾帧关闭
+        weakself.quysAdviceEndViewCloseEventBlockItem();//TODO：关闭window
+    };
+    
+    self.imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+        //尾帧点击
+        weakself.quysAdviceEndViewClickEventBlockItem(cp);
+    };
+    
+    self.playerView.urlVideo = self.vm.videoUrl;
+    self.playerView.quysAdviceStatisticalCallBackBlockItem = ^{
+        //曝光：自动播放视频
+        [weakself resume];
+    };
     
 }
 

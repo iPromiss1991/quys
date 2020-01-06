@@ -62,7 +62,7 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.imgPlayendCover);
-        make.right.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_W(-20));
+        make.right.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_W(-5));
         make.width.mas_equalTo(kScale_W(60)).priorityHigh();
         make.height.mas_equalTo(kScale_H(40)).priorityHigh();
     }];

@@ -29,24 +29,28 @@
     kWeakSelf(self)
     QuysIncentiveVideo *view = [[QuysIncentiveVideo alloc] initWithFrame:CGRectMake(0, 100, kScreenWidth, kScreenHeight -100) viewModel:self.vm];
     self.view = view;
-    self.quysAdviceCloseEventBlockItem  = view.quysAdviceCloseEventBlockItem;
-    self.quysAdviceClickEventBlockItem = view.quysAdviceEndViewClickEventBlockItem ;
-    self.quysAdviceStatisticalCallBackBlockItem = view.quysAdviceStatisticalCallBackBlockItem;
+    view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem ;
+    view.quysAdviceClickEventBlockItem   =  self.quysAdviceClickEventBlockItem ;
+    view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem   ;
     
-    self.quysAdvicePlayStartCallBackBlockItem = view.quysAdvicePlayStartCallBackBlockItem;
-    self.quysAdvicePlayEndCallBackBlockItem = view.quysAdvicePlayEndCallBackBlockItem;
-    self.quysAdviceProgressClickEventBlockItem = view.quysAdviceProgressEventBlockItem;
+    view.quysAdvicePlayStartCallBackBlockItem = self.quysAdvicePlayStartCallBackBlockItem ;
+    view.quysAdvicePlayEndCallBackBlockItem = self.quysAdvicePlayEndCallBackBlockItem;
+    view.quysAdviceProgressEventBlockItem = self.quysAdviceProgressClickEventBlockItem;
 
-    self.quysAdviceMuteCallBackBlockItem = view.quysAdviceMuteCallBackBlockItem;
-    self.quysAdviceCloseMuteCallBackBlockItemItem = view.quysAdviceCloseMuteCallBackBlockItemItem;
+    view.quysAdviceMuteCallBackBlockItem = self.quysAdviceMuteCallBackBlockItem ;
+    view.quysAdviceCloseMuteCallBackBlockItem = self.quysAdviceCloseMuteCallBackBlockItem;
 
-    self.quysAdviceEndViewCloseEventBlockItem = view.quysAdviceEndViewCloseEventBlockItem;
-    self.quysAdviceEndViewClickEventBlockItem = view.quysAdviceEndViewClickEventBlockItem;
-    self.quysAdviceEndViewStatisticalCallBackBlockItem = view.quysAdviceEndViewStatisticalCallBackBlockItem;
+    view.quysAdviceEndViewCloseEventBlockItem = self.quysAdviceEndViewCloseEventBlockItem;
+    view.quysAdviceEndViewClickEventBlockItem = self.quysAdviceEndViewClickEventBlockItem;
+    view.quysAdviceEndViewStatisticalCallBackBlockItem = self.quysAdviceEndViewStatisticalCallBackBlockItem;
     
     
-    self.quysAdviceSuspendCallBackBlockItem = view.quysAdviceSuspendCallBackBlockItem;
-    self.quysAdvicePlayagainCallBackBlockItem = view.quysAdvicePlayagainCallBackBlockItem ;
+    view.quysAdviceSuspendCallBackBlockItem = self.quysAdviceSuspendCallBackBlockItem;
+    view.quysAdvicePlayagainCallBackBlockItem = self.quysAdvicePlayagainCallBackBlockItem ;
+    
+    view.quysAdviceLoadSucessCallBackBlockItem = self.quysAdviceLoadSucessCallBackBlockItem;
+    view.quysAdviceLoadFailCallBackBlockItem = self.quysAdviceLoadFailCallBackBlockItem ;
+    [view updateBlockItemsAndPalyStart];//给block重新赋值,因为创建QuysIncentiveVideo的初始化方法内使用的block尚未有值。
     
     //TODO:视频尾帧view在此回调加载
     view.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType) {

@@ -82,6 +82,8 @@
         {
             [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
         }
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //关闭事件
@@ -90,6 +92,8 @@
         {
             [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
         }
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //曝光事件
@@ -99,37 +103,61 @@
         {
             [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+
+    };
+    
+    adView.quysAdvicePlayStartCallBackBlockItem = ^{
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
+    };
+    
+    adView.quysAdviceLoadSucessCallBackBlockItem = ^{
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
+    };
+    
+    adView.quysAdviceLoadFailCallBackBlockItem = ^{
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //静音
     adView.quysAdviceMuteCallBackBlockItem = ^{
-         
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
     };
     
     //关闭静音
-    adView.quysAdviceCloseMuteCallBackBlockItemItem = ^{
-         
+    adView.quysAdviceCloseMuteCallBackBlockItem = ^{
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //关闭尾帧
     adView.quysAdviceEndViewCloseEventBlockItem = ^{
-         
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //尾帧点击
     adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
-         
+        
+        self.adModel.statisticsModelEndView.clicked = YES;//TODO
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     
     //视频暂停
     adView.quysAdviceSuspendCallBackBlockItem = ^{
-         
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //视频再次播放
     adView.quysAdvicePlayagainCallBackBlockItem = ^{
-         
+         NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
     
     //尾帧曝光事件
@@ -139,6 +167,8 @@
         {
             [weakself.delegate quys_endViewInterstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+
     };
 
     self.adView = adView;
@@ -295,6 +325,15 @@
     return [self.adModel.videoDuration integerValue] <= 0?10:[self.adModel.videoDuration integerValue];
 }
 
+-(QuysAdviceVideoEndShowType)videoEndShowType
+{
+    return self.adModel.videoEndShowType;
+}
+
+-(NSString *)videoEndShowValue
+{
+    return self.adModel.videoEndShowValue;
+}
 
 
 - (void)dealloc

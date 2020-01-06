@@ -193,12 +193,15 @@
         {
             dispatch_source_cancel(weakself.source_t );
             [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
         }
         
     });
     dispatch_resume(timer);
-    self.source_t = timer;
-    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+            weakself.source_t = timer;
+    });
 }
 
 - (void)setVm:(QuysAdOpenScreenVM *)vm

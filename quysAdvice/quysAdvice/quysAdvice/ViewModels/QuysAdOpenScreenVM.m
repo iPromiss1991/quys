@@ -127,7 +127,7 @@
             case QuysAdviceActiveTypeHtml:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
@@ -136,7 +136,7 @@
             case QuysAdviceActiveTypeImageUrl:
             {
                 QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
@@ -145,7 +145,7 @@
             case QuysAdviceActiveTypeWebURL:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                         }];
@@ -236,17 +236,6 @@
     }
 }
 
-
-- (void)removeBackgroundImageView
-{
-    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
-    {
-        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
-        {
-            [subObj removeFromSuperview];
-        }
-    }
-}
 
 - (void)validateWindow
 {
