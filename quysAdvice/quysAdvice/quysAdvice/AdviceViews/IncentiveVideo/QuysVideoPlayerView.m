@@ -8,7 +8,7 @@
 
 #import "QuysVideoPlayerView.h"
 #import "QuysVidoePlayButtonView.h"
- #import <AVKit/AVKit.h>
+#import <AVKit/AVKit.h>
 
 @interface QuysVideoPlayerView ()
 
@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) id playbackObserver;
 @property (nonatomic) BOOL buffered;//是否缓冲完毕
- 
+
 @property (nonatomic,strong) QuysVidoePlayButtonView *playButtonView;
 
 @end
@@ -39,12 +39,12 @@
 - (void)createUI
 {
     kWeakSelf(self)
-     self.backgroundColor = [UIColor cyanColor];
+    self.backgroundColor = [UIColor cyanColor];
     [self.layer addSublayer:self.playerLayer];
-    QuysVidoePlayButtonView *playButtonView = [[QuysVidoePlayButtonView alloc]initWithFrame:CGRectMake(0, 0, kScale_W(100), kScale_W(100))];
+    QuysVidoePlayButtonView *playButtonView = [[QuysVidoePlayButtonView alloc]initWithFrame:self.bounds];
     playButtonView.center = self.center;
     playButtonView.quysAdviceClickPlayButtonBlockItem = ^(BOOL playEnable) {
-        [weakself rerunPlayVideo];
+        [weakself playStatesChanged];
     };
     [self addSubview:playButtonView];
     self.playButtonView = playButtonView;
@@ -53,7 +53,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+    self.playButtonView.frame = self.bounds;;
 }
 
 #pragma mark - Init
@@ -89,7 +89,7 @@
 -(void)setUrlVideo:(NSString *)urlVideo{
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-    [self.player play];//开始播放视频
+    [self playStatesChanged];//开始播放视频
     if (self.quysAdvicePlayStartCallBackBlockItem)
     {
         self.quysAdvicePlayStartCallBackBlockItem();
@@ -110,28 +110,40 @@
 
 -(void)playStatesChanged
 {
-    
+    NSLog(@">>>%lf",CMTimeGetSeconds(self.player.currentItem.currentTime));
     if (self.player.rate)
     {
         [self.player pause];
+        [self.playButtonView showView];
         if (self.quysAdviceSuspendCallBackBlockItem)
         {
             self.quysAdviceSuspendCallBackBlockItem();
         }
-        
+        [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)) forKey:kVideoEndTime];
     }else
     {
-        [self.player play];
-        if (self.quysAdvicePlayagainCallBackBlockItem)
+        [self.playButtonView hiddenView];
+        if (!(CMTimeGetSeconds(self.player.currentItem.currentTime)  >= 0) )
         {
-            self.quysAdvicePlayagainCallBackBlockItem();
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%f",0.0) forKey:kVideoBeginTime];
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoIsFirstFrame];
+            
+        }else
+        {
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)) forKey:kVideoBeginTime];
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"0") forKey:kVideoIsFirstFrame];
+            if (self.quysAdvicePlayagainCallBackBlockItem)
+            {
+                self.quysAdvicePlayagainCallBackBlockItem();
+            }
         }
+        [self.player play];
     }
     
 }
 
 
- 
+
 
 #pragma mark - lTime
 
@@ -139,24 +151,31 @@
 {
     BOOL isNormalStatus = NO;
     NSTimeInterval totalTime = CMTimeGetSeconds(self.player.currentItem.duration);//总时长
-    NSTimeInterval currentTime = CMTimeGetSeconds(self.player.currentTime);//当前时间进度
+    NSTimeInterval currentTime = CMTimeGetSeconds(self.player.currentItem.currentTime);//当前时间进度
     
     // 切换视频源时totalTime/currentTime的值会出现nan导致时间错乱
     if (!(totalTime >= 0) || !(currentTime >= 0))
     {
-        [self.playButtonView playStart];
         totalTime = 0;
         currentTime = 0;
     }else
     {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",totalTime) forKey:kVideoTotalTime];
+        });
         isNormalStatus = YES;
+        if (currentTime == 0)
+        {
+            [self.playButtonView hiddenView];
+        }
     }
     
     NSInteger totalMin = totalTime / 60;
     NSInteger totalSec = (NSInteger)totalTime % 60;
     NSString *totalTimeStr = [NSString stringWithFormat:@"%02ld:%02ld",totalMin,totalSec];
     self.totalTime = totalTimeStr;
-
+    
     NSInteger currentMin = currentTime / 60;
     NSInteger currentSec = (NSInteger)currentTime % 60;
     NSString *currentTimeStr = [NSString stringWithFormat:@"%02ld:%02ld",currentMin,currentSec];
@@ -183,8 +202,8 @@
 -(void)vpc_playbackFinished:(NSNotification *)noti
 {
     [self.player pause];
-    [self.playButtonView playEnd];
-
+    [self.playButtonView showView];
+    
 }
 
 - (void)vpc_addObserverToPlayerItem:(AVPlayerItem *)playerItem {
@@ -209,7 +228,7 @@
         AVPlayerStatus status= [[change objectForKey:@"new"] intValue];
         if (status == AVPlayerStatusReadyToPlay)
         {
-             [self quys_videoPlay];
+            [self quys_videoPlay];
             if (self.quysAdviceLoadSucessCallBackBlockItem)
             {
                 self.quysAdviceLoadSucessCallBackBlockItem();
@@ -218,8 +237,8 @@
         {
             if (self.quysAdviceLoadFailCallBackBlockItem)
             {
-                 self.quysAdviceLoadFailCallBackBlockItem();
-             }
+                self.quysAdviceLoadFailCallBackBlockItem();
+            }
         }
     } else if ([keyPath isEqualToString:@"loadedTimeRanges"])
     {
@@ -266,18 +285,18 @@
     NSInteger dragedSeconds = floorf(a);
     CMTime dragedCMTime = CMTimeMake(dragedSeconds, 1);
     [self.player seekToTime:dragedCMTime];
-    [self.player play];
+    [self playStatesChanged];
 }
 
 - (void)setMute
 {
-     if (self.player.volume == 0.0)
-     {
-         self.player.volume = 1.0;
-         if (self.quysAdviceCloseMuteCallBackBlockItem)
-         {
-             self.quysAdviceCloseMuteCallBackBlockItem();
-         }
+    if (self.player.volume == 0.0)
+    {
+        self.player.volume = 1.0;
+        if (self.quysAdviceCloseMuteCallBackBlockItem)
+        {
+            self.quysAdviceCloseMuteCallBackBlockItem();
+        }
     }else
     {
         self.player.volume = 0.0f;
@@ -294,11 +313,12 @@
 {
     
     if (self.quysAdviceStatisticalCallBackBlockItem)
-           {
-               self.quysAdviceStatisticalCallBackBlockItem();
-           }
+    {
+        self.quysAdviceStatisticalCallBackBlockItem();
+    }
 }
-- (void)dealloc
+
+ - (void)dealloc
 {
     [self validatePlayer];
 }

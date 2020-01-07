@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3F4905DBB69DEEEB5750B04A /* Pods_quysAdvice_quysDevDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5453E071EFBA50862755032 /* Pods_quysAdvice_quysDevDemo.framework */; };
 		526B426A8316BE26CEB10C60 /* Pods_quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C7376E1911634BB08B664E /* Pods_quysAdvice.framework */; };
+		FB1A0DEB23C4668300EADB4D /* zanting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DE923C4668300EADB4D /* zanting@2x.png */; };
+		FB1A0DEC23C4668300EADB4D /* zanting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DEA23C4668300EADB4D /* zanting@3x.png */; };
+		FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */; };
+		FB1A0DF223C494FE00EADB4D /* QuysDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DF123C494FE00EADB4D /* QuysDemoViewController.m */; };
 		FB6A1C6D23B0C1B600E29B75 /* QuysFullScreenReplaceView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB6A1C6B23B0C1B600E29B75 /* QuysFullScreenReplaceView.h */; };
 		FB6A1C6E23B0C1B600E29B75 /* QuysFullScreenReplaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB6A1C6C23B0C1B600E29B75 /* QuysFullScreenReplaceView.m */; };
 		FB6A1C7323B1B82600E29B75 /* QuysNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = FB6A1C7123B1B82600E29B75 /* QuysNavigationController.h */; };
@@ -178,6 +182,12 @@
 		9E23C06C9917F5F312DCBF81 /* Pods-quysAdvice-quysAdviceTestDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysAdviceTestDemo.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysAdviceTestDemo/Pods-quysAdvice-quysAdviceTestDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B5453E071EFBA50862755032 /* Pods_quysAdvice_quysDevDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice_quysDevDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C7376E1911634BB08B664E /* Pods_quysAdvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB1A0DE923C4668300EADB4D /* zanting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@2x.png"; sourceTree = "<group>"; };
+		FB1A0DEA23C4668300EADB4D /* zanting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@3x.png"; sourceTree = "<group>"; };
+		FB1A0DED23C492EC00EADB4D /* QuysServiceListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysServiceListTableViewController.h; sourceTree = "<group>"; };
+		FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysServiceListTableViewController.m; sourceTree = "<group>"; };
+		FB1A0DF023C494FE00EADB4D /* QuysDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysDemoViewController.h; sourceTree = "<group>"; };
+		FB1A0DF123C494FE00EADB4D /* QuysDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysDemoViewController.m; sourceTree = "<group>"; };
 		FB6A1C6B23B0C1B600E29B75 /* QuysFullScreenReplaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysFullScreenReplaceView.h; sourceTree = "<group>"; };
 		FB6A1C6C23B0C1B600E29B75 /* QuysFullScreenReplaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysFullScreenReplaceView.m; sourceTree = "<group>"; };
 		FB6A1C7123B1B82600E29B75 /* QuysNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysNavigationController.h; sourceTree = "<group>"; };
@@ -630,18 +640,18 @@
 		FB955A4523B9EC0A00AFA427 /* IncentiveVideo */ = {
 			isa = PBXGroup;
 			children = (
-				FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */,
-				FB955A9723C31F8D00AFA427 /* QuysVidoePlayButtonView.m */,
-				FB955A4B23B9ECA400AFA427 /* QuysIncentiveVideo.h */,
-				FB955A4C23B9ECA400AFA427 /* QuysIncentiveVideo.m */,
 				FB955A4A23B9ECA400AFA427 /* QuysIncentiveVideoWindow.h */,
 				FB955A4E23B9ECA400AFA427 /* QuysIncentiveVideoWindow.m */,
 				FB955A4D23B9ECA400AFA427 /* QuysIncentiveVideoWindowVC.h */,
 				FB955A4F23B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.m */,
+				FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */,
+				FB955A9723C31F8D00AFA427 /* QuysVidoePlayButtonView.m */,
 				FB955A6E23BD8DE400AFA427 /* QuysVideoPlayerView.h */,
 				FB955A6F23BD8DE400AFA427 /* QuysVideoPlayerView.m */,
 				FB955A8F23BEEB8D00AFA427 /* QuysImgPlayendCoverView.h */,
 				FB955A9023BEEB8D00AFA427 /* QuysImgPlayendCoverView.m */,
+				FB955A4B23B9ECA400AFA427 /* QuysIncentiveVideo.h */,
+				FB955A4C23B9ECA400AFA427 /* QuysIncentiveVideo.m */,
 			);
 			path = IncentiveVideo;
 			sourceTree = "<group>";
@@ -716,6 +726,10 @@
 				FBC4CE5923B4563000AF86B1 /* main.m */,
 				FB955A2623B49C6E00AFA427 /* QuysViewController.h */,
 				FB955A2723B49C6E00AFA427 /* QuysViewController.m */,
+				FB1A0DED23C492EC00EADB4D /* QuysServiceListTableViewController.h */,
+				FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */,
+				FB1A0DF023C494FE00EADB4D /* QuysDemoViewController.h */,
+				FB1A0DF123C494FE00EADB4D /* QuysDemoViewController.m */,
 			);
 			path = quysDevDemo;
 			sourceTree = "<group>";
@@ -723,6 +737,8 @@
 		FBC4CE6323B4570200AF86B1 /* quysBundle */ = {
 			isa = PBXGroup;
 			children = (
+				FB1A0DE923C4668300EADB4D /* zanting@2x.png */,
+				FB1A0DEA23C4668300EADB4D /* zanting@3x.png */,
 				FB955A9B23C334E000AFA427 /* play@2x.png */,
 				FB955A9C23C334E300AFA427 /* play@3x.png */,
 				FB955A8B23BEEA4E00AFA427 /* mute@2x.png */,
@@ -961,6 +977,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB955A8023BEE7A400AFA427 /* voice@2x.png in Resources */,
+				FB1A0DEB23C4668300EADB4D /* zanting@2x.png in Resources */,
 				FB955A8D23BEEA4E00AFA427 /* mute@2x.png in Resources */,
 				FB955A8123BEE7A400AFA427 /* voice@3x.png in Resources */,
 				FBC4CE7123B457AE00AF86B1 /* close@2x.png in Resources */,
@@ -972,6 +989,7 @@
 				FB955A8E23BEEA4E00AFA427 /* mute@3x.png in Resources */,
 				FB955A8923BEE83000AFA427 /* back@3x.png in Resources */,
 				FB955A9E23C334E700AFA427 /* play@3x.png in Resources */,
+				FB1A0DEC23C4668300EADB4D /* zanting@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,10 +1133,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */,
 				FB955A2823B49C6E00AFA427 /* QuysViewController.m in Sources */,
 				FBC4CE4F23B4562C00AF86B1 /* ViewController.m in Sources */,
 				FBC4CE4923B4562C00AF86B1 /* AppDelegate.m in Sources */,
 				FBC4CE5A23B4563000AF86B1 /* main.m in Sources */,
+				FB1A0DF223C494FE00EADB4D /* QuysDemoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -281,6 +281,7 @@
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
+        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
         [self uploadServer:self.adModel.reportVideoShowUrl];
         self.adModel.statisticsModel.exposured = YES;
     }else
@@ -295,6 +296,7 @@
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
+        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
         [self uploadServer:self.adModel.reportLandingPageShowUrl];
         self.adModel.statisticsModelEndView.exposured = YES;
     }else

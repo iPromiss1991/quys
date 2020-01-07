@@ -7,7 +7,6 @@
 //
 
 #import "QuysIncentiveVideoApi.h"
-#import "NSDate+QuysTimestamp.h"
 #import "UIDevice+Hardware.h"
 #import "QuysMD5.h"
 @implementation QuysIncentiveVideoApi
@@ -16,7 +15,7 @@
 {
 //    return @"http://jl.quyuansu.com/pull/list";
 //    return @"http://192.168.1.7/advert/test.php?tid=246";//开屏
-    return @"http://192.168.1.2/advert/test.php?tid=269";//
+    return @"http://192.168.1.2/advert/test.php?tid=255";//
 
 }
 

@@ -215,6 +215,16 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 
 #define kClickClickID @"__CLICK_ID__"
 
+//激励视频
+#define kClientTimeStamp @"__TS__"
+#define kVideoTotalTime @"__VIDEO_TIME__"
+#define kVideoBeginTime @"__BEGIN_TIME__"
+#define kVideoEndTime @"__END_TIME__"
+
+#define kVideoIsFirstFrame @"__PLAY_FIRST_FRAME__"
+#define kVideoIsLastFrame @"__PLAY_LAST_FRAME__"
+#define kVideoScene @"__SCENE__" 
+
 
 
 #pragma mark - 业务通知

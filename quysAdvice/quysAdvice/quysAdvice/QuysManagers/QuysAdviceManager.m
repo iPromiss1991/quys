@@ -112,6 +112,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
                                  kClickInsideDownY,@"",
                                  kClickUPX,@"",
                                  kClickUPY,@"",
+                                 kVideoScene,@"1",
                                  nil];
     return dicM;
 }

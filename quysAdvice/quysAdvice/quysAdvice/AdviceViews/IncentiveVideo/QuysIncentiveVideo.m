@@ -59,7 +59,6 @@
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
     [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
-    
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
     
@@ -83,7 +82,7 @@
     
     UIButton *btnCounntdown = [UIButton buttonWithType:UIButtonTypeCustom];
     btnCounntdown.userInteractionEnabled = NO;
-    [btnCounntdown setTitle:@"0s" forState:UIControlStateNormal];
+    [btnCounntdown setTitle:@"" forState:UIControlStateNormal];
     [btnCounntdown setTitle:@"" forState:UIControlStateHighlighted];
     [btnCounntdown setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnCounntdown];
@@ -207,6 +206,7 @@
 {
     if (self.vm.isClickable)
     {
+        [self playStatesChanged];
         //获取触发触摸的点
         CGPoint cpBegain = [sender locationInView:self];
         CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
@@ -231,7 +231,7 @@
 
 - (void)closeAndRemovePlayer
 {
-    [self suspend];
+    [self playStatesChanged];
     [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
     [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
 }
@@ -316,7 +316,7 @@
     [self updateConstraintsIfNeeded];
 }
 
-- (void)suspend
+- (void)playStatesChanged
 {
     
     [self.playerView playStatesChanged];
@@ -324,11 +324,7 @@
 }
 
 
-- (void)resume
-{
-    [self.playerView playStatesChanged];
-}
-
+ 
 
 #pragma mark -QuysVideoPlayerDelegate
 
@@ -337,12 +333,14 @@
 {
     if (status)
     {
-        self.countdownLeft = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]] - [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]];
+        NSInteger totalTime = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]];
+        NSInteger currentTime = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]];
+        self.countdownLeft = totalTime - currentTime;
         [self countdownEvevt];
         
         if (self.quysAdviceProgressEventBlockItem)
         {
-            NSInteger progress = [self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemCurrentTime]]/[self translateMediaTimeToSeconds:playItemInfo[kAVPlayerItemTotalTime]];
+            NSInteger progress = currentTime/totalTime;
             self.quysAdviceProgressEventBlockItem(progress);
         }
     }
@@ -403,14 +401,18 @@
     self.playerView.urlVideo = self.vm.videoUrl;
     self.playerView.quysAdviceStatisticalCallBackBlockItem = ^{
         //曝光：自动播放视频
-        [weakself resume];
+        [weakself playStatesChanged];
     };
     
 }
+
+
 
 - (void)dealloc
 {
     
 }
+
+
 
 @end

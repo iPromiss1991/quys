@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) QuysAdviceClickPlayButtonBlock quysAdviceClickPlayButtonBlockItem;
 
 
-- (void)playStart;
+- (void)hiddenView;
 
-- (void)playEnd;
+- (void)showView;
  
 @end
 

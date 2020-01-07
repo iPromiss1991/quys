@@ -7,7 +7,6 @@
 //
 
 #import "QuysAdSplashApi.h"
-#import "NSDate+QuysTimestamp.h"
 #import "UIDevice+Hardware.h"
 #import "QuysMD5.h"
 @implementation QuysAdSplashApi

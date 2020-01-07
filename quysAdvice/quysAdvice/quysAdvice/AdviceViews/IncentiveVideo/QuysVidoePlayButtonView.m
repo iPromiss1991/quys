@@ -30,6 +30,10 @@
 
 - (void)createUI
 {
+    
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    [self addGestureRecognizer:tap];
+    
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
     viewContain.backgroundColor = [UIColor grayColor];
     viewContain.alpha = .7;
@@ -83,29 +87,46 @@
 }
 
 
-- (void)playStart
+- (void)hiddenView
 {
     self.hidden = YES;
  
 }
 
 
-- (void)playEnd
+- (void)showView
 {
     self.hidden = NO;
-
+    self.shapeLayer.hidden = YES;
     
 }
 
 
 - (void)clickPlayBtEvent:(UIButton*)sender
 {
+    sender.selected = !sender.selected;
     if (self.quysAdviceClickPlayButtonBlockItem)
     {
         self.quysAdviceClickPlayButtonBlockItem(YES);
     }
+    if (sender.selected)
+    {
+        //暂停
+         [self.btnPlay setImage:[UIImage imageNamed:@"zanting" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+         [self.btnPlay setImage:[UIImage imageNamed:@"zanting" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }else
+    {
+        //播放
+        [self.btnPlay setImage:[UIImage imageNamed:@"play" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.btnPlay setImage:[UIImage imageNamed:@"play" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }
     
-    
+}
+
+
+- (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
+{
+
 }
 
  
@@ -157,4 +178,5 @@
     }
     return _shapeLayer;
 }
+
 @end
