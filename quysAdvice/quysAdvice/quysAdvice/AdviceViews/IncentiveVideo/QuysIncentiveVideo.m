@@ -49,8 +49,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
-    viewContain.backgroundColor = [UIColor orangeColor];
-    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -90,8 +89,7 @@
     
     //
     UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
-    viewFootContain.backgroundColor = [UIColor orangeColor];
-    [self.viewContain addSubview:viewFootContain];
+     [self.viewContain addSubview:viewFootContain];
     self.viewFootContain = viewFootContain;
     
     UIImageView *imgLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
@@ -340,7 +338,7 @@
         
         if (self.quysAdviceProgressEventBlockItem)
         {
-            NSInteger progress = currentTime/totalTime;
+            NSInteger progress = (currentTime/(CGFloat)totalTime)*100;
             self.quysAdviceProgressEventBlockItem(progress);
         }
     }

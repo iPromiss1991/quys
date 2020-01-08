@@ -7,7 +7,7 @@
 //
 
 #import "QuysServiceListTableViewController.h"
-
+#import "QuysDemoViewController.h"
 @interface QuysServiceListTableViewController ()
 @property (nonatomic,strong) NSMutableArray *arrServiceList;
 
@@ -17,15 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"广告类型";
     
     
-    
-    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 #pragma mark - Table view data source
@@ -51,7 +51,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *strService = self.arrServiceList[indexPath.row    ];
     //TODO
+    QuysDemoViewController *vc = [[QuysDemoViewController alloc]init];
+
+    vc.title = strService;
+    if (self.navigationController)
+    {
+        [self.navigationController pushViewController:vc animated:YES];
+    }else
+    {
+        [self presentViewController:vc animated:YES completion:nil];
+        
+    }
     
 }
 

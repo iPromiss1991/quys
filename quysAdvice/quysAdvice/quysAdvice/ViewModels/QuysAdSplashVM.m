@@ -119,7 +119,7 @@
     if ([self.adView isMemberOfClass:[QuysAdSplash class]])
     {
         switch (self.adModel.ctype) {
-            case QuysAdviceActiveTypeHtml:
+            case QuysAdviceActiveTypeHtmlSourceCode:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
@@ -130,23 +130,36 @@
                 break;
             case QuysAdviceActiveTypeImageUrl:
             {
-                QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
+                //判断后缀是否.ipa==直接下载； 或者加载web
+                if ([self.adModel.ldp containsString:@".ipa"])
+                {
+                     [self openUrl:self.adModel.ldp];
+                }else
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
+                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                     }];
+                }
+                [self updateClickAndUpload:cpClick];
+            }
+                break;
+            case QuysAdviceActiveTypeHtmlLink:
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
             }
                 break;
-            case QuysAdviceActiveTypeWebURL:
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
-                        }];
-                    }
-                break;
             case QuysAdviceActiveTypeDownAppAppstore:
+            {
+                [self openUrl:self.adModel.downUrl];
+                [self updateClickAndUpload:cpClick];
+            }
+                break;
+            case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
                 [self updateClickAndUpload:cpClick];

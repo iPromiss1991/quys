@@ -19,8 +19,8 @@ FOUNDATION_EXPORT const unsigned char quysAdviceVersionString[];
 //#import <quysAdvice/QuysAdviceBaseDelegate.h>
 
 #import <quysAdvice/UIDevice+Hardware.h>
-#import <quysAdvice/UIViewController+QuysNavBar.h>//第三方：release的时候可能需要注释该行
-#import <quysAdvice/VHLNavigation.h>//第三方：release的时候可能需要注释该行
+//#import <quysAdvice/UIViewController+QuysNavBar.h>//TODO:第三方：release的时候可能需要注释该行
+//#import <quysAdvice/VHLNavigation.h>//第三方：release的时候可能需要注释该行
 
 //#import <quysAdvice/QuysAdSplash.h>
 //#import <quysAdvice/QuysAdSplashDelegate.h>

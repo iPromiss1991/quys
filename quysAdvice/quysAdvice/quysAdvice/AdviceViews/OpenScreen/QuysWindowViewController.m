@@ -36,8 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor yellowColor];
-//    self.navigationController.navigationBarHidden = YES;
+ //    self.navigationController.navigationBarHidden = YES;
     [self vhl_setStatusBarHidden:YES];
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarHidden:YES];

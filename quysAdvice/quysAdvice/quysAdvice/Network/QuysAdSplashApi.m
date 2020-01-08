@@ -13,16 +13,22 @@
 - (NSString *)baseUrl
 {
 //    return @"http://adx.quyuansu.com/api/spread/detail";
-    return @"http://192.168.1.2/advert/test.php?tid=246";//开屏
-//    return @"http://192.168.1.2/advert/test.php?tid=71";//
+    return @"http://192.168.1.2/advert/test.php?tid=17";//
+    
+    /*
+     286:激励视频 -- webrl
+     17:banner -- webpic
+     132:banner -- weburl
+     */
+ 
 
 }
 
 //- (NSString *)requestUrl
 //{
-//    NSString *strTimestam = [NSDate getNowTimeTimestamp];
+//    NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
 //    NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
-//    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];//TODO:位数？大小写
+//    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
 //    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"?id=%@&apiToken=%@&timestamp=%@",self.businessID,strMd5ApiToken,strTimestam];
 //    return strUrl;
 //}

@@ -82,8 +82,6 @@
         {
             [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
         }
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-
     };
     
     //关闭事件
@@ -92,8 +90,6 @@
         {
             [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
         }
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-
     };
     
     //曝光事件
@@ -103,23 +99,44 @@
         {
             [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-
     };
     
+    //播放开始
     adView.quysAdvicePlayStartCallBackBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        
     };
     
-    adView.quysAdviceLoadSucessCallBackBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+    
+    //播放完成
+    adView.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType) {
+        
     };
     
-    adView.quysAdviceLoadFailCallBackBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+    //播放进度
+    adView.quysAdviceProgressEventBlockItem = ^(NSInteger progress) {
+        [self.adModel.videoCheckPointList enumerateObjectsUsingBlock:^(QuysVideoCheckPoint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (obj.checkPoint >= 0 && obj.checkPoint <= 100)
+            {
+                //checkPoint：可能是小数0～1，也可能是1～100
+                if (obj.checkPoint <= 1)
+                {
+                    if (ceilf(obj.checkPoint*100) == progress || obj.checkPoint == 1 )
+                    {
+                        [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
+                        obj.isReported = YES;
+                    }
+                }else
+                {
+                    if (obj.checkPoint == progress)
+                    {
+                        [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
+                        obj.isReported = YES;
+                    }
+                }
+            }
+            NSLog(@"======%lf",obj.checkPoint);
+        }];
     };
     
     //静音
@@ -130,34 +147,34 @@
     //关闭静音
     adView.quysAdviceCloseMuteCallBackBlockItem = ^{
         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        
     };
     
     //关闭尾帧
     adView.quysAdviceEndViewCloseEventBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
     };
     
     //尾帧点击
     adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
         
         self.adModel.statisticsModelEndView.clicked = YES;//TODO
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
     };
     
     
     //视频暂停
     adView.quysAdviceSuspendCallBackBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
     };
     
     //视频再次播放
     adView.quysAdvicePlayagainCallBackBlockItem = ^{
-         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
     };
     
     //尾帧曝光事件
@@ -168,9 +185,23 @@
             [weakself.delegate quys_endViewInterstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
         NSLog(@",,%s",__PRETTY_FUNCTION__);
-
+        
     };
-
+    
+    //加载成功
+    adView.quysAdviceLoadSucessCallBackBlockItem = ^{
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
+    };
+    
+    //加载失败
+    adView.quysAdviceLoadFailCallBackBlockItem = ^{
+        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        
+    };
+    
+    
+    
     self.adView = adView;
     return adView;
     
@@ -179,7 +210,6 @@
 
 #pragma mark - Event
 
-#pragma mark - QuysIncentiveVideoWindow
 
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
@@ -198,10 +228,10 @@
             }else
             {
                 NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
-                 [self openUrl:strMacroReplace];
+                [self openUrl:strMacroReplace];
                 [self updateClickAndUpload:cpClick];
             }
-
+            
         }else
         {
             if ([self.adModel.landingPageUrl containsString:@"ipa"])
@@ -232,16 +262,16 @@
 {
     if (self.adModel.clickeUploadEnable)
     {
-    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-    //更新点击坐标
-    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-    
-    [self updateReplaceDictionary:kClickUPX value:strCpX];
-    [self updateReplaceDictionary:kClickUPY value:strCpY];
-    self.adModel.statisticsModel.clicked = YES;
-    [self uploadServer:self.adModel.reportVideoClickUrl];
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        self.adModel.statisticsModel.clicked = YES;
+        [self uploadServer:self.adModel.reportVideoClickUrl];
     }
 }
 
@@ -262,12 +292,12 @@
                 [weakself openUrl:model.dstlink];
             }
             
-                if (!kISNullString(model.clickid))
-                {
-                    [weakself openUrl:model.dstlink];
-                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick];
-                }
+            if (!kISNullString(model.clickid))
+            {
+                [weakself openUrl:model.dstlink];
+                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                [weakself updateClickAndUpload:cpClick];
+            }
         }
         
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {

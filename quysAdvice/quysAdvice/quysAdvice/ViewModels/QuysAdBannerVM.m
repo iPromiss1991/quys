@@ -102,7 +102,44 @@
             self.adView = adView;
             return adView;
             
+        }break;
+        case QuysAdviceCreativeTypePictureOnly:
+        {
+            kWeakSelf(self)
+            //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
+            QuysAdBanner *adView = [[QuysAdBanner alloc]initWithFrame:self.cgFrame viewModel:self];
+            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+            
+            //点击事件
+            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+                [weakself interstitialOnClick:cp];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+                {
+                    [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //关闭事件
+            adView.quysAdviceCloseEventBlockItem = ^{
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                {
+                    [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //曝光事件
+            adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                [weakself interstitialOnExposure];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                {
+                    [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            self.adView = adView;
+            return adView;
+            
         }
+            break;
         default:
             return nil;
             break;
@@ -118,7 +155,7 @@
     if ([self.adView isMemberOfClass:[QuysAdBanner class]])
     {
         switch (self.adModel.ctype) {
-            case QuysAdviceActiveTypeHtml:
+            case QuysAdviceActiveTypeHtmlSourceCode:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
@@ -129,23 +166,36 @@
                 break;
             case QuysAdviceActiveTypeImageUrl:
             {
-                QuysPictureViewController *webVC = [[QuysPictureViewController alloc] initWithUrl:self.adModel.imgUrl];
+                //判断后缀是否.ipa==直接下载； 或者加载web
+                if ([self.adModel.ldp containsString:@".ipa"])
+                {
+                     [self openUrl:self.adModel.ldp];
+                }else
+                {
+                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
+                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                     }];
+                }
+                [self updateClickAndUpload:cpClick];
+            }
+                break;
+            case QuysAdviceActiveTypeHtmlLink:
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
             }
                 break;
-            case QuysAdviceActiveTypeWebURL:
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
-                        }];
-                    }
-                break;
             case QuysAdviceActiveTypeDownAppAppstore:
+            {
+                [self openUrl:self.adModel.downUrl];
+                [self updateClickAndUpload:cpClick];
+            }
+                break;
+            case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
                 [self updateClickAndUpload:cpClick];
@@ -172,16 +222,16 @@
 {
     if (self.adModel.clickeUploadEnable)
     {
-    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-    //更新点击坐标
-    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-    
-    [self updateReplaceDictionary:kClickUPX value:strCpX];
-    [self updateReplaceDictionary:kClickUPY value:strCpY];
-    self.adModel.statisticsModel.clicked = YES;
-    [self uploadServer:self.adModel.clkTracking];
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        self.adModel.statisticsModel.clicked = YES;
+        [self uploadServer:self.adModel.clkTracking];
     }
 }
 
@@ -202,11 +252,11 @@
                 [weakself openUrl:model.dstlink];
             }
             if (!kISNullString(model.clickid))
-                {
-                    [weakself openUrl:model.dstlink];
-                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick];
-                }
+            {
+                [weakself openUrl:model.dstlink];
+                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                [weakself updateClickAndUpload:cpClick];
+            }
         }
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         

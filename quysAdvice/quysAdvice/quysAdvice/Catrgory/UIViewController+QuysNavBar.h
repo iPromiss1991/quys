@@ -8,11 +8,11 @@
 
  
 
-#import <UIKit/UIKit.h>
+#import "QuysBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIViewController (QuysNavBar)
+@interface QuysBaseViewController (QuysNavBar)
 @property (nonatomic, strong) UIButton *qus_navBackButton;
 
 /** 导航栏返回按钮图片*/

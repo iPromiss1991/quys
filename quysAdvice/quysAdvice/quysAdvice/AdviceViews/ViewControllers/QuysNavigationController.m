@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor clearColor];
     // 重新响应侧滑返回手势
     self.interactivePopGestureRecognizer.delegate = self;
 }

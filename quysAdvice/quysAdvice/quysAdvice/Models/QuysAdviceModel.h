@@ -26,14 +26,15 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 };
 
 /*广告行为类型:
- 1-html(源码)  2-图片url  3-文字链*(html:TODO:不确认)  4-下载app*(下载地址)   5-android 应用市场下载  6-ios:appstore(下载地址)   8-请求下载地址，见4.8 请求下载类型处理方式
+ 1-html(源码)  2-图片url（web）  3-文字链*(html:TODO:不确认)  4-下载app*(下载地址)   5-android 应用市场下载  6-ios:appstore(下载地址)   8-请求下载地址，见4.8 请求下载类型处理方式
 */
 
 typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
-    QuysAdviceActiveTypeHtml = 1,
+    QuysAdviceActiveTypeHtmlSourceCode = 1,
    QuysAdviceActiveTypeImageUrl = 2,
-    QuysAdviceActiveTypeWebURL = 3,
-   QuysAdviceActiveTypeDownAppAppstore = 4,//4&6
+    QuysAdviceActiveTypeHtmlLink = 3,
+   QuysAdviceActiveTypeDownAppAppstore = 4,
+    QuysAdviceActiveTypeDownAppAppstoreSecond = 6,
    QuysAdviceActiveTypeDownAppWebUrl = 8,
 };
 
@@ -72,6 +73,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 
 @property (nonatomic , copy) NSString              * imgUrl;
+@property (nonatomic , copy) NSString              * ldp;
 @property (nonatomic , strong) NSArray <NSString *>              * imgUrlList;
 
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型

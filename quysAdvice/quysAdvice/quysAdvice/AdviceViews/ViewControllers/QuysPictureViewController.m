@@ -35,7 +35,7 @@
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarBackgroundAlpha:1.0f];
     [self vhl_setNavBarHidden:NO];
-    [self setQus_navBackButtonTitle:@"存储"];
+    [self setQus_navBackButtonTitle:@"返回"];
     [self vhl_setInteractivePopGestureRecognizerEnable:NO];//TODO
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
@@ -59,6 +59,7 @@
 -(void)qus_navigationItemHandleBack:(UIButton *)button
 {
     [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    [super qus_navigationItemHandleBack:button];
     
 }
 

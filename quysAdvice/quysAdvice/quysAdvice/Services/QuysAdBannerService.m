@@ -87,7 +87,8 @@
 
 
 /// 展示视图
-- (UIView*)showAdView;{
+- (UIView*)showAdView
+{
     if (self.loadAdViewEnable)
     {
         [self.parentView addSubview:self.adviceView];

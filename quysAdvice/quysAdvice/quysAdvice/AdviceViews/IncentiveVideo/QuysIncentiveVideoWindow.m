@@ -62,10 +62,10 @@
     self.rootVC.quysAdvicePlayEndCallBackBlockItem = quysAdvicePlayEndCallBackBlockItem;
 }
 
-- (void)setQuysAdviceProgressClickEventBlockItem:(QuysAdviceProgressEventBlock)quysAdviceProgressClickEventBlockItem
+- (void)setQuysAdviceProgressEventBlockItem:(QuysAdviceProgressEventBlock)quysAdviceProgressEventBlockItem
 {
-    _quysAdviceProgressClickEventBlockItem = quysAdviceProgressClickEventBlockItem;
-    self.rootVC.quysAdviceProgressClickEventBlockItem = quysAdviceProgressClickEventBlockItem;
+    _quysAdviceProgressEventBlockItem = quysAdviceProgressEventBlockItem;
+    self.rootVC.quysAdviceProgressEventBlockItem = quysAdviceProgressEventBlockItem;
 }
 
 //

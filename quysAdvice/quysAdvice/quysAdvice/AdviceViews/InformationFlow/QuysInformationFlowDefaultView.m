@@ -38,8 +38,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]init];
-    viewContain.backgroundColor = [UIColor blueColor];
-    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -57,7 +56,6 @@
     
     UILabel *lblTag = [[UILabel alloc] init];
     lblTag.text = @"广告";
-    lblTag.backgroundColor = [UIColor redColor];
     kViewRadius(lblTag, kScale_W(5));
     self.lblTag = lblTag;
     [self.viewContain addSubview:lblTag];
@@ -157,6 +155,7 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
+    [self removeFromSuperview];
     if (self.quysAdviceCloseEventBlockItem)
        {
            self.quysAdviceCloseEventBlockItem();

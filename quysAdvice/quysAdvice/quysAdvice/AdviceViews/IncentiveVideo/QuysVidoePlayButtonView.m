@@ -107,7 +107,7 @@
     sender.selected = !sender.selected;
     if (self.quysAdviceClickPlayButtonBlockItem)
     {
-        self.quysAdviceClickPlayButtonBlockItem(YES);
+        self.quysAdviceClickPlayButtonBlockItem();
     }
     if (sender.selected)
     {

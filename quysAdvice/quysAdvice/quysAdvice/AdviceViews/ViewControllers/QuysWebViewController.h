@@ -6,11 +6,11 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "QuysBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 ///webview
-@interface QuysWebViewController : UIViewController
+@interface QuysWebViewController : QuysBaseViewController
 
 - (instancetype)initWithUrl:(NSString *)requestUrl;
 

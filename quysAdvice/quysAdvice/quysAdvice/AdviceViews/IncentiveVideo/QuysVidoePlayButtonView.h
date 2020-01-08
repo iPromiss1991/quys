@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void(^QuysAdviceClickPlayButtonBlock)(BOOL playEnable);//!< 点击事件
+typedef void(^QuysAdviceClickPlayButtonBlock)(void );//!< 点击事件
 NS_ASSUME_NONNULL_BEGIN
 ///视频播放按钮
 @interface QuysVidoePlayButtonView : UIView

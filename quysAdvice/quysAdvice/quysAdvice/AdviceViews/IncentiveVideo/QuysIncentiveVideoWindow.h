@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
 @property (nonatomic,copy) QuysAdvicePlayEndCallBackBlock quysAdvicePlayEndCallBackBlockItem;
-@property (nonatomic,copy) QuysAdviceProgressEventBlock quysAdviceProgressClickEventBlockItem;
+@property (nonatomic,copy) QuysAdviceProgressEventBlock quysAdviceProgressEventBlockItem;
 
 @property (nonatomic,copy) QuysAdviceMuteCallBackBlock quysAdviceMuteCallBackBlockItem;
 @property (nonatomic,copy) QuysAdviceCloseMuteCallBackBlock quysAdviceCloseMuteCallBackBlockItem;

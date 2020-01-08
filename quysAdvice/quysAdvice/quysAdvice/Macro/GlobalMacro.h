@@ -225,6 +225,9 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kVideoIsLastFrame @"__PLAY_LAST_FRAME__"
 #define kVideoScene @"__SCENE__" 
 
+#define kVideoType @"__TYPE__"
+#define kVideoBeavior @"__BEAVIOR__"//TODO：尚未实现
+#define kVideoStatus @"__STATUS__"
 
 
 #pragma mark - 业务通知
@@ -234,6 +237,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 
 #pragma mark - 业务枚举
 
+///激励视频尾帧
 typedef NS_ENUM(NSInteger,QuysAdviceVideoEndShowType) {
    QuysAdviceVideoEndShowTypeNone = 0,
   QuysAdviceVideoEndShowTypeImageUrl = 1,
@@ -245,6 +249,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceVideoEndShowType) {
 
 #pragma mark - 事件回调
 
+///广告
 typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
 typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
 typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
@@ -252,6 +257,7 @@ typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 typedef void(^QuysAdviceLoadSucessCallBackBlock)(void);//!< 加载成功事件
 typedef void(^QuysAdviceLoadFailCallBackBlock)(void);//!< 加载失败事件
 
+//视频
 typedef void(^QuysAdvicePlayStartCallBackBlock)(void);//!< 播放开始事件
 typedef void(^QuysAdvicePlayEndCallBackBlock)(QuysAdviceVideoEndShowType endType);//!< 播放完成事件
 typedef void(^QuysAdviceProgressEventBlock)(NSInteger progress);//!< 进度事件

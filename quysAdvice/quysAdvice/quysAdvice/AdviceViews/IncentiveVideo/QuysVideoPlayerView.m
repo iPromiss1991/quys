@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) id playbackObserver;
 @property (nonatomic) BOOL buffered;//是否缓冲完毕
+@property (nonatomic) BOOL isReplay;//是否重复播放
 
 @property (nonatomic,strong) QuysVidoePlayButtonView *playButtonView;
 
@@ -39,11 +40,10 @@
 - (void)createUI
 {
     kWeakSelf(self)
-    self.backgroundColor = [UIColor cyanColor];
-    [self.layer addSublayer:self.playerLayer];
+     [self.layer addSublayer:self.playerLayer];
     QuysVidoePlayButtonView *playButtonView = [[QuysVidoePlayButtonView alloc]initWithFrame:self.bounds];
     playButtonView.center = self.center;
-    playButtonView.quysAdviceClickPlayButtonBlockItem = ^(BOOL playEnable) {
+    playButtonView.quysAdviceClickPlayButtonBlockItem = ^(void) {
         [weakself playStatesChanged];
     };
     [self addSubview:playButtonView];
@@ -127,11 +127,18 @@
         {
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%f",0.0) forKey:kVideoBeginTime];
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoIsFirstFrame];
-            
+            if (self.isReplay)
+            {
+                 [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"3") forKey:kVideoType];
+            }else
+            {
+                [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoType];
+            }
         }else
         {
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)) forKey:kVideoBeginTime];
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"0") forKey:kVideoIsFirstFrame];
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"2") forKey:kVideoType];
             if (self.quysAdvicePlayagainCallBackBlockItem)
             {
                 self.quysAdvicePlayagainCallBackBlockItem();
@@ -149,6 +156,7 @@
 
 - (void)quys_videoPlay
 {
+    [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"0") forKey:kVideoStatus];
     BOOL isNormalStatus = NO;
     NSTimeInterval totalTime = CMTimeGetSeconds(self.player.currentItem.duration);//总时长
     NSTimeInterval currentTime = CMTimeGetSeconds(self.player.currentItem.currentTime);//当前时间进度
@@ -201,6 +209,7 @@
 
 -(void)vpc_playbackFinished:(NSNotification *)noti
 {
+    self.isReplay = YES;
     [self.player pause];
     [self.playButtonView showView];
     
@@ -235,10 +244,14 @@
             }
         }else if(status == AVPlayerStatusFailed)
         {
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"2") forKey:kVideoStatus];
             if (self.quysAdviceLoadFailCallBackBlockItem)
             {
                 self.quysAdviceLoadFailCallBackBlockItem();
             }
+        }else
+        {
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1g") forKey:kVideoStatus];
         }
     } else if ([keyPath isEqualToString:@"loadedTimeRanges"])
     {

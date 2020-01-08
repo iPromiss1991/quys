@@ -11,7 +11,7 @@
 
 
 
-@implementation UIViewController (QuysNavBar)
+@implementation QuysBaseViewController (QuysNavBar)
 
 +(void)load
 {
@@ -107,11 +107,11 @@
     [self.qus_navBackButton setTitleColor:titleColor forState:UIControlStateNormal];
     [self.qus_navBackButton setTitleColor:[titleColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     //
-    [self.qus_navBackButton setTitle:self.qus_navBackButtonTitle?:@"返回的" forState:UIControlStateNormal];
+    [self.qus_navBackButton setTitle:self.qus_navBackButtonTitle?:@"返回上一页" forState:UIControlStateNormal];
     self.qus_navBackButton.titleLabel.font = [UIFont systemFontOfSize:16];
     
-    self.qus_navBackButton.titleEdgeInsets = UIEdgeInsetsMake(0, 6, 0, 0);     // 图片和字体靠近一点，根据实际情况调整
-    self.qus_navBackButton.contentEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0);
+    self.qus_navBackButton.titleEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0);     // 图片和字体靠近一点，根据实际情况调整
+    self.qus_navBackButton.contentEdgeInsets = UIEdgeInsetsMake(0, -36, 0, 0);
     [self.qus_navBackButton sizeToFit];
     
     [self.qus_navBackButton addTarget:self action:@selector(qus_navigationItemHandleBack:) forControlEvents:UIControlEventTouchUpInside];

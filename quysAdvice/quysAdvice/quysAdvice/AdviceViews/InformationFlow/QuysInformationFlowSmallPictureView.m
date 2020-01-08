@@ -38,8 +38,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]init];
-    viewContain.backgroundColor = [UIColor blueColor];
-    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -155,6 +154,7 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
+    [self removeFromSuperview];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

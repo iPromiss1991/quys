@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <quysAdvice/quysAdvice.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QuysDemoViewController : UIViewController
+@interface QuysDemoViewController : UIViewController<QuysAdSplashDelegate>
 
 @end
 

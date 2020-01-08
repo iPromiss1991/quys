@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+ #import "QuysServiceListTableViewController.h"
 #import <quysAdvice/quysAdvice.h>
-@interface AppDelegate ()<QuysAdSplashDelegate,QuysAdviceOpeenScreenDelegate>
+@interface AppDelegate ()<QuysAdviceOpeenScreenDelegate>
 @property (nonatomic,strong) QuysAdOpenScreenService *service;
 
 
@@ -28,29 +28,53 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
-    UIViewController *rootVC = [[ViewController alloc] init];
+    QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:rootVC];
-//
-//    UITabBarController *tabBarVC = [[UITabBarController alloc]init];
-//    [tabBarVC addChildViewController:rootVC];
-//    self.window.rootViewController = tabBarVC;
-
     [self.window makeKeyAndVisible];
-//
+    //TODO:
     [[QuysAdviceManager shareManager] configSettings] ;
     
-    
-//    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc ]initWithID:@"qystest_kp" key:@"52E7FFCB4DE9EC44CF96CF16E1BD8ED5" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:self.window];
-//    self.service = service;
+
     
  
     return YES;
 }
 
 
-- (void)quys_requestStart:(QuysAdBaseService *)service
-{
-    NSLog(@"%s",__PRETTY_FUNCTION__);
 
+- (void)quys_requestStart:(QuysAdBaseService*)service
+{
+    
+}
+
+- (void)quys_requestSuccess:(QuysAdBaseService*)service{
+    [self.service performSelector:@selector(showAdView)];
+}
+- (void)quys_requestFial:(QuysAdBaseService*)service error:(NSError*)error{
+    
+}
+
+- (void)quys_interstitialOnExposure:(QuysAdBaseService*)service{
+    
+}
+- (void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdBaseService*)service{
+    
+}
+- (void)quys_interstitialOnAdClose:(QuysAdBaseService*)service{
+    
+}
+
+/// 视频播放开始
+/// @param service 广告服务对象
+- (void)quys_videoPlaystart:(QuysAdBaseService*)service
+{
+    
+}
+
+/// 视频播放结束
+/// @param service 广告服务对象
+- (void)quys_videoPlayEnd:(QuysAdBaseService*)service;
+{
+    
 }
 @end

@@ -13,6 +13,10 @@
 		FB1A0DEC23C4668300EADB4D /* zanting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DEA23C4668300EADB4D /* zanting@3x.png */; };
 		FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */; };
 		FB1A0DF223C494FE00EADB4D /* QuysDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DF123C494FE00EADB4D /* QuysDemoViewController.m */; };
+		FB1A0DF523C57B9400EADB4D /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DF323C57B9400EADB4D /* nav_back@2x.png */; };
+		FB1A0DF623C57B9400EADB4D /* nav_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DF423C57B9400EADB4D /* nav_back@3x.png */; };
+		FB1A0DF923C57CA800EADB4D /* QuysBaseViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FB1A0DF723C57CA800EADB4D /* QuysBaseViewController.h */; };
+		FB1A0DFA23C57CA800EADB4D /* QuysBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DF823C57CA800EADB4D /* QuysBaseViewController.m */; };
 		FB6A1C6D23B0C1B600E29B75 /* QuysFullScreenReplaceView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB6A1C6B23B0C1B600E29B75 /* QuysFullScreenReplaceView.h */; };
 		FB6A1C6E23B0C1B600E29B75 /* QuysFullScreenReplaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB6A1C6C23B0C1B600E29B75 /* QuysFullScreenReplaceView.m */; };
 		FB6A1C7323B1B82600E29B75 /* QuysNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = FB6A1C7123B1B82600E29B75 /* QuysNavigationController.h */; };
@@ -63,11 +67,10 @@
 		FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = FB848D75239E56540092A260 /* NSDate+QuysTimestamp.m */; };
 		FB955A1123B489CA00AFA427 /* quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB848CEC239DE2D50092A260 /* quysAdvice.framework */; };
 		FB955A1823B48CE200AFA427 /* VHLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A1623B48CE200AFA427 /* VHLNavigation.m */; };
-		FB955A1923B48CE200AFA427 /* VHLNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A1723B48CE200AFA427 /* VHLNavigation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB955A1C23B48E7E00AFA427 /* UIViewController+QuysNavBar.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A1A23B48E7E00AFA427 /* UIViewController+QuysNavBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FB955A1923B48CE200AFA427 /* VHLNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A1723B48CE200AFA427 /* VHLNavigation.h */; };
+		FB955A1C23B48E7E00AFA427 /* UIViewController+QuysNavBar.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A1A23B48E7E00AFA427 /* UIViewController+QuysNavBar.h */; };
 		FB955A1D23B48E7E00AFA427 /* UIViewController+QuysNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A1B23B48E7E00AFA427 /* UIViewController+QuysNavBar.m */; };
 		FB955A2523B4994700AFA427 /* quysBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBC4CE6223B4570200AF86B1 /* quysBundle.bundle */; };
-		FB955A2823B49C6E00AFA427 /* QuysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A2723B49C6E00AFA427 /* QuysViewController.m */; };
 		FB955A2D23B4B3AD00AFA427 /* QuysDownAddressModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A2B23B4B3AD00AFA427 /* QuysDownAddressModel.h */; };
 		FB955A2E23B4B3AD00AFA427 /* QuysDownAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB955A2C23B4B3AD00AFA427 /* QuysDownAddressModel.m */; };
 		FB955A3923B602F800AFA427 /* QuysAdBaseService.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A3723B602F800AFA427 /* QuysAdBaseService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -139,7 +142,6 @@
 		FBBA897D23AB781300D0088C /* QuysFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA897B23AB781300D0088C /* QuysFileManager.h */; };
 		FBBA897E23AB781300D0088C /* QuysFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA897C23AB781300D0088C /* QuysFileManager.m */; };
 		FBC4CE4923B4562C00AF86B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4CE4823B4562C00AF86B1 /* AppDelegate.m */; };
-		FBC4CE4F23B4562C00AF86B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4CE4E23B4562C00AF86B1 /* ViewController.m */; };
 		FBC4CE5423B4563000AF86B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBC4CE5323B4563000AF86B1 /* Assets.xcassets */; };
 		FBC4CE5A23B4563000AF86B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4CE5923B4563000AF86B1 /* main.m */; };
 		FBC4CE6E23B457AE00AF86B1 /* close_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC4CE6923B457AE00AF86B1 /* close_press@3x.png */; };
@@ -188,6 +190,10 @@
 		FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysServiceListTableViewController.m; sourceTree = "<group>"; };
 		FB1A0DF023C494FE00EADB4D /* QuysDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysDemoViewController.h; sourceTree = "<group>"; };
 		FB1A0DF123C494FE00EADB4D /* QuysDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysDemoViewController.m; sourceTree = "<group>"; };
+		FB1A0DF323C57B9400EADB4D /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_back@2x.png"; path = "../../../../Downloads/nav_back@2x.png"; sourceTree = "<group>"; };
+		FB1A0DF423C57B9400EADB4D /* nav_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@3x.png"; sourceTree = "<group>"; };
+		FB1A0DF723C57CA800EADB4D /* QuysBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseViewController.h; sourceTree = "<group>"; };
+		FB1A0DF823C57CA800EADB4D /* QuysBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseViewController.m; sourceTree = "<group>"; };
 		FB6A1C6B23B0C1B600E29B75 /* QuysFullScreenReplaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysFullScreenReplaceView.h; sourceTree = "<group>"; };
 		FB6A1C6C23B0C1B600E29B75 /* QuysFullScreenReplaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysFullScreenReplaceView.m; sourceTree = "<group>"; };
 		FB6A1C7123B1B82600E29B75 /* QuysNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysNavigationController.h; sourceTree = "<group>"; };
@@ -244,8 +250,6 @@
 		FB955A1723B48CE200AFA427 /* VHLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VHLNavigation.h; path = "../../../../../Downloads/VHLNavigation-master/Demo/VHLNavigation/VHLNavigation/VHLNavigation.h"; sourceTree = "<group>"; };
 		FB955A1A23B48E7E00AFA427 /* UIViewController+QuysNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QuysNavBar.h"; sourceTree = "<group>"; };
 		FB955A1B23B48E7E00AFA427 /* UIViewController+QuysNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QuysNavBar.m"; sourceTree = "<group>"; };
-		FB955A2623B49C6E00AFA427 /* QuysViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysViewController.h; sourceTree = "<group>"; };
-		FB955A2723B49C6E00AFA427 /* QuysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewController.m; sourceTree = "<group>"; };
 		FB955A2B23B4B3AD00AFA427 /* QuysDownAddressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysDownAddressModel.h; sourceTree = "<group>"; };
 		FB955A2C23B4B3AD00AFA427 /* QuysDownAddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysDownAddressModel.m; sourceTree = "<group>"; };
 		FB955A3723B602F800AFA427 /* QuysAdBaseService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysAdBaseService.h; sourceTree = "<group>"; };
@@ -322,8 +326,6 @@
 		FBC4CE4523B4562C00AF86B1 /* quysDevDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = quysDevDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC4CE4723B4562C00AF86B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FBC4CE4823B4562C00AF86B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FBC4CE4D23B4562C00AF86B1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		FBC4CE4E23B4562C00AF86B1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FBC4CE5323B4563000AF86B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBC4CE5823B4563000AF86B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBC4CE5923B4563000AF86B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -624,6 +626,8 @@
 				FB6A1C7223B1B82600E29B75 /* QuysNavigationController.m */,
 				FB6A1C8623B20B3600E29B75 /* QuysPictureViewController.h */,
 				FB6A1C8723B20B3600E29B75 /* QuysPictureViewController.m */,
+				FB1A0DF723C57CA800EADB4D /* QuysBaseViewController.h */,
+				FB1A0DF823C57CA800EADB4D /* QuysBaseViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -719,13 +723,9 @@
 				FBC4CE7623B4660D00AF86B1 /* Default-568h@2x.png */,
 				FBC4CE4723B4562C00AF86B1 /* AppDelegate.h */,
 				FBC4CE4823B4562C00AF86B1 /* AppDelegate.m */,
-				FBC4CE4D23B4562C00AF86B1 /* ViewController.h */,
-				FBC4CE4E23B4562C00AF86B1 /* ViewController.m */,
 				FBC4CE5323B4563000AF86B1 /* Assets.xcassets */,
 				FBC4CE5823B4563000AF86B1 /* Info.plist */,
 				FBC4CE5923B4563000AF86B1 /* main.m */,
-				FB955A2623B49C6E00AFA427 /* QuysViewController.h */,
-				FB955A2723B49C6E00AFA427 /* QuysViewController.m */,
 				FB1A0DED23C492EC00EADB4D /* QuysServiceListTableViewController.h */,
 				FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */,
 				FB1A0DF023C494FE00EADB4D /* QuysDemoViewController.h */,
@@ -737,6 +737,8 @@
 		FBC4CE6323B4570200AF86B1 /* quysBundle */ = {
 			isa = PBXGroup;
 			children = (
+				FB1A0DF323C57B9400EADB4D /* nav_back@2x.png */,
+				FB1A0DF423C57B9400EADB4D /* nav_back@3x.png */,
 				FB1A0DE923C4668300EADB4D /* zanting@2x.png */,
 				FB1A0DEA23C4668300EADB4D /* zanting@3x.png */,
 				FB955A9B23C334E000AFA427 /* play@2x.png */,
@@ -777,11 +779,11 @@
 				FBBA897D23AB781300D0088C /* QuysFileManager.h in Headers */,
 				FBBA896923AB18BC00D0088C /* QuysAdBannerVM.h in Headers */,
 				FB955A7023BD8DE400AFA427 /* QuysVideoPlayerView.h in Headers */,
+				FB955A1923B48CE200AFA427 /* VHLNavigation.h in Headers */,
 				FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */,
+				FB955A1C23B48E7E00AFA427 /* UIViewController+QuysNavBar.h in Headers */,
 				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
 				FBBA896823AB18BC00D0088C /* QuysAdBannerService.h in Headers */,
-				FB955A1C23B48E7E00AFA427 /* UIViewController+QuysNavBar.h in Headers */,
-				FB955A1923B48CE200AFA427 /* VHLNavigation.h in Headers */,
 				FBBA897423AB1F2700D0088C /* QuysAdOpenScreen.h in Headers */,
 				FBBA897923AB1F2700D0088C /* QuysAdOpenScreenVM.h in Headers */,
 				FBBA897723AB1F2700D0088C /* QuysAdOpenScreenService.h in Headers */,
@@ -816,6 +818,7 @@
 				FBBA895523A7820900D0088C /* QuysInformationFlowMorePictureView.h in Headers */,
 				FB955A9A23C31F8D00AFA427 /* QuysVidoePlayButtonView.h in Headers */,
 				FB848D5C239E2AA50092A260 /* QuysAdviceModel.h in Headers */,
+				FB1A0DF923C57CA800EADB4D /* QuysBaseViewController.h in Headers */,
 				FB848D14239DE9EC0092A260 /* QuysSAMKeychainQuery.h in Headers */,
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
 				FBBA895023A7819E00D0088C /* QuysInformationFlowSmallPictureView.h in Headers */,
@@ -978,11 +981,13 @@
 			files = (
 				FB955A8023BEE7A400AFA427 /* voice@2x.png in Resources */,
 				FB1A0DEB23C4668300EADB4D /* zanting@2x.png in Resources */,
+				FB1A0DF623C57B9400EADB4D /* nav_back@3x.png in Resources */,
 				FB955A8D23BEEA4E00AFA427 /* mute@2x.png in Resources */,
 				FB955A8123BEE7A400AFA427 /* voice@3x.png in Resources */,
 				FBC4CE7123B457AE00AF86B1 /* close@2x.png in Resources */,
 				FBC4CE7023B457AE00AF86B1 /* close@3x.png in Resources */,
 				FBC4CE6E23B457AE00AF86B1 /* close_press@3x.png in Resources */,
+				FB1A0DF523C57B9400EADB4D /* nav_back@2x.png in Resources */,
 				FB955A8A23BEE83000AFA427 /* back@2x.png in Resources */,
 				FBC4CE6F23B457AE00AF86B1 /* close_press@2x.png in Resources */,
 				FB955A9D23C334E700AFA427 /* play@2x.png in Resources */,
@@ -1086,6 +1091,7 @@
 				FB848D0C239DE96E0092A260 /* QuysAdviceManager.m in Sources */,
 				FB848D66239E2DD30092A260 /* QuysAdSplashVM.m in Sources */,
 				FB955A2E23B4B3AD00AFA427 /* QuysDownAddressModel.m in Sources */,
+				FB1A0DFA23C57CA800EADB4D /* QuysBaseViewController.m in Sources */,
 				FB955A9923C31F8D00AFA427 /* QuysVidoePlayButtonView.m in Sources */,
 				FB848D15239DE9EC0092A260 /* QuysSAMKeychain.m in Sources */,
 				FBBA894C23A77E8700D0088C /* QuysInformationFlowService.m in Sources */,
@@ -1134,8 +1140,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */,
-				FB955A2823B49C6E00AFA427 /* QuysViewController.m in Sources */,
-				FBC4CE4F23B4562C00AF86B1 /* ViewController.m in Sources */,
 				FBC4CE4923B4562C00AF86B1 /* AppDelegate.m in Sources */,
 				FBC4CE5A23B4563000AF86B1 /* main.m in Sources */,
 				FB1A0DF223C494FE00EADB4D /* QuysDemoViewController.m in Sources */,

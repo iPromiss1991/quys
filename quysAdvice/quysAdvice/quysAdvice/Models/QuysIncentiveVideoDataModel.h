@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysVideoCheckPoint: NSObject
 @property (nonatomic , strong) NSArray <NSString *>              * urls;
 @property (nonatomic,assign) CGFloat checkPoint;
-@property (nonatomic,assign) BOOL isReportRepeat;
+@property (nonatomic,assign) BOOL isReported;
 
 
 @end
