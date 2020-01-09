@@ -39,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self vhl_setNavBarBackgroundColor:[UIColor purpleColor]];
     [self vhl_setNavigationSwitchStyle:VHLNavigationSwitchStyleFakeNavBar];
     //[self vhl_setNavBarBackgroundImage:[UIImage imageNamed:@"millcolorGrad"]];
@@ -68,6 +69,7 @@
     {
         [webView loadHTMLString:self.strHtml baseURL:nil];
     }
+    webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:webView];
     self.webView = webView;
   }

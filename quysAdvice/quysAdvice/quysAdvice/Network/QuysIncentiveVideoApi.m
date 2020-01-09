@@ -11,22 +11,34 @@
 #import "QuysMD5.h"
 @implementation QuysIncentiveVideoApi
 
-- (NSString *)baseUrl
+
+
+- (NSString *)requestUrl
 {
-//    return @"http://jl.quyuansu.com/pull/list";
-//    return @"http://192.168.1.7/advert/test.php?tid=246";//开屏
-    return @"http://192.168.1.2/advert/test.php?tid=255";//
+     if (1)
+    {
+        NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
+//  NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";
+        NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
+        NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
+        NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+        return strUrl;
+        
+//        return @"http://192.168.1.8:8086/spread/detail";
 
+    }else
+    {
+        NSString *strRequestUrl = @"http://192.168.1.2/advert/test.php?";
+        NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
+        NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
+        NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?tid=255&id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+        return strUrl;
+        
+    }
+    
 }
-
-//- (NSString *)requestUrl
-//{
-//    NSString *strTimestam = [NSDate getNowTimeTimestamp];
-//    NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
-//    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];//TODO:位数？大小写
-//    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"?id=%@&apiToken=%@&timestamp=%@",self.businessID,strMd5ApiToken,strTimestam];
-//    return strUrl;
-//}
 
 
 - (id)requestArgument
@@ -42,9 +54,9 @@
     UIDevice *device = [[UIDevice alloc] init];
     NSMutableDictionary *dicM = [NSMutableDictionary new];
     
-    [dicM setObject:[device quys_customImei] forKey:@"imei"];
-    [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
-    [dicM setObject:[[QuysAdviceManager shareManager] strIPAddress] forKey:@"ip"];
+    [dicM setObject:[device quys_customImei] forKey:@"Imei"];
+    [dicM setObject:[device quys_customMacAddress] forKey:@"Mac"];
+    [dicM setObject:[[QuysAdviceManager shareManager] strIPAddress] forKey:@"IP"];
     
     [dicM setObject:[[device quys_platformString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
     [dicM setObject:[device quys_deviceBrand] forKey:@"Brand"];
@@ -52,7 +64,7 @@
 
     [dicM setObject:[device quys_idFa] forKey:@"Idfa"];
     [dicM setObject:[device quys_idFv] forKey:@"Idfv"];
-    [dicM setObject:[[QuysAdviceManager shareManager] strUserAgent] forKey:@"ua"];
+    [dicM setObject:[[QuysAdviceManager shareManager] strUserAgent] forKey:@"Ua"];
 
     [dicM setObject:kStringFormat(@"%@",[device systemVersion]) forKey:@"OsVersionMajor"];
     [dicM setObject:[device quys_deviceType] forKey:@"DeviceType"];
@@ -70,13 +82,13 @@
     [dicM setObject:[device quys_screenOritation] forKey:@"ScreenOrientation"];
 
     [dicM setObject:[device quys_screenPixelDensity] forKey:@"ScreenPixelDensity"];
-    [dicM setObject:[device quys_screenResolution] forKey:@"ScreenResolution"];
+    [dicM setObject:@([[device quys_screenResolution] integerValue]) forKey:@"ScreenResolution"];
     
     [dicM setObject:[device quys_country] forKey:@"Country"];
     [dicM setObject:[device quys_preferredLanguage] forKey:@"Language"];
-    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
+    [dicM setObject:[device quys_customImsi] forKey:@"Imsi"];
 
-    [dicM setObject:[device quys_screenDensity] forKey:@"dpi"];
+    [dicM setObject:[device quys_screenDensity] forKey:@"Dpi"];
     return dicM;
 }
 

@@ -21,7 +21,7 @@
     
     //TODO：广告的类型，以及输入不同参数（举例：信息流就有三种），是否需要把全部情况都list
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor orangeColor];
    NSString *strService = self.title;
     //
     if ([strService isEqualToString:@"banner"])
@@ -31,7 +31,7 @@
     
     if ([strService isEqualToString:@"信息流"])
     {
-        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"quystest-xx" cGrect:CGRectMake(0, 300, [UIScreen mainScreen].bounds.size.width, 600) eventDelegate:self parentView:self.view];
+        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"quystest-xx" cGrect:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 200) eventDelegate:self parentView:self.view];
     }
     
     if ([strService isEqualToString:@"插屏"])
@@ -41,7 +41,7 @@
     
     if ([strService isEqualToString:@"激励视频"])
     {
-        self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
+        self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdoupeng" key:@"84673BEB749DE9BB9A44B30AA425E531" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
     }
     
     if ([self.service isKindOfClass:[QuysIncentiveVideoService class]]) {

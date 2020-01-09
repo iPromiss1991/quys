@@ -11,6 +11,12 @@
 @implementation QuysBaseNetworkApi
 - (NSTimeInterval)requestTimeoutInterval
 {
-    return 2;
+    return 3;
 }
+
+-(YTKRequestMethod)requestMethod
+{
+    return YTKRequestMethodPOST;
+}
+
 @end

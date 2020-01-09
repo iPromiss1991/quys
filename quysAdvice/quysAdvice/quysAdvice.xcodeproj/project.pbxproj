@@ -107,8 +107,6 @@
 		FB955A9A23C31F8D00AFA427 /* QuysVidoePlayButtonView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */; };
 		FB955A9D23C334E700AFA427 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A9B23C334E000AFA427 /* play@2x.png */; };
 		FB955A9E23C334E700AFA427 /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB955A9C23C334E300AFA427 /* play@3x.png */; };
-		FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */; };
-		FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */; };
 		FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBA892623A216E000D0088C /* UIView+Statistical.h */; };
 		FBBA892B23A216E000D0088C /* UIView+Statistical.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892723A216E000D0088C /* UIView+Statistical.m */; };
 		FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBA892823A216E000D0088C /* HLJViewTrackModel.m */; };
@@ -286,8 +284,6 @@
 		FB955A9823C31F8D00AFA427 /* QuysVidoePlayButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuysVidoePlayButtonView.h; sourceTree = "<group>"; };
 		FB955A9B23C334E000AFA427 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
 		FB955A9C23C334E300AFA427 /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
-		FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysBaseJsonResponseSerializer.h; sourceTree = "<group>"; };
-		FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseJsonResponseSerializer.m; sourceTree = "<group>"; };
 		FBBA892623A216E000D0088C /* UIView+Statistical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Statistical.h"; sourceTree = "<group>"; };
 		FBBA892723A216E000D0088C /* UIView+Statistical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Statistical.m"; sourceTree = "<group>"; };
 		FBBA892823A216E000D0088C /* HLJViewTrackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLJViewTrackModel.m; sourceTree = "<group>"; };
@@ -586,8 +582,6 @@
 				FB848D5F239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m */,
 				FB848D36239E1C820092A260 /* QuysAdviceConfigModel.h */,
 				FB848D37239E1C820092A260 /* QuysAdviceConfigModel.m */,
-				FBBA891623A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h */,
-				FBBA891723A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m */,
 				FBBA893823A71E8F00D0088C /* QuysUploadStatisticsModel.h */,
 				FBBA893923A71E8F00D0088C /* QuysUploadStatisticsModel.m */,
 				FB955A2B23B4B3AD00AFA427 /* QuysDownAddressModel.h */,
@@ -798,7 +792,6 @@
 				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
 				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
-				FBBA891823A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.h in Headers */,
 				FBBA896A23AB18BC00D0088C /* QuysAdBanner.h in Headers */,
 				FB6A1C8323B1E61000E29B75 /* QuysOpenScreenWindow.h in Headers */,
 				FB6A1C7323B1B82600E29B75 /* QuysNavigationController.h in Headers */,
@@ -1111,7 +1104,6 @@
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FB955A4023B9EAB000AFA427 /* QuysIncentiveVideoService.m in Sources */,
-				FBBA891923A1EC1B00D0088C /* QuysBaseJsonResponseSerializer.m in Sources */,
 				FB955A5B23B9FF8500AFA427 /* QuysIncentiveVideoApi.m in Sources */,
 				FB955A7123BD8DE400AFA427 /* QuysVideoPlayerView.m in Sources */,
 				FBBA896723AB18BC00D0088C /* QuysAdBannerService.m in Sources */,

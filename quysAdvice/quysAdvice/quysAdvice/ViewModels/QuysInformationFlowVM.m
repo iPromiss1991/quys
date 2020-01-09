@@ -68,8 +68,8 @@
 
 - (UIView *)createAdviceView
 {
-    switch (QuysAdviceCreativeTypeMultiPicture) {
-        case QuysAdviceCreativeTypeDefault:
+    switch (self.adModel.creativeType) {
+        case QuysAdviceCreativeTypeBigPicture:
         {
             kWeakSelf(self)
             QuysInformationFlowDefaultView *adView = [[QuysInformationFlowDefaultView alloc]initWithFrame:self.cgFrame viewModel:self];

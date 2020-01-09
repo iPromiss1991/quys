@@ -118,7 +118,7 @@
     {
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
-            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
+            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"没有相关广告！"}];//TODO:全局替换报错文案
             [self.delegate quys_requestFial:self error:error];
         }
         

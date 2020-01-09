@@ -496,7 +496,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
         case ReachableViaWiFi:// Wifi
         {
-            netconnType = @"100";
+            netconnType = @"1";
         }
             break;
 
@@ -541,7 +541,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
                 netconnType = @"4";//@"4G"
             }else{
-                netconnType = @"1";//@"未知"
+                netconnType = @"0";//@"未知"
 
             }
         }
@@ -648,10 +648,25 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     if (!carrier.isoCountryCode)
     {
         //没有SIM卡
-        mobile = @"无运营商";
+        mobile = @"0";//无运营商
     }else
     {
         mobile = [carrier carrierName];
+    }
+    if ([mobile containsString:@"移动"])
+    {
+        mobile= @"1";
+    }
+    if ([mobile containsString:@"电信"])
+    {
+        mobile= @"2";
+    }
+    if ([mobile containsString:@"联通"])
+    {
+        mobile= @"3";
+    }else
+    {
+        mobile= @"0";
     }
     return mobile;
 }
@@ -726,7 +741,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString*)quys_screenResolution
 {
     double dbScreenResolution = kScreenWidth * kScreenHeight*powf([UIScreen mainScreen].scale, 2);
-    return  [NSString stringWithFormat:@"%lf",dbScreenResolution];
+    return  [NSString stringWithFormat:@"%.0f",dbScreenResolution];
 }
 
 /// 屏幕像素密度（该属性是按照android理解的，如：3.0）               相关资料：https://www.cnblogs.com/weekbo/p/9013388.html
@@ -742,7 +757,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString*)quys_screenDensity
 {
     CGFloat screenDensity = [[self quys_screenPixelDensity] floatValue]*160.0;
-    return [NSString stringWithFormat:@"%f",screenDensity];
+    return [NSString stringWithFormat:@"%.0f",screenDensity];
 }
 
 /// 国家，使用ISO-3166-1   Alpha-3
@@ -783,7 +798,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     NSString *uuid = [NSString stringWithString:(__bridge NSString *)uuid_string_ref];
     CFRelease(uuid_ref);
     CFRelease(uuid_string_ref);
-    return [uuid lowercaseString];
+    return [[uuid lowercaseString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
 }
 
 
