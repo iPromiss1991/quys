@@ -76,20 +76,30 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL clickeUploadEnable;//!< 是否触上报事件
 @property (nonatomic,assign) BOOL exposuredUploadEnable;
 
+@property (nonatomic,assign) BOOL playStartUploadEnable;//!<  播放
+@property (nonatomic,assign) BOOL playEndUploadEnable;
+
+@property (nonatomic,assign) BOOL downloadStartUploadEnable;//!<  下载
+@property (nonatomic,assign) BOOL downloadCompleteUploadEnable;
+
+@property (nonatomic,assign) BOOL loadSucessUploadEnable;//!<  加载
+@property (nonatomic,assign) BOOL loadFailUploadEnable;
+
 @property (nonatomic,assign) BOOL closeMuteUploadEnable;//!< 静音
 @property (nonatomic,assign) BOOL muteUploadEnable;
+
+
 
 @property (nonatomic,assign) BOOL suspendMuteUploadEnable;//!< 暂停
 @property (nonatomic,assign) BOOL resumUploadEnable;
 
-
-
+@property (nonatomic,assign) BOOL interruptUploadEnable;//!< 跳过
+ 
 
 //尾帧
-@property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModelEndView;//!<尾帧上报统计模型
-@property (nonatomic,assign) BOOL clickeUploadEnableEndView;//!< 尾帧是否触上报事件
-@property (nonatomic,assign) BOOL exposuredUploadEnableEndView;
-
+@property (nonatomic,assign) BOOL endViewClickeUploadEnable;//!< 尾帧是否触上报事件
+@property (nonatomic,assign) BOOL endViewExposuredUploadEnable;
+@property (nonatomic,assign) BOOL endViewClosedUploadEnable;
 
 
 @end

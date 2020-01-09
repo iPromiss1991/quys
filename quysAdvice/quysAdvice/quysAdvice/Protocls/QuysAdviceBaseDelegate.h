@@ -28,12 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)quys_interstitialOnAdClose:(QuysAdBaseService*)service;
 
 
-//尾帧
-- (void)quys_endViewInterstitialOnExposure:(QuysAdBaseService*)service;
 
-- (void)quys_endViewInterstitialOnClick:(CGPoint)cpClick service:(QuysAdBaseService*)service;
-
-- (void)quys_endViewInterstitialOnAdClose:(QuysAdBaseService*)service;
 
 @end
 

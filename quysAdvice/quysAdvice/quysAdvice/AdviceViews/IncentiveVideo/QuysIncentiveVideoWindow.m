@@ -125,7 +125,7 @@
     self.rootVC.quysAdviceLoadSucessCallBackBlockItem = quysAdviceLoadSucessCallBackBlockItem;
 }
 
--(void)setQuysAdviceLoadFailCallBackBlockItem:(QuysAdviceLoadSucessCallBackBlock)quysAdviceLoadFailCallBackBlockItem
+-(void)setQuysAdviceLoadFailCallBackBlockItem:(QuysAdviceLoadFailCallBackBlock)quysAdviceLoadFailCallBackBlockItem
 {
     _quysAdviceLoadFailCallBackBlockItem = quysAdviceLoadFailCallBackBlockItem;
     self.rootVC.quysAdviceLoadFailCallBackBlockItem = quysAdviceLoadFailCallBackBlockItem;

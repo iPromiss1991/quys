@@ -12,30 +12,30 @@ NS_ASSUME_NONNULL_BEGIN
 ///激励视频广告协议
 @protocol QuysIncentiveVideoDelegate <QuysAdviceBaseDelegate>
 
-- (void)quys_IncentiveVideoPlaystart:(QuysAdBaseService*)service;
+- (void)quys_IncentiveVideoLoadSuccess:(QuysAdBaseService*)service;
+- (void)quys_IncentiveVideoLoadFail:(NSError *)error service:(QuysAdBaseService*)service;
 
+
+- (void)quys_IncentiveVideoPlaystart:(QuysAdBaseService*)service;
 - (void)quys_IncentiveVideoPlayEnd:(QuysAdBaseService*)service;
 
 - (void)quys_IncentiveVideoSkip:(QuysAdBaseService*)service;
 
-- (void)quys_IncentiveVideoLandingPageOnExposure:(QuysAdBaseService*)service;
-
-- (void)quys_IncentiveVideoLandingPageClick:(QuysAdBaseService*)service;
-
-- (void)quys_IncentiveVideoLandingPageClose:(QuysAdBaseService*)service;
-
-- (void)quys_IncentiveVideoLoadSuccess:(QuysAdBaseService*)service;
-
-- (void)quys_IncentiveVideoLoadError:(QuysAdBaseService*)service;
-
 - (void)quys_IncentiveVideoMuteplay:(QuysAdBaseService*)service;
-
 - (void)quys_IncentiveVideoUnMuteplay:(QuysAdBaseService*)service;
 
-- (void)quys_IncentiveVideoPlaybackProgress:(QuysAdBaseService*)service;
+- (void)quys_IncentiveVideoSuspend:(QuysAdBaseService*)service;
+- (void)quys_IncentiveVideoResume:(QuysAdBaseService*)service;
+
+- (void)quys_IncentiveVideoPlayProgress:(NSInteger)progress service:(QuysAdBaseService*)service;
 
 
+//尾帧
+- (void)quys_endViewInterstitialOnExposure:(QuysAdBaseService*)service;
 
+- (void)quys_endViewInterstitialOnClick:(CGPoint)cpClick service:(QuysAdBaseService*)service;
+
+- (void)quys_endViewInterstitialOnAdClose:(QuysAdBaseService*)service;
 
 @end
 

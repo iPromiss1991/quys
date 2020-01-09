@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVKit/AVKit.h>
+
 #define kAVPlayerItemDidRemoveNotification @"kAVPlayerItemDidRemoveNotification"
 #define kAVPlayerItemTotalTime @"kAVPlayerItemTotalTime"
 #define kAVPlayerItemCurrentTime @"kAVPlayerItemCurrentTime"
@@ -25,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface QuysVideoPlayerView : UIView
+@property (nonatomic, strong) AVPlayer *player;
+
 @property (nonatomic, strong) NSString *urlVideo;
 @property (nonatomic,assign) CGFloat playProgress;
 @property (nonatomic,strong) NSString *totalTime;

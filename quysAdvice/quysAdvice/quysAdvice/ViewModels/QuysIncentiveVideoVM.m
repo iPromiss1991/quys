@@ -86,6 +86,7 @@
     
     //关闭事件
     adView.quysAdviceCloseEventBlockItem = ^{
+        [self interstitialOnInterrupt];
         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
         {
             [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
@@ -103,78 +104,129 @@
     
     //播放开始
     adView.quysAdvicePlayStartCallBackBlockItem = ^{
-        
+        if (weakself.adModel.playStartUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoStartUrl];
+            weakself.adModel.statisticsModel.playStart = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlaystart:)])
+        {
+             [weakself.delegate quys_IncentiveVideoPlaystart:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     
     //播放完成
-    adView.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType) {
-        
+    adView.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType)
+    {
+        if (weakself.adModel.playEndUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoEndUrl];
+            weakself.adModel.statisticsModel.playEnd = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlayEnd:)])
+        {
+             [weakself.delegate quys_IncentiveVideoPlayEnd:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //播放进度
-    adView.quysAdviceProgressEventBlockItem = ^(NSInteger progress) {
-        [self.adModel.videoCheckPointList enumerateObjectsUsingBlock:^(QuysVideoCheckPoint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            if (obj.checkPoint >= 0 && obj.checkPoint <= 100)
-            {
-                //checkPoint：可能是小数0～1，也可能是1～100
-                if (obj.checkPoint <= 1)
-                {
-                    if (ceilf(obj.checkPoint*100) == progress || obj.checkPoint == 1 )
-                    {
-                        [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
-                        obj.isReported = YES;
-                    }
-                }else
-                {
-                    if (obj.checkPoint == progress)
-                    {
-                        [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
-                        obj.isReported = YES;
-                    }
-                }
-            }
-            NSLog(@"======%lf",obj.checkPoint);
-        }];
+    adView.quysAdviceProgressEventBlockItem = ^(NSInteger progress)
+    {
+        [weakself updateClientTimeStamp];
+        [weakself uploadProgressEvent:progress];
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlayProgress:service:)])
+        {
+             [weakself.delegate quys_IncentiveVideoPlayProgress:progress service:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //静音
     adView.quysAdviceMuteCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
+        if (weakself.adModel.muteUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoMuteUrl];
+            weakself.adModel.statisticsModel.mute = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoMuteplay:)])
+        {
+             [weakself.delegate quys_IncentiveVideoMuteplay:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //关闭静音
     adView.quysAdviceCloseMuteCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+        if (weakself.adModel.closeMuteUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoUnMuteUrl];
+            weakself.adModel.statisticsModel.closeMute = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoUnMuteplay:)])
+        {
+             [weakself.delegate quys_IncentiveVideoUnMuteplay:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //关闭尾帧
-    adView.quysAdviceEndViewCloseEventBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+    adView.quysAdviceEndViewCloseEventBlockItem = ^
+    {
+        if (weakself.adModel.endViewClosedUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportLandingPageCloseUrl];
+            weakself.adModel.statisticsModel.endViewClosed = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnAdClose:)])
+        {
+             [weakself.delegate quys_endViewInterstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //尾帧点击
     adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
-        
-        self.adModel.statisticsModelEndView.clicked = YES;//TODO
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+        if (weakself.adModel.endViewClickeUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportLandingPageClickUrl];
+            self.adModel.statisticsModel.endViewClicked = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnClick:service:)])
+        {
+            [weakself.delegate quys_endViewInterstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     
     //视频暂停
     adView.quysAdviceSuspendCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+        if (weakself.adModel.suspendMuteUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoPauseUrl];
+            weakself.adModel.statisticsModel.suspend = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoSuspend:)])
+        {
+             [weakself.delegate quys_IncentiveVideoSuspend:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //视频再次播放
     adView.quysAdvicePlayagainCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+        if (weakself.adModel.resumUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoPauseUrl];
+            weakself.adModel.statisticsModel.resume = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoResume:)])
+        {
+             [weakself.delegate quys_IncentiveVideoResume:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //尾帧曝光事件
@@ -184,20 +236,34 @@
         {
             [weakself.delegate quys_endViewInterstitialOnExposure:(QuysAdBaseService*)weakself.service];
         }
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
     };
     
     //加载成功
     adView.quysAdviceLoadSucessCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+        if (weakself.adModel.loadSucessUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoPauseUrl];
+            weakself.adModel.statisticsModel.loadSucess = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoLoadSuccess:)])
+        {
+             [weakself.delegate quys_IncentiveVideoLoadSuccess:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     //加载失败
-    adView.quysAdviceLoadFailCallBackBlockItem = ^{
-        NSLog(@",,%s",__PRETTY_FUNCTION__);
-        
+    adView.quysAdviceLoadFailCallBackBlockItem = ^(NSError * error) {
+        if (weakself.adModel.loadFailUploadEnable)
+        {
+            [weakself updateClientTimeStamp];
+            [weakself uploadServer:weakself.adModel.reportVideoPauseUrl];
+            weakself.adModel.statisticsModel.loadFail = YES;
+        }
+        if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoLoadFail:service:)])
+        {
+            [weakself.delegate quys_IncentiveVideoLoadFail:error service:(QuysAdBaseService*)weakself.service];
+        }
     };
     
     
@@ -236,7 +302,7 @@
         {
             if ([self.adModel.landingPageUrl containsString:@"ipa"])
             {
-                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
+                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
                 [self openUrl:strMacroReplace];
                 [self updateClickAndUpload:cpClick];
             }else
@@ -319,21 +385,61 @@
     }
 }
 
+-(void)interstitialOnInterrupt
+{
+        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+        [self uploadServer:self.adModel.reportVideoInterruptUrl];
+}
+
 
 -(void)interstitialOnExposureEndView
 {
-    if (self.adModel.exposuredUploadEnableEndView)
+    if (self.adModel.endViewExposuredUploadEnable)
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
         [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
         [self uploadServer:self.adModel.reportLandingPageShowUrl];
-        self.adModel.statisticsModelEndView.exposured = YES;
+        self.adModel.statisticsModel.endViewExposured = YES;
     }else
     {
     }
 }
 
+
+
+- (void)uploadProgressEvent:(NSInteger)progress
+{
+    [self.adModel.videoCheckPointList enumerateObjectsUsingBlock:^(QuysVideoCheckPoint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (obj.checkPoint >= 0 && obj.checkPoint <= 100 && obj.isReported == NO)
+        {
+            //checkPoint：可能是小数0～1，也可能是1～100
+            if (obj.checkPoint <= 1)
+            {
+                if (ceilf(obj.checkPoint*100) == progress || obj.checkPoint == 1 )
+                {
+                    [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
+                    obj.isReported = YES;
+                }
+            }else
+            {
+                if (obj.checkPoint == progress)
+                {
+                    [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
+                    obj.isReported = YES;
+                }
+            }
+        }
+        NSLog(@"======%lf",obj.checkPoint);
+    }];
+}
+
+
+- (void)updateClientTimeStamp
+{
+    [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+}
 
 - (void)removeBackgroundImageView
 {

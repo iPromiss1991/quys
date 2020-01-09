@@ -8,11 +8,9 @@
 
 #import "QuysVideoPlayerView.h"
 #import "QuysVidoePlayButtonView.h"
-#import <AVKit/AVKit.h>
 
 @interface QuysVideoPlayerView ()
 
-@property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 @property (nonatomic, strong) UILabel *speedTextLabel;//显示网速Label
 
@@ -247,7 +245,8 @@
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"2") forKey:kVideoStatus];
             if (self.quysAdviceLoadFailCallBackBlockItem)
             {
-                self.quysAdviceLoadFailCallBackBlockItem();
+                NSError *error = [((AVPlayerItem*)object) error];
+                self.quysAdviceLoadFailCallBackBlockItem(error);
             }
         }else
         {

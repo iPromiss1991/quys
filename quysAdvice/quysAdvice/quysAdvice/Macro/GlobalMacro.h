@@ -255,7 +255,7 @@ typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
 typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 
 typedef void(^QuysAdviceLoadSucessCallBackBlock)(void);//!< 加载成功事件
-typedef void(^QuysAdviceLoadFailCallBackBlock)(void);//!< 加载失败事件
+typedef void(^QuysAdviceLoadFailCallBackBlock)(NSError *error);//!< 加载失败事件
 
 //视频
 typedef void(^QuysAdvicePlayStartCallBackBlock)(void);//!< 播放开始事件

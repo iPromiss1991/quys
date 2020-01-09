@@ -202,9 +202,21 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    if (self.vm.isClickable)
+    [self playStatesChanged];
+    if (self.playerView.player.rate)
     {
-        [self playStatesChanged];
+         if (self.vm.isClickable )
+         {
+             //获取触发触摸的点
+             CGPoint cpBegain = [sender locationInView:self];
+             CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+             if (self.quysAdviceClickEventBlockItem)
+             {
+                 self.quysAdviceClickEventBlockItem(cpBegainResult);
+             }
+         }
+    }else
+    {
         //获取触发触摸的点
         CGPoint cpBegain = [sender locationInView:self];
         CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
@@ -396,7 +408,7 @@
         weakself.quysAdviceEndViewClickEventBlockItem(cp);
     };
     
-    self.playerView.urlVideo = self.vm.videoUrl;
+    self.playerView.urlVideo = kStringFormat(@"%@",self.vm.videoUrl);
     self.playerView.quysAdviceStatisticalCallBackBlockItem = ^{
         //曝光：自动播放视频
         [weakself playStatesChanged];
