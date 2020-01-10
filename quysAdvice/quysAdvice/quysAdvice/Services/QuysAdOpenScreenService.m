@@ -61,9 +61,9 @@
 /// 开始加载视图
 - (void)loadAdViewNow:(UIImage*)imgReplace
 {
-    [self addBackgroundImageView:imgReplace];
     if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {
+        [self addBackgroundImageView:imgReplace];
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             if ([weakself.delegate respondsToSelector:@selector(quys_requestStart:)])

@@ -711,7 +711,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceAdvertisingIdentifier];
     if (strUniqueID.length <= 0)
     {
-        strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        strUniqueID = [[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
         [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
     }else
     {
@@ -727,7 +727,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceVenderIdentifier];
     if (strUniqueID.length <= 0)
     {
-        strUniqueID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        strUniqueID =[ [[[UIDevice currentDevice] identifierForVendor] UUIDString]stringByReplacingOccurrencesOfString:@"-" withString:@""];
         [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceVenderIdentifier];
     }else
     {

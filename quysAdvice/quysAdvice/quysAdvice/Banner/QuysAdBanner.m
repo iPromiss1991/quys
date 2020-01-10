@@ -1,21 +1,16 @@
 //
-//  QuysInformationFlowDefault.m
+//  QuysAdSplash.m
 //  quysAdvice
 //
-//  Created by quys on 2019/12/16.
+//  Created by quys on 2019/12/9.
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysInformationFlowDefaultView.h"
-@interface QuysInformationFlowDefaultView()
-
-
+#import "QuysAdBanner.h"
+@interface QuysAdBanner()
 @property (nonatomic,strong) UIView *viewContain;
-@property (nonatomic,strong) UILabel *lblContent;
 @property (nonatomic,strong) UIImageView *imgView;
-@property (nonatomic,strong) UILabel *lblTag;
 
-@property (nonatomic,strong) UILabel *lblType;
 @property (nonatomic,strong) UIButton *btnClose;
 
 
@@ -23,9 +18,9 @@
 
 
 
-@implementation QuysInformationFlowDefaultView
+@implementation QuysAdBanner
 
-- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysInformationFlowVM *)viewModel
+- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdBannerVM *)viewModel
 {
     if (self = [super initWithFrame:frame])
     {
@@ -43,28 +38,11 @@
     [self addSubview:viewContain];
     self.viewContain = viewContain;
     
-    UILabel *lblContent = [[UILabel alloc] init];
-    lblContent.numberOfLines = 0;
-    lblContent.text = @"广告页的展示需要做到根据相关配置信息动态更新展示内容。因此广告展示数据可以通过服务端接口动态获取，然后根据对应规则解析控制展示效果。";
-    self.lblContent = lblContent;
-    [self.viewContain addSubview:lblContent];
-    
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     imgView.userInteractionEnabled = YES;
     [self.viewContain addSubview:imgView];
     self.imgView = imgView;
-    
-    UILabel *lblTag = [[UILabel alloc] init];
-    lblTag.text = @"广告";
-    kViewRadius(lblTag, kScale_W(5));
-    self.lblTag = lblTag;
-    [self.viewContain addSubview:lblTag];
 
-    
-    UILabel *lblType = [[UILabel alloc] init];
-    lblType.text = @"新闻";
-    self.lblType = lblType;
-    [self.viewContain addSubview:lblType];
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -84,41 +62,17 @@
         make.edges.mas_equalTo(self);
     }];
     
-    [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
-         make.top.mas_equalTo(self.viewContain).priorityHigh();
-         make.left.mas_equalTo(self.viewContain).offset(kScale_W(2));
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2));
+    [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.viewContain).offset(kScale_H(0)).priorityHigh();
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-0));
+        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
     
     
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
-           make.top.mas_equalTo(self.lblContent.mas_bottom).priorityHigh();;
-           make.left.right.mas_equalTo(self.viewContain);
+           make.top.mas_equalTo(self.viewContain);
+           make.left.right.bottom.mas_equalTo(self.viewContain);
        }];
-    
-    
-    
-    [self.lblTag mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.imgView.mas_bottom).offset(kScale_W(2)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(18));//TODO:字体、样式、布局？
-        make.left.mas_equalTo(self.viewContain).offset(kScale_W(2));
-        make.bottom.mas_equalTo(self.viewContain).offset(kScale_W(-2));
-    }];
-    
-    
-    [self.lblType mas_updateConstraints:^(MASConstraintMaker *make) {
-         make.centerY.mas_equalTo(self.lblTag).priorityHigh();
-         make.left.mas_equalTo(self.lblTag.mas_right).offset(kScale_W(5));
-    }];
-    
-    
-    [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.lblTag).priorityHigh();
-        make.left.greaterThanOrEqualTo(self.lblType.mas_right).offset(kScale_W(2));
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2));
-        make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
-    }];
-    
     
     [super updateConstraints];
 }
@@ -160,16 +114,6 @@
        {
            self.quysAdviceCloseEventBlockItem();
        }
-   //TODO:动画分类==代理回调！移除视图,点击事件接受对象？img：viewContain。
-//    CABasicAnimation *animation = [CABasicAnimation animation];
-//    animation.keyPath = @"transform.scale";
-//    animation.toValue = @(.5);
-//    animation.duration = .3;
-//    animation.removedOnCompletion = NO;
-//    animation.fillMode = kCAFillModeForwards;
-//    [self.layer addAnimation:animation forKey:@"scale"];
-//
-//    animation.delegate = self;
 }
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
@@ -183,7 +127,7 @@
 }
 
  
-- (void)setVm:(QuysInformationFlowVM *)vm
+- (void)setVm:(QuysAdBannerVM *)vm
 {
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];

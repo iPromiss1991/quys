@@ -29,12 +29,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:rootVC];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
     [self.window makeKeyAndVisible];
     //TODO:
     [[QuysAdviceManager shareManager] configSettings] ;
     
-
+    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"" key:@"" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h"] eventDelegate:self window:self.window];
+    self.service = service;
     
  
     return YES;

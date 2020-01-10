@@ -48,6 +48,7 @@
 
 - (void)createUI
 {
+    self.backgroundColor = [UIColor whiteColor];
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];

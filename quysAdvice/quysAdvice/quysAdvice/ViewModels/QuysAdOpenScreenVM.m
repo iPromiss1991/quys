@@ -70,7 +70,7 @@
 
 - (UIView *)createAdviceView
 {
-    switch (self.adModel.creativeType) {
+    switch (self.adModel.creativeType) {//TODO：添加视频QuysAdviceCreativeTypeVideo
         case QuysAdviceCreativeTypeDefault:
         {
             kWeakSelf(self)

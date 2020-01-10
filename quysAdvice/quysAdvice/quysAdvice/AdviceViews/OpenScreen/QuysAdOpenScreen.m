@@ -12,12 +12,13 @@
 @property (nonatomic,strong) UIImageView *imgView;
 
 @property (nonatomic,strong) UIButton *btnClose;
+
+@property (nonatomic,strong) UIView *viewBottomContain;
 @property (nonatomic,strong) UIImageView *imgSmallIcon;
+@property (nonatomic,strong) UILabel *lblContent;
 @property (nonatomic,strong) UIImageView *imgLogo;
 
-@property (nonatomic,strong) UILabel *lblContent;
 @property (nonatomic,assign) NSInteger countdownLeft;
-
 @property (nonatomic,strong) dispatch_source_t source_t;
 
 
@@ -59,9 +60,16 @@
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
+    
+    UIView *viewBottomContain = [[UIView alloc] init];
+    viewBottomContain.backgroundColor = [UIColor grayColor];
+    viewBottomContain.alpha = .8;
+    [self.viewContain addSubview:viewBottomContain];
+    self.viewBottomContain = viewBottomContain;
+    
     UIImageView *imgSmallIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     imgSmallIcon.userInteractionEnabled = YES;
-    [self.viewContain addSubview:imgSmallIcon];
+    [self.viewBottomContain addSubview:imgSmallIcon];
     self.imgSmallIcon = imgSmallIcon;
     
     UILabel *lblContent = [[UILabel alloc] init];
@@ -70,12 +78,12 @@
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     self.lblContent = lblContent;
-    [self.viewContain addSubview:lblContent];
+    [self.viewBottomContain addSubview:lblContent];
     
     
     UIImageView *imgLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     imgLogo.userInteractionEnabled = YES;
-    [self.viewContain addSubview:imgLogo];
+    [self.viewBottomContain addSubview:imgLogo];
     self.imgLogo = imgLogo;
     
     
@@ -92,7 +100,7 @@
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.viewContain);
     }];
-    
+
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.viewContain);
@@ -103,24 +111,29 @@
     }];
     
     
+    [self.viewBottomContain mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(self.viewContain);
+        make.top.mas_greaterThanOrEqualTo(self.viewContain.mas_bottom).offset(-kScale_H(200));
+    }];
+    
     [self.imgSmallIcon mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_greaterThanOrEqualTo(self.viewContain);
-        make.left.mas_equalTo(self.viewContain).mas_offset(kScale_W(20));
-        make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-20));
+        make.top.mas_greaterThanOrEqualTo(self.viewBottomContain);
+        make.left.mas_equalTo(self.viewBottomContain).mas_offset(kScale_W(20));
+        make.bottom.mas_equalTo(self.viewBottomContain).mas_offset(kScale_H(-20));
         make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
     
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_greaterThanOrEqualTo(self.viewContain).mas_offset(kScale_H(200));
+        make.top.mas_greaterThanOrEqualTo(self.viewBottomContain);
         make.left.mas_equalTo(self.imgSmallIcon.mas_right).mas_offset(kScale_W(5));
-        make.bottom.mas_equalTo(self.viewContain).mas_offset(kScale_H(-10));
+        make.bottom.mas_equalTo(self.viewBottomContain).mas_offset(kScale_H(-10));
     }];
     
     
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.imgSmallIcon).priorityHigh();
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
-        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20)).priorityHigh();
+        make.right.mas_equalTo(self.viewBottomContain).mas_offset(kScale_W(-20)).priorityHigh();
         make.width.height.mas_equalTo(kScale_W(22)).priorityHigh();
     }];
     
@@ -145,8 +158,8 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
-    dispatch_suspend(self.source_t);
+//    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
+//    dispatch_suspend(self.source_t);//TODO
     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标

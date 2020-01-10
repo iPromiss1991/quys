@@ -15,7 +15,7 @@
 
 - (NSString *)requestUrl
 {
-     if (1)
+     if (0)
     {
         NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
 //  NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";
@@ -29,7 +29,7 @@
 
     }else
     {
-        NSString *strRequestUrl = @"http://192.168.1.2/advert/test.php?";
+        NSString *strRequestUrl = @"http://192.168.1.2/advert/test.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
@@ -71,14 +71,14 @@
     [dicM setObject:[device quys_getNetconnTypeForIncentiveVideo] forKey:@"NetworkType"];
 
     [dicM setObject:[device quys_carrierName] forKey:@"OperatorType"];
-    [dicM setObject:@"2" forKey:@"OsType"];//安卓= 1,            IOS = 2,          WinPhone = 3,          塞班= 4,          黑莓 = 5,          其他 = 100
+    [dicM setObject:@"2" forKey:@"OsType"];//安卓= 1, IOS = 2,    WinPhone = 3,   塞班= 4,  黑莓 = 5, 其他 = 100
 
-    [dicM setObject:kStringFormat(@"%lf",kScreenHeight) forKey:@"AdslotHeight"];
-    [dicM setObject:kStringFormat(@"%lf",kScreenWidth) forKey:@"AdslotWidth"];
+    [dicM setObject:@([kStringFormat(@"%lf",kScreenHeight) integerValue]) forKey:@"AdslotHeight"];
+    [dicM setObject:@([kStringFormat(@"%lf",kScreenWidth) integerValue]) forKey:@"AdslotWidth"];
     [dicM setObject:[device quys_appVersionByFloat] forKey:@"AppVersionMajor"];
     
-    [dicM setObject:kStringFormat(@"%lf",kScreenHeight) forKey:@"ScreenHeight"];
-    [dicM setObject:kStringFormat(@"%lf",kScreenWidth) forKey:@"ScreenWidth"];
+    [dicM setObject:@([kStringFormat(@"%lf",kScreenHeight) integerValue]) forKey:@"ScreenHeight"];
+    [dicM setObject:@([kStringFormat(@"%lf",kScreenWidth) integerValue]) forKey:@"ScreenWidth"];
     [dicM setObject:[device quys_screenOritation] forKey:@"ScreenOrientation"];
 
     [dicM setObject:[device quys_screenPixelDensity] forKey:@"ScreenPixelDensity"];

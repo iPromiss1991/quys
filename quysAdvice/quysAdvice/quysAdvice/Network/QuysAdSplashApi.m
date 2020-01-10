@@ -34,7 +34,7 @@
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?tid=319&id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?tid=291&id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
         return strUrl;
         
     }
