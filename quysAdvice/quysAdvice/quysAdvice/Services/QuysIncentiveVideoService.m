@@ -81,7 +81,8 @@
 {
     QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
     self.adviceView = [vm createAdviceView];
-    self.loadAdViewEnable = YES;
+        self.adviceView?(self.loadAdViewEnable = YES):(self.loadAdViewEnable = NO);
+
 }
 
 
@@ -91,13 +92,9 @@
 {
     if (self.loadAdViewEnable)
     {
-        self.adviceView.hidden = NO;
-        //TODO
-        //        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        //        animation.duration = .3;
-        //        animation.fromValue = @(0.5);
-        //        animation.toValue = @(1);
-        //        [self.adviceView.layer addAnimation:animation forKey:@"animation"];
+        [UIView transitionFromView:[UIApplication sharedApplication].keyWindow toView:self.adviceView duration:3 options:UIViewAnimationOptionTransitionCurlDown completion:^(BOOL finished) {
+            self.adviceView.hidden = NO;
+        }];
     }else
     {
         //视图正在创建中。。。

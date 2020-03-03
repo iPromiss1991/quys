@@ -75,7 +75,7 @@
         {
             kWeakSelf(self)
             QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self];
-            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+            [adView hlj_setTrackTag:kStringFormat(@"%lu",(unsigned long)[adView hash]) position:0 trackData:@{}];
             
            //点击事件
                 adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {

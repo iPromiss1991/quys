@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
 typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
 typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
-@interface QuysAdOpenScreen : UIView
+@interface QuysAdOpenScreenDefaultView : UIView
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM*)viewModel;
 
 @property (nonatomic,strong) QuysAdOpenScreenVM *vm;

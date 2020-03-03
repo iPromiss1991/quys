@@ -83,7 +83,7 @@
 {
     QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
     self.adviceView = [vm createAdviceView];
-    self.loadAdViewEnable = YES;
+    self.adviceView?(self.loadAdViewEnable = YES):(self.loadAdViewEnable = NO);
 }
 
 

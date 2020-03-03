@@ -155,21 +155,13 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [self removeFromSuperview];
+    self.frame = CGRectZero;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
        {
            self.quysAdviceCloseEventBlockItem();
        }
-   //TODO:动画分类==代理回调！移除视图,点击事件接受对象？img：viewContain。
-//    CABasicAnimation *animation = [CABasicAnimation animation];
-//    animation.keyPath = @"transform.scale";
-//    animation.toValue = @(.5);
-//    animation.duration = .3;
-//    animation.removedOnCompletion = NO;
-//    animation.fillMode = kCAFillModeForwards;
-//    [self.layer addAnimation:animation forKey:@"scale"];
-//
-//    animation.delegate = self;
 }
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）

@@ -17,8 +17,8 @@
 {
      if (0)
     {
-        NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
-//  NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";
+//        NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
+  NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];

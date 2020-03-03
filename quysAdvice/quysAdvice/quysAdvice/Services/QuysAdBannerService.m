@@ -81,7 +81,8 @@
 {
     QuysAdBannerVM *vm =  [[QuysAdBannerVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
     self.adviceView = [vm createAdviceView];
-    self.loadAdViewEnable = YES;
+        self.adviceView?(self.loadAdViewEnable = YES):(self.loadAdViewEnable = NO);
+
 }
 
 

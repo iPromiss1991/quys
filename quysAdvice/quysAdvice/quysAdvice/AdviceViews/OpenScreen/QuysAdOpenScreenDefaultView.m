@@ -6,8 +6,8 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdOpenScreen.h"
-@interface QuysAdOpenScreen()
+#import "QuysAdOpenScreenDefaultView.h"
+@interface QuysAdOpenScreenDefaultView()
 @property (nonatomic,strong) UIView *viewContain;
 @property (nonatomic,strong) UIImageView *imgView;
 
@@ -26,7 +26,7 @@
 
 
 //TODO:文案展示？（不清楚），倒计时（循环引用）
-@implementation QuysAdOpenScreen
+@implementation QuysAdOpenScreenDefaultView
 
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel
 {

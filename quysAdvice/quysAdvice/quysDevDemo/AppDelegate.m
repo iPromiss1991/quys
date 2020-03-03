@@ -34,7 +34,7 @@
     //TODO:
     [[QuysAdviceManager shareManager] configSettings] ;
     
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"" key:@"" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h"] eventDelegate:self window:self.window];
+    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"ziyanapp_kp" key:@"D850E31B659D57D2B82D9457C0FC5A15" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-375w-667h"] eventDelegate:self window:self.window];
     self.service = service;
     
  

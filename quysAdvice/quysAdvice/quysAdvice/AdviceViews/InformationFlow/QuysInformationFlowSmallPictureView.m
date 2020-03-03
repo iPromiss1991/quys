@@ -154,7 +154,9 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [self removeFromSuperview];
+    self.frame = CGRectZero;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

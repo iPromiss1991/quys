@@ -1,24 +1,24 @@
 //
-//  QuysWindowViewController.h
-//  quysAdviceTestDemo
+//  QuysAdOpenScreenVideoView.h
+//  quysAdvice
 //
-//  Created by quys on 2019/12/20.
-//  Copyright © 2019 Quys. All rights reserved.
+//  Created by wxhmbp on 2020/3/3.
+//  Copyright © 2020年 Quys. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "QuysAdOpenScreenVM.h"
-#import "QuysAdOpenScreenDefaultView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-///开屏广告rootVC
-
-@interface QuysWindowViewController : UIViewController
-- (instancetype)initWithVM:(QuysAdOpenScreenVM*)vm;
-
+///开屏视频
+@interface QuysAdOpenScreenVideoView : UIView
+@property (nonatomic,strong) QuysAdOpenScreenVM *vm;
 @property (nonatomic,copy) QuysAdviceCloseEventBlock quysAdviceCloseEventBlockItem;
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
+
+
+- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel;
 
 @end
 
