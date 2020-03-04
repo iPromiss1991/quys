@@ -8,6 +8,7 @@
 
 #import "QuysOpenScreenWindow.h"
 #import "QuysNavigationController.h"
+
 @interface QuysOpenScreenWindow()
 @property (nonatomic,strong) QuysWindowViewController *rootVC;
 
@@ -16,12 +17,12 @@
 
 @implementation QuysOpenScreenWindow
 
-- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel
+- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel type:(QuysAdviceCreativeType)creativeType
 {
     if (self = [super initWithFrame:frame])
     {
         self.windowLevel = UIWindowLevelAlert+1;
-        QuysWindowViewController *rootVC = [[QuysWindowViewController alloc] initWithVM:viewModel];
+        QuysWindowViewController *rootVC = [[QuysWindowViewController alloc] initWithVM:viewModel type:creativeType];
         rootVC.quysAdviceClickEventBlockItem =  self.quysAdviceClickEventBlockItem;
         rootVC.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
         rootVC.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;

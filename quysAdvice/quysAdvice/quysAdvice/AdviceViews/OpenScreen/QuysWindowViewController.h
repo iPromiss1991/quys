@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///开屏广告rootVC
 
 @interface QuysWindowViewController : UIViewController
-- (instancetype)initWithVM:(QuysAdOpenScreenVM*)vm;
+- (instancetype)initWithVM:(QuysAdOpenScreenVM*)vm type:(QuysAdviceCreativeType)creativeType;
 
 @property (nonatomic,copy) QuysAdviceCloseEventBlock quysAdviceCloseEventBlockItem;
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;

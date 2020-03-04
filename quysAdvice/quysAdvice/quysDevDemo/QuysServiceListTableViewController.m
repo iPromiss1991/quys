@@ -118,7 +118,7 @@
 {
     if (_arrServiceList == nil)
     {
-        _arrServiceList = [NSMutableArray arrayWithArray:@[@"banner",@"信息流",@"插屏",@"激励视频"]];
+        _arrServiceList = [NSMutableArray arrayWithArray:@[@"banner",@"信息流",@"插屏",@"激励视频",@"测试开屏视频"]];
     }return _arrServiceList;
 }
 

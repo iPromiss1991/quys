@@ -8,57 +8,80 @@
 //
 
 #import "QuysWindowViewController.h"
+#import "QuysAdOpenScreenVideoView.h"
 @interface QuysWindowViewController ()
 @property (nonatomic,strong) QuysAdOpenScreenVM *vm;
+@property (nonatomic,assign) QuysAdviceCreativeType creativeType;
 
 @end
 
 @implementation QuysWindowViewController
 
--(instancetype)initWithVM:(QuysAdOpenScreenVM *)vm
+-(instancetype)initWithVM:(QuysAdOpenScreenVM *)vm type:(QuysAdviceCreativeType)creativeType
 {
     if (self == [super init])
     {
         self.vm = vm;
+        self.creativeType = creativeType;
     }
     return self;
 }
 - (void)loadView
 {
-   QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
-    self.view = view;
-    view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
-    view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
-    view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+    
+    switch (self.creativeType)
+    {
+        case QuysAdviceCreativeTypeDefault:
+        {
+            QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
+            self.view = view;
+            view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
+            view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
+            view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+        }
+            break;
+        case QuysAdviceCreativeTypeVideo:
+        {
+            QuysAdOpenScreenVideoView *view = [[QuysAdOpenScreenVideoView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
+              self.view = view;
+              view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
+              view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
+              view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+        }
+            break;
+        default:
+            break;
+    }
+
     
     
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- //    self.navigationController.navigationBarHidden = YES;
+    //    self.navigationController.navigationBarHidden = YES;
     [self vhl_setStatusBarHidden:YES];
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarHidden:YES];
-
+    
     // Do any additional setup after loading the view.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-//    self.view.frame = CGRectMake(0, 0, 0, 330);
-
+    //    self.view.frame = CGRectMake(0, 0, 0, 330);
+    
     
 }
 

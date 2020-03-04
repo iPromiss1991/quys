@@ -1,0 +1,183 @@
+
+//
+//  QuysVideoCoverView.m
+//  quysAdvice
+//
+//  Created by quys on 2020/3/3.
+//  Copyright © 2020 Quys. All rights reserved.
+//
+
+#import "QuysVideoCoverView.h"
+@interface QuysVideoCoverView()
+@property (nonatomic,strong) UIView *viewContain;
+@property (nonatomic,strong) UIButton *btnVoice;
+@property (nonatomic,strong) UIButton *btnClose;
+
+
+
+@property (nonatomic,assign) NSInteger countdownLeft;
+@property (nonatomic,strong) dispatch_source_t source_t;
+
+
+@end
+
+
+@implementation QuysVideoCoverView
+
+- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel
+{
+    if (self = [super initWithFrame:frame])
+    {
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+        [self createUI];
+        self.vm = viewModel;
+    }
+    return self;
+}
+
+
+- (void)createUI
+{
+    UIView *viewContain = [[UIView alloc]initWithFrame:self.frame];
+     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    [self addGestureRecognizer:tap];
+    [self addSubview:viewContain];
+    self.viewContain = viewContain;
+    
+    UIButton *btnVoice = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnVoice addTarget:self action:@selector(clickVoiceBtEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [btnVoice setTitle:@"声音" forState:UIControlStateNormal];
+    [btnVoice setTitle:@"" forState:UIControlStateHighlighted];
+    [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.viewContain addSubview:btnVoice];
+    self.btnVoice = btnVoice;
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [btnClose setTitle:@"" forState:UIControlStateNormal];
+    [btnClose setTitle:@"" forState:UIControlStateHighlighted];
+    [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.viewContain addSubview:btnClose];
+    self.btnClose = btnClose;
+    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+}
+
+- (void)updateConstraints
+{
+    [self.viewContain mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(self);
+        make.height.mas_equalTo(kScale_H(100));
+    }];
+    
+    [self.btnVoice mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.viewContain).offset(kScale_H(20));
+        make.left.mas_equalTo(self.viewContain).offset(kScale_W(20));
+        make.height.mas_equalTo(kScale_H(44));
+        make.width.mas_equalTo(kScale_W(60));
+    }];
+    
+    [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.viewContain).offset(kScale_H(20));
+        make.left.mas_equalTo(self.btnVoice.mas_right).offset(kScale_W(20)).priorityMedium();
+        make.height.mas_equalTo(kScale_H(44));
+        make.width.mas_equalTo(kScale_W(60));
+        make.right.mas_equalTo(self.viewContain).offset(-kScale_W(20)).priorityHigh();
+    }];
+    
+    [super updateConstraints];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    
+}
+
+
+#pragma mark - Category覆写
+
+
+//根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
+- (void)hlj_viewStatisticalCallBack
+{
+    //倒计时
+    [self countdownEvevt];
+    if (self.quysAdviceStatisticalCallBackBlockItem)
+    {
+        self.quysAdviceStatisticalCallBackBlockItem();
+    }
+}
+
+
+
+#pragma mark - event
+
+- (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
+{
+    //获取触发触摸的点
+    CGPoint cpBegain = [sender locationInView:self];
+    CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+    if (self.quysAdviceClickEventBlockItem)
+    {
+        self.quysAdviceClickEventBlockItem(cpBegainResult);
+    }
+}
+
+- (void)clickCloseBtEvent:(UIButton*)sender
+{
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    if (self.quysAdviceCloseEventBlockItem)
+    {
+        self.quysAdviceCloseEventBlockItem();
+    }
+}
+
+- (void)clickVoiceBtEvent:(UIButton*)sender
+{
+    //TODO：变换image
+    sender.selected = !sender.selected;
+    if (self.quysAdviceVoiceEventBlockItem)
+    {
+        self.quysAdviceVoiceEventBlockItem(sender.selected);
+    }
+}
+
+- (void)countdownEvevt
+{
+    
+    kWeakSelf(self)
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        if (self.countdownLeft >= 1)
+        {
+            weakself.countdownLeft--;
+            [weakself.btnClose setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+        }else
+        {
+            dispatch_source_cancel(weakself.source_t );
+            [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            [weakself clickCloseBtEvent:nil];
+            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+        }
+        
+    });
+    dispatch_resume(timer);
+    self.source_t = timer;
+
+}
+
+
+- (void)setVm:(QuysAdOpenScreenVM *)vm
+{
+    _vm = vm;
+     self.countdownLeft = vm.showDuration;
+    
+}
+
+
+
+@end

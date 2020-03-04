@@ -210,11 +210,8 @@
         
     });
     dispatch_resume(timer);
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-            weakself.source_t = timer;
-    });
-}
+    self.source_t = timer;
+ }
 
 - (void)setVm:(QuysAdOpenScreenVM *)vm
 {

@@ -15,6 +15,7 @@
 #import "QuysPictureViewController.h"
 #import "QuysAppDownUrlApi.h"
 #import "QuysDownAddressModel.h"
+#import <AVFoundation/AVFoundation.h>
 @interface QuysAdOpenScreenVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdviceOpeenScreenDelegate> delegate;
@@ -51,6 +52,7 @@
     [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
     [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
     self.strImgUrl = model.imgUrl;
+    self.materialUrl = model.materialUrl;
 }
 
 
@@ -70,46 +72,43 @@
 
 - (UIView *)createAdviceView
 {
-    switch (self.adModel.creativeType) {//TODO：添加视频QuysAdviceCreativeTypeVideo
-        case QuysAdviceCreativeTypeDefault:
-        {
-            kWeakSelf(self)
-            QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self];
-            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
-            
-           //点击事件
-                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                    [weakself interstitialOnClick:cp];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
-                    {
-                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //关闭事件
-                adView.quysAdviceCloseEventBlockItem = ^{
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
-                    {
-                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //曝光事件
-                adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                    [weakself interstitialOnExposure];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
-                    {
-                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                self.adView = adView;
-                return adView;
-                
+    if (self.adModel.creativeType == QuysAdviceCreativeTypeDefault || self.adModel.creativeType == QuysAdviceCreativeTypeVideo)
+    {
+        kWeakSelf(self)
+        QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self type:self.adModel.creativeType];
+        [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+        
+        //点击事件
+        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+            [weakself interstitialOnClick:cp];
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+            {
+                [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
             }
-            default:
-                return nil;
-                break;
-            
+        };
+        
+        //关闭事件
+        adView.quysAdviceCloseEventBlockItem = ^{
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+            {
+                [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+            }
+        };
+        
+        //曝光事件
+        adView.quysAdviceStatisticalCallBackBlockItem = ^{
+            [weakself interstitialOnExposure];
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+            {
+                [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+            }
+        };
+        self.adView = adView;
+        return adView;
+        
+    }else
+    {
+        return nil;
     }
 }
 
@@ -138,13 +137,13 @@
                 //判断后缀是否.ipa==直接下载； 或者加载web
                 if ([self.adModel.ldp containsString:@".ipa"])
                 {
-                     [self openUrl:self.adModel.ldp];
+                    [self openUrl:self.adModel.ldp];
                 }else
                 {
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
-                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                     }];
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    }];
                 }
                 [self updateClickAndUpload:cpClick];
             }
@@ -193,16 +192,16 @@
 {
     if (self.adModel.clickeUploadEnable)
     {
-    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-    //更新点击坐标
-    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-    
-    [self updateReplaceDictionary:kClickUPX value:strCpX];
-    [self updateReplaceDictionary:kClickUPY value:strCpY];
-    self.adModel.statisticsModel.clicked = YES;
-    [self uploadServer:self.adModel.clkTracking];
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        self.adModel.statisticsModel.clicked = YES;
+        [self uploadServer:self.adModel.clkTracking];
     }
 }
 
@@ -223,12 +222,12 @@
                 [weakself openUrl:model.dstlink];
             }
             
-                if (!kISNullString(model.clickid))
-                {
-                    [weakself openUrl:model.dstlink];
-                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick];
-                }
+            if (!kISNullString(model.clickid))
+            {
+                [weakself openUrl:model.dstlink];
+                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                [weakself updateClickAndUpload:cpClick];
+            }
         }
         
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
@@ -258,10 +257,31 @@
 
 - (NSInteger)showDuration
 {
-    return self.adModel.showDuration <= 0?5:self.adModel.showDuration;
+    //TODO:测试数据似乎仅有QuysAdviceCreativeTypeDefault
+
+    if (self.adModel.creativeType == QuysAdviceCreativeTypeDefault)
+    {
+        return self.adModel.showDuration <= 0?5:(self.adModel.showDuration <=5?self.adModel.showDuration:5);
+    }else if (self.adModel.creativeType == QuysAdviceCreativeTypeVideo)
+    {
+        NSInteger totalSecond = [self getVideoTimeByUrlString:self.adModel.materialUrl];
+        return totalSecond <= 15?totalSecond:15;
+    }else
+    {
+        return 5;
+    }
 }
 
-
+- (NSInteger)getVideoTimeByUrlString:(NSString*)urlString
+{
+    //计算视频长度  （秒）
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
+    AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
+    NSInteger totalSecond = urlAsset.duration.value / urlAsset.duration.timescale;
+    NSLog(@"计算视频长度 = %ld",(long)totalSecond);
+    return totalSecond;
+}
 
 - (void)dealloc
 {

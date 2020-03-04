@@ -460,7 +460,7 @@
 
 - (NSInteger)showDuration
 {
-    return [self.adModel.videoDuration integerValue] <= 0?10:[self.adModel.videoDuration integerValue];
+    return [self.adModel.videoDuration integerValue];
 }
 
 -(QuysAdviceVideoEndShowType)videoEndShowType

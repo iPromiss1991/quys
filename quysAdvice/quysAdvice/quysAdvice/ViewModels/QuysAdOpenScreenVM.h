@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "QuysAdviceOpeenScreenDelegate.h"
-@class QuysAdviceModel,QuysAdOpenScreenService;
+#import "QuysAdviceModel.h"
+@class QuysAdOpenScreenService;
 NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysAdOpenScreenVM : NSObject
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strImgUrl;
 @property (nonatomic,assign) NSInteger showDuration;
 
+@property (nonatomic,strong) NSString *materialUrl;
 
 
 
