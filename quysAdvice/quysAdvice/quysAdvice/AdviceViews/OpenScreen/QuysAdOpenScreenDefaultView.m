@@ -6,8 +6,8 @@
 //  Copyright © 2019 Quys. All rights reserved.
 //
 
-#import "QuysAdOpenScreen.h"
-@interface QuysAdOpenScreen()
+#import "QuysAdOpenScreenDefaultView.h"
+@interface QuysAdOpenScreenDefaultView()
 @property (nonatomic,strong) UIView *viewContain;
 @property (nonatomic,strong) UIImageView *imgView;
 
@@ -26,7 +26,7 @@
 
 
 //TODO:文案展示？（不清楚），倒计时（循环引用）
-@implementation QuysAdOpenScreen
+@implementation QuysAdOpenScreenDefaultView
 
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel
 {
@@ -42,7 +42,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]initWithFrame:self.frame];
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -53,10 +53,8 @@
     self.imgView = imgView;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnClose.backgroundColor = kRGB16(BackgroundColor1, 1);
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"" forState:UIControlStateNormal];
-    [btnClose setTitle:@"" forState:UIControlStateHighlighted];
-    [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
@@ -100,7 +98,7 @@
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.viewContain);
     }];
-
+    
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.viewContain);
@@ -144,6 +142,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    kViewRadius(self.btnClose, kScale_H(10));
     
     
 }
@@ -158,8 +157,8 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-//    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
-//    dispatch_suspend(self.source_t);//TODO
+    //    //暂停倒计时（因为倒计时完毕会移除当前的自定义window）
+    //    dispatch_suspend(self.source_t);//TODO
     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
@@ -200,18 +199,23 @@
         if (self.countdownLeft >= 1)
         {
             weakself.countdownLeft--;
-            [weakself.btnClose setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+            NSString *strCountdownLeft = kStringFormat(@"%lds",weakself.countdownLeft);
+            NSString *strDesc = kStringFormat(@"%@",@"跳过");
+            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:kStringFormat(@"%@%@",strCountdownLeft,strDesc)];
+            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, strCountdownLeft.length)];
+            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:10]} range:NSMakeRange(2, strDesc.length)];
+            [weakself.btnClose setAttributedTitle:attr forState:UIControlStateNormal];
         }else
         {
             dispatch_source_cancel(weakself.source_t );
-            [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            weakself.btnClose.titleLabel.attributedText = nil;
             [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
         }
         
     });
     dispatch_resume(timer);
     self.source_t = timer;
- }
+}
 
 - (void)setVm:(QuysAdOpenScreenVM *)vm
 {

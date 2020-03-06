@@ -126,7 +126,9 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-
+    if (self.quysAdviceClickPlayButtonBlockItem) {
+        self.quysAdviceClickPlayButtonBlockItem();
+    }
 }
 
  

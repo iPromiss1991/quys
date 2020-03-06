@@ -71,12 +71,15 @@
     
     UILabel *lblTag = [[UILabel alloc] init];
     lblTag.text = @"广告";
+    [lblTag  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     self.lblTag = lblTag;
     [self.viewContain addSubview:lblTag];
     
     
     UILabel *lblType = [[UILabel alloc] init];
     lblType.text = @"新闻";
+    lblType.textAlignment = NSTextAlignmentLeft;
+    [lblType  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     self.lblType = lblType;
     [self.viewContain addSubview:lblType];
     
@@ -84,8 +87,8 @@
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
     [btnClose setTitle:@"" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     [self setNeedsUpdateConstraints];
@@ -126,26 +129,25 @@
         make.height.mas_equalTo(self.viewContain).multipliedBy(0.5);
     }];
     
+    //TODO:关闭广告时，布局混乱
     [self.lblTag mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.btnClose);
+        make.centerY.mas_equalTo(self.btnClose);
         make.left.mas_equalTo(self.lblContent);
-        make.bottom.mas_equalTo(self.viewContain).offset(kScale_H(-2)).priorityHigh();
-    }]; 
+    }];
     
     
     [self.lblType mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.lblTag).priorityHigh();
-        make.left.mas_equalTo(self.lblTag.mas_right).offset(kScale_W(2)).priorityHigh();
-        make.bottom.mas_equalTo(self.lblTag);
+        make.centerY.mas_equalTo(self.btnClose);
+        make.left.mas_equalTo(self.lblTag.mas_right).offset(kScale_W(2));
     }];
     
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2)).priorityLow();
-        make.top.mas_equalTo(self.imgViewThree.mas_bottom);
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2));
-        make.width.height.mas_equalTo(kScale_W(22));
-        make.bottom.mas_equalTo(self.lblTag).priorityLow();
+        make.top.mas_equalTo(self.imgViewThree.mas_bottom).offset(kScale_H(2));
+        make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2)).priorityMedium();
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2)).priorityHigh();
+        make.height.width.mas_lessThanOrEqualTo(kScale_W(20));
+        make.bottom.mas_equalTo(self.viewContain).offset(kScale_H(-2));
     }];
     
     
@@ -184,7 +186,9 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [self removeFromSuperview];
+    self.frame = CGRectZero;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
@@ -205,15 +209,20 @@
 - (void)setVm:(QuysInformationFlowVM *)vm
 {
     _vm = vm;
-    if (self.vm.arrImgUrl.count >= 1)
+    if (self.vm.arrImgUrl.count == 1)
     {
-         [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
-
-    }else if (self.vm.arrImgUrl.count >= 2)
+        [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+        [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+        [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+    }else if (self.vm.arrImgUrl.count == 2)
     {
+        [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
         [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
+        [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
     }else
     {
+        [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
+        [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
         [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[2]]];
     }
 }

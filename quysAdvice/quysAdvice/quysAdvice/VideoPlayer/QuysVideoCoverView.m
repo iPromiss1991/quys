@@ -39,24 +39,21 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]initWithFrame:self.frame];
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [self addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
     
     UIButton *btnVoice = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnVoice addTarget:self action:@selector(clickVoiceBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnVoice setTitle:@"声音" forState:UIControlStateNormal];
-    [btnVoice setTitle:@"" forState:UIControlStateHighlighted];
-    [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];    [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnVoice];
     self.btnVoice = btnVoice;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnClose.backgroundColor = kRGB16(BackgroundColor1, 1);
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"" forState:UIControlStateNormal];
-    [btnClose setTitle:@"" forState:UIControlStateHighlighted];
-    [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
@@ -92,6 +89,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    kViewRadius(self.btnClose, kScale_H(10));
     
     
 }
@@ -137,11 +135,19 @@
 
 - (void)clickVoiceBtEvent:(UIButton*)sender
 {
-    //TODO：变换image
     sender.selected = !sender.selected;
+    if (sender.selected)
+    {
+        [sender setImage:[UIImage imageNamed:@"jingyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"jingyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }else
+    {
+        [sender setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    }
     if (self.quysAdviceVoiceEventBlockItem)
     {
-        self.quysAdviceVoiceEventBlockItem(sender.selected);
+        self.quysAdviceVoiceEventBlockItem(!sender.selected);
     }
 }
 
@@ -155,11 +161,16 @@
         if (self.countdownLeft >= 1)
         {
             weakself.countdownLeft--;
-            [weakself.btnClose setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
+            NSString *strCountdownLeft = kStringFormat(@"%lds",weakself.countdownLeft);
+            NSString *strDesc = kStringFormat(@"%@",@"跳过");
+            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:kStringFormat(@"%@%@",strCountdownLeft,strDesc)];
+            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, strCountdownLeft.length)];
+            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:10]} range:NSMakeRange(2, strDesc.length)];
+            [weakself.btnClose setAttributedTitle:attr forState:UIControlStateNormal];
         }else
         {
             dispatch_source_cancel(weakself.source_t );
-            [weakself.btnClose setTitle:kStringFormat(@"") forState:UIControlStateNormal];
+            [weakself.btnClose setAttributedTitle:nil forState:UIControlStateNormal];
             [weakself clickCloseBtEvent:nil];
             [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
         }
@@ -167,14 +178,14 @@
     });
     dispatch_resume(timer);
     self.source_t = timer;
-
+    
 }
 
 
 - (void)setVm:(QuysAdOpenScreenVM *)vm
 {
     _vm = vm;
-     self.countdownLeft = vm.showDuration;
+    self.countdownLeft = vm.showDuration;
     
 }
 

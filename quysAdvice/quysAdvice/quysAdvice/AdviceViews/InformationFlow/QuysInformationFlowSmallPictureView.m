@@ -71,8 +71,8 @@
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
     [btnClose setTitle:@"" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     [self setNeedsUpdateConstraints];
@@ -154,7 +154,9 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [self removeFromSuperview];
+    self.frame = CGRectZero;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

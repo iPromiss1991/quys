@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "QuysAdSplashService.h"
-
+typedef NS_ENUM(NSInteger,QuysNetworkReachabilityStatus) {
+    QuysNetworkReachabilityStatusUnknown          = -1,
+    QuysNetworkReachabilityStatusNotReachable     = 0,
+    QuysNetworkReachabilityStatusReachableViaWWAN = 1,
+    QuysNetworkReachabilityStatusReachableViaWiFi = 2,
+};
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysAdviceManager : NSObject
@@ -17,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) NSString *strUserAgent;//!<浏览器信息
 @property (nonatomic,strong) NSString *strIPAddress;//!<ip信息
+
+@property (nonatomic,assign) QuysNetworkReachabilityStatus networkReachabilityStatus;
 
 
 + (instancetype)shareManager;

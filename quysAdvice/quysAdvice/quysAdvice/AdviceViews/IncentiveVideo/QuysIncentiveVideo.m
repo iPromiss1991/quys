@@ -50,8 +50,6 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     UIView *viewContain = [[UIView alloc]initWithFrame:CGRectZero];
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
-    [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
     
@@ -59,6 +57,8 @@
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
     [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    [playerView addGestureRecognizer:tap];
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
     
@@ -72,18 +72,15 @@
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"" forState:UIControlStateNormal];
-    [btnClose setTitle:@"" forState:UIControlStateHighlighted];
     [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
     
     UIButton *btnCounntdown = [UIButton buttonWithType:UIButtonTypeCustom];
     btnCounntdown.userInteractionEnabled = NO;
-    [btnCounntdown setTitle:@"" forState:UIControlStateNormal];
-    [btnCounntdown setTitle:@"" forState:UIControlStateHighlighted];
+    [btnCounntdown setBackgroundColor:kRGB16(BackgroundColor1, 1)];
     [btnCounntdown setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnCounntdown];
     self.btnCounntdown = btnCounntdown;
@@ -108,11 +105,9 @@
     
     UIButton *btnVoice = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnVoice addTarget:self action:@selector(clickVoiceBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnVoice setTitle:@"" forState:UIControlStateNormal];
-    [btnVoice setTitle:@"" forState:UIControlStateHighlighted];
     [btnVoice setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.viewFootContain addSubview:btnVoice];
     self.btnVoice = btnVoice;
     
@@ -189,7 +184,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+    kViewRadius(self.btnCounntdown, kScale_H(10));
     
 }
 
@@ -203,7 +198,7 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    [self playStatesChanged];
+    //当播放时点击触发playStatesChanged，弹出QuysVidoePlayButtonView会拦截点击事件，所以该方法仅需要处理播放时的点击事件，即可。
     if (self.playerView.player.rate)
     {
          if (self.vm.isClickable )
@@ -216,15 +211,9 @@
                  self.quysAdviceClickEventBlockItem(cpBegainResult);
              }
          }
+        [self playStatesChanged];
     }else
     {
-        //获取触发触摸的点
-        CGPoint cpBegain = [sender locationInView:self];
-        CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
-        if (self.quysAdviceClickEventBlockItem)
-        {
-            self.quysAdviceClickEventBlockItem(cpBegainResult);
-        }
     }
 }
 
@@ -254,12 +243,12 @@
     sender.selected = !sender.selected;
     if (sender.selected)
     {
-        [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-        [self.btnVoice setImage:[UIImage imageNamed:@"mute" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+        [self.btnVoice setImage:[UIImage imageNamed:@"jingyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.btnVoice setImage:[UIImage imageNamed:@"jingyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     }else
     {
-        [self.btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-        [self.btnVoice setImage:[UIImage imageNamed:@"voice" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+        [self.btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     }
     [self.playerView setMute];
     NSLog(@"%s",__PRETTY_FUNCTION__);
@@ -288,8 +277,8 @@
         NSLog(@"%lds",weakself.countdownLeft);
     }else
     {
-        [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateNormal];
-        [weakself.btnCounntdown setTitle:kStringFormat(@"") forState:UIControlStateHighlighted];
+        [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateNormal];
+        [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateHighlighted];
         NSLog(@"%lds",weakself.countdownLeft);
         //TODO:加载尾帧，同时继续播放剩余内容（方案：1、post 通知。  2、监听页面显示）
         switch (self.vm.videoEndShowType) {

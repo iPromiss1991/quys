@@ -38,7 +38,7 @@
 - (void)createUI
 {
     kWeakSelf(self)
-     [self.layer addSublayer:self.playerLayer];
+    [self.layer addSublayer:self.playerLayer];
     QuysVidoePlayButtonView *playButtonView = [[QuysVidoePlayButtonView alloc]initWithFrame:self.bounds];
     playButtonView.center = self.center;
     playButtonView.quysAdviceClickPlayButtonBlockItem = ^(void) {
@@ -105,8 +105,47 @@
 
 #pragma mark - PrivateMethod
 
-
+//TODO：优化，playStatesChanged方法，同时支持网络监测、播放暂停等功能
 -(void)playStatesChanged
+{
+    kWeakSelf(self)
+    QuysNetworkReachabilityStatus status = [QuysAdviceManager shareManager].networkReachabilityStatus;
+    switch (status) {
+        case QuysNetworkReachabilityStatusUnknown:
+            
+//            break;
+        case QuysNetworkReachabilityStatusNotReachable:
+            
+//            break;
+        case QuysNetworkReachabilityStatusReachableViaWWAN:
+        {
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"继续播放" style:UIAlertActionStyleDefault
+                                                                     handler:^(UIAlertAction * action) {
+                                                                         //响应事件
+                                                                      }];
+               UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
+                                                                     handler:^(UIAlertAction * action) {
+                                                                         //响应事件
+                                                                      }];
+
+               [alertVC addAction:defaultAction];
+               [alertVC addAction:cancelAction];
+               [[UIViewController quys_findVisibleViewController:nil] presentViewController:alertVC animated:YES completion:nil];
+        }
+            break;
+        case QuysNetworkReachabilityStatusReachableViaWiFi:
+        {
+            [weakself playVideo];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)playVideo
 {
     NSLog(@">>>%lf",CMTimeGetSeconds(self.player.currentItem.currentTime));
     if (self.player.rate)
@@ -125,18 +164,20 @@
         {
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%f",0.0) forKey:kVideoBeginTime];
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoIsFirstFrame];
-            if (self.isReplay)
-            {
-                 [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"3") forKey:kVideoType];
-            }else
-            {
-                [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoType];
-            }
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoType];
         }else
         {
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)) forKey:kVideoBeginTime];
             [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"0") forKey:kVideoIsFirstFrame];
-            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"2") forKey:kVideoType];
+            if (self.isReplay)
+            {
+                [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"3") forKey:kVideoType];
+                [self rerunPlayVideo];
+                self.isReplay = NO;
+            }else
+            {
+                [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"2") forKey:kVideoType];
+            }
             if (self.quysAdvicePlayagainCallBackBlockItem)
             {
                 self.quysAdvicePlayagainCallBackBlockItem();
@@ -297,7 +338,6 @@
     NSInteger dragedSeconds = floorf(a);
     CMTime dragedCMTime = CMTimeMake(dragedSeconds, 1);
     [self.player seekToTime:dragedCMTime];
-    [self playStatesChanged];
 }
 
 - (void)setMute
@@ -330,7 +370,7 @@
     }
 }
 
- - (void)dealloc
+- (void)dealloc
 {
     [self validatePlayer];
 }

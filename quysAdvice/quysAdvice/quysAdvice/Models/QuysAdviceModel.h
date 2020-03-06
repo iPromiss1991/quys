@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 */
 
 typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
-    QuysAdviceActiveTypeHtmlSourceCode = 1,
+    QuysAdviceActiveTypeHtmlSourceCode = 1,//TODO:信息流QuysAdviceActiveType=0？合理？
    QuysAdviceActiveTypeImageUrl = 2,
     QuysAdviceActiveTypeHtmlLink = 3,
    QuysAdviceActiveTypeDownAppAppstore = 4,

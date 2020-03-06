@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
 @interface QuysIncentiveVideoService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;
-@property (nonatomic,assign,readonly) BOOL loadAdViewEnable;
 @property (nonatomic,strong) UIWindow *adviceView;
 
 
@@ -25,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param delegate 回调代理
 /// @param window  程序主窗口
 - (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate window:(UIWindow*)window;
+
 
 
 @end

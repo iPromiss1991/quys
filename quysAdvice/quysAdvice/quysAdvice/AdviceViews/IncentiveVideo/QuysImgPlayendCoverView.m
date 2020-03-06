@@ -47,8 +47,8 @@
     [btnClose setTitle:@"" forState:UIControlStateNormal];
     [btnClose setTitle:@"" forState:UIControlStateHighlighted];
     [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [btnClose setImage:[UIImage imageNamed:@"close" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [btnClose setImage:[UIImage imageNamed:@"guanbi_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.imgPlayendCover addSubview:btnClose];
     self.btnClose = btnClose;
 }
@@ -114,8 +114,8 @@
 
 - (void)setStrImageUrl:(NSString *)strImageUrl
 {
-    _strImageUrl = strImageUrl;
-    [self.imgPlayendCover sd_setImageWithURL:[NSURL URLWithString:strImageUrl] placeholderImage:nil];
+    _strImageUrl = strImageUrl;//TODOD:测试
+    [self.imgPlayendCover sd_setImageWithURL:[NSURL URLWithString:@"http://static.bla01.com/1518/cryi3qbtes2_20191127.jpg"] placeholderImage:nil];
     
 }
 @end

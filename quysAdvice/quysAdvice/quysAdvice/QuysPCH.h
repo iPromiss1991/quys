@@ -9,6 +9,7 @@
 #ifndef QuysPCH_h
 #define QuysPCH_h
 #import "GlobalMacro.h"
+#import "ColorMacro.h"
 #import <UIImageView+WebCache.h>
 #import <Masonry/Masonry.h>
 #import <YYModel.h>

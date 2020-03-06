@@ -1,15 +1,18 @@
 # Uncomment the next line to define a global platform for your project
+source 'https://git.coding.net/CocoaPods/Specs.git'
+ 
 platform :ios, '9.0'
-
+#inhibit_all_warnings! #忽略所有依赖库的所有警告
 target 'quysAdvice' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+  use_modular_headers!
  pod 'Masonry'
- pod 'YTKNetwork'
+ pod 'YTKNetwork', '~> 2.0.2' #:inhibit_warnings => true #true 忽略警告
  pod 'YYModel'
  pod 'SDWebImage'
  pod 'Reachability'
-
+ 
+ 
   target 'quysDevDemo' do
     pod 'Masonry'
 

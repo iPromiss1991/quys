@@ -13,7 +13,6 @@
 #import "QuysAdSplash.h"
 
 @interface QuysAdSplashService()<YTKRequestDelegate>
-@property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
@@ -81,22 +80,15 @@
 {
     QuysAdSplashVM *vm =  [[QuysAdSplashVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame];
     self.adviceView = [vm createAdviceView];
-    self.loadAdViewEnable = YES;
+
 }
 
 
 
 /// 展示视图
 - (UIView*)showAdView{
-    if (self.loadAdViewEnable)
-    {
-        [self.parentView addSubview:self.adviceView];
-        return self.adviceView;
-        }else
-        {
-            //视图正在创建中。。。
-            return nil;
-        }
+    [self.parentView addSubview:self.adviceView];
+    return self.adviceView;
 }
 
 
@@ -134,6 +126,13 @@
     
 }
 
+#pragma mark - Init
+-(UIView *)adviceView
+{
+    if (_adviceView == nil) {
+        _adviceView = [UIView new];
+    }return _adviceView;
+}
 
 
 

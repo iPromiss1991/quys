@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,assign) QuysAdviceVideoEndShowType videoEndShowType;
 @property (nonatomic,strong) NSString *videoEndShowValue;
-
+//TODO:删除window属性
 - (instancetype)initWithModel:(QuysIncentiveVideoDataModel*)model delegate:(id<QuysIncentiveVideoDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window;
 
 

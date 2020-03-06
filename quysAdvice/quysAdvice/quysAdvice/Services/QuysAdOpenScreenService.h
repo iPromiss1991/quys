@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
 @interface QuysAdOpenScreenService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysAdviceOpeenScreenDelegate> delegate;
-@property (nonatomic,assign,readonly) BOOL loadAdViewEnable;
 @property (nonatomic,strong) UIWindow *adviceView;
 
 

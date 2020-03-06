@@ -177,6 +177,41 @@
             }
         
             break;
+            case QuysAdviceCreativeTypeImageAndText://TODO:是否多余的case，即是否真实运行
+            {
+                kWeakSelf(self)
+                QuysInformationFlowDefaultView *adView = [[QuysInformationFlowDefaultView alloc]initWithFrame:self.cgFrame viewModel:self];
+                [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+                
+                //点击事件
+                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+                    [weakself interstitialOnClick:cp];
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:) ])
+                    {
+                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                
+                //关闭事件
+                adView.quysAdviceCloseEventBlockItem = ^{
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                    {
+                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                
+                //曝光事件
+                adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                    [weakself interstitialOnExposure];
+                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                    {
+                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                    }
+                };
+                self.adView = adView;
+                return adView;
+                
+            }break;
         default:
             return nil;
             break;

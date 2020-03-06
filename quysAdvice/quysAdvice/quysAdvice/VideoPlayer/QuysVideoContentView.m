@@ -43,19 +43,14 @@
     
     coverView.quysAdviceCloseEventBlockItem = ^{
         [weakself quys_remove];
-        if (weakself.quysAdviceCloseEventBlockItem)
-        {
-             weakself.quysAdviceCloseEventBlockItem();
-        }
+        [weakself closeEvent];
     };
     
     coverView.quysAdviceVoiceEventBlockItem = ^(BOOL voiceEnable) {
     voiceEnable? (weakself.quysAvPlayer.volume = 1):(weakself.quysAvPlayer.volume = 0);
     };
     coverView.quysAdviceStatisticalCallBackBlockItem = ^{
-        if (weakself.quysAdviceStatisticalCallBackBlockItem) {
-            weakself.quysAdviceStatisticalCallBackBlockItem();
-        }
+        [weakself statisticalEvent];
     };
 
     self.coverView = coverView;
@@ -120,6 +115,9 @@
 
 - (void)closeEvent
 {
+    self.frame = CGRectZero;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

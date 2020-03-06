@@ -9,6 +9,7 @@
 
 #import "QuysWindowViewController.h"
 #import "QuysAdOpenScreenVideoView.h"
+#import "QuysAdOpenScreenDefaultView.h"
 @interface QuysWindowViewController ()
 @property (nonatomic,strong) QuysAdOpenScreenVM *vm;
 @property (nonatomic,assign) QuysAdviceCreativeType creativeType;
@@ -33,7 +34,7 @@
     {
         case QuysAdviceCreativeTypeDefault:
         {
-            QuysAdOpenScreen *view = [[QuysAdOpenScreen alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
+            QuysAdOpenScreenDefaultView *view = [[QuysAdOpenScreenDefaultView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
             self.view = view;
             view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
             view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
@@ -52,6 +53,7 @@
         default:
             break;
     }
+
 
     
     

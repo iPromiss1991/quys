@@ -20,7 +20,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.windowLevel = UIWindowLevelAlert+1;
+        self.windowLevel = UIWindowLevelAlert -1;
         QuysIncentiveVideoWindowVC *rootVC = [[QuysIncentiveVideoWindowVC alloc] initWithVM:viewModel];
         QuysNavigationController *nav= [[QuysNavigationController alloc]initWithRootViewController:rootVC];
         nav.hideNavbar = YES;

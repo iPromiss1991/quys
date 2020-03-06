@@ -7,6 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import <AFNetworking.h>
 
 #import "QuysAdviceManager.h"
 #import "QuysAdviceConfigModel.h"
@@ -57,7 +58,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 {
     [self quys_UserAgent];
     self.strIPAddress =  [self quys_getIPAdderss];
-
+    [self monitorNetworkStatus];
 }
 
 
@@ -189,6 +190,44 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     }];
     return strTemp;
 }
+
+
+#pragma mark - 网络状态
+- (void)monitorNetworkStatus
+{
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];//sharedManager：之前误写为manager，导致不能按预期运行
+   [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        /*
+         AFNetworkReachabilityStatusUnknown          = -1,
+         AFNetworkReachabilityStatusNotReachable     = 0,
+         AFNetworkReachabilityStatusReachableViaWWAN = 1,
+         AFNetworkReachabilityStatusReachableViaWiFi = 2,
+         */
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知");
+                self.networkReachabilityStatus = QuysNetworkReachabilityStatusUnknown;
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"没有网络");
+                self.networkReachabilityStatus = QuysNetworkReachabilityStatusNotReachable;
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"3G|4G");
+                self.networkReachabilityStatus = QuysNetworkReachabilityStatusReachableViaWWAN;
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"WiFi");
+                self.networkReachabilityStatus = QuysNetworkReachabilityStatusReachableViaWiFi;
+                break;
+            default:
+                break;
+        }
+    }];
+
+    [manager startMonitoring];
+}
+
 
 #pragma mark - Init
 

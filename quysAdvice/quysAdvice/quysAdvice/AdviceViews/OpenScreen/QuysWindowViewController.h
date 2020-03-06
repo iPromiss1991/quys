@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QuysAdOpenScreenVM.h"
-#import "QuysAdOpenScreen.h"
+#import "QuysAdOpenScreenDefaultView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 ///开屏广告rootVC

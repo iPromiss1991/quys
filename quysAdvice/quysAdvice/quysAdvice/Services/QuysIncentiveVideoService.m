@@ -13,7 +13,6 @@
 #import "QuysFullScreenReplaceView.h"
 #import "QuysIncentiveVideoVM.h"
 @interface QuysIncentiveVideoService()<YTKRequestDelegate>
-@property (nonatomic,assign,readwrite) BOOL loadAdViewEnable;
 
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
@@ -81,7 +80,7 @@
 {
     QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
     self.adviceView = [vm createAdviceView];
-    self.loadAdViewEnable = YES;
+
 }
 
 
@@ -89,19 +88,7 @@
 /// 展示视图
 - (void)showAdView
 {
-    if (self.loadAdViewEnable)
-    {
         self.adviceView.hidden = NO;
-        //TODO
-        //        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        //        animation.duration = .3;
-        //        animation.fromValue = @(0.5);
-        //        animation.toValue = @(1);
-        //        [self.adviceView.layer addAnimation:animation forKey:@"animation"];
-    }else
-    {
-        //视图正在创建中。。。
-    }
 }
 
 
