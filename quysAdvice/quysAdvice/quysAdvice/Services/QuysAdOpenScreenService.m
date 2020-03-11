@@ -18,25 +18,31 @@
 @property (nonatomic,strong) NSString *bussinessKey;
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIWindow *window;
+@property (nonatomic,strong) QuysAdOpenScreenVM *vm;
 
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
+
+
+//bg
+@property (nonatomic,strong) NSDate *dateInitRequest;//!<初始化请求的date
 
 
 @end
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate window:(UIWindow*)window;
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate 
 {
     if (self = [super init])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageViewAndWindow) name:kRemoveBackgroundImageViewNotify object:nil];
+        self.dateInitRequest = [NSDate date];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageViewAndWindow) name:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
         self.cgFrame = cgFrame;
-        self.window = window;
+        self.bgShowDuration = 1;
         [self config:imgReplace];
     }return self;
 }
@@ -79,8 +85,9 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
+    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame  ];
     self.adviceView = [vm createAdviceView];
+    self.vm = vm;
 }
 
 
@@ -88,10 +95,19 @@
 /// 展示视图
 - (void)showAdView
 {
-    self.adviceView.hidden = NO;
+    NSDate *dateCurrent = [NSDate date];
+    NSTimeInterval differ = [dateCurrent timeIntervalSinceDate:self.dateInitRequest];
+    NSTimeInterval differFinal = self.bgShowDuration - differ >=0?(self.bgShowDuration - differ):0;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(differFinal* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.adviceView.hidden = NO;
+        [self removeBackgroundImageView];
+        NSLog(@"quys_date =%@",[NSDate  date]);
+    });
 }
 
 
+/// 添加遮罩底图
+/// @param imgBackground 底图
 - (void)addBackgroundImageView:(UIImage*)imgBackground
 {
     QuysFullScreenReplaceView *vBack = [[QuysFullScreenReplaceView alloc]initWithFrame:[UIScreen mainScreen].bounds  image:imgBackground];
@@ -99,27 +115,40 @@
 }
 
 
+/// 移除window & 遮罩底图
 - (void)removeBackgroundImageViewAndWindow
 {
     [self removeBackgroundImageView];
     [self removeWindow:self.adviceView];
 }
 
+
+/// 移除遮罩底图
 - (void)removeBackgroundImageView
 {
     //移除delegate.window的遮罩图
-    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
-    {
-        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
         {
-            [subObj removeFromSuperview];
+            if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
+            {
+                [UIView animateWithDuration:.5 animations:^{
+                    [(QuysFullScreenReplaceView*)subObj setFrame:CGRectZero];
+                    [subObj removeFromSuperview];
+                }];
+
+            }
         }
-    }
+    });
 }
 
 
 - (void)removeWindow:(UIWindow*)window
 {
+    for (id obj in window.subviews)
+    {
+        [obj removeFromSuperview];
+    }
    window.hidden = YES;
    window = nil;
 }
@@ -139,7 +168,6 @@
             [self.delegate quys_requestSuccess:self];
         }
         [self showAdView];
-        [self removeBackgroundImageView];
     }else
     {
         [self removeBackgroundImageViewAndWindow];
@@ -163,19 +191,30 @@
     
 }
 
+
+#pragma mark - Init
+
+
 -(UIWindow *)adviceView
 {
     if (_adviceView == nil)
     {
-        _adviceView.windowLevel = UIWindowLevelAlert+1;
+        _adviceView.windowLevel = UIWindowLevelAlert - 1;
         UIViewController *rootVC = [UIViewController new];
         _adviceView.rootViewController = rootVC;
     }return _adviceView;
 }
 
+-(NSTimeInterval)bgShowDuration
+{
+    if (_bgShowDuration <= 0)
+    {
+        _bgShowDuration = 0;
+    }return _bgShowDuration;
+}
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoveBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
 }
 @end

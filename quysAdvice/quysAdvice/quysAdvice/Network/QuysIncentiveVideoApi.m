@@ -29,11 +29,13 @@
 
     }else
     {
-        NSString *strRequestUrl = @"http://192.168.1.11/advert/test.php";
+        NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?tid=356&id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+//        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?tid=206&id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+
         return strUrl;
         
     }
@@ -43,7 +45,7 @@
 
 - (id)requestArgument
 {
-    //TODO:
+
     /*
      1、组建请求参数:done
      2、创建数据响应模型:done

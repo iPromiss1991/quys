@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 };
 
 /*广告行为类型:
- 1-html(源码)  2-图片url（web）  3-文字链*(html:TODO:不确认)  4-下载app*(下载地址)   5-android 应用市场下载  6-ios:appstore(下载地址)   8-请求下载地址，见4.8 请求下载类型处理方式
+ 1-html(源码)  2-图片url（web）  3-文字链*(html)  4-下载app*(下载地址)   5-android 应用市场下载  6-ios:appstore(下载地址)   8-请求下载地址，见4.8 请求下载类型处理方式
 */
 
 typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
 
 ///广告模型
 @interface QuysAdviceModel : NSObject
+@property (nonatomic , copy) NSString            * title;
 @property (nonatomic , strong) NSArray <NSString *>              * clkTracking;
 @property (nonatomic , strong) NSArray <NSString *>              * impTracking;
 @property (nonatomic , strong) NSArray <NSString *>              * downStart;

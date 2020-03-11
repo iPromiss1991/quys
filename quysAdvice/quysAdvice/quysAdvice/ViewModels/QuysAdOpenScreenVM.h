@@ -18,11 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) NSInteger showDuration;
 
 @property (nonatomic,strong) NSString *materialUrl;
+@property (nonatomic,strong) NSString *title;
+
+@property (nonatomic,assign) BOOL closeWindowEnable;//!<  是否可以关闭window
 
 
 
 
-- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdviceOpeenScreenDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window;
+- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdviceOpeenScreenDelegate>)delegate frame:(CGRect)cgFrame ;
 
 
 - (UIWindow *)createAdviceView;

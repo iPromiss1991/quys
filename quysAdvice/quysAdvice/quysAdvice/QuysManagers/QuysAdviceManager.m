@@ -21,6 +21,13 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 @property (nonatomic,strong) UIView *webViewTarget;
 
 
+#pragma mark - 辅助字段
+
+@property (nonatomic,assign) BOOL searchIpEnable;//!< 能否查询ip
+@property (nonatomic,assign) BOOL searchUser_AgentEnable;//!< 能否查询User_Agent
+
+
+
 @end
 
 
@@ -56,9 +63,14 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 /// 每次启动App需要做的配置事件
 - (void)configSettings
 {
+    self.searchUser_AgentEnable = YES;
+    self.searchIpEnable = YES;
+    
     [self quys_UserAgent];
-    self.strIPAddress =  [self quys_getIPAdderss];
+    [self quys_getIPAdderss];
+    
     [self monitorNetworkStatus];
+    [self addMainObserver];
 }
 
 
@@ -67,15 +79,17 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 {
     kWeakSelf(self)
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *strUserAgent = @"";
-        [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
-        if (!strUserAgent.length) {
-            weakself.strUserAgent = strUserAgent;
-            [weakself configUserAgent];
-        }else
-        {
-            [weakself configUserAgent];
-        }
+        NSString *strUserAgent =@"" ;
+        NSString *strStored = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
+           if (!kISNullString(strStored))
+           {
+               strUserAgent = strStored;
+               weakself.strUserAgent = strUserAgent;
+               [weakself configUserAgent];
+           }else
+           {
+               [weakself configUserAgent];
+           }
     });
 }
 
@@ -89,6 +103,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
         [wkWebview evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError * _Nullable error) {
             [[QuysFileManager shareManager] saveToUserdefault:kUserAgent contents:result];
             weakself.strUserAgent = result;
+            weakself.searchUser_AgentEnable = NO;
         }];
         self.webViewTarget = wkWebview;
     }else
@@ -97,6 +112,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
         weakself.strUserAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
         weakself.webViewTarget = webView;
         [[QuysFileManager shareManager] saveToUserdefault:kUserAgent contents:weakself.strUserAgent];
+        weakself.searchUser_AgentEnable = NO;
     }
 }
 
@@ -120,27 +136,43 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 
 
 /// 网络ip地址
-- (NSString*)quys_getIPAdderss
+- (void)quys_getIPAdderss
 {
-    __block  NSString *strIPAddress = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];
-    if (strIPAddress)
+    kWeakSelf(self)
+    __block  NSString *strIPAddress  ;
+    NSString *strStored = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];
+    if (!kISNullString(strStored))
+    {
+        strIPAddress = strStored;
+    }
+    if (!kISNullString(strStored))
     {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
              strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
              if (strIPAddress.length)
              {
                  [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
+                 weakself.strIPAddress = strIPAddress;
+                 weakself.searchIpEnable = NO;
+             }else
+             {
+                 weakself.searchIpEnable = YES;
              };
         });
-        return  strIPAddress;
     }else
     {
-        strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
-        if (strIPAddress.length)
-        {
-            [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
-        };
-        return strIPAddress;
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
+            if (strIPAddress.length)
+            {
+                [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
+                weakself.strIPAddress = strIPAddress;
+                weakself.searchIpEnable = NO;
+            }else
+            {
+                weakself.searchIpEnable = YES;
+            };
+        });
     }
 }
 
@@ -163,16 +195,27 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 }*/
 -(NSDictionary *)quys_deviceWANIPAdress
 {
-   __block NSDictionary *ipDic ;
+   __block NSMutableDictionary *ipDic = [NSMutableDictionary new] ;
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
          NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
            NSData *data = [NSData dataWithContentsOfURL:ipURL];
            if (data)
            {
-                ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil][@"data"];
+                id  dicTemp = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil][@"data"];
+               if ([dicTemp isKindOfClass:[NSString class]])
+               {
+                    
+               }else
+               {
+                   ipDic = [dicTemp mutableCopy];
+               }
+               if (kISNullString([ipDic valueForKey:@"ip"]))
+               {
+                   [ipDic setValue:@"" forKey:@"ip"];
+               }
            }else
            {
-                ipDic = @{@"ip":@""};
+                ipDic = [[NSMutableDictionary alloc]initWithDictionary:@{@"ip":@""}];
            }
     });
     return ipDic;
@@ -229,6 +272,62 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 }
 
 
+#pragma mark - Runloop闲时获取数据
+- (void)addMainObserver
+{
+      CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+
+      switch (activity) {
+
+            case kCFRunLoopEntry:
+//            NSLog(@"###cmm###进入kCFRunLoopEntry");
+            break;
+
+            case kCFRunLoopBeforeTimers:
+//            NSLog(@"###cmm###即将处理Timer事件");
+            break;
+
+            case kCFRunLoopBeforeSources:
+//            NSLog(@"###cmm###即将处理Source事件");
+            break;
+
+            case kCFRunLoopBeforeWaiting:
+          {
+//              NSLog(@"###cmm###即将休眠");
+
+              if (kISNullString(self.strIPAddress) && self.searchIpEnable)
+              {
+                  NSLog(@"######查询ip");
+                  [self quys_getIPAdderss];
+              }
+              if (kISNullString(self.strUserAgent) && self.searchUser_AgentEnable)
+              {
+                  NSLog(@"######查询user_agent");
+                  [self quys_UserAgent];
+              }
+          }
+            break;
+
+            case kCFRunLoopAfterWaiting:
+//            NSLog(@"###cmm###被唤醒");
+            break;
+
+            case kCFRunLoopExit:
+//            NSLog(@"###cmm###退出RunLoop");
+            break;
+
+            default:
+            break;
+           }
+      });
+
+      CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopDefaultMode);
+
+ 
+}
+
+
+
 #pragma mark - Init
 
 
@@ -250,9 +349,10 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     return _dicMReplace;
 }
 
+//TODO:runloop闲时获取相关数据
 - (NSString *)strUserAgent
 {
-    if (_strUserAgent == nil)
+    if (_strUserAgent == nil || [_strUserAgent isEqualToString:@""])
     {
         NSString *strTemp = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
         _strUserAgent = strTemp?strTemp:@"" ;//获取本地存储的
@@ -263,7 +363,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 -(NSString *)strIPAddress
 
 {
-    if (_strIPAddress == nil)
+    if (_strIPAddress == nil || [_strIPAddress isEqualToString:@""])
     {
         NSString *strTemp = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];
         _strIPAddress = strTemp?strTemp:@"" ;//获取本地存储的

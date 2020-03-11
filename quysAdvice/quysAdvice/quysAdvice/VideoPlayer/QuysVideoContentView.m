@@ -36,7 +36,7 @@
     kWeakSelf(self)
     [self.layer addSublayer:self.quysAvPalyerLayer];
 
-    QuysVideoCoverView *coverView = [[QuysVideoCoverView alloc] initWithFrame:CGRectZero viewModel:[QuysAdOpenScreenVM new]];
+    QuysVideoCoverView *coverView = [[QuysVideoCoverView alloc] initWithFrame:CGRectZero];
     coverView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
         [weakself clickEvent:cp];
     };
@@ -56,7 +56,6 @@
     self.coverView = coverView;
     [self addSubview:coverView];
     
-    self.backgroundColor = [UIColor yellowColor];
     
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
@@ -133,7 +132,11 @@
 }
 
 
-
+- (void)setShowDuration:(NSInteger)showDuration
+{
+    _showDuration = showDuration;
+    self.coverView.showDuration = showDuration;
+}
 
 
 

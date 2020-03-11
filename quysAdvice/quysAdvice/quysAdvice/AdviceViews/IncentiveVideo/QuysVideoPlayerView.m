@@ -17,6 +17,7 @@
 @property (nonatomic, strong) id playbackObserver;
 @property (nonatomic) BOOL buffered;//是否缓冲完毕
 @property (nonatomic) BOOL isReplay;//是否重复播放
+@property (nonatomic,assign) BOOL isPlayToEnd ;//!<是否播放至最后
 
 @property (nonatomic,strong) QuysVidoePlayButtonView *playButtonView;
 
@@ -54,54 +55,6 @@
     self.playButtonView.frame = self.bounds;;
 }
 
-#pragma mark - Init
--(AVPlayer *)player{
-    
-    if (!_player) {
-        _player = [[AVPlayer alloc] init];
-        __weak typeof(self) weakSelf = self;
-        // 每秒回调一次
-        self.playbackObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
-            [weakSelf quys_videoPlay];
-            NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);//总时长
-            NSTimeInterval currentTime = time.value / time.timescale;//当前时间进度
-            weakSelf.playProgress= currentTime / totalTime;
-        }];
-    }
-    return _player;
-    
-}
-
--(AVPlayerLayer *)playerLayer{
-    
-    if (!_playerLayer) {
-        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        _playerLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    }
-    return _playerLayer;
-    
-}
-
-
-//设置播放地址
--(void)setUrlVideo:(NSString *)urlVideo{
-    
-    [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-    [self playStatesChanged];//开始播放视频
-    if (self.quysAdvicePlayStartCallBackBlockItem)
-    {
-        self.quysAdvicePlayStartCallBackBlockItem();
-    }
-    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlVideo]];
-    [self vpc_addObserverToPlayerItem:item];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.player replaceCurrentItemWithPlayerItem:item];
-        [self vpc_playerItemAddNotification];
-        [self vpc_playerRemoveNotification];
-    });
-    
-}
-
 
 #pragma mark - PrivateMethod
 
@@ -117,34 +70,46 @@
         case QuysNetworkReachabilityStatusNotReachable:
             
 //            break;
-        case QuysNetworkReachabilityStatusReachableViaWWAN:
+        case QuysNetworkReachabilityStatusReachableViaWiFi://QuysNetworkReachabilityStatusReachableViaWWAN
         {
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"继续播放" style:UIAlertActionStyleDefault
-                                                                     handler:^(UIAlertAction * action) {
-                                                                         //响应事件
-                                                                      }];
-               UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                                     handler:^(UIAlertAction * action) {
-                                                                         //响应事件
-                                                                      }];
+            if (![QuysAdviceManager shareManager].playVideoWithoutWifi)
+            {
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"使用流量播放" message:@"当前为非wifi连接" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"继续播放" style:UIAlertActionStyleDefault
+                                                                         handler:^(UIAlertAction * action) {
+                                                                             //响应事件
+                    [QuysAdviceManager shareManager].playVideoWithoutWifi = YES;;
+                                                        [weakself playVideo];
+                                                                           }];
+                   UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault
+                                                                         handler:^(UIAlertAction * action) {
+                                                                             //响应事件
+                       [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
+                       [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveIncentiveBackgroundImageViewNotify object:nil];
+                                                                           }];
 
-               [alertVC addAction:defaultAction];
-               [alertVC addAction:cancelAction];
-               [[UIViewController quys_findVisibleViewController:nil] presentViewController:alertVC animated:YES completion:nil];
+                   [alertVC addAction:defaultAction];
+                   [alertVC addAction:cancelAction];
+                   [[UIViewController quys_findVisibleViewController:NSClassFromString(@"QuysIncentiveVideoWindow")] presentViewController:alertVC animated:YES completion:nil];
+            }else
+            {
+                [self playVideo];
+            }
         }
             break;
-        case QuysNetworkReachabilityStatusReachableViaWiFi:
-        {
-            [weakself playVideo];
-        }
-            break;
+//        case QuysNetworkReachabilityStatusReachableViaWiFi:
+//        {
+//            [self playVideo];
+//        }
+//            break;
             
         default:
             break;
     }
 }
 
+
+/// 播放视频
 - (void)playVideo
 {
     NSLog(@">>>%lf",CMTimeGetSeconds(self.player.currentItem.currentTime));
@@ -185,15 +150,16 @@
         }
         [self.player play];
     }
-    
 }
 
 
 
 
-#pragma mark - lTime
+#pragma mark - Time
 
-- (void)quys_videoPlay
+
+/// 播放进度计算 & 回调
+- (void)quys_progressCallback
 {
     [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"0") forKey:kVideoStatus];
     BOOL isNormalStatus = NO;
@@ -227,7 +193,8 @@
     NSInteger currentSec = (NSInteger)currentTime % 60;
     NSString *currentTimeStr = [NSString stringWithFormat:@"%02ld:%02ld",currentMin,currentSec];
     self.currentTime = currentTimeStr;
-    
+//    NSLog(@"=============%@       %@",totalTimeStr,currentTimeStr);
+
     if ([self.delegate respondsToSelector:@selector(quys_videoPlay:isCorrectStatus:)])
     {
         [self.delegate quys_videoPlay:@{kAVPlayerItemTotalTime:[NSString stringWithFormat:@"%02ld:%02ld",totalMin,totalSec],kAVPlayerItemCurrentTime:[NSString stringWithFormat:@"%02ld:%02ld",currentMin,currentSec]} isCorrectStatus:isNormalStatus];
@@ -276,7 +243,8 @@
         AVPlayerStatus status= [[change objectForKey:@"new"] intValue];
         if (status == AVPlayerStatusReadyToPlay)
         {
-            [self quys_videoPlay];
+               [self playStatesChanged];
+
             if (self.quysAdviceLoadSucessCallBackBlockItem)
             {
                 self.quysAdviceLoadSucessCallBackBlockItem();
@@ -302,8 +270,6 @@
         NSTimeInterval totalBuffer = startSeconds + durationSeconds;//缓冲总长度
         float totalTime = CMTimeGetSeconds(self.player.currentItem.duration);//视频总长度
         float progress = totalBuffer/totalTime;//缓冲进度
-        NSLog(@"progress = %lf",progress);
-        
         //如果缓冲完了，拖动进度条不需要重新显示缓冲条
         if (!self.buffered)
         {
@@ -313,7 +279,6 @@
             }
             self.playProgress = progress;
         }
-        NSLog(@"buffered = %@",self.buffered ? @"yes" : @"no");
     }
 }
 
@@ -334,7 +299,7 @@
         return;
         
     }
-    CGFloat a=0;
+    CGFloat a = 0;
     NSInteger dragedSeconds = floorf(a);
     CMTime dragedCMTime = CMTimeMake(dragedSeconds, 1);
     [self.player seekToTime:dragedCMTime];
@@ -369,6 +334,66 @@
         self.quysAdviceStatisticalCallBackBlockItem();
     }
 }
+
+
+# pragma mark - Init
+-(AVPlayer *)player{
+    
+    if (!_player) {
+        _player = [[AVPlayer alloc] init];
+    }
+    return _player;
+    
+}
+
+-(AVPlayerLayer *)playerLayer{
+    
+    if (!_playerLayer) {
+        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        _playerLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    }
+    return _playerLayer;
+    
+}
+
+
+//设置播放地址
+-(void)setUrlVideo:(NSString *)urlVideo{
+    
+    [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    __weak typeof(self) weakSelf = self;
+          // 每秒回调一次
+    self.isPlayToEnd = NO;
+    self.playbackObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
+              NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);//总时长
+              NSTimeInterval currentTime = time.value / time.timescale;//当前时间进度
+              weakSelf.playProgress= currentTime / totalTime;
+//        NSLog(@"%lf   %lf  %lf",currentTime,totalTime,floor(totalTime));
+
+        if (currentTime >0 & totalTime > 0 & currentTime <= floor(totalTime ) & !weakSelf.isPlayToEnd)
+        {
+             [weakSelf quys_progressCallback];
+            (currentTime == floor(totalTime))?(weakSelf.isPlayToEnd = YES):(weakSelf.isPlayToEnd = NO);
+        }else
+        {
+            weakSelf.isPlayToEnd = NO;
+        }
+           }];
+    if (self.quysAdvicePlayStartCallBackBlockItem)
+    {
+        self.quysAdvicePlayStartCallBackBlockItem();
+    }
+    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlVideo]];
+    [self vpc_addObserverToPlayerItem:item];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.player replaceCurrentItemWithPlayerItem:item];
+        [self vpc_playerItemAddNotification];
+        [self vpc_playerRemoveNotification];
+    });
+    
+}
+
+
 
 - (void)dealloc
 {

@@ -12,7 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
 @interface QuysAdBannerService : QuysAdBaseService
-@property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
+@property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;//!<  <#字段#>
+@property (nonatomic,strong) UIView *adviceView;//!<  广告视图
 
 
 
@@ -22,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param frame 弹窗frame
 /// @param delegate 回调代理
 /// @param parentView 弹窗父视图（展示弹窗的容器视图）
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)frame eventDelegate:(id <QuysAdSplashDelegate>)delegate parentView:(UIView*)parentView;
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)frame eventDelegate:(id <QuysAdSplashDelegate>)delegate parentView:(UIView*)parentView;
 
 
 /// 开始加载视图

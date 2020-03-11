@@ -21,7 +21,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.windowLevel = UIWindowLevelAlert+1;
+        self.windowLevel = UIWindowLevelAlert - 1;
         QuysWindowViewController *rootVC = [[QuysWindowViewController alloc] initWithVM:viewModel type:creativeType];
         rootVC.quysAdviceClickEventBlockItem =  self.quysAdviceClickEventBlockItem;
         rootVC.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;

@@ -356,6 +356,14 @@
 
 #pragma mark - Init
 
+-(NSString *)strTitle
+{
+    if (_strTitle == nil)
+    {
+        _strTitle = self.adModel.title;
+    }return _strTitle;
+}
+
 - (NSString *)strImgUrl
 {
     if (_strImgUrl == nil)
@@ -369,11 +377,28 @@
 {
     if (_arrImgUrl == nil)
     {
-        if (self.adModel.imgUrlList.count >= 3)
+        _arrImgUrl = [NSArray array];
+        if (self.adModel.imgUrlList.count == 1)
         {
-             _arrImgUrl = [self.adModel.imgUrlList subarrayWithRange:NSMakeRange(0, 3) ];
+            for (int i=0; i<3; i++)
+            {
+              _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[0]];
+            }
+        }else if (self.adModel.imgUrlList.count == 2)
+        {
+            for (int i=0; i<2; i++)
+            {
+                _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[i]];
+            }
+            _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[arc4random()%1]];
+        }else
+        {
+            for (int i=0; i<3; i++)
+            {
+              _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[i]];
+            }
         }
-    }return _arrImgUrl;
+    }    return _arrImgUrl;
 }
 
 

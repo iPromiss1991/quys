@@ -32,11 +32,14 @@
     QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
     [self.window makeKeyAndVisible];
-    //TODO:
+
+    //TODO
     [[QuysAdviceManager shareManager] configSettings] ;
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"ziyanapp_kp" key:@"D850E31B659D57D2B82D9457C0FC5A15" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-375w-667h"] eventDelegate:self window:self.window];
+    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"qystest_kp" key:@"D850E31B659D57D2B82D9457C0FC5A15" cgRect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h"] eventDelegate:self ];
+//    service.bgShowDuration = 0.003;
     self.service = service;
-    
+
+ 
  
     return YES;
 }
@@ -49,20 +52,22 @@
 }
 
 - (void)quys_requestSuccess:(QuysAdBaseService*)service{
-    [self.service performSelector:@selector(showAdView)];
+    NSLog(@"quys_date1 =%@",[NSDate  date]);
+ 
 }
 - (void)quys_requestFial:(QuysAdBaseService*)service error:(NSError*)error{
     
 }
 
 - (void)quys_interstitialOnExposure:(QuysAdBaseService*)service{
-    
+
 }
 - (void)quys_interstitialOnClick:(CGPoint)cpClick service:(QuysAdBaseService*)service{
     
 }
 - (void)quys_interstitialOnAdClose:(QuysAdBaseService*)service{
-    
+    self.service = nil;
+
 }
 
 /// 视频播放开始

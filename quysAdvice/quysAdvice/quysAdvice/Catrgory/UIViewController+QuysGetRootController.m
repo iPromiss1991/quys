@@ -18,7 +18,7 @@
 {
     UIViewController *frontUIViewController = nil;
     UIWindow *defaultWindow = [[UIApplication sharedApplication] keyWindow];
-    NSArray *windows = [[UIApplication sharedApplication] windows];
+    NSArray *windows = [[[[UIApplication sharedApplication] windows] reverseObjectEnumerator] allObjects];
     for(UIWindow *tmpWin in windows)
     {
         if ([tmpWin isKindOfClass:[windowClass class]] )

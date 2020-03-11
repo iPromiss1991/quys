@@ -48,6 +48,7 @@
     
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 3;
+    [lblContent setTextColor:kRGB16(TextThemeColor1, 1)];
     lblContent.text = @"广告页的展示需要做到根据相关配置信息动态更新展示内容。因此广告展示数据可以通过服务端接口动态获取，然后根据对应规则解析控制展示效果。";
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
@@ -70,16 +71,17 @@
     self.imgViewThree = imgViewThree;
     
     UILabel *lblTag = [[UILabel alloc] init];
-    lblTag.text = @"广告";
+    lblTag.text = @"广告1";
+    [lblTag setTextColor:kRGB16(TextThemeColor2, 1)];
     [lblTag  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     self.lblTag = lblTag;
     [self.viewContain addSubview:lblTag];
     
     
     UILabel *lblType = [[UILabel alloc] init];
-    lblType.text = @"新闻";
+    lblType.text = @"新闻2";
+    [lblType setTextColor:kRGB16(TextThemeColor2, 1)];
     lblType.textAlignment = NSTextAlignmentLeft;
-    [lblType  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     self.lblType = lblType;
     [self.viewContain addSubview:lblType];
     
@@ -129,7 +131,6 @@
         make.height.mas_equalTo(self.viewContain).multipliedBy(0.5);
     }];
     
-    //TODO:关闭广告时，布局混乱
     [self.lblTag mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.btnClose);
         make.left.mas_equalTo(self.lblContent);
@@ -144,8 +145,8 @@
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.imgViewThree.mas_bottom).offset(kScale_H(2));
-        make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2)).priorityMedium();
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2)).priorityHigh();
+        make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2));
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2));
         make.height.width.mas_lessThanOrEqualTo(kScale_W(20));
         make.bottom.mas_equalTo(self.viewContain).offset(kScale_H(-2));
     }];
@@ -225,6 +226,9 @@
         [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
         [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[2]]];
     }
+    self.lblContent.text = self.vm.strTitle;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
 }
 
 @end

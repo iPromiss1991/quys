@@ -29,13 +29,8 @@
 
 - (void)createUI
 {
-    
-
-    
-    
     UIImageView *imgPlayendCover = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     imgPlayendCover.userInteractionEnabled = YES;
-    imgPlayendCover.hidden = YES;
     [self addSubview:imgPlayendCover];
     self.imgPlayendCover = imgPlayendCover;
     
@@ -44,13 +39,14 @@
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
-    [btnClose setTitle:@"" forState:UIControlStateNormal];
-    [btnClose setTitle:@"" forState:UIControlStateHighlighted];
+
     [btnClose setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [btnClose setImage:[UIImage imageNamed:@"guanbi" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [btnClose setImage:[UIImage imageNamed:@"guanbi_press" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     [self.imgPlayendCover addSubview:btnClose];
     self.btnClose = btnClose;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
 }
 
 - (void)updateConstraints
@@ -62,9 +58,8 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.imgPlayendCover);
-        make.right.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_W(-5));
-        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(40)).priorityHigh();
+        make.right.mas_equalTo(self.imgPlayendCover).mas_offset(kScale_W(-5)).priorityHigh();
+        make.width.height.mas_equalTo(kScale_W(30));
     }];
     
     [super updateConstraints];
@@ -114,8 +109,9 @@
 
 - (void)setStrImageUrl:(NSString *)strImageUrl
 {
-    _strImageUrl = strImageUrl;//TODOD:测试
-    [self.imgPlayendCover sd_setImageWithURL:[NSURL URLWithString:@"http://static.bla01.com/1518/cryi3qbtes2_20191127.jpg"] placeholderImage:nil];
-    
+    _strImageUrl = strImageUrl;
+    [self.imgPlayendCover sd_setImageWithURL:[NSURL URLWithString:strImageUrl] placeholderImage:nil];
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
 }
 @end

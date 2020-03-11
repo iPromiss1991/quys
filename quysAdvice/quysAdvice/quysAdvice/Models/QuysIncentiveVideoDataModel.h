@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * pkgName;
 @property (nonatomic , assign) NSInteger              clickPosition;
 @property (nonatomic , copy) NSString              * videoUrl;
-@property (nonatomic , assign) BOOL              isClickable;//!< *视频播放中是否可以点击上报 (true:可以，false:不可以)，false情况下播放中不允许点击
+@property (nonatomic , assign) BOOL              isClickable;//!< *视频播放中是否可以点击上报 (true:可以，false:不可以)，false情况下播放中不允许点击上报
 @property (nonatomic , copy) NSString              * image;
 @property (nonatomic , copy) NSString              * videoDuration;
 @property (nonatomic , copy) NSString              * videoWidth;

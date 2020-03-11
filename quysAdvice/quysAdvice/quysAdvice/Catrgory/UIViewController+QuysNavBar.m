@@ -183,6 +183,8 @@
 
 - (void)qus_navigationItemHandleBack:(UIButton *)button
 {
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
+
     if ([self.navigationController respondsToSelector:@selector(popViewControllerAnimated:)])
     {
         [self.navigationController popViewControllerAnimated:YES];

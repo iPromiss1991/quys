@@ -16,6 +16,7 @@ typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 
 @interface QuysVideoContentView : UIView
 
+@property (nonatomic,assign) NSInteger showDuration;//!< 播放倒计时
 @property (nonatomic,strong) NSURL *quysPlayUrl;
 
 @property (nonatomic,copy) QuysAdviceVoiceEventBlock quysAdviceVoiceEventBlockItem;

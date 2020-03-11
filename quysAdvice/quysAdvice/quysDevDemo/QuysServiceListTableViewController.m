@@ -52,8 +52,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *strService = self.arrServiceList[indexPath.row    ];
-    //TODO
-    QuysDemoViewController *vc = [[QuysDemoViewController alloc]init];
+     QuysDemoViewController *vc = [[QuysDemoViewController alloc]init];
 
     vc.title = strService;
     if (self.navigationController)

@@ -32,15 +32,6 @@
     
     switch (self.creativeType)
     {
-        case QuysAdviceCreativeTypeDefault:
-        {
-            QuysAdOpenScreenDefaultView *view = [[QuysAdOpenScreenDefaultView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
-            self.view = view;
-            view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
-            view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
-            view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
-        }
-            break;
         case QuysAdviceCreativeTypeVideo:
         {
             QuysAdOpenScreenVideoView *view = [[QuysAdOpenScreenVideoView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
@@ -51,6 +42,13 @@
         }
             break;
         default:
+        {
+            QuysAdOpenScreenDefaultView *view = [[QuysAdOpenScreenDefaultView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
+            self.view = view;
+            view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
+            view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
+            view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+        }
             break;
     }
 

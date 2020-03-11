@@ -52,9 +52,11 @@
     view.quysAdviceLoadFailCallBackBlockItem = self.quysAdviceLoadFailCallBackBlockItem ;
     [view updateBlockItemsAndPalyStart];//给block重新赋值,因为创建QuysIncentiveVideo的初始化方法内使用的block尚未有值。
     
-    //TODO:视频尾帧view在此回调加载
-    view.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType) {
-        switch (endType) {
+    //:视频尾帧view在此回调加载
+    view.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType)
+    {
+        switch (endType)
+        {
             case QuysAdviceVideoEndShowTypeHtmlCode:
             {
                 QuysWebViewController *vc = [[QuysWebViewController alloc] initWithHtml:weakself.vm.videoEndShowValue];

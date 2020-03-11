@@ -23,8 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //TODO：广告的类型，以及输入不同参数（举例：信息流就有三种），是否需要把全部情况都list
-    // Do any additional setup after loading the view.
+     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor orangeColor];
      UIView *viewContain = [[UIView alloc]init];
     viewContain.backgroundColor = [UIColor whiteColor];
@@ -39,23 +38,23 @@
 //    //
 //    if ([strService isEqualToString:@"banner"])
 //    {
-//        self.service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cGrect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
+//        self.service = [[QuysAdBannerService alloc ]initWithID:@"yisoukuaidu_kp" key:@"64153C0313FCC0295167FB7A53976B42" cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
 //    }
 //
 //    if ([strService isEqualToString:@"信息流"])
 //    {
-//        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"quystest-xx" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200) eventDelegate:self parentView:viewContain];
+//        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"quystest-xx" cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200) eventDelegate:self parentView:viewContain];
 //    }
 //
 //    if ([strService isEqualToString:@"插屏"])
 //    {
-//        self.service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp" key:@"quystest-cp" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
+//        self.service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp" key:@"quystest-cp" cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
 //    }
 //
 //    if ([strService isEqualToString:@"激励视频"])
 //    {
 //        [viewContain removeFromSuperview];
-//        self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jmtest" key:@"jmtest" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
+//        self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jmtest" key:@"jmtest" cgRect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
 //    }
 //
 //    if ([self.service isKindOfClass:[QuysIncentiveVideoService class]])
@@ -70,17 +69,17 @@
     //
     if ([strService isEqualToString:@"banner"])
     {
-        self.service = [[QuysAdBannerService alloc ]initWithID:@"ziyanapp_banner" key:@"DF6CB421D36AE5B518700B40A77105A7" cGrect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
+        self.service = [[QuysAdBannerService alloc ]initWithID:@"ziyanapp_banner" key:@"DF6CB421D36AE5B518700B40A77105A7" cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
     }
     
     if ([strService isEqualToString:@"信息流"])
     {
-        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"3A6511273E535FA02C15F37D17D22A95" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200) eventDelegate:self parentView:viewContain];
+        self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx" key:@"3A6511273E535FA02C15F37D17D22A95" cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200) eventDelegate:self parentView:viewContain];
     }
     
     if ([strService isEqualToString:@"插屏"])
     {
-        self.service = [[QuysAdSplashService alloc ]initWithID:@"ziyanapp_cp" key:@"8EB8AC0B397CA55C2D78DE88DF8587C2" cGrect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
+        self.service = [[QuysAdSplashService alloc ]initWithID:@"ziyanapp_cp" key:@"8EB8AC0B397CA55C2D78DE88DF8587C2" cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200) eventDelegate:self parentView:viewContain];
     }
     
     if ([strService isEqualToString:@"激励视频"])
@@ -209,10 +208,10 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-//    [super touchesBegan:touches withEvent:event];
-//    if ([self.title isEqualToString:@"激励视频"]) {
-//            self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cGrect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self window:[UIApplication sharedApplication].delegate.window];
-//    }
+    [super touchesBegan:touches withEvent:event];
+    if ([self.title isEqualToString:@"激励视频"]) {
+            self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp" key:@"1262DF2885ACB4EEC8FF0486502E7A6D" cgRect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h@2x"] eventDelegate:self  ];
+    }
 
 }
 

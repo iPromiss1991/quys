@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///视频播放按钮
 @interface QuysVidoePlayButtonView : UIView
 @property (nonatomic,strong) UIButton *btnPlay;
+
 @property (nonatomic,copy) QuysAdviceClickPlayButtonBlock quysAdviceClickPlayButtonBlockItem;
 
 

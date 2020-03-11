@@ -747,7 +747,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 屏幕像素密度（该属性是按照android理解的，如：3.0）               相关资料：https://www.cnblogs.com/weekbo/p/9013388.html
 - (NSString*)quys_screenPixelDensity
 {
-    //TODO
     float screenInch = [[self quys_iPhoneDiagonalByPlatform:[self quys_platformString]] floatValue];
     double dbScreenResolution = sqrtl(powf(kScreenWidth*[UIScreen mainScreen].nativeScale, 2) + powf(kScreenHeight*[UIScreen mainScreen].scale, 2))/screenInch/160.0;
     return  [NSString stringWithFormat:@"%lf",dbScreenResolution];

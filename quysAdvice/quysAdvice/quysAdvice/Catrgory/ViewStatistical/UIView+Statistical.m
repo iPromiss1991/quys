@@ -231,6 +231,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
             showInWidow = YES;
         }
         
+
         // 与 shieldView 关系判断
         BOOL coverByShieldV = NO;
         if (self.hlj_trackModel.shieldView) {

@@ -184,6 +184,10 @@
 {
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+    self.lblContent.text = self.vm.strTitle;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+
 }
 
 @end

@@ -29,6 +29,8 @@
     UIImageView *imgReplace = [[UIImageView alloc] initWithImage:img];
     [self addSubview:imgReplace];
     self.imgReplace = imgReplace;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
     
 }
 

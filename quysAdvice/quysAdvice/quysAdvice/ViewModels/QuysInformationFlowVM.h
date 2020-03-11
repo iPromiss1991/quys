@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///插屏广告viewModel
 @interface QuysInformationFlowVM : NSObject
 //输出字段
+@property (nonatomic,strong) NSString *strTitle;
 @property (nonatomic,strong) NSString *strImgUrl;//!> 单图展示
 @property (nonatomic,strong) NSArray *arrImgUrl;//!> 多图展示
 

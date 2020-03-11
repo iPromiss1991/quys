@@ -15,7 +15,6 @@
 @property (nonatomic,strong) UIButton *btnCounntdown;//!< 倒计时
 @property (nonatomic,strong) UIButton *btnClose;
 
-//TODO:videoPlayerView
 @property (nonatomic,strong) QuysVideoPlayerView *playerView;
 @property (nonatomic,strong) QuysImgPlayendCoverView *imgPlayendCover;
 
@@ -31,16 +30,15 @@
 
 @end
 
-
-//TODO:文案展示？（不清楚），倒计时（循环引用）
 @implementation QuysIncentiveVideo
 
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysIncentiveVideoVM *)viewModel
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
         [self createUI];
+        self.viewContain.hlj_viewVisible = YES;
         self.vm = viewModel;
     }
     return self;
@@ -56,19 +54,11 @@
     
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
-    [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+    [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [playerView addGestureRecognizer:tap];
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
-    
-    //
-    QuysImgPlayendCoverView *imgPlayendCover = [[QuysImgPlayendCoverView alloc] init];
-    imgPlayendCover.userInteractionEnabled = YES;
-    imgPlayendCover.hidden = YES;
-    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
-    [self.playerView addSubview:imgPlayendCover];
-    self.imgPlayendCover = imgPlayendCover;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -80,13 +70,15 @@
     
     UIButton *btnCounntdown = [UIButton buttonWithType:UIButtonTypeCustom];
     btnCounntdown.userInteractionEnabled = NO;
-    [btnCounntdown setBackgroundColor:kRGB16(BackgroundColor1, 1)];
+    btnCounntdown.hidden = YES;
+    [btnCounntdown setBackgroundColor:kRGB16(BackgroundColor1, .7)];
     [btnCounntdown setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.viewContain addSubview:btnCounntdown];
     self.btnCounntdown = btnCounntdown;
     
     //
     UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
+    viewFootContain.backgroundColor = kRGB16(BackgroundColor1, .7);
      [self.viewContain addSubview:viewFootContain];
     self.viewFootContain = viewFootContain;
     
@@ -111,7 +103,13 @@
     [self.viewFootContain addSubview:btnVoice];
     self.btnVoice = btnVoice;
     
-    
+    QuysImgPlayendCoverView *imgPlayendCover = [[QuysImgPlayendCoverView alloc] init];
+    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];
+    imgPlayendCover.userInteractionEnabled = YES;
+    imgPlayendCover.hidden = YES;
+    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];
+    [self.viewContain addSubview:imgPlayendCover];
+    self.imgPlayendCover = imgPlayendCover;
     
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
@@ -126,16 +124,14 @@
     [self.btnCounntdown mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.btnClose);
         make.left.mas_equalTo(self.viewContain).offset(kScale_W(20));
-        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_W(22)).priorityHigh();
+        make.width.height.mas_equalTo(kScale_W(40));
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.btnCounntdown.mas_right);
         make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-5));
-        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(40)).priorityHigh();
+        make.width.height.mas_equalTo(kScale_W(30));
     }];
     
     [self.playerView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -144,10 +140,9 @@
     }];
     
     [self.imgPlayendCover mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.playerView);
+        make.edges.mas_equalTo(self.viewContain);
     }];
     
-    //
     [self.viewFootContain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.playerView.mas_bottom).priorityHigh();
         make.left.right.bottom.mas_equalTo(self.viewContain);
@@ -167,14 +162,11 @@
         make.bottom.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(-10));
     }];
     
-    //TODO：音量按钮布局待确认！
     [self.btnVoice mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.imgLogo).priorityHigh();
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
         make.right.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(-5)).priorityHigh();
-        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(40)).priorityHigh();
-        
+        make.width.height.mas_equalTo(kScale_W(30));
     }];
     
     
@@ -184,7 +176,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    kViewRadius(self.btnCounntdown, kScale_H(10));
+    kViewRadius(self.btnCounntdown, kScale_H(20));
     
 }
 
@@ -214,6 +206,7 @@
         [self playStatesChanged];
     }else
     {
+        
     }
 }
 
@@ -231,9 +224,8 @@
 
 - (void)closeAndRemovePlayer
 {
-    [self playStatesChanged];
     [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveIncentiveBackgroundImageViewNotify object:nil];
 }
 
 /// 静音设置
@@ -271,45 +263,51 @@
     kWeakSelf(self)
     if (self.countdownLeft >= 1)
     {
-        weakself.countdownLeft--;
+        weakself.btnCounntdown.hidden = NO;
         [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateNormal];
         [weakself.btnCounntdown setTitle:kStringFormat(@"%lds",weakself.countdownLeft) forState:UIControlStateHighlighted];
-        NSLog(@"%lds",weakself.countdownLeft);
     }else
     {
+        weakself.btnCounntdown.hidden = YES;
         [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateNormal];
         [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateHighlighted];
-        NSLog(@"%lds",weakself.countdownLeft);
-        //TODO:加载尾帧，同时继续播放剩余内容（方案：1、post 通知。  2、监听页面显示）
-        switch (self.vm.videoEndShowType) {
-            case QuysAdviceVideoEndShowTypeNone:
+        if (self.vm.videoEndShowValue)
+        {
+            switch (self.vm.videoEndShowType)
             {
-                 self.imgPlayendCover.hidden = YES;
-            }
-                break;
-            case QuysAdviceVideoEndShowTypeImageUrl:
-            {
-                self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue;
-                self.imgPlayendCover.hidden = NO;
-            }
-                break;
-            case QuysAdviceVideoEndShowTypeHtmlCode:
-            {
-                if (self.quysAdvicePlayEndCallBackBlockItem) {
-                    self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlCode);
+                case QuysAdviceVideoEndShowTypeNone:
+                {
+                     self.imgPlayendCover.hidden = YES;
                 }
+                    break;
+                case QuysAdviceVideoEndShowTypeImageUrl:
+                {
+                    self.imgPlayendCover.strImageUrl = self.vm.videoEndShowValue;
+                    self.imgPlayendCover.hidden = NO;
+                }
+                    break;
+                case QuysAdviceVideoEndShowTypeHtmlCode:
+                {
+                    if (self.quysAdvicePlayEndCallBackBlockItem) {
+                        self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlCode);
+                    }
+                }
+                    break;
+                case QuysAdviceVideoEndShowTypeHtmlUrl:
+                {     if (self.quysAdvicePlayEndCallBackBlockItem) {
+                    self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlUrl);
+                }
+                    
+                }
+                    break;
+                    
+                default:
+                    break;
             }
-                break;
-            case QuysAdviceVideoEndShowTypeHtmlUrl:
-            {     if (self.quysAdvicePlayEndCallBackBlockItem) {
-                self.quysAdvicePlayEndCallBackBlockItem(QuysAdviceVideoEndShowTypeHtmlUrl);
-            }
-                
-            }
-                break;
-                
-            default:
-                break;
+        }else
+        {
+            self.imgPlayendCover.strImageUrl = self.vm.videoAlternateEndShowValue;
+            self.imgPlayendCover.hidden = NO;
         }
     }
     [self setNeedsUpdateConstraints];
@@ -363,6 +361,7 @@
 - (void)setVm:(QuysIncentiveVideoVM *)vm
 {
     _vm = vm;
+    [self.lblContent setText:vm.desc];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
 }
 
@@ -390,7 +389,8 @@
     
     self.imgPlayendCover.quysAdviceCloseEventBlockItem = ^{
         //尾帧关闭
-        weakself.quysAdviceEndViewCloseEventBlockItem();//TODO：关闭window
+        weakself.imgPlayendCover.hidden = YES;
+        weakself.quysAdviceEndViewCloseEventBlockItem();
     };
     
     self.imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
@@ -400,8 +400,8 @@
     
     self.playerView.urlVideo = kStringFormat(@"%@",self.vm.videoUrl);
     self.playerView.quysAdviceStatisticalCallBackBlockItem = ^{
-        //曝光：自动播放视频
-        [weakself playStatesChanged];
+        //曝光
+        
     };
     
 }

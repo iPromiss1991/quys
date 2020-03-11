@@ -12,7 +12,6 @@
 @property (nonatomic,strong) CAShapeLayer *shapeLayer;
 @property (nonatomic,assign) BOOL circleEnable;//!< 是否转圈
 
-
 @end
 
 
@@ -89,14 +88,16 @@
 
 - (void)hiddenView
 {
-    self.hidden = YES;
+    [UIView animateWithDuration:.5 animations:^{
+        self.alpha = 0;
+    }];
  
 }
 
 
 - (void)showView
 {
-    self.hidden = NO;
+    self.alpha = 1;
     self.shapeLayer.hidden = YES;
     
 }
@@ -104,32 +105,25 @@
 
 - (void)clickPlayBtEvent:(UIButton*)sender
 {
-    sender.selected = !sender.selected;
-    if (self.quysAdviceClickPlayButtonBlockItem)
-    {
-        self.quysAdviceClickPlayButtonBlockItem();
-    }
-    if (sender.selected)
-    {
-        //暂停
-         [self.btnPlay setImage:[UIImage imageNamed:@"zanting" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-         [self.btnPlay setImage:[UIImage imageNamed:@"zanting" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
-    }else
-    {
-        //播放
-        [self.btnPlay setImage:[UIImage imageNamed:@"play" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-        [self.btnPlay setImage:[UIImage imageNamed:@"play" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
-    }
-    
+    [self clickEvent];
 }
 
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    if (self.quysAdviceClickPlayButtonBlockItem) {
+    [self clickEvent];
+}
+
+#pragma mark - PrivateMethod
+
+- (void)clickEvent
+{
+    if (self.quysAdviceClickPlayButtonBlockItem)
+    {
         self.quysAdviceClickPlayButtonBlockItem();
     }
 }
+
 
  
 #pragma mark - Init

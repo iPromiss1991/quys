@@ -22,9 +22,9 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
-        [self createUI];
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
         self.vm = viewModel;
+        [self createUI];
         [self setupConfig];
     }
     return self;
@@ -33,7 +33,7 @@
 - (void)createUI
 {
     kWeakSelf(self)
-    QuysVideoContentView *videoView = [[QuysVideoContentView alloc]init];
+    QuysVideoContentView *videoView = [[QuysVideoContentView alloc] init];
     videoView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
         [weakself clickEvent:cp];
     };
@@ -43,7 +43,7 @@
     videoView.quysAdviceStatisticalCallBackBlockItem = ^{
         [weakself statisticalEvent];
     };
-
+    videoView.showDuration = self.vm.showDuration;
     self.videoView = videoView;
     [self addSubview:videoView];
     

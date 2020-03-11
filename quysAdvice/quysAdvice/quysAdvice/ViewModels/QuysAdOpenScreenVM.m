@@ -29,12 +29,12 @@
 
 
 @implementation QuysAdOpenScreenVM
-- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdviceOpeenScreenDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window
+- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdviceOpeenScreenDelegate>)delegate frame:(CGRect)cgFrame
 {
     if (self = [super init])
     {
         self.delegate = delegate;
-        self.window = window;
+        self.closeWindowEnable = YES;
         [self packingModel:model frame:cgFrame];
     }
     return self;
@@ -80,6 +80,7 @@
         
         //点击事件
         adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+            weakself.closeWindowEnable = NO;
             [weakself interstitialOnClick:cp];
             if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
             {
@@ -108,7 +109,39 @@
         
     }else
     {
-        return nil;
+        kWeakSelf(self)
+        QuysOpenScreenWindow *adView = [[QuysOpenScreenWindow alloc]initWithFrame:self.cgFrame viewModel:self type:QuysAdviceCreativeTypeDefault];//QuysAdviceCreativeTypePictureOnly
+        [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+        
+        //点击事件
+        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+            weakself.closeWindowEnable = NO;
+            [weakself interstitialOnClick:cp];
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+            {
+                [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+            }
+        };
+        
+        //关闭事件
+        adView.quysAdviceCloseEventBlockItem = ^{
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+            {
+                [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+            }
+        };
+        
+        //曝光事件
+        adView.quysAdviceStatisticalCallBackBlockItem = ^{
+            [weakself interstitialOnExposure];
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+            {
+                [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+            }
+        };
+        self.adView = adView;
+        return adView;
+        
     }
 }
 
@@ -126,7 +159,7 @@
             case QuysAdviceActiveTypeHtmlSourceCode:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
@@ -141,7 +174,7 @@
                 }else
                 {
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
-                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     }];
                 }
@@ -255,20 +288,22 @@
     self.adView = nil;
 }
 
+- (NSString *)title
+{
+    if (_title == nil) {
+        _title = self.adModel.title;
+    }return _title;
+}
 - (NSInteger)showDuration
 {
     //TODO:测试数据似乎仅有QuysAdviceCreativeTypeDefault
-
-    if (self.adModel.creativeType == QuysAdviceCreativeTypeDefault)
-    {
-        return self.adModel.showDuration <= 0?5:(self.adModel.showDuration <=5?self.adModel.showDuration:5);
-    }else if (self.adModel.creativeType == QuysAdviceCreativeTypeVideo)
+    if (self.adModel.creativeType == QuysAdviceCreativeTypeVideo)
     {
         NSInteger totalSecond = [self getVideoTimeByUrlString:self.adModel.materialUrl];
-        return totalSecond <= 15?totalSecond:15;
+        return totalSecond <= 15?totalSecond:15;//quys_warning:视屏最长15s?
     }else
     {
-        return 5;
+        return self.adModel.showDuration <= 0?5:(self.adModel.showDuration <=5?self.adModel.showDuration:5);
     }
 }
 

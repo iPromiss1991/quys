@@ -36,7 +36,7 @@
     [self vhl_setNavBarBackgroundAlpha:1.0f];
     [self vhl_setNavBarHidden:NO];
     [self setQus_navBackButtonTitle:@"返回"];
-    [self vhl_setInteractivePopGestureRecognizerEnable:NO];//TODO
+    [self vhl_setInteractivePopGestureRecognizerEnable:NO];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     [self.view addSubview:imgView];
@@ -58,7 +58,9 @@
 
 -(void)qus_navigationItemHandleBack:(UIButton *)button
 {
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveIncentiveBackgroundImageViewNotify object:nil];
+
     [super qus_navigationItemHandleBack:button];
     
 }

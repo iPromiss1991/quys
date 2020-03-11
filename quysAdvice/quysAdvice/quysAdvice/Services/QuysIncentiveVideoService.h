@@ -22,8 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param cgFrame 弹窗frame
 /// @param imgReplace 弹窗背景视图
 /// @param delegate 回调代理
-/// @param window  程序主窗口
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate window:(UIWindow*)window;
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate;
 
 
 

@@ -236,7 +236,8 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 
 #pragma mark - 业务通知
 
-#define kRemoveBackgroundImageViewNotify  @"kRemoveBackgroundImageViewNotify"//移除广告window
+#define kRemoveOpenScreenBackgroundImageViewNotify  @"kRemoveOpenScreenBackgroundImageViewNotify"//移除开屏广告window
+#define kRemoveIncentiveBackgroundImageViewNotify  @"kRemoveIncentiveBackgroundImageViewNotify"//移除激励视频广告window
 
 
 #pragma mark - 业务枚举

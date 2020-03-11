@@ -49,7 +49,7 @@
     [self vhl_setNavBarBackgroundAlpha:1.0f];
     [self vhl_setNavBarHidden:NO];
     [self setQus_navBackButtonTitle:@"返回"];
-    [self vhl_setInteractivePopGestureRecognizerEnable:NO];//TODO
+    [self vhl_setInteractivePopGestureRecognizerEnable:NO];
     
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
@@ -81,14 +81,14 @@
 
 - (void)setconfigUrl:(NSString *)requestUrl
 {
-    NSAssert(requestUrl != nil || requestUrl.length>0, kStringFormat(@"\n<<<输入的webURL无效%@",requestUrl));
+//    NSAssert(requestUrl != nil || requestUrl.length > 0, kStringFormat(@"\n<<<输入的webURL无效%@",requestUrl));
     self.strUrl = requestUrl;
 }
 
 
 - (void)setconfigHtml:(NSString *)html
 {
-    NSAssert(html == nil || html.length<=0, kStringFormat(@"\n<<<输入的html无效%@",html));
+//    NSAssert(html != nil || html.length > 0, kStringFormat(@"\n<<<输入的html无效%@",html));
     self.strHtml = html;
 }
 
@@ -97,7 +97,6 @@
 
 -(void)qus_navigationItemHandleBack:(UIButton *)button
 {
-//    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
     [super qus_navigationItemHandleBack:button];
     
 }

@@ -21,14 +21,13 @@
 @property (nonatomic,strong) UIView *parentView;
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
-@property (nonatomic,strong) UIView *adviceView;
 
 
 @end
 
 
 @implementation QuysAdBannerService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
     {

@@ -19,7 +19,6 @@
 @property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
-@property (nonatomic,strong) UIWindow *window;
 @property (nonatomic,strong) QuysIncentiveVideoService *service;
 
 @end
@@ -27,12 +26,11 @@
 
 
 @implementation QuysIncentiveVideoVM
-- (instancetype)initWithModel:(QuysIncentiveVideoDataModel*)model delegate:(id<QuysIncentiveVideoDelegate>)delegate frame:(CGRect)cgFrame  window:(UIWindow*)window
+- (instancetype)initWithModel:(QuysIncentiveVideoDataModel*)model delegate:(id<QuysIncentiveVideoDelegate>)delegate frame:(CGRect)cgFrame  
 {
     if (self = [super init])
     {
         self.delegate = delegate;
-        self.window = window;
         [self packingModel:model frame:cgFrame];
     }
     return self;
@@ -117,7 +115,7 @@
     };
     
     
-    //播放完成
+    //播放完成（尾帧展示逻辑：部分）
     adView.quysAdvicePlayEndCallBackBlockItem = ^(QuysAdviceVideoEndShowType endType)
     {
         if (weakself.adModel.playEndUploadEnable)
@@ -188,12 +186,8 @@
     
     //尾帧点击
     adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
-        if (weakself.adModel.endViewClickeUploadEnable)
-        {
-            [weakself updateClientTimeStamp];
-            [weakself uploadServer:weakself.adModel.reportLandingPageClickUrl];
-            self.adModel.statisticsModel.endViewClicked = YES;
-        }
+            [weakself interstitialEndviewOnClick:cp];
+      
         if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnClick:service:)])
         {
             [weakself.delegate quys_endViewInterstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
@@ -277,6 +271,8 @@
 #pragma mark - Event
 
 
+/// 视频播放点击
+/// @param cpClick 点击坐标
 - (void)interstitialOnClick:(CGPoint)cpClick
 {
     if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
@@ -287,7 +283,6 @@
          */
         if (self.adModel.isDownLoadType)
         {
-            //TODO
             if (self.adModel.clickPosition == 1)
             {
                 [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
@@ -318,11 +313,7 @@
 }
 
 
-- (void)openUrl:(NSString*)strUrl
-{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
-    
-}
+
 
 - (void)updateClickAndUpload:(CGPoint)cpClick
 {
@@ -342,6 +333,74 @@
 }
 
 
+/// 尾帧点击
+/// @param cpClick 点击坐标
+- (void)interstitialEndviewOnClick:(CGPoint)cpClick
+{
+    if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
+    {
+        /*点击事件优先级：
+         1\deep:
+         2\isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
+         */
+        if (self.adModel.isDownLoadType)
+        {
+            if (self.adModel.clickPosition == 1)
+            {
+                [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
+            }else
+            {
+                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
+                [self openUrl:strMacroReplace];
+                [self updateClickAndUpload:cpClick];
+            }
+            
+        }else
+        {
+            if ([self.adModel.landingPageUrl containsString:@"ipa"])
+            {
+                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
+                [self openUrl:strMacroReplace];
+                [self updateClickAndUpload:cpClick];
+            }else
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
+                QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
+                QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
+                [nav pushViewController:webVC animated:YES];
+                [self updateClickAndUpload:cpClick];
+            }
+        }
+    }
+}
+
+
+
+
+- (void)updateEndviewClickAndUpload:(CGPoint)cpClick
+{
+    if (self.adModel.endViewClickeUploadEnable)
+    {
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        self.adModel.statisticsModel.endViewClicked = YES;
+        [self updateClientTimeStamp];
+        [self uploadServer:self.adModel.reportLandingPageClickUrl];
+    }
+}
+
+
+- (void)openUrl:(NSString*)strUrl
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+    
+}
 - (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
 {
     kWeakSelf(self)
@@ -458,6 +517,12 @@
     self.adView = nil;
 }
 
+-(NSString *)desc
+{
+    return self.adModel.desc;
+
+}
+
 - (NSInteger)showDuration
 {
     return [self.adModel.videoDuration integerValue];
@@ -473,6 +538,10 @@
     return self.adModel.videoEndShowValue;
 }
 
+- (NSString *)videoAlternateEndShowValue
+{
+    return self.adModel.image;
+}
 
 - (void)dealloc
 {

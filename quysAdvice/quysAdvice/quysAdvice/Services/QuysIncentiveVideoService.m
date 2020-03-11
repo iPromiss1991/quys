@@ -17,7 +17,6 @@
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
 @property (nonatomic,assign) CGRect cgFrame;
-@property (nonatomic,strong) UIWindow *window;
 
 
 @property (nonatomic,strong) QuysIncentiveVideoApi *api;
@@ -27,16 +26,15 @@
 
 
 @implementation QuysIncentiveVideoService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate window:(UIWindow*)window;
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate 
 {
     if (self = [super init])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageView) name:kRemoveBackgroundImageViewNotify object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageView) name:kRemoveIncentiveBackgroundImageViewNotify object:nil];
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
         self.cgFrame = cgFrame;
-        self.window = window;
         [self config:imgReplace];
     }return self;
 }
@@ -78,9 +76,8 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysIncentiveVideoDataModel*)adViewModel
 {
-    QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame window:self.window ];
+    QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame  ];
     self.adviceView = [vm createAdviceView];
-
 }
 
 
@@ -88,30 +85,29 @@
 /// 展示视图
 - (void)showAdView
 {
-        self.adviceView.hidden = NO;
+    self.adviceView.hidden = NO;
 }
 
 
 - (void)removeBackgroundImageView
 {
-    //TODO:移除window
-    CABasicAnimation *animation = [CABasicAnimation animation];
-    animation.keyPath = @"opacity";
-    animation.toValue = @(.0);
-    animation.duration = .3;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    [self.adviceView.layer addAnimation:animation forKey:@"opacity"];
-    [self removeWindow:self.adviceView];
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+
+    for (UIWindow *__strong windowItem in windows) {
+        if ([windowItem isKindOfClass:[QuysIncentiveVideoWindow class]]) {
+            windowItem.hidden = YES;
+            windowItem = nil;
+        }
+    }
+    self.adviceView.hidden = YES;
+    self.adviceView = nil;
+    
+    NSArray *windows1 = [[UIApplication sharedApplication] windows];
+
 }
 
 
-- (void)removeWindow:(UIWindow*)window
-{
-   window.hidden = YES;
-   window = nil;
-}
-
+ 
 
 #pragma mark - YTKRequestDelegate
 
@@ -154,7 +150,7 @@
 {
     if (_adviceView == nil)
     {
-        _adviceView.windowLevel = UIWindowLevelAlert+1;
+        _adviceView.windowLevel = UIWindowLevelAlert - 1;
         UIViewController *rootVC = [UIViewController new];
         _adviceView.rootViewController = rootVC;
     }return _adviceView;
@@ -163,6 +159,6 @@
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoveBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoveIncentiveBackgroundImageViewNotify object:nil];
 }
 @end

@@ -29,7 +29,7 @@
 
 
 @implementation QuysInformationFlowService
-- (instancetype)initWithID:businessID key:bussinessKey cGrect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
 {
     if (self = [super init])
     {
@@ -110,7 +110,7 @@
     {
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
-            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"没有相关广告！"}];//TODO:全局替换报错文案
+            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"没有相关广告！"}];
             [self.delegate quys_requestFial:self error:error];
         }
         

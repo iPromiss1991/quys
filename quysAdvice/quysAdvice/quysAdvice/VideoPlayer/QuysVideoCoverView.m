@@ -24,14 +24,13 @@
 
 @implementation QuysVideoCoverView
 
-- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdOpenScreenVM *)viewModel
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];//因为是全屏显示，所以父视图被遮挡（hidden= yes），所以曝光为NO。
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
         [self createUI];
-        self.vm = viewModel;
-    }
+     }
     return self;
 }
 
@@ -52,7 +51,8 @@
     self.btnVoice = btnVoice;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnClose.backgroundColor = kRGB16(BackgroundColor1, 1);
+    [btnClose setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    btnClose.backgroundColor = kRGB16(BackgroundColor1, .7);
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
     [self.viewContain addSubview:btnClose];
     self.btnClose = btnClose;
@@ -79,7 +79,7 @@
         make.top.mas_equalTo(self.viewContain).offset(kScale_H(20));
         make.left.mas_equalTo(self.btnVoice.mas_right).offset(kScale_W(20)).priorityMedium();
         make.height.mas_equalTo(kScale_H(44));
-        make.width.mas_equalTo(kScale_W(60));
+        make.width.mas_greaterThanOrEqualTo(kScale_W(60));
         make.right.mas_equalTo(self.viewContain).offset(-kScale_W(20)).priorityHigh();
     }];
     
@@ -126,7 +126,7 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
@@ -165,14 +165,14 @@
             NSString *strDesc = kStringFormat(@"%@",@"跳过");
             NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:kStringFormat(@"%@%@",strCountdownLeft,strDesc)];
             [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, strCountdownLeft.length)];
-            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:10]} range:NSMakeRange(2, strDesc.length)];
+            [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:10]} range:NSMakeRange(strCountdownLeft.length, strDesc.length)];
             [weakself.btnClose setAttributedTitle:attr forState:UIControlStateNormal];
         }else
         {
             dispatch_source_cancel(weakself.source_t );
             [weakself.btnClose setAttributedTitle:nil forState:UIControlStateNormal];
             [weakself clickCloseBtEvent:nil];
-            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveBackgroundImageViewNotify object:nil];
+            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
         }
         
     });
@@ -182,13 +182,10 @@
 }
 
 
-- (void)setVm:(QuysAdOpenScreenVM *)vm
+- (void)setShowDuration:(NSInteger)showDuration
 {
-    _vm = vm;
-    self.countdownLeft = vm.showDuration;
-    
+    _showDuration = showDuration;
+    self.countdownLeft = showDuration;
 }
-
-
 
 @end
