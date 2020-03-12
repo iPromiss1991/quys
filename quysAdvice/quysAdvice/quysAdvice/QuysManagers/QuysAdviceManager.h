@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strUserAgent;//!<浏览器信息
 @property (nonatomic,strong) NSString *strIPAddress;//!<ip信息
 
-@property (nonatomic,assign) QuysNetworkReachabilityStatus networkReachabilityStatus;
+@property (nonatomic,assign) QuysNetworkReachabilityStatus networkReachabilityStatus;//!<  网络状态
 
 
 + (instancetype)shareManager;

@@ -22,7 +22,6 @@
 @property (nonatomic,strong) UIView *parentView;
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
-@property (nonatomic,strong) UIView *adviceView;//!<
 
 
 @end

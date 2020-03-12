@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 /// 激励视频广告服务
 @interface QuysIncentiveVideoService : QuysAdBaseService
-@property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;
-@property (nonatomic,strong,nullable) UIWindow *adviceView;
+@property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;//!<  服务代理
+@property (nonatomic,strong,nullable) UIWindow *adviceView;//!<  广告
 
 
 

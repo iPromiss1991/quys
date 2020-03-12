@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 /// 开屏广告服务
 @interface QuysAdOpenScreenService : QuysAdBaseService
-@property (nonatomic,weak) id <QuysAdviceOpeenScreenDelegate> delegate;
-@property (nonatomic,strong) UIWindow *adviceView;
+@property (nonatomic,weak) id <QuysAdviceOpeenScreenDelegate> delegate;//!<  服务代理
+@property (nonatomic,strong) UIWindow *adviceView;//!<  广告
 
 #warning:建议在初始化之后立即设置，以便准确控制加载adviceView的时机。
 @property (nonatomic,assign) NSTimeInterval bgShowDuration;//!< 开屏启动图展示时间（eg：默认1s），结束时展示adviceView

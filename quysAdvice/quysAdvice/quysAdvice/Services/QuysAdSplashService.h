@@ -12,7 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 /// 插屏广告服务
 @interface QuysAdSplashService : QuysAdBaseService
-@property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
+@property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;//!<  服务代理
+@property (nonatomic,strong) UIView *adviceView;//!<  广告视图
 
 
 
