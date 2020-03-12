@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 基础广告服务（抽象类）
 @interface QuysAdBaseService : NSObject
 
 @end

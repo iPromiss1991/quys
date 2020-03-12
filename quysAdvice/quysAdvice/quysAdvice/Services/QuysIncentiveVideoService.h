@@ -9,7 +9,7 @@
 #import "QuysAdBaseService.h"
 #import "QuysIncentiveVideoDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
-/// 插屏广告服务
+/// 激励视频广告服务
 @interface QuysIncentiveVideoService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;
 @property (nonatomic,strong,nullable) UIWindow *adviceView;

@@ -10,7 +10,7 @@
 #import "QuysAdBaseService.h"
 
 NS_ASSUME_NONNULL_BEGIN
-/// 插屏广告服务
+/// 信息流广告服务
 @interface QuysInformationFlowService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
 

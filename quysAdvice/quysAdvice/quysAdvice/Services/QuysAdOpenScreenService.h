@@ -9,7 +9,7 @@
 #import "QuysAdBaseService.h"
 #import "QuysAdviceOpeenScreenDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
-/// 插屏广告服务
+/// 开屏广告服务
 @interface QuysAdOpenScreenService : QuysAdBaseService
 @property (nonatomic,weak) id <QuysAdviceOpeenScreenDelegate> delegate;
 @property (nonatomic,strong) UIWindow *adviceView;
