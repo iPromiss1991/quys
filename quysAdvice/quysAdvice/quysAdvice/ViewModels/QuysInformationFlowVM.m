@@ -177,7 +177,8 @@
             }
         
             break;
-            case QuysAdviceCreativeTypeImageAndText://TODO:是否多余的case，即是否真实运行
+           
+        default:
             {
                 kWeakSelf(self)
                 QuysInformationFlowDefaultView *adView = [[QuysInformationFlowDefaultView alloc]initWithFrame:self.cgFrame viewModel:self];
@@ -211,9 +212,7 @@
                 self.adView = adView;
                 return adView;
                 
-            }break;
-        default:
-            return nil;
+            }
             break;
     }
 }

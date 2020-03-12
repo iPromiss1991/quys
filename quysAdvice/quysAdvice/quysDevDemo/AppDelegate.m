@@ -36,7 +36,6 @@
     //TODO
     [[QuysAdviceManager shareManager] configSettings] ;
     QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"qystest_kp" key:@"D850E31B659D57D2B82D9457C0FC5A15" cgRect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h"] eventDelegate:self ];
-//    service.bgShowDuration = 0.003;
     self.service = service;
 
  

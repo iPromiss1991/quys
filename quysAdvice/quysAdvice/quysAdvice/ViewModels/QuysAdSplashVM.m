@@ -66,47 +66,38 @@
 
 - (UIView *)createAdviceView
 {
-    switch (self.adModel.creativeType) {
-        case QuysAdviceCreativeTypeDefault:
+    kWeakSelf(self)
+    //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
+    QuysAdSplash *adView = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:self];
+    [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+    
+    //点击事件
+    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+        [weakself interstitialOnClick:cp];
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
         {
-            kWeakSelf(self)
-            //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
-            QuysAdSplash *adView = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:self];
-            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
-            
-            //点击事件
-            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                [weakself interstitialOnClick:cp];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
-                {
-                    [weakself.delegate quys_interstitialOnClick:cp service:weakself.service];
-                }
-            };
-            
-            //关闭事件
-            adView.quysAdviceCloseEventBlockItem = ^{
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
-                {
-                    [weakself.delegate quys_interstitialOnAdClose:weakself.service];
-                }
-            };
-            
-            //曝光事件
-            adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                [weakself interstitialOnExposure];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
-                {
-                    [weakself.delegate quys_interstitialOnExposure:weakself.service];
-                }
-            };
-            self.adView = adView;
-            return adView;
-            
+            [weakself.delegate quys_interstitialOnClick:cp service:weakself.service];
         }
-        default:
-            return nil;
-            break;
-    }
+    };
+    
+    //关闭事件
+    adView.quysAdviceCloseEventBlockItem = ^{
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+        {
+            [weakself.delegate quys_interstitialOnAdClose:weakself.service];
+        }
+    };
+    
+    //曝光事件
+    adView.quysAdviceStatisticalCallBackBlockItem = ^{
+        [weakself interstitialOnExposure];
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+        {
+            [weakself.delegate quys_interstitialOnExposure:weakself.service];
+        }
+    };
+    self.adView = adView;
+    return adView;
 }
 
 

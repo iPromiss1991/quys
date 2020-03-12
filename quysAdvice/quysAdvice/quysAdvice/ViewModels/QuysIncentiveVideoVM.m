@@ -260,8 +260,6 @@
         }
     };
     
-    
-    
     self.adView = adView;
     return adView;
     
@@ -523,6 +521,10 @@
 
 }
 
+-(NSString *)strTitle
+{
+    return self.adModel.title;
+}
 - (NSInteger)showDuration
 {
     return [self.adModel.videoDuration integerValue];

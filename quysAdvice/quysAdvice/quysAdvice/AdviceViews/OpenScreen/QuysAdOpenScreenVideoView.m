@@ -22,7 +22,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
+        [self hlj_setTrackTag:kStringFormat(@"%lud",[self hash]) position:0 trackData:@{}];
         self.vm = viewModel;
         [self createUI];
         [self setupConfig];

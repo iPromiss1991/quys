@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 /*素材类型:
  1-图片 2-图文 3-文字 4-html  5-信息流多图  6-大规格插屏(大 图)   7-图文（小图）  8-视频
+ 
 */
 
 typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
@@ -19,7 +20,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
     QuysAdviceCreativeTypeImageAndText = 2,
     QuysAdviceCreativeTypeTextOnly = 3,
     QuysAdviceCreativeTypeHtml = 4,
-    QuysAdviceCreativeTypeMultiPicture = 5,//!< TODO：后台确认该字段？
+    QuysAdviceCreativeTypeMultiPicture = 5,
     QuysAdviceCreativeTypeBigPicture = 6,
     QuysAdviceCreativeTypeSmallPicture = 7,
     QuysAdviceCreativeTypeVideo = 8
@@ -30,12 +31,12 @@ typedef NS_ENUM(NSInteger,QuysAdviceCreativeType) {
 */
 
 typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
-    QuysAdviceActiveTypeHtmlSourceCode = 1,//TODO:信息流QuysAdviceActiveType=0？合理？
-   QuysAdviceActiveTypeImageUrl = 2,
+    QuysAdviceActiveTypeHtmlSourceCode = 1,
+    QuysAdviceActiveTypeImageUrl = 2,
     QuysAdviceActiveTypeHtmlLink = 3,
-   QuysAdviceActiveTypeDownAppAppstore = 4,
+    QuysAdviceActiveTypeDownAppAppstore = 4,
     QuysAdviceActiveTypeDownAppAppstoreSecond = 6,
-   QuysAdviceActiveTypeDownAppWebUrl = 8,
+    QuysAdviceActiveTypeDownAppWebUrl = 8,
 };
 
 

@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) NSString *videoUrl;//!< 视频播放地址
 @property (nonatomic,assign) BOOL isClickable;//!<  播放过程是否可以点击
+@property (nonatomic,strong) NSString *strTitle;//!<  视频title
 @property (nonatomic,strong) NSString *desc;//!<  视频详情
 
 

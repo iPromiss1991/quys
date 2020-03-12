@@ -21,7 +21,7 @@
     NSArray *windows = [[[[UIApplication sharedApplication] windows] reverseObjectEnumerator] allObjects];
     for(UIWindow *tmpWin in windows)
     {
-        if ([tmpWin isKindOfClass:[windowClass class]] )
+        if ([tmpWin isMemberOfClass:[windowClass class]] )
         {
             defaultWindow = tmpWin;
             break;

@@ -20,6 +20,7 @@
 
 
 @property (nonatomic,strong) UIView *viewFootContain;
+@property (nonatomic,strong) UILabel *lblTitle;
 @property (nonatomic,strong) UIImageView *imgLogo;
 @property (nonatomic,strong) UILabel *lblContent;
 @property (nonatomic,strong) UIButton *btnVoice;//!< 声音
@@ -36,7 +37,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
+        [self hlj_setTrackTag:kStringFormat(@"%lud",(unsigned long)[self hash]) position:0 trackData:@{}];
         [self createUI];
         self.viewContain.hlj_viewVisible = YES;
         self.vm = viewModel;
@@ -54,7 +55,7 @@
     
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
-    [playerView hlj_setTrackTag:kStringFormat(@"%ld",[playerView hash]) position:0 trackData:@{}];
+    [playerView hlj_setTrackTag:kStringFormat(@"%lud",[playerView hash]) position:0 trackData:@{}];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [playerView addGestureRecognizer:tap];
     [self.viewContain addSubview:playerView];
@@ -87,11 +88,22 @@
     [self.viewFootContain addSubview:imgLogo];
     self.imgLogo = imgLogo;
     
+    UILabel *lblTitle = [[UILabel alloc] init];
+       lblTitle.numberOfLines = 1;
+    lblTitle.textAlignment =NSTextAlignmentCenter;
+       lblTitle.text = @"文案";
+       [lblTitle setFont:kScaleFont(17)];
+       [lblTitle setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+       [lblTitle setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+       self.lblTitle = lblTitle;
+       [self.viewFootContain addSubview:lblTitle];
+    
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 3;
-    lblContent.text = @"优化完黑屏现象后，我们发现还存在一个现象，那就是广告展示完进入首页后，首页才刚开始加载，需要一段等待时间.    我们可以利用展示广告这段时间对首页内容进行预加载，在广告展示完毕后进入首页可以看到已经就绪的首页。调用VC的view属性触发VC的预加载，如下所示。";
+    lblContent.text = @"文案";
+    [lblContent setFont:kScaleFont(15)];
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    [lblContent setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     self.lblContent = lblContent;
     [self.viewFootContain addSubview:lblContent];
     
@@ -104,10 +116,10 @@
     self.btnVoice = btnVoice;
     
     QuysImgPlayendCoverView *imgPlayendCover = [[QuysImgPlayendCoverView alloc] init];
-    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];
+    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%lud",[imgPlayendCover hash]) position:0 trackData:@{}];
     imgPlayendCover.userInteractionEnabled = YES;
     imgPlayendCover.hidden = YES;
-    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%ld",[imgPlayendCover hash]) position:0 trackData:@{}];
+    [imgPlayendCover hlj_setTrackTag:kStringFormat(@"%lud",[imgPlayendCover hash]) position:0 trackData:@{}];
     [self.viewContain addSubview:imgPlayendCover];
     self.imgPlayendCover = imgPlayendCover;
     
@@ -149,22 +161,28 @@
         make.height.mas_equalTo(kScale_H(100)).priorityHigh();
     }];
     
+    [self.lblTitle mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.viewFootContain).offset(2);
+        make.right.mas_equalTo(self.viewFootContain).offset(-2);
+        make.top.mas_equalTo(self.viewFootContain).offset(1);
+    }];
+    
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.viewFootContain).priorityHigh();
+        make.top.mas_equalTo(self.lblTitle.mas_bottom).offset(1);
         make.left.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(5));
-        make.width.mas_equalTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_H(60)).priorityHigh();
+        make.width.height.mas_equalTo(kScale_W(60));
+        make.bottom.mas_lessThanOrEqualTo(self.viewFootContain);
     }];
     
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(5));
+        make.top.mas_equalTo(self.lblTitle.mas_bottom).mas_offset(kScale_H(5));
         make.left.mas_equalTo(self.imgLogo.mas_right).mas_offset(kScale_W(5));
-        make.bottom.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(-10));
+        make.bottom.mas_equalTo(self.viewFootContain).mas_offset(kScale_H(-5));
     }];
     
     [self.btnVoice mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.imgLogo).priorityHigh();
-        make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
+        make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5)).priorityMedium();
         make.right.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(-5)).priorityHigh();
         make.width.height.mas_equalTo(kScale_W(30));
     }];
@@ -243,7 +261,6 @@
         [self.btnVoice setImage:[UIImage imageNamed:@"shengyin" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateHighlighted];
     }
     [self.playerView setMute];
-    NSLog(@"%s",__PRETTY_FUNCTION__);
 }
 
 
@@ -361,8 +378,14 @@
 - (void)setVm:(QuysIncentiveVideoVM *)vm
 {
     _vm = vm;
+    self.lblTitle.text = vm.strTitle;
     [self.lblContent setText:vm.desc];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+    
+    if (kISNullString(vm.strTitle) & kISNullString(vm.strImgUrl))
+    {
+        self.viewFootContain.backgroundColor = [UIColor clearColor];
+    }
 }
 
 - (void)updateBlockItemsAndPalyStart

@@ -230,7 +230,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kVideoScene @"__SCENE__" 
 
 #define kVideoType @"__TYPE__"
-#define kVideoBeavior @"__BEAVIOR__"//TODO：尚未实现
+#define kVideoBeavior @"__BEAVIOR__"
 #define kVideoStatus @"__STATUS__"
 
 

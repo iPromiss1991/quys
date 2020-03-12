@@ -101,9 +101,6 @@
     }
     self.adviceView.hidden = YES;
     self.adviceView = nil;
-    
-    NSArray *windows1 = [[UIApplication sharedApplication] windows];
-
 }
 
 

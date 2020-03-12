@@ -58,7 +58,7 @@
 
 #pragma mark - PrivateMethod
 
-//TODO：优化，playStatesChanged方法，同时支持网络监测、播放暂停等功能
+//(优化playStatesChanged方法)同时支持网络监测、播放暂停等功能
 -(void)playStatesChanged
 {
     kWeakSelf(self)
@@ -70,8 +70,10 @@
         case QuysNetworkReachabilityStatusNotReachable:
             
 //            break;
-        case QuysNetworkReachabilityStatusReachableViaWiFi://QuysNetworkReachabilityStatusReachableViaWWAN
+        case QuysNetworkReachabilityStatusReachableViaWWAN://
         {
+            [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%@",@"1") forKey:kVideoType];
+
             if (![QuysAdviceManager shareManager].playVideoWithoutWifi)
             {
                 UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"使用流量播放" message:@"当前为非wifi连接" preferredStyle:UIAlertControllerStyleAlert];
@@ -97,11 +99,11 @@
             }
         }
             break;
-//        case QuysNetworkReachabilityStatusReachableViaWiFi:
-//        {
-//            [self playVideo];
-//        }
-//            break;
+        case QuysNetworkReachabilityStatusReachableViaWiFi:
+        {
+            [self playVideo];
+        }
+            break;
             
         default:
             break;

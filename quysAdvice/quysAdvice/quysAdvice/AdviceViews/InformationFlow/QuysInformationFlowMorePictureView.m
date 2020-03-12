@@ -49,7 +49,7 @@
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 3;
     [lblContent setTextColor:kRGB16(TextThemeColor1, 1)];
-    lblContent.text = @"广告页的展示需要做到根据相关配置信息动态更新展示内容。因此广告展示数据可以通过服务端接口动态获取，然后根据对应规则解析控制展示效果。";
+    lblContent.text = @"文案";
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
     self.lblContent = lblContent;
@@ -71,7 +71,7 @@
     self.imgViewThree = imgViewThree;
     
     UILabel *lblTag = [[UILabel alloc] init];
-    lblTag.text = @"广告1";
+    lblTag.text = @"广告";
     [lblTag setTextColor:kRGB16(TextThemeColor2, 1)];
     [lblTag  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     self.lblTag = lblTag;
@@ -79,7 +79,7 @@
     
     
     UILabel *lblType = [[UILabel alloc] init];
-    lblType.text = @"新闻2";
+    lblType.text = @"新闻";
     [lblType setTextColor:kRGB16(TextThemeColor2, 1)];
     lblType.textAlignment = NSTextAlignmentLeft;
     self.lblType = lblType;

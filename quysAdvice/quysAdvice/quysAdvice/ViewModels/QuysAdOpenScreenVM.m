@@ -184,7 +184,7 @@
             case QuysAdviceActiveTypeHtmlLink:
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     [weakself updateClickAndUpload:cpClick];
                 }];
@@ -296,7 +296,6 @@
 }
 - (NSInteger)showDuration
 {
-    //TODO:测试数据似乎仅有QuysAdviceCreativeTypeDefault
     if (self.adModel.creativeType == QuysAdviceCreativeTypeVideo)
     {
         NSInteger totalSecond = [self getVideoTimeByUrlString:self.adModel.materialUrl];

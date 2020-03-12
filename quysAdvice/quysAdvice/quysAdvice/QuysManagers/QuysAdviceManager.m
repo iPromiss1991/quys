@@ -12,6 +12,9 @@
 #import "QuysAdviceManager.h"
 #import "QuysAdviceConfigModel.h"
 
+static  NSString *kGetNetworkIpUrl = @"http://pv.sohu.com/cityjson?ie=utf-8";
+static  NSString *kGetNetworkIpKey = @"cip";
+
 static  NSString *kNetworkIp = @"quys_kNetworkIp";
 static  NSString *kUserAgent = @"quys_kUserAgent";
 
@@ -77,6 +80,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 /// 获取userAgent并保存本地
 - (void)quys_UserAgent
 {
+    self.searchUser_AgentEnable = NO;
     kWeakSelf(self)
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *strUserAgent =@"" ;
@@ -138,6 +142,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 /// 网络ip地址
 - (void)quys_getIPAdderss
 {
+    self.searchIpEnable = NO;
     kWeakSelf(self)
     __block  NSString *strIPAddress  ;
     NSString *strStored = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kNetworkIp];
@@ -148,7 +153,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     if (!kISNullString(strStored))
     {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-             strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
+             strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:kGetNetworkIpKey];
              if (strIPAddress.length)
              {
                  [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
@@ -162,7 +167,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     }else
     {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:@"ip"];
+            strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:kGetNetworkIpKey];
             if (strIPAddress.length)
             {
                 [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
@@ -197,25 +202,25 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 {
    __block NSMutableDictionary *ipDic = [NSMutableDictionary new] ;
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];
-           NSData *data = [NSData dataWithContentsOfURL:ipURL];
-           if (data)
+//         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];//http://pv.sohu.com/cityjson
+            NSURL *ipURL = [NSURL URLWithString:kGetNetworkIpUrl];//
+        NSError *error;
+            NSMutableString *ip = [NSMutableString stringWithContentsOfURL:ipURL encoding:NSUTF8StringEncoding error:&error];
+           //判断返回字符串是否为所需数据
+           if ([ip hasPrefix:@"var returnCitySN = "])
            {
-                id  dicTemp = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil][@"data"];
-               if ([dicTemp isKindOfClass:[NSString class]])
-               {
-                    
-               }else
-               {
-                   ipDic = [dicTemp mutableCopy];
-               }
-               if (kISNullString([ipDic valueForKey:@"ip"]))
-               {
-                   [ipDic setValue:@"" forKey:@"ip"];
-               }
+               NSLog(@"<<<<<<<<<<<<<%@   %@ ",error ,ip);
+               //对字符串进行处理，然后进行json解析
+               //删除字符串多余字符串
+               NSRange range = NSMakeRange(0, 19);
+               [ip deleteCharactersInRange:range];
+               NSString * nowIp =[ip substringToIndex:ip.length-1];
+               //将字符串转换成二进制进行Json解析
+               NSData * data = [nowIp dataUsingEncoding:NSUTF8StringEncoding];
+               ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
            }else
            {
-                ipDic = [[NSMutableDictionary alloc]initWithDictionary:@{@"ip":@""}];
+                ipDic = [[NSMutableDictionary alloc]initWithDictionary:@{kGetNetworkIpKey:@""}];
            }
     });
     return ipDic;
@@ -248,20 +253,30 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
          */
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
+            {
                 NSLog(@"未知");
                 self.networkReachabilityStatus = QuysNetworkReachabilityStatusUnknown;
+            }
                 break;
             case AFNetworkReachabilityStatusNotReachable:
+            {
                 NSLog(@"没有网络");
                 self.networkReachabilityStatus = QuysNetworkReachabilityStatusNotReachable;
+            }
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
+            {
                 NSLog(@"3G|4G");
+                [[self dicMReplace] setObject:@(2) forKey:kVideoBeavior];;
                 self.networkReachabilityStatus = QuysNetworkReachabilityStatusReachableViaWWAN;
+            }
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
+            {
                 NSLog(@"WiFi");
+                [[self dicMReplace] setObject:@(1) forKey:kVideoBeavior];;
                 self.networkReachabilityStatus = QuysNetworkReachabilityStatusReachableViaWiFi;
+            }
                 break;
             default:
                 break;
@@ -349,7 +364,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     return _dicMReplace;
 }
 
-//TODO:runloop闲时获取相关数据
+#warning     runloop闲时获取相关数据(ip & userAgent)
 - (NSString *)strUserAgent
 {
     if (_strUserAgent == nil || [_strUserAgent isEqualToString:@""])

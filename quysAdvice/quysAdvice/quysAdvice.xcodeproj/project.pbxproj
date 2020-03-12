@@ -950,7 +950,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Quys;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Quys;
 				TargetAttributes = {
 					FB135D6123CC0A00000E43DB = {
@@ -1358,7 +1358,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8D56AE8037303AF929E0C9C7 /* Pods-quysAdvice.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3LW46M37JG;
@@ -1425,7 +1425,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A624D97231D28409DA1E055 /* Pods-quysAdvice.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3LW46M37JG;

@@ -31,7 +31,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
+        [self hlj_setTrackTag:kStringFormat(@"%lud",[self hash]) position:0 trackData:@{}];
         [self createUI];
         self.vm = viewModel;
     }
@@ -72,7 +72,7 @@
     
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 0;
-    lblContent.text = @"文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案";
+    lblContent.text = @"文案";
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     self.lblContent = lblContent;

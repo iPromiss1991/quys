@@ -82,12 +82,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     //    self.navigationController.navigationBarHidden = YES;
     [self vhl_setStatusBarHidden:YES];
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarHidden:YES];
     
-    // Do any additional setup after loading the view.
+    //模仿nav推出效果
+    CATransition * ani = [CATransition animation];
+    ani.type = kCATransitionPush;
+    ani.subtype = kCATransitionFromRight;
+    ani.duration = .3;
+    [self.view.layer addAnimation:ani forKey:@"transitionAni"];
+    
+ 
 }
 
 /*
