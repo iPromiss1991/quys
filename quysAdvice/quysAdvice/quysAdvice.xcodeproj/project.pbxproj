@@ -468,7 +468,6 @@
 			children = (
 				FB22D09D240E4752005E0E44 /* VideoPlayer */,
 				FBBA897A23AB77F500D0088C /* QuysManagers */,
-				FB848CEF239DE2D50092A260 /* quysAdvice.h */,
 				FB848D6B239E54A60092A260 /* MD5 */,
 				FB848D68239E33AD0092A260 /* Macro */,
 				FB848D59239E2A770092A260 /* Models */,
@@ -481,6 +480,7 @@
 				FB848D0E239DE9D90092A260 /* Keychain */,
 				FB848CF0239DE2D50092A260 /* Info.plist */,
 				FB848D67239E31B70092A260 /* QuysPCH.h */,
+				FB848CEF239DE2D50092A260 /* quysAdvice.h */,
 			);
 			path = quysAdvice;
 			sourceTree = "<group>";
