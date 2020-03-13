@@ -118,7 +118,7 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.lblTag);
         make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2));
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2)).priorityHigh();
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-0)).priorityHigh();
         make.height.width.mas_lessThanOrEqualTo(kScale_W(20));
         make.bottom.mas_equalTo(self.viewContain).offset(kScale_W(-2));
 

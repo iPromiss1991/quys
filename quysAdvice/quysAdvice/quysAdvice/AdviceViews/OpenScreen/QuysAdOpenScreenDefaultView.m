@@ -72,6 +72,7 @@
     
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 0;
+    lblContent.font = kScaleFont(15);
     lblContent.text = @"文案";
     [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
@@ -224,7 +225,7 @@
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgSmallIcon sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-//    [self.lblContent setText:vm.title];
+    [self.lblContent setText:vm.title];
     self.countdownLeft = vm.showDuration;
     
 }
