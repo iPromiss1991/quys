@@ -244,6 +244,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 - (void)monitorNetworkStatus
 {
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];//sharedManager：之前误写为manager，导致不能按预期运行
+    [manager startMonitoring];
    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         /*
          AFNetworkReachabilityStatusUnknown          = -1,
