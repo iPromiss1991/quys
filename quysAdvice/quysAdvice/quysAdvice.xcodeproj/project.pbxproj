@@ -801,13 +801,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB955A3F23B9EAB000AFA427 /* QuysIncentiveVideoService.h in Headers */,
+				FB955A3923B602F800AFA427 /* QuysAdBaseService.h in Headers */,
 				FB955A3C23B9E9E700AFA427 /* QuysIncentiveVideoDelegate.h in Headers */,
-				FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */,
 				FB955A6523BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h in Headers */,
-				FB955A5E23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
 				FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */,
-				FB955A3923B602F800AFA427 /* QuysAdBaseService.h in Headers */,
+				FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */,
+				FB955A5E23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h in Headers */,
 				FB6A1C7B23B1C20E00E29B75 /* QuysAppDownUrlApi.h in Headers */,
 				FB848D0D239DE96E0092A260 /* QuysAdviceManager.h in Headers */,
 				FBBA894723A77B8800D0088C /* QuysInformationFlowVM.h in Headers */,

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysAdOpenScreenVM : NSObject
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
+@property (nonatomic,strong) NSString *iconUrl;
+
 @property (nonatomic,assign) NSInteger showDuration;
 
 @property (nonatomic,strong) NSString *materialUrl;

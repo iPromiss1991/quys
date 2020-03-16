@@ -52,6 +52,7 @@
     [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
     [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
     self.strImgUrl = model.imgUrl;
+    self.iconUrl = model.iconUrl;
     self.materialUrl = model.materialUrl;
 }
 
@@ -80,7 +81,6 @@
         
         //点击事件
         adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-            weakself.closeWindowEnable = NO;
             [weakself interstitialOnClick:cp];
             if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
             {
@@ -115,7 +115,6 @@
         
         //点击事件
         adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-            weakself.closeWindowEnable = NO;
             [weakself interstitialOnClick:cp];
             if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
             {
@@ -158,6 +157,7 @@
         switch (self.adModel.ctype) {
             case QuysAdviceActiveTypeHtmlSourceCode:
             {
+                self.closeWindowEnable = NO;
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
@@ -167,6 +167,7 @@
                 break;
             case QuysAdviceActiveTypeImageUrl:
             {
+                self.closeWindowEnable = NO;
                 //判断后缀是否.ipa==直接下载； 或者加载web
                 if ([self.adModel.ldp containsString:@".ipa"])
                 {
@@ -183,6 +184,7 @@
                 break;
             case QuysAdviceActiveTypeHtmlLink:
             {
+                self.closeWindowEnable = NO;
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{

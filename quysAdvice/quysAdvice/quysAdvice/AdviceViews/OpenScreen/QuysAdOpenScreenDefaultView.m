@@ -74,8 +74,8 @@
     lblContent.numberOfLines = 0;
     lblContent.font = kScaleFont(15);
     lblContent.text = @"文案";
-    [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-    [lblContent setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [lblContent setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [lblContent setContentHuggingPriority: UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     self.lblContent = lblContent;
     [self.viewBottomContain addSubview:lblContent];
     
@@ -133,7 +133,7 @@
         make.centerY.mas_equalTo(self.imgSmallIcon).priorityHigh();
         make.left.mas_equalTo(self.lblContent.mas_right).mas_offset(kScale_W(5));
         make.right.mas_equalTo(self.viewBottomContain).mas_offset(kScale_W(-20)).priorityHigh();
-        make.width.height.mas_equalTo(kScale_W(60));
+        make.width.height.mas_equalTo(self.imgSmallIcon);
     }];
     
     
@@ -199,7 +199,7 @@
         {
             weakself.countdownLeft--;
             NSString *strCountdownLeft = kStringFormat(@"%lds",weakself.countdownLeft);
-            NSString *strDesc = kStringFormat(@"%@",@"跳过");
+            NSString *strDesc = kStringFormat(@" %@",@"跳过 ");
             NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:kStringFormat(@"%@%@",strCountdownLeft,strDesc)];
             [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],NSFontAttributeName:[UIFont systemFontOfSize:20]} range:NSMakeRange(0, strCountdownLeft.length)];
             [attr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:10]} range:NSMakeRange(strCountdownLeft.length, strDesc.length)];
@@ -224,7 +224,7 @@
     _vm = vm;
     [self.imgView sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
     [self.imgSmallIcon sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
-    [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.strImgUrl]];
+    [self.imgLogo sd_setImageWithURL:[NSURL URLWithString:vm.iconUrl]];
     [self.lblContent setText:vm.title];
     self.countdownLeft = vm.showDuration;
     

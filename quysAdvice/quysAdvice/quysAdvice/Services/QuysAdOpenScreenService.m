@@ -132,7 +132,7 @@
         {
             if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
             {
-                [UIView animateWithDuration:.5 animations:^{
+                [UIView animateWithDuration:.3 animations:^{
                     [(QuysFullScreenReplaceView*)subObj setFrame:CGRectZero];
                     [subObj removeFromSuperview];
                 }];
@@ -149,8 +149,18 @@
     {
         [obj removeFromSuperview];
     }
-   window.hidden = YES;
-   window = nil;
+    __block UIWindow* windowTemp = window;
+    //淡入淡出效果
+    CATransition * ani = [CATransition animation];
+    ani.type = kCATransitionFade;
+    ani.subtype = kCATransitionFromRight;
+    ani.duration = .2;
+    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        windowTemp.hidden = YES;
+        windowTemp = nil;
+    });
 }
 
 
