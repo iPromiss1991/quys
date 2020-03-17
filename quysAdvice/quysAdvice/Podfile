@@ -12,7 +12,6 @@ target 'quysAdvice' do
  pod 'SDWebImage'
  pod 'Reachability'
  
- 
   target 'quysDevDemo' do
     pod 'Masonry'
 

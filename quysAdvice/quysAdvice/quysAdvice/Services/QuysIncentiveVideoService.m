@@ -96,9 +96,11 @@
     for (UIWindow *__strong windowItem in windows) {
         if ([windowItem isKindOfClass:[QuysIncentiveVideoWindow class]]) {
             windowItem.hidden = YES;
+            windowItem.windowLevel = - 1000;
             windowItem = nil;
         }
     }
+    [self.adviceView resignKeyWindow];
     self.adviceView.hidden = YES;
     self.adviceView = nil;
 }

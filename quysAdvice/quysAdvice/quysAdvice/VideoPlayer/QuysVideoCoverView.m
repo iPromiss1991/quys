@@ -126,11 +126,11 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
 }
 
 - (void)clickVoiceBtEvent:(UIButton*)sender
