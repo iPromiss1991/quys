@@ -119,7 +119,7 @@
         {
             [self.service performSelector:@selector(showAdView)];
             self.adviceView = [self.service valueForKey:@"adviceView"];
-            
+                  
         }
         
         [self.view setNeedsUpdateConstraints];
