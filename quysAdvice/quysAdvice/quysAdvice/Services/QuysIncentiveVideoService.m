@@ -10,8 +10,6 @@
 #import "QuysIncentiveVideoApi.h"
 #import "QuysIncentiveVideoOutLayerDataModel.h"
 #import "QuysIncentiveVideoWindow.h"
-#import "QuysFullScreenReplaceView.h"
-#import "QuysIncentiveVideoVM.h"
 @interface QuysIncentiveVideoService()<YTKRequestDelegate>
 
 @property (nonatomic,strong) NSString *businessID;

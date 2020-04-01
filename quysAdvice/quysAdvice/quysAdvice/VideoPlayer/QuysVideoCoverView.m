@@ -120,7 +120,7 @@
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cpBegainResult);
+        self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
     }
 }
 
@@ -172,7 +172,6 @@
             dispatch_source_cancel(weakself.source_t );
             [weakself.btnClose setAttributedTitle:nil forState:UIControlStateNormal];
             [weakself clickCloseBtEvent:nil];
-            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
         }
         
     });

@@ -27,19 +27,22 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[QuysAdviceManager shareManager] configSettings] ;
+
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
     [self.window makeKeyAndVisible];
 
-    //TODO
-    [[QuysAdviceManager shareManager] configSettings] ;
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc] initWithID:@"qystest_kp" key:@"D850E31B659D57D2B82D9457C0FC5A15" cgRect:[UIScreen mainScreen].bounds backgroundImage:[UIImage imageNamed:@"Default-568h"] eventDelegate:self ];
-    self.service = service;
-
- 
- 
+    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchIamge"];
+    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc]
+                                        initWithID:@"kp_ios_qys_test"
+                                        key:@"206063F608B0A590F7ACCB7725207D37"
+                                        cgRect:[UIScreen mainScreen].bounds
+                                        launchScreenVC:viewController
+                                        eventDelegate:self ];
+    self.service = service;//需强引用该服务
     return YES;
 }
 
@@ -51,7 +54,6 @@
 }
 
 - (void)quys_requestSuccess:(QuysAdBaseService*)service{
-    NSLog(@"quys_date1 =%@",[NSDate  date]);
  
 }
 - (void)quys_requestFial:(QuysAdBaseService*)service error:(NSError*)error{
@@ -65,21 +67,8 @@
     
 }
 - (void)quys_interstitialOnAdClose:(QuysAdBaseService*)service{
-    self.service = nil;
 
 }
 
-/// 视频播放开始
-/// @param service 广告服务对象
-- (void)quys_videoPlaystart:(QuysAdBaseService*)service
-{
-    
-}
-
-/// 视频播放结束
-/// @param service 广告服务对象
-- (void)quys_videoPlayEnd:(QuysAdBaseService*)service;
-{
-    
-}
+ 
 @end

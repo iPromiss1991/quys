@@ -15,7 +15,7 @@
 
 - (NSString *)requestUrl
 {
-     if (0)
+     if (1)
     {
 //        NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
   NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";

@@ -11,7 +11,6 @@
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysAdviceModel.h"
 #import "QuysOpenScreenWindow.h"
-#import "QuysFullScreenReplaceView.h"
 #import "QuysAdOpenScreenVM.h"
 @interface QuysAdOpenScreenService()<YTKRequestDelegate>
 @property (nonatomic,strong) NSString *businessID;
@@ -19,6 +18,8 @@
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIWindow *window;
 @property (nonatomic,strong) QuysAdOpenScreenVM *vm;
+
+@property (nonatomic,strong) UIViewController *launchScreenVC;
 
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
@@ -32,7 +33,7 @@
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate 
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame launchScreenVC:(nonnull UIViewController *)launchScreenVC eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate
 {
     if (self = [super init])
     {
@@ -43,14 +44,14 @@
         self.delegate = delegate;
         self.cgFrame = cgFrame;
         self.bgShowDuration = 1;
-        [self config:imgReplace];
+        [self config:launchScreenVC];
     }return self;
 }
 
 #pragma mark - PrivateMethod
 
 
-- (void)config:(UIImage*)imgReplace
+- (void)config:(UIViewController*)launchScreenVC
 {
     //配置api 并请求数据
     QuysAdSplashApi *api = [[QuysAdSplashApi alloc]init];
@@ -58,16 +59,16 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    [self loadAdViewNow:imgReplace];
+    [self loadAdViewNow:launchScreenVC];
 }
 
 
 /// 开始加载视图
-- (void)loadAdViewNow:(UIImage*)imgReplace
+- (void)loadAdViewNow:(UIViewController*)launchScreenVC
 {
     if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {
-        [self addBackgroundImageView:imgReplace];
+        [self addBackgroundImageView:launchScreenVC];
         kWeakSelf(self)
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             if ([weakself.delegate respondsToSelector:@selector(quys_requestStart:)])
@@ -98,20 +99,26 @@
     NSDate *dateCurrent = [NSDate date];
     NSTimeInterval differ = [dateCurrent timeIntervalSinceDate:self.dateInitRequest];
     NSTimeInterval differFinal = self.bgShowDuration - differ >=0?(self.bgShowDuration - differ):0;
+    NSLog(@"启动图展示时长：%lf",differFinal);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(differFinal* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.adviceView.hidden = NO;
-        [self removeBackgroundImageView];
-        NSLog(@"quys_date =%@",[NSDate  date]);
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self removeBackgroundImageView];
+        });        NSLog(@"quys_date =%@",[NSDate  date]);
     });
 }
 
 
 /// 添加遮罩底图
-/// @param imgBackground 底图
-- (void)addBackgroundImageView:(UIImage*)imgBackground
+/// @param launchScreenVC 底图
+- (void)addBackgroundImageView:(UIViewController*)launchScreenVC
 {
-    QuysFullScreenReplaceView *vBack = [[QuysFullScreenReplaceView alloc]initWithFrame:[UIScreen mainScreen].bounds  image:imgBackground];
-    [[UIApplication sharedApplication].delegate.window addSubview:vBack];
+    UIWindow *mainWindow = [UIApplication sharedApplication].keyWindow;
+    [mainWindow addSubview:launchScreenVC.view];
+    [mainWindow bringSubviewToFront:launchScreenVC.view];
+    self.launchScreenVC = launchScreenVC;
+    
 }
 
 
@@ -126,19 +133,10 @@
 /// 移除遮罩底图
 - (void)removeBackgroundImageView
 {
+    kWeakSelf(self)
     //移除delegate.window的遮罩图
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
-        {
-            if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
-            {
-                [UIView animateWithDuration:.3 animations:^{
-                    [(QuysFullScreenReplaceView*)subObj setFrame:CGRectZero];
-                    [subObj removeFromSuperview];
-                }];
-
-            }
-        }
+        [weakself.launchScreenVC.view removeFromSuperview];
     });
 }
 
@@ -151,11 +149,11 @@
     }
     __block UIWindow* windowTemp = window;
     //淡入淡出效果
-    CATransition * ani = [CATransition animation];
-    ani.type = kCATransitionFade;
-    ani.subtype = kCATransitionFromRight;
-    ani.duration = .2;
-    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
+//    CATransition * ani = [CATransition animation];
+//    ani.type = kCATransitionFade;
+//    ani.subtype = kCATransitionFromRight;
+//    ani.duration = .2;
+//    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         windowTemp.hidden = YES;
@@ -188,6 +186,7 @@
         }
         
     }
+    NSLog(@"广告<<<<<<<<%@",request.responseString);
 }
 
 
@@ -219,7 +218,7 @@
 {
     if (_bgShowDuration <= 0)
     {
-        _bgShowDuration = 0;
+        _bgShowDuration = 1;
     }return _bgShowDuration;
 }
 

@@ -17,7 +17,7 @@
     //  NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
     //    NSString *strRequestUrl = @"http://192.168.1.8:8086/spread/detail";
     //标准测试
-    if (0)
+    if (1)//TODO:注意还有 激励视频Api
     {
 //        NSString *strRequestUrl = @"http://192.168.1.8:8086/spread/detail";
       NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
@@ -91,5 +91,6 @@
     
     return dicM;
 }
+
 
 @end

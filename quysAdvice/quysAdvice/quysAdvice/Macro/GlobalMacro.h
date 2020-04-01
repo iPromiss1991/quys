@@ -210,7 +210,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 
 #define kRealAdWidth  @"__WIDTH__"
 #define kRealAdHeight @"__HEIGHT__"
-
+//绝对坐标
 #define kClickInsideDownX @"__DOWN_X__"
 #define kClickInsideDownY @"__DOWN_Y__"
 
@@ -218,6 +218,17 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kClickUPY @"__UP_Y__"
 
 #define kClickClickID @"__CLICK_ID__"
+//
+#define kShowTimeStemp @"__SHOW_TIME__"
+#define kClickTimeStemp @"__CLICK_TIME__"
+//相对坐标
+#define kRE_DOWN_X @"__RE_DOWN_X__"
+#define k_RE_DOWN_Y @"__RE_DOWN_Y__"
+
+#define k_RE_UP_X @"__RE_UP_X__"
+#define k_RE_UP_Y @"__RE_UP_Y__"
+
+
 
 //激励视频
 #define kClientTimeStamp @"__TS__"
@@ -256,7 +267,7 @@ typedef NS_ENUM(NSInteger,QuysAdviceVideoEndShowType) {
 
 ///广告
 typedef void(^QuysAdviceCloseEventBlock)(void);//!< 关闭事件
-typedef void(^QuysAdviceClickEventBlock)(CGPoint cp);//!< 点击事件
+typedef void(^QuysAdviceClickEventBlock)(CGPoint cp,CGPoint cpRe);//!< 点击事件
 typedef void(^QuysAdviceStatisticalCallBackBlock)(void);//!< 曝光事件
 
 typedef void(^QuysAdviceLoadSucessCallBackBlock)(void);//!< 加载成功事件
@@ -276,7 +287,7 @@ typedef void(^QuysAdviceMuteCallBackBlock)(void);//!< 静音事件
 
 // 尾帧
 typedef void(^QuysAdviceEndViewCloseEventBlock)(void);//!< 关闭事件
-typedef void(^QuysAdviceEndViewClickEventBlock)(CGPoint cp);//!< 点击事件
+typedef void(^QuysAdviceEndViewClickEventBlock)(CGPoint cp ,CGPoint cpRe);//!< 点击事件
 typedef void(^QuysAdviceEndViewStatisticalCallBackBlock)(void);//!< 尾帧 曝光事件
 
 

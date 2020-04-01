@@ -8,7 +8,6 @@
 
 #import "QuysIncentiveVideoVM.h"
 #import "QuysIncentiveVideoWindow.h"
-#import "QuysFullScreenReplaceView.h"
 #import "QuysNavigationController.h"
 #import "QuysWebViewController.h"
 #import "QuysPictureViewController.h"
@@ -71,16 +70,15 @@
 {
     kWeakSelf(self)
     QuysIncentiveVideoWindow *adView = [[QuysIncentiveVideoWindow alloc]initWithFrame:self.cgFrame viewModel:self];
-    [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
     
     //点击事件
-    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        [weakself interstitialOnClick:cp];
-        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself interstitialOnClick:cp cpRe:cpRe];
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
         {
-            [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
         }
-    };
+    } ;
     
     //关闭事件
     adView.quysAdviceCloseEventBlockItem = ^{
@@ -185,14 +183,14 @@
     };
     
     //尾帧点击
-    adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp) {
-            [weakself interstitialEndviewOnClick:cp];
+    adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+            [weakself interstitialEndviewOnClick:cp cpRe:cpRe];
       
-        if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnClick:service:)])
+        if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnClick:relativeClickPoint:service:)])
         {
-            [weakself.delegate quys_endViewInterstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_endViewInterstitialOnClick:cp relativeClickPoint:cpRe  service:(QuysAdBaseService*)weakself.service];
         }
-    };
+    } ;
     
     
     //视频暂停
@@ -271,7 +269,7 @@
 
 /// 视频播放点击
 /// @param cpClick 点击坐标
-- (void)interstitialOnClick:(CGPoint)cpClick
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
     {
@@ -283,12 +281,12 @@
         {
             if (self.adModel.clickPosition == 1)
             {
-                [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.fileUrl point:cpClick cpRe:cpRe] ;
             }else
             {
                 NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
                 [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }
             
         }else
@@ -297,14 +295,14 @@
             {
                 NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
                 [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }else
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
                 QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
                 QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
                 [nav pushViewController:webVC animated:YES];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }
         }
     }
@@ -313,7 +311,7 @@
 
 
 
-- (void)updateClickAndUpload:(CGPoint)cpClick
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     if (self.adModel.clickeUploadEnable)
     {
@@ -333,7 +331,7 @@
 
 /// 尾帧点击
 /// @param cpClick 点击坐标
-- (void)interstitialEndviewOnClick:(CGPoint)cpClick
+- (void)interstitialEndviewOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
     {
@@ -345,12 +343,12 @@
         {
             if (self.adModel.clickPosition == 1)
             {
-                [self getRealDownUrl:self.adModel.fileUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.fileUrl point:cpClick  cpRe:cpRe] ;
             }else
             {
                 NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
                 [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }
             
         }else
@@ -359,14 +357,14 @@
             {
                 NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
                 [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }else
             {
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
                 QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
                 QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
                 [nav pushViewController:webVC animated:YES];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }
         }
     }
@@ -375,7 +373,7 @@
 
 
 
-- (void)updateEndviewClickAndUpload:(CGPoint)cpClick
+- (void)updateEndviewClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     if (self.adModel.endViewClickeUploadEnable)
     {
@@ -399,7 +397,7 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
     
 }
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -419,7 +417,7 @@
             {
                 [weakself openUrl:model.dstlink];
                 [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                [weakself updateClickAndUpload:cpClick];
+                [weakself updateClickAndUpload:cpClick  cpRe:cpRe] ;
             }
         }
         
@@ -498,16 +496,7 @@
     [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
 }
 
-- (void)removeBackgroundImageView
-{
-    for (id  subObj in [UIApplication sharedApplication].delegate.window.subviews)
-    {
-        if ([subObj isKindOfClass:[QuysFullScreenReplaceView class]])
-        {
-            [subObj removeFromSuperview];
-        }
-    }
-}
+
 
 - (void)validateWindow
 {

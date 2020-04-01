@@ -87,6 +87,7 @@
 /// 展示视图
 - (UIView*)showAdView
 {
+    self.parentView.hlj_viewVisible = YES;
     [self.parentView addSubview:self.adviceView];
     return self.adviceView;
 }

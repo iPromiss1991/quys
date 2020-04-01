@@ -55,7 +55,6 @@
     
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
-    [playerView hlj_setTrackTag:kStringFormat(@"%lud",[playerView hash]) position:0 trackData:@{}];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [playerView addGestureRecognizer:tap];
     [self.viewContain addSubview:playerView];
@@ -218,7 +217,7 @@
              CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
              if (self.quysAdviceClickEventBlockItem)
              {
-                 self.quysAdviceClickEventBlockItem(cpBegainResult);
+                 self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
              }
          }
         [self playStatesChanged];
@@ -416,10 +415,10 @@
         weakself.quysAdviceEndViewCloseEventBlockItem();
     };
     
-    self.imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
+    self.imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
         //尾帧点击
-        weakself.quysAdviceEndViewClickEventBlockItem(cp);
-    };
+        weakself.quysAdviceEndViewClickEventBlockItem(cp,cpRe);
+    } ;
     
     self.playerView.urlVideo = kStringFormat(@"%@",self.vm.videoUrl);
     self.playerView.quysAdviceStatisticalCallBackBlockItem = ^{

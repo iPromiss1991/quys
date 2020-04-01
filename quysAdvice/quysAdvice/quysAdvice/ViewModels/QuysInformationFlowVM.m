@@ -76,11 +76,11 @@
             [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
             
             //点击事件
-            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                [weakself interstitialOnClick:cp];
-                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:) ])
+            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+                [weakself interstitialOnClick:cp cpRe:cpRe];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
                 {
-                    [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                    [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
                 }
             };
             
@@ -106,113 +106,113 @@
         }
             break;
         case QuysAdviceCreativeTypeSmallPicture:
-            {
-                kWeakSelf(self)
-                QuysInformationFlowSmallPictureView *adView = [[QuysInformationFlowSmallPictureView alloc]initWithFrame:self.cgFrame viewModel:self];
-                [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
-                
-                //点击事件
-                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                    [weakself interstitialOnClick:cp];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
-                    {
-                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)self.service];
-                    }
-                };
-                
-                //关闭事件
-                adView.quysAdviceCloseEventBlockItem = ^{
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
-                    {
-                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //曝光事件
-                adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                    [weakself interstitialOnExposure];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
-                    {
-                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                self.adView = adView;
-                return adView;
-                
-            }
+        {
+            kWeakSelf(self)
+            QuysInformationFlowSmallPictureView *adView = [[QuysInformationFlowSmallPictureView alloc]initWithFrame:self.cgFrame viewModel:self];
+            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+            
+            //点击事件
+            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+                [weakself interstitialOnClick:cp cpRe:cpRe];
+              if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
+                {
+                    [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //关闭事件
+            adView.quysAdviceCloseEventBlockItem = ^{
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                {
+                    [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //曝光事件
+            adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                [weakself interstitialOnExposure];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                {
+                    [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            self.adView = adView;
+            return adView;
+            
+        }
             break;
         case QuysAdviceCreativeTypeMultiPicture:
-            {
-                kWeakSelf(self)
-                QuysInformationFlowMorePictureView *adView = [[QuysInformationFlowMorePictureView alloc]initWithFrame:self.cgFrame viewModel:self];
-                [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
-                
-                //点击事件
-                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                    [weakself interstitialOnClick:cp];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
-                    {
-                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //关闭事件
-                adView.quysAdviceCloseEventBlockItem = ^{
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
-                    {
-                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //曝光事件
-                adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                    [weakself interstitialOnExposure];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
-                    {
-                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                self.adView = adView;
-                return adView;
-            }
-        
+        {
+            kWeakSelf(self)
+            QuysInformationFlowMorePictureView *adView = [[QuysInformationFlowMorePictureView alloc]initWithFrame:self.cgFrame viewModel:self];
+            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+            
+            //点击事件
+            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+                [weakself interstitialOnClick:cp cpRe:cpRe];
+               if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
+                {
+                    [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //关闭事件
+            adView.quysAdviceCloseEventBlockItem = ^{
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                {
+                    [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //曝光事件
+            adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                [weakself interstitialOnExposure];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                {
+                    [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            self.adView = adView;
+            return adView;
+        }
+            
             break;
-           
+            
         default:
-            {
-                kWeakSelf(self)
-                QuysInformationFlowDefaultView *adView = [[QuysInformationFlowDefaultView alloc]initWithFrame:self.cgFrame viewModel:self];
-                [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
-                
-                //点击事件
-                adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-                    [weakself interstitialOnClick:cp];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:) ])
-                    {
-                        [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //关闭事件
-                adView.quysAdviceCloseEventBlockItem = ^{
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
-                    {
-                        [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                
-                //曝光事件
-                adView.quysAdviceStatisticalCallBackBlockItem = ^{
-                    [weakself interstitialOnExposure];
-                    if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
-                    {
-                        [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
-                    }
-                };
-                self.adView = adView;
-                return adView;
-                
-            }
+        {
+            kWeakSelf(self)
+            QuysInformationFlowDefaultView *adView = [[QuysInformationFlowDefaultView alloc]initWithFrame:self.cgFrame viewModel:self];
+            [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
+            
+            //点击事件
+            adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+                [weakself interstitialOnClick:cp cpRe:cpRe];
+               if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
+                {
+                    [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //关闭事件
+            adView.quysAdviceCloseEventBlockItem = ^{
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnAdClose:)])
+                {
+                    [weakself.delegate quys_interstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            
+            //曝光事件
+            adView.quysAdviceStatisticalCallBackBlockItem = ^{
+                [weakself interstitialOnExposure];
+                if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
+                {
+                    [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
+                }
+            };
+            self.adView = adView;
+            return adView;
+            
+        }
             break;
     }
 }
@@ -221,7 +221,7 @@
 #pragma mark - Event
 
 
-- (void)interstitialOnClick:(CGPoint)cpClick
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     if ([self.adView isMemberOfClass:[QuysInformationFlowDefaultView class]] ||[self.adView isMemberOfClass:[QuysInformationFlowSmallPictureView class]]||[self.adView isMemberOfClass:[QuysInformationFlowMorePictureView class]])
@@ -232,7 +232,7 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
@@ -241,15 +241,15 @@
                 //判断后缀是否.ipa==直接下载； 或者加载web
                 if ([self.adModel.ldp containsString:@".ipa"])
                 {
-                     [self openUrl:self.adModel.ldp];
+                    [self openUrl:self.adModel.ldp];
                 }else
                 {
                     QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
-                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                     }];
+                    UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
+                    [rootVC quys_presentViewController:webVC animated:YES completion:^{
+                    }];
                 }
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeHtmlLink:
@@ -257,25 +257,25 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstore:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppWebUrl:
             {
-                [self getRealDownUrl:self.adModel.downUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.downUrl point:cpClick cpRe:cpReClick];
             }
                 break;
             default:
@@ -290,26 +290,25 @@
     
 }
 
-
-- (void)updateClickAndUpload:(CGPoint)cpClick
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.clickeUploadEnable)
     {
-    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-    //更新点击坐标
-    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-    
-    [self updateReplaceDictionary:kClickUPX value:strCpX];
-    [self updateReplaceDictionary:kClickUPY value:strCpY];
-    self.adModel.statisticsModel.clicked = YES;
-    [self uploadServer:self.adModel.clkTracking];
+        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        //更新点击坐标
+        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+        
+        [self updateReplaceDictionary:kClickUPX value:strCpX];
+        [self updateReplaceDictionary:kClickUPY value:strCpY];
+        self.adModel.statisticsModel.clicked = YES;
+        [self uploadServer:self.adModel.clkTracking];
     }
 }
 
 
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -324,15 +323,13 @@
             {
                 [weakself openUrl:model.dstlink];
             }
-            
-                if (!kISNullString(model.clickid))
-                {
-                    [weakself openUrl:model.dstlink];
-                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick];
-                }
+            if (!kISNullString(model.clickid))
+            {
+                [weakself openUrl:model.dstlink];
+                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
+            }
         }
-        
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         
     }];
@@ -344,12 +341,14 @@
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
-        [self uploadServer:self.adModel.clkTracking];
+        [self uploadServer:self.adModel.impTracking];
         self.adModel.statisticsModel.exposured = YES;
     }else
     {
     }
 }
+
+
 
 
 
@@ -381,7 +380,7 @@
         {
             for (int i=0; i<3; i++)
             {
-              _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[0]];
+                _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[0]];
             }
         }else if (self.adModel.imgUrlList.count == 2)
         {
@@ -394,7 +393,7 @@
         {
             for (int i=0; i<3; i++)
             {
-              _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[i]];
+                _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[i]];
             }
         }
     }    return _arrImgUrl;

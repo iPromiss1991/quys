@@ -11,7 +11,7 @@
 @implementation QuysBaseNetworkApi
 - (NSTimeInterval)requestTimeoutInterval
 {
-    return 3;
+    return 1;
 }
 
 -(YTKRequestMethod)requestMethod

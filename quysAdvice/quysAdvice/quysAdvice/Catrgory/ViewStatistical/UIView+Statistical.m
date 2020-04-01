@@ -203,6 +203,9 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         
         if (!self.window) return NO;
         
+        if ([[self class] isMemberOfClass:NSClassFromString(@"QuysAdBanner")]) {
+            NSLog(@"QuysAdBanner");
+        }
         if (![self.nextResponder isKindOfClass:[UIViewController class]])
         {
              if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {

@@ -163,7 +163,7 @@
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cpBegainResult);
+        self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
     }
 }
 

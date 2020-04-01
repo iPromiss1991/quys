@@ -25,6 +25,7 @@
     if (self = [super initWithFrame:frame])
     {
         [self createUI];
+        [self hlj_setTrackTag:kStringFormat(@"%ld",[self hash]) position:0 trackData:@{}];
         self.vm = viewModel;
     }
     return self;
@@ -97,15 +98,13 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-    //获取触发触摸的点
+     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cpBegainResult);
-    }
-    
-    
+        self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
+    }  
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender

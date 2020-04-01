@@ -72,11 +72,11 @@
     [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
     
     //点击事件
-    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        [weakself interstitialOnClick:cp];
-        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself interstitialOnClick:cp cpRe:cpRe];
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
         {
-            [weakself.delegate quys_interstitialOnClick:cp service:weakself.service];
+            [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:weakself.service];
         }
     };
     
@@ -104,7 +104,7 @@
 #pragma mark - Event
 
 
-- (void)interstitialOnClick:(CGPoint)cpClick
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     if ([self.adView isMemberOfClass:[QuysAdSplash class]])
@@ -115,7 +115,7 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
@@ -132,7 +132,7 @@
                      [rootVC quys_presentViewController:webVC animated:YES completion:^{
                      }];
                 }
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeHtmlLink:
@@ -140,25 +140,25 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstore:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppWebUrl:
             {
-                [self getRealDownUrl:self.adModel.downUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.downUrl point:cpClick cpRe:cpReClick];
             }
                 break;
             default:
@@ -173,7 +173,7 @@
     
 }
 
-- (void)updateClickAndUpload:(CGPoint)cpClick
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.clickeUploadEnable)
     {
@@ -191,7 +191,7 @@
 }
 
 
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -210,7 +210,7 @@
                 {
                     [weakself openUrl:model.dstlink];
                     [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }
         }
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {

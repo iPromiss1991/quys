@@ -9,7 +9,6 @@
 #import "QuysAdOpenScreenVM.h"
 #import "QuysAdviceModel.h"
 #import "QuysOpenScreenWindow.h"
-#import "QuysFullScreenReplaceView.h"
 #import "QuysNavigationController.h"
 #import "QuysWebViewController.h"
 #import "QuysPictureViewController.h"
@@ -80,11 +79,11 @@
         [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
         
         //点击事件
-        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-            [weakself interstitialOnClick:cp];
-            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+            [weakself interstitialOnClick:cp cpRe:cpRe];
+            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
             {
-                [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
             }
         };
         
@@ -114,11 +113,11 @@
         [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
         
         //点击事件
-        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-            [weakself interstitialOnClick:cp];
-            if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+        adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+            [weakself interstitialOnClick:cp cpRe:cpRe];
+           if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
             {
-                [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+                [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
             }
         };
         
@@ -149,7 +148,7 @@
 
 #pragma mark - QuysOpenScreenWindow
 
-- (void)interstitialOnClick:(CGPoint)cpClick
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     if ([self.adView isMemberOfClass:[QuysOpenScreenWindow class]])
@@ -161,7 +160,7 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [self updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
@@ -179,7 +178,7 @@
                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
                     }];
                 }
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeHtmlLink:
@@ -188,25 +187,25 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[QuysOpenScreenWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [self updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstore:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppWebUrl:
             {
-                [self getRealDownUrl:self.adModel.downUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.downUrl point:cpClick cpRe:cpReClick];
             }
                 break;
             default:
@@ -223,7 +222,7 @@
 }
 
 
-- (void)updateClickAndUpload:(CGPoint)cpClick
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.clickeUploadEnable)
     {
@@ -235,13 +234,21 @@
         
         [self updateReplaceDictionary:kClickUPX value:strCpX];
         [self updateReplaceDictionary:kClickUPY value:strCpY];
+        //
+        [self updateReplaceDictionary:kRE_DOWN_X value:strCpX];
+        [self updateReplaceDictionary:k_RE_DOWN_Y value:strCpY];
+        
+        [self updateReplaceDictionary:k_RE_UP_X value:strCpX];
+        [self updateReplaceDictionary:k_RE_UP_Y value:strCpY];
+        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.clkTracking];
     }
 }
 
 
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -261,7 +268,7 @@
             {
                 [weakself openUrl:model.dstlink];
                 [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                [weakself updateClickAndUpload:cpClick];
+                [weakself updateClickAndUpload:cpClick cpRe:cpRe];
             }
         }
         

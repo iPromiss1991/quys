@@ -37,8 +37,8 @@
     [self.layer addSublayer:self.quysAvPalyerLayer];
 
     QuysVideoCoverView *coverView = [[QuysVideoCoverView alloc] initWithFrame:CGRectZero];
-    coverView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        [weakself clickEvent:cp];
+    coverView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself clickEvent:cp reCp:cpRe];
     };
     
     coverView.quysAdviceCloseEventBlockItem = ^{
@@ -104,11 +104,11 @@
 }
 
 #pragma mark - Blocks
-- (void)clickEvent:(CGPoint)cp
+- (void)clickEvent:(CGPoint)cp reCp:(CGPoint)reCp
 {
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cp);
+        self.quysAdviceClickEventBlockItem(cp,reCp);
     }
 }
 
@@ -117,6 +117,7 @@
     self.frame = CGRectZero;
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
+
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

@@ -22,7 +22,6 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        [self hlj_setTrackTag:kStringFormat(@"%lud",[self hash]) position:0 trackData:@{}];
         self.vm = viewModel;
         [self createUI];
         [self setupConfig];
@@ -34,8 +33,8 @@
 {
     kWeakSelf(self)
     QuysVideoContentView *videoView = [[QuysVideoContentView alloc] init];
-    videoView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        [weakself clickEvent:cp];
+    videoView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself clickEvent:cp  cpRe:cpRe];
     };
     videoView.quysAdviceCloseEventBlockItem = ^{
         [weakself closeEvent];
@@ -68,11 +67,11 @@
 }
 
 
-- (void)clickEvent:(CGPoint)cp
+- (void)clickEvent:(CGPoint)cp cpRe:(CGPoint)cpRe
 {
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cp);
+        self.quysAdviceClickEventBlockItem(cp,cpRe);
     }
 }
 

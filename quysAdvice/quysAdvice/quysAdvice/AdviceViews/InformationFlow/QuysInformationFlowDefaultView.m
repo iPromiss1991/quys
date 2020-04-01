@@ -152,10 +152,8 @@
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
     if (self.quysAdviceClickEventBlockItem)
     {
-        self.quysAdviceClickEventBlockItem(cpBegainResult);
+        self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
     }
-    
-    
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender
@@ -163,6 +161,7 @@
     self.frame = CGRectZero;
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
+
     if (self.quysAdviceCloseEventBlockItem)
        {
            self.quysAdviceCloseEventBlockItem();

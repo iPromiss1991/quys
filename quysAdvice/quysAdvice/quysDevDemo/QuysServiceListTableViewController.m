@@ -18,8 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"广告类型";
-    
-    
+    self.tableView.backgroundColor = [UIColor purpleColor];
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
@@ -41,6 +41,7 @@
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    cell.backgroundView.backgroundColor = [UIColor purpleColor];
     [cell.textLabel setText:self.arrServiceList[indexPath.row]];
     // Configure the cell...
     

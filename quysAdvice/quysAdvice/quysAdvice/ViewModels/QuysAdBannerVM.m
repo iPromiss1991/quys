@@ -69,14 +69,13 @@
     kWeakSelf(self)
     //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
     QuysAdBanner *adView = [[QuysAdBanner alloc]initWithFrame:self.cgFrame viewModel:self];
-    [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
     
     //点击事件
-    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp) {
-        [weakself interstitialOnClick:cp];
-        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:service:)])
+    adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself interstitialOnClick:cp cpRe:cpRe];
+        if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
         {
-            [weakself.delegate quys_interstitialOnClick:cp service:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -104,7 +103,8 @@
 
 #pragma mark - Event
 
-- (void)interstitialOnClick:(CGPoint)cpClick
+
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     if ([self.adView isMemberOfClass:[QuysAdBanner class]])
@@ -115,7 +115,7 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
@@ -132,7 +132,7 @@
                      [rootVC quys_presentViewController:webVC animated:YES completion:^{
                      }];
                 }
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeHtmlLink:
@@ -140,25 +140,25 @@
                 QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
                 UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
                 [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
                 }];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstore:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppAppstoreSecond:
             {
                 [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick];
+                [self updateClickAndUpload:cpClick cpRe:cpReClick];
             }
                 break;
             case QuysAdviceActiveTypeDownAppWebUrl:
             {
-                [self getRealDownUrl:self.adModel.downUrl point:cpClick];
+                [self getRealDownUrl:self.adModel.downUrl point:cpClick cpRe:cpReClick];
             }
                 break;
             default:
@@ -173,25 +173,25 @@
     
 }
 
-- (void)updateClickAndUpload:(CGPoint)cpClick
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.clickeUploadEnable)
     {
-        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-        //更新点击坐标
-        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-        
-        [self updateReplaceDictionary:kClickUPX value:strCpX];
-        [self updateReplaceDictionary:kClickUPY value:strCpY];
-        self.adModel.statisticsModel.clicked = YES;
-        [self uploadServer:self.adModel.clkTracking];
+    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+    //更新点击坐标
+    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+    
+    [self updateReplaceDictionary:kClickUPX value:strCpX];
+    [self updateReplaceDictionary:kClickUPY value:strCpY];
+    self.adModel.statisticsModel.clicked = YES;
+    [self uploadServer:self.adModel.clkTracking];
     }
 }
 
 
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -207,11 +207,11 @@
                 [weakself openUrl:model.dstlink];
             }
             if (!kISNullString(model.clickid))
-            {
-                [weakself openUrl:model.dstlink];
-                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                [weakself updateClickAndUpload:cpClick];
-            }
+                {
+                    [weakself openUrl:model.dstlink];
+                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
+                }
         }
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         
@@ -230,7 +230,6 @@
     {
     }
 }
-
 
 
 
