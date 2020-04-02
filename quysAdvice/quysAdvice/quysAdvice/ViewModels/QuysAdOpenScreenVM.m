@@ -228,6 +228,10 @@
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        
+        NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
+        NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
+        
         //更新点击坐标
         [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
         [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
@@ -235,11 +239,11 @@
         [self updateReplaceDictionary:kClickUPX value:strCpX];
         [self updateReplaceDictionary:kClickUPY value:strCpY];
         //
-        [self updateReplaceDictionary:kRE_DOWN_X value:strCpX];
-        [self updateReplaceDictionary:k_RE_DOWN_Y value:strCpY];
+        [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
         
-        [self updateReplaceDictionary:k_RE_UP_X value:strCpX];
-        [self updateReplaceDictionary:k_RE_UP_Y value:strCpY];
+        [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
         [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
 
         self.adModel.statisticsModel.clicked = YES;
@@ -322,7 +326,6 @@
     NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
     AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
     NSInteger totalSecond = urlAsset.duration.value / urlAsset.duration.timescale;
-    NSLog(@"计算视频长度 = %ld",(long)totalSecond);
     return totalSecond;
 }
 

@@ -85,15 +85,15 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *strUserAgent =@"" ;
         NSString *strStored = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
-           if (!kISNullString(strStored))
-           {
-               strUserAgent = strStored;
-               weakself.strUserAgent = strUserAgent;
-               [weakself configUserAgent];
-           }else
-           {
-               [weakself configUserAgent];
-           }
+        if (!kISNullString(strStored))
+        {
+            strUserAgent = strStored;
+            weakself.strUserAgent = strUserAgent;
+            [weakself configUserAgent];
+        }else
+        {
+            [weakself configUserAgent];
+        }
     });
 }
 
@@ -124,17 +124,21 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 - (NSMutableDictionary*)combineReplaceKeyAndValues
 {
     
-    NSMutableDictionary *dicM = [[NSMutableDictionary alloc]initWithObjectsAndKeys:
-                                 kResponeAdWidth,@"",
-                                 kResponeAdHeight,@"",
-                                 kRealAdWidth,@"",
-                                 kRealAdHeight,@"",
-                                 kClickInsideDownX,@"",
-                                 kClickInsideDownY,@"",
-                                 kClickUPX,@"",
-                                 kClickUPY,@"",
-                                 kVideoScene,@"1",
-                                 nil];
+    NSMutableDictionary *dicM = [[NSMutableDictionary alloc]initWithDictionary:@{
+        kResponeAdWidth:@"",
+        kResponeAdHeight:@"",
+        kRealAdWidth:@"",
+        kRealAdHeight:@"",
+        kClickInsideDownX:@"",
+        kClickInsideDownY:@"",
+        kClickUPX:@"",
+        kClickUPY:@"",
+        kVideoScene:@"1",
+        kLATITUDE:@"-999",
+        kLONGITUDE:@"-999",
+        kLAT:@"-999",
+        kLON:@"-999"
+    }];
     return dicM;
 }
 
@@ -153,16 +157,16 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     if (!kISNullString(strStored))
     {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-             strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:kGetNetworkIpKey];
-             if (strIPAddress.length)
-             {
-                 [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
-                 weakself.strIPAddress = strIPAddress;
-                 weakself.searchIpEnable = NO;
-             }else
-             {
-                 weakself.searchIpEnable = YES;
-             };
+            strIPAddress = [[self quys_deviceWANIPAdress] valueForKey:kGetNetworkIpKey];
+            if (strIPAddress.length)
+            {
+                [[QuysFileManager shareManager] saveToUserdefault:kNetworkIp contents:strIPAddress ];
+                weakself.strIPAddress = strIPAddress;
+                weakself.searchIpEnable = NO;
+            }else
+            {
+                weakself.searchIpEnable = YES;
+            };
         });
     }else
     {
@@ -184,44 +188,44 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 
 /// 获取网络信息
 /*返回字段如下：{
-    area = "";
-    "area_id" = "";
-    city = "\U53a6\U95e8";
-    "city_id" = 350200;
-    country = "\U4e2d\U56fd";
-    "country_id" = CN;
-    county = XX;
-    "county_id" = xx;
-    ip = "183.250.89.75";
-    isp = "\U79fb\U52a8";
-    "isp_id" = 100025;
-    region = "\U798f\U5efa";
-    "region_id" = 350000;
-}*/
+ area = "";
+ "area_id" = "";
+ city = "\U53a6\U95e8";
+ "city_id" = 350200;
+ country = "\U4e2d\U56fd";
+ "country_id" = CN;
+ county = XX;
+ "county_id" = xx;
+ ip = "183.250.89.75";
+ isp = "\U79fb\U52a8";
+ "isp_id" = 100025;
+ region = "\U798f\U5efa";
+ "region_id" = 350000;
+ }*/
 -(NSDictionary *)quys_deviceWANIPAdress
 {
-   __block NSMutableDictionary *ipDic = [NSMutableDictionary new] ;
+    __block NSMutableDictionary *ipDic = [NSMutableDictionary new] ;
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-//         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];//http://pv.sohu.com/cityjson
-            NSURL *ipURL = [NSURL URLWithString:kGetNetworkIpUrl];//
+        //         NSURL *ipURL = [NSURL URLWithString:@"http://ip.taobao.com/service/getIpInfo2.php?ip=myip"];//http://pv.sohu.com/cityjson
+        NSURL *ipURL = [NSURL URLWithString:kGetNetworkIpUrl];//
         NSError *error;
-            NSMutableString *ip = [NSMutableString stringWithContentsOfURL:ipURL encoding:NSUTF8StringEncoding error:&error];
-           //判断返回字符串是否为所需数据
-           if ([ip hasPrefix:@"var returnCitySN = "])
-           {
-               NSLog(@"<<<<<<<<<<<<<%@   %@ ",error ,ip);
-               //对字符串进行处理，然后进行json解析
-               //删除字符串多余字符串
-               NSRange range = NSMakeRange(0, 19);
-               [ip deleteCharactersInRange:range];
-               NSString * nowIp =[ip substringToIndex:ip.length-1];
-               //将字符串转换成二进制进行Json解析
-               NSData * data = [nowIp dataUsingEncoding:NSUTF8StringEncoding];
-               ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-           }else
-           {
-                ipDic = [[NSMutableDictionary alloc]initWithDictionary:@{kGetNetworkIpKey:@""}];
-           }
+        NSMutableString *ip = [NSMutableString stringWithContentsOfURL:ipURL encoding:NSUTF8StringEncoding error:&error];
+        //判断返回字符串是否为所需数据
+        if ([ip hasPrefix:@"var returnCitySN = "])
+        {
+            NSLog(@"获取ip地址：\n<<<<<<<<<<<<<error:%@   \n%@ ",error ,ip);
+            //对字符串进行处理，然后进行json解析
+            //删除字符串多余字符串
+            NSRange range = NSMakeRange(0, 19);
+            [ip deleteCharactersInRange:range];
+            NSString * nowIp =[ip substringToIndex:ip.length-1];
+            //将字符串转换成二进制进行Json解析
+            NSData * data = [nowIp dataUsingEncoding:NSUTF8StringEncoding];
+            ipDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        }else
+        {
+            ipDic = [[NSMutableDictionary alloc]initWithDictionary:@{kGetNetworkIpKey:@""}];
+        }
     });
     return ipDic;
 }
@@ -230,6 +234,10 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 - (NSString*)replaceSpecifiedString:(NSString*)strForReplace
 {
     __block NSString *strTemp = strForReplace;
+    [[self dicMReplace] setObject:[NSDate quys_getNowTimeTimestamp] forKey:kClientTimeStamp];
+    [[self dicMReplace] setObject:[NSDate quys_getNowTimeSecond] forKey:kEVENT_TIME];
+    [[self dicMReplace] setObject:[NSDate quys_getNowTimeTimestamp] forKey:kMILI_MISECONDS];
+    //
     [[self dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
         if ([strTemp containsString:key])
         {
@@ -245,7 +253,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 {
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];//sharedManager：之前误写为manager，导致不能按预期运行
     [manager startMonitoring];
-   [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         /*
          AFNetworkReachabilityStatusUnknown          = -1,
          AFNetworkReachabilityStatusNotReachable     = 0,
@@ -283,7 +291,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
                 break;
         }
     }];
-
+    
     [manager startMonitoring];
 }
 
@@ -291,55 +299,53 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 #pragma mark - Runloop闲时获取数据
 - (void)addMainObserver
 {
-      CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
-
-      switch (activity) {
-
+    CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+        
+        switch (activity) {
+                
             case kCFRunLoopEntry:
-//            NSLog(@"###cmm###进入kCFRunLoopEntry");
-            break;
-
+                //            NSLog(@"###cmm###进入kCFRunLoopEntry");
+                break;
+                
             case kCFRunLoopBeforeTimers:
-//            NSLog(@"###cmm###即将处理Timer事件");
-            break;
-
+                //            NSLog(@"###cmm###即将处理Timer事件");
+                break;
+                
             case kCFRunLoopBeforeSources:
-//            NSLog(@"###cmm###即将处理Source事件");
-            break;
-
+                //            NSLog(@"###cmm###即将处理Source事件");
+                break;
+                
             case kCFRunLoopBeforeWaiting:
-          {
-//              NSLog(@"###cmm###即将休眠");
-
-              if (kISNullString(self.strIPAddress) && self.searchIpEnable)
-              {
-                  NSLog(@"######查询ip");
-                  [self quys_getIPAdderss];
-              }
-              if (kISNullString(self.strUserAgent) && self.searchUser_AgentEnable)
-              {
-                  NSLog(@"######查询user_agent");
-                  [self quys_UserAgent];
-              }
-          }
-            break;
-
+            {
+                //              NSLog(@"###cmm###即将休眠");
+                
+                if (kISNullString(self.strIPAddress) && self.searchIpEnable)
+                {
+                    [self quys_getIPAdderss];
+                }
+                if (kISNullString(self.strUserAgent) && self.searchUser_AgentEnable)
+                {
+                    [self quys_UserAgent];
+                }
+            }
+                break;
+                
             case kCFRunLoopAfterWaiting:
-//            NSLog(@"###cmm###被唤醒");
-            break;
-
+                //            NSLog(@"###cmm###被唤醒");
+                break;
+                
             case kCFRunLoopExit:
-//            NSLog(@"###cmm###退出RunLoop");
-            break;
-
+                //            NSLog(@"###cmm###退出RunLoop");
+                break;
+                
             default:
-            break;
-           }
-      });
-
-      CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopDefaultMode);
-
- 
+                break;
+        }
+    });
+    
+    CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopDefaultMode);
+    
+    
 }
 
 
@@ -360,7 +366,7 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 {
     if (_dicMReplace == nil)
     {
-      _dicMReplace = [self combineReplaceKeyAndValues];
+        _dicMReplace = [self combineReplaceKeyAndValues];
     }
     return _dicMReplace;
 }

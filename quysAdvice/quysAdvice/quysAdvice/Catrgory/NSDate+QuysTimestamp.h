@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 获取当前时间戳 （以毫秒为单位）
 +(NSString *)quys_getNowTimeTimestamp;
 
+
+/// 获取当前时间戳 （以毫秒为单位）
++(NSString *)quys_getNowTimeSecond;
 @end
 
 NS_ASSUME_NONNULL_END

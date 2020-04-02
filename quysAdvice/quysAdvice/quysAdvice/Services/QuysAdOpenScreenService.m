@@ -102,10 +102,10 @@
     NSLog(@"启动图展示时长：%lf",differFinal);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(differFinal* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.adviceView.hidden = NO;
-
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self removeBackgroundImageView];
-        });        NSLog(@"quys_date =%@",[NSDate  date]);
+            [self removeBackgroundImageView];
+        });
     });
 }
 
@@ -129,6 +129,20 @@
     [self removeWindow:self.adviceView];
 }
 
+/// 延时移除window & 遮罩底图
+- (void)removeBackgroundImageViewAndWindowDelay
+{
+    NSDate *dateCurrent = [NSDate date];
+    NSTimeInterval differ = [dateCurrent timeIntervalSinceDate:self.dateInitRequest];
+    NSTimeInterval differFinal = self.bgShowDuration - differ >=0?(self.bgShowDuration - differ):0;
+    NSLog(@"启动图展示时长：%lf",differFinal);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(differFinal* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self removeBackgroundImageView];
+        [self removeWindow:self.adviceView];
+    });
+}
+
+
 
 /// 移除遮罩底图
 - (void)removeBackgroundImageView
@@ -149,11 +163,11 @@
     }
     __block UIWindow* windowTemp = window;
     //淡入淡出效果
-//    CATransition * ani = [CATransition animation];
-//    ani.type = kCATransitionFade;
-//    ani.subtype = kCATransitionFromRight;
-//    ani.duration = .2;
-//    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
+    //    CATransition * ani = [CATransition animation];
+    //    ani.type = kCATransitionFade;
+    //    ani.subtype = kCATransitionFromRight;
+    //    ani.duration = .2;
+    //    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         windowTemp.hidden = YES;
@@ -178,7 +192,7 @@
         [self showAdView];
     }else
     {
-        [self removeBackgroundImageViewAndWindow];
+        [self removeBackgroundImageViewAndWindowDelay];
         if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
         {
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:kQuysNetworkParsingErrorCode userInfo:@{NSUnderlyingErrorKey:@"数据解析异常！"}];
@@ -186,13 +200,13 @@
         }
         
     }
-    NSLog(@"广告<<<<<<<<%@",request.responseString);
+    NSLog(@"原始响应数据：\n<<<<<<<<%@",request.responseObject);
 }
 
 
 - (void)requestFailed:(__kindof YTKBaseRequest *)request
 {
-    [self removeBackgroundImageViewAndWindow];
+    [self removeBackgroundImageViewAndWindowDelay];
     if ([self.delegate respondsToSelector:@selector(quys_requestFial:error:)])
     {
         [self.delegate quys_requestFial:self error:request.error];

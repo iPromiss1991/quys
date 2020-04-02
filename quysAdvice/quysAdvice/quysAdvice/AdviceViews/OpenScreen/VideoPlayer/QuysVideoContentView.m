@@ -37,6 +37,7 @@
     [self.layer addSublayer:self.quysAvPalyerLayer];
 
     QuysVideoCoverView *coverView = [[QuysVideoCoverView alloc] initWithFrame:CGRectZero];
+    coverView.alpha = .0;
     coverView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
         [weakself clickEvent:cp reCp:cpRe];
     };
@@ -169,7 +170,9 @@
     _quysPlayUrl = quysPlayUrl;
     [self.quysAvPlayer replaceCurrentItemWithPlayerItem:self.quysAvPlayerItem];
     [self.quysAvPlayer play];
-}
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.coverView.alpha = 1;
+    });}
 
 
 

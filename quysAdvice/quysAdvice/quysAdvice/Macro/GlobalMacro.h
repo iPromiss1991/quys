@@ -222,7 +222,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kShowTimeStemp @"__SHOW_TIME__"
 #define kClickTimeStemp @"__CLICK_TIME__"
 //相对坐标
-#define kRE_DOWN_X @"__RE_DOWN_X__"
+#define k_RE_DOWN_X @"__RE_DOWN_X__"
 #define k_RE_DOWN_Y @"__RE_DOWN_Y__"
 
 #define k_RE_UP_X @"__RE_UP_X__"
@@ -243,6 +243,30 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 #define kVideoType @"__TYPE__"
 #define kVideoBeavior @"__BEAVIOR__"
 #define kVideoStatus @"__STATUS__"
+
+//
+#define kEVENT_TIME @"__EVENT_TIME__"//!<秒级
+#define kEVENT_DURATION @"__DURATION__"//!<秒级
+
+
+
+#define kCLICK_TIME_START @"_CLICK_TIME_START_"//!<毫秒级（点击事件开始时间戳）
+#define kCLICK_TIME_END @"_CLICK_TIME_END_"//!<毫秒级（点击事件结束时间戳）
+
+#define kLATITUDE @"__LATITUDE__" //!< 纬度
+#define kLONGITUDE @"__LONGITUDE__"//!< 经度
+#define kLAT @"__LAT__"
+#define kLON @"__LON__"
+
+
+#define kM_DURATION @"__M_DURATION__"//!<毫秒级（用户点击时视频已经播放的毫秒数）
+#define kMILI_MISECONDS @"__MILI_MISECONDS__"//!<毫秒级（（事件触发的毫秒数）
+
+//目前的方案是：“点击”和“抬起”事件共用一个CGPoint
+#define kCLICK_DOWN_X @"__CLICK_DOWN_X__"
+#define kCLICK_DOWN_Y @"__CLICK_DOWN_Y__"
+#define kCLICK_UP_X @"__CLICK_UP_X__"
+#define kCLICK_UP_Y @"__CLICK_UP_Y__"
 
 
 #pragma mark - 业务通知

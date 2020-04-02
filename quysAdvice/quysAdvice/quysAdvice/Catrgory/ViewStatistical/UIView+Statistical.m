@@ -179,7 +179,6 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         BOOL coverByShieldV = NO;
         if (self.hlj_trackModel.shieldView) {
             CGRect shieldViewRect = [self.hlj_trackModel.shieldView convertRect:self.hlj_trackModel.shieldView.bounds toView:window];
-            NSLog(@"%@ ===== %@ ==== %ld", NSStringFromCGRect(shieldViewRect), NSStringFromCGRect(self.hlj_trackModel.shieldView.bounds), self.hlj_trackModel.position);
             BOOL isShieldVRectValid = !CGRectIsEmpty(shieldViewRect) || !CGRectIsNull(shieldViewRect);
             coverByShieldV = (CGRectContainsRect(shieldViewRect, rect) && isShieldVRectValid);
             
@@ -202,10 +201,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         if (self.alpha <= 0.1) return NO;
         
         if (!self.window) return NO;
-        
-        if ([[self class] isMemberOfClass:NSClassFromString(@"QuysAdBanner")]) {
-            NSLog(@"QuysAdBanner");
-        }
+
         if (![self.nextResponder isKindOfClass:[UIViewController class]])
         {
              if (self.superview && ![self.superview.nextResponder isKindOfClass:[UIViewController class]] && !self.superview.hlj_viewVisible) {
@@ -239,7 +235,6 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
         BOOL coverByShieldV = NO;
         if (self.hlj_trackModel.shieldView) {
             CGRect shieldViewRect = [self.hlj_trackModel.shieldView convertRect:self.hlj_trackModel.shieldView.bounds toView:window];
-            NSLog(@"%@ ===== %@ ==== %ld", NSStringFromCGRect(shieldViewRect), NSStringFromCGRect(self.hlj_trackModel.shieldView.bounds), self.hlj_trackModel.position);
             BOOL isShieldVRectValid = !CGRectIsEmpty(shieldViewRect) || !CGRectIsNull(shieldViewRect);
             coverByShieldV = (CGRectContainsRect(shieldViewRect, rect) && isShieldVRectValid);
             
@@ -281,7 +276,7 @@ TT_FIX_CATEGORY_BUG(qys_Statistical)
 
 #pragma mark - 记录有效曝光 输出动作
 - (void)hlj_viewStatistical {
-    NSLog(@"曝光：class:%@    hlj_trackTag:%@,       position:%zd",[self class],self.hlj_trackModel.tag,self.hlj_trackModel.position);
+    NSLog(@"曝光：class:%@    hlj_trackTag:%@,       position:%zd\n",[self class],self.hlj_trackModel.tag,self.hlj_trackModel.position);
     [self hlj_viewStatisticalCallBack];
 }
 

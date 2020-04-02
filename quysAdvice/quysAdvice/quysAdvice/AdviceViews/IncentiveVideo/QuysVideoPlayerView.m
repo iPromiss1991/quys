@@ -114,7 +114,6 @@
 /// 播放视频
 - (void)playVideo
 {
-    NSLog(@">>>%lf",CMTimeGetSeconds(self.player.currentItem.currentTime));
     if (self.player.rate)
     {
         [self.player pause];
@@ -124,6 +123,8 @@
             self.quysAdviceSuspendCallBackBlockItem();
         }
         [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)) forKey:kVideoEndTime];
+        [[[QuysAdviceManager shareManager] dicMReplace] setObject:kStringFormat(@"%lf",CMTimeGetSeconds(self.player.currentItem.currentTime)*1000) forKey:kM_DURATION];
+
     }else
     {
         [self.playButtonView hiddenView];
@@ -195,8 +196,7 @@
     NSInteger currentSec = (NSInteger)currentTime % 60;
     NSString *currentTimeStr = [NSString stringWithFormat:@"%02ld:%02ld",currentMin,currentSec];
     self.currentTime = currentTimeStr;
-//    NSLog(@"=============%@       %@",totalTimeStr,currentTimeStr);
-
+ 
     if ([self.delegate respondsToSelector:@selector(quys_videoPlay:isCorrectStatus:)])
     {
         [self.delegate quys_videoPlay:@{kAVPlayerItemTotalTime:[NSString stringWithFormat:@"%02ld:%02ld",totalMin,totalSec],kAVPlayerItemCurrentTime:[NSString stringWithFormat:@"%02ld:%02ld",currentMin,currentSec]} isCorrectStatus:isNormalStatus];
@@ -370,8 +370,7 @@
               NSTimeInterval totalTime = CMTimeGetSeconds(weakSelf.player.currentItem.duration);//总时长
               NSTimeInterval currentTime = time.value / time.timescale;//当前时间进度
               weakSelf.playProgress= currentTime / totalTime;
-//        NSLog(@"%lf   %lf  %lf",currentTime,totalTime,floor(totalTime));
-
+ 
         if (currentTime >0 & totalTime > 0 & currentTime <= floor(totalTime ) & !weakSelf.isPlayToEnd)
         {
              [weakSelf quys_progressCallback];

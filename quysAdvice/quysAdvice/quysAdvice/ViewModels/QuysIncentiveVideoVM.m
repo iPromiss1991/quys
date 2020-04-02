@@ -108,7 +108,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlaystart:)])
         {
-             [weakself.delegate quys_IncentiveVideoPlaystart:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoPlaystart:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -124,7 +124,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlayEnd:)])
         {
-             [weakself.delegate quys_IncentiveVideoPlayEnd:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoPlayEnd:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -135,7 +135,7 @@
         [weakself uploadProgressEvent:progress];
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoPlayProgress:service:)])
         {
-             [weakself.delegate quys_IncentiveVideoPlayProgress:progress service:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoPlayProgress:progress service:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -149,7 +149,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoMuteplay:)])
         {
-             [weakself.delegate quys_IncentiveVideoMuteplay:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoMuteplay:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -163,7 +163,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoUnMuteplay:)])
         {
-             [weakself.delegate quys_IncentiveVideoUnMuteplay:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoUnMuteplay:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -178,14 +178,14 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnAdClose:)])
         {
-             [weakself.delegate quys_endViewInterstitialOnAdClose:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_endViewInterstitialOnAdClose:(QuysAdBaseService*)weakself.service];
         }
     };
     
     //尾帧点击
     adView.quysAdviceEndViewClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
-            [weakself interstitialEndviewOnClick:cp cpRe:cpRe];
-      
+        [weakself interstitialEndviewOnClick:cp cpRe:cpRe];
+        
         if ([weakself.delegate respondsToSelector:@selector(quys_endViewInterstitialOnClick:relativeClickPoint:service:)])
         {
             [weakself.delegate quys_endViewInterstitialOnClick:cp relativeClickPoint:cpRe  service:(QuysAdBaseService*)weakself.service];
@@ -203,7 +203,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoSuspend:)])
         {
-             [weakself.delegate quys_IncentiveVideoSuspend:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoSuspend:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -217,7 +217,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoResume:)])
         {
-             [weakself.delegate quys_IncentiveVideoResume:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoResume:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -240,7 +240,7 @@
         }
         if ([weakself.delegate respondsToSelector:@selector(quys_IncentiveVideoLoadSuccess:)])
         {
-             [weakself.delegate quys_IncentiveVideoLoadSuccess:(QuysAdBaseService*)weakself.service];
+            [weakself.delegate quys_IncentiveVideoLoadSuccess:(QuysAdBaseService*)weakself.service];
         }
     };
     
@@ -311,18 +311,37 @@
 
 
 
-- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpRe
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.clickeUploadEnable)
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        
+        NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
+        NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
+        
         //更新点击坐标
         [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
         [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
         
         [self updateReplaceDictionary:kClickUPX value:strCpX];
         [self updateReplaceDictionary:kClickUPY value:strCpY];
+        //
+        [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
+        //
+        [self updateReplaceDictionary:kCLICK_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:kCLICK_DOWN_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:kCLICK_UP_X value:strReCpX];
+        [self updateReplaceDictionary:kCLICK_UP_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",self.showDuration)];
+
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.reportVideoClickUrl];
     }
@@ -373,18 +392,37 @@
 
 
 
-- (void)updateEndviewClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpRe
+- (void)updateEndviewClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     if (self.adModel.endViewClickeUploadEnable)
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        
+        NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
+        NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
+        
         //更新点击坐标
         [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
         [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
         
         [self updateReplaceDictionary:kClickUPX value:strCpX];
         [self updateReplaceDictionary:kClickUPY value:strCpY];
+        //
+        [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
+        //
+        [self updateReplaceDictionary:kCLICK_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:kCLICK_DOWN_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:kCLICK_UP_X value:strReCpX];
+        [self updateReplaceDictionary:kCLICK_UP_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",self.showDuration)];
+        
         self.adModel.statisticsModel.endViewClicked = YES;
         [self updateClientTimeStamp];
         [self uploadServer:self.adModel.reportLandingPageClickUrl];
@@ -442,8 +480,8 @@
 
 -(void)interstitialOnInterrupt
 {
-        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
-        [self uploadServer:self.adModel.reportVideoInterruptUrl];
+    [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+    [self uploadServer:self.adModel.reportVideoInterruptUrl];
 }
 
 
@@ -476,6 +514,7 @@
                 {
                     [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
                     obj.isReported = YES;
+                    NSLog(@"上报进度：%lf\n",obj.checkPoint);
                 }
             }else
             {
@@ -483,10 +522,11 @@
                 {
                     [[QuysUploadApiTaskManager shareManager] addTaskUrls:obj.urls];
                     obj.isReported = YES;
+                    NSLog(@"上报进度：%lf\n",obj.checkPoint);
+                    
                 }
             }
         }
-        NSLog(@"======%lf",obj.checkPoint);
     }];
 }
 
@@ -507,7 +547,7 @@
 -(NSString *)desc
 {
     return self.adModel.desc;
-
+    
 }
 
 -(NSString *)strTitle

@@ -296,12 +296,24 @@
     {
         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+        
+        NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
+        NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
+        
         //更新点击坐标
         [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
         [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
         
         [self updateReplaceDictionary:kClickUPX value:strCpX];
         [self updateReplaceDictionary:kClickUPY value:strCpY];
+        //
+        [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
+        
+        [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
+        [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
+        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.clkTracking];
     }

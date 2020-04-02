@@ -55,11 +55,11 @@ static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
                 NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
                 NSURLSessionDataTask *task = [session dataTaskWithURL:requestUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                    NSLog(@"完成请求:%@==%@",obj,[NSThread currentThread]);
+                    NSLog(@"上报请求完成:%@d\n",obj);
                     dispatch_semaphore_signal(self.semaphore);
                 }];
                 [task resume];
-                NSLog(@"发起请求:%@==%@",obj,[NSThread currentThread]);
+                NSLog(@"上报请求:%@\n",obj);
             }];
         }
     });

@@ -41,7 +41,7 @@
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
-    cell.backgroundView.backgroundColor = [UIColor purpleColor];
+    cell.contentView.backgroundColor = [UIColor purpleColor];
     [cell.textLabel setText:self.arrServiceList[indexPath.row]];
     // Configure the cell...
     
