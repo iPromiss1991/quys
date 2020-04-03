@@ -27,7 +27,7 @@
 
 
 @implementation QuysAdSplashService
-- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nonnull UIView *)parentView
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate parentView:(nullable UIView *)parentView
 {
     if (self = [super init])
     {
@@ -88,7 +88,7 @@
 - (UIView*)showAdView
 {
     self.parentView.hlj_viewVisible = YES;
-    [self.parentView addSubview:self.adviceView];
+    [self.parentView?self.parentView:[UIApplication sharedApplication].delegate.window addSubview:self.adviceView];
     return self.adviceView;
 }
 

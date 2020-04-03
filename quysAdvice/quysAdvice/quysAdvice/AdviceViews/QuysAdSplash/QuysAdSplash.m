@@ -12,7 +12,7 @@
 @property (nonatomic,strong) UIImageView *imgView;
 
 @property (nonatomic,strong) UIButton *btnClose;
-
+@property (nonatomic,assign) CGRect cgFrame;
 
 @end
 
@@ -22,16 +22,18 @@
 
 - (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdSplashVM *)viewModel
 {
-    if (self = [super initWithFrame:frame])
+    if (self = [super initWithFrame:[UIScreen  mainScreen].bounds])
     {
         [self createUI];
         self.vm = viewModel;
+        self.cgFrame = frame;
     }
     return self;
 }
 
 - (void)createUI
 {
+    self.backgroundColor = kRGB16(MaskColor1, .8);
     UIView *viewContain = [[UIView alloc]init];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
@@ -58,7 +60,9 @@
 - (void)updateConstraints
 {
     [self.viewContain mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self);
+        make.center.mas_equalTo(self);
+        make.width.mas_equalTo(self.frame.size.width? self.cgFrame.size.width:0);
+        make.height.mas_equalTo(self.frame.size.height?self.cgFrame.size.height:0);
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -104,14 +108,14 @@
     {
         self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
     }
+    self.frame = CGRectZero;
+    [self removeFromSuperview];
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
     self.frame = CGRectZero;
-    [self setNeedsUpdateConstraints];
-    [self updateConstraintsIfNeeded];
-
+    [self removeFromSuperview];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

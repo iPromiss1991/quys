@@ -65,7 +65,7 @@
                                                                    key:@"BA705F17304101A531E474CD8BBB5821"
                                                                 cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200)
                                                          eventDelegate:self
-                                                            parentView:viewContain];
+                                                            parentView:self.view];
             }
             
          
@@ -130,12 +130,14 @@
                 make.height.mas_greaterThanOrEqualTo(400);
             }];
             
-            [self.viewContainBottom mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(self.adviceView.mas_bottom);
-                make.left.right.mas_equalTo(self.viewContain);
-                make.bottom.mas_equalTo(self.viewContain);
-                make.height.mas_greaterThanOrEqualTo(100);
-            }];
+            if (![self.title containsString:@"插屏"]) {
+                [self.viewContainBottom mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(self.adviceView.mas_bottom);
+                    make.left.right.mas_equalTo(self.viewContain);
+                    make.bottom.mas_equalTo(self.viewContain);
+                    make.height.mas_greaterThanOrEqualTo(100);
+                }];
+            }
         }
     }
     
