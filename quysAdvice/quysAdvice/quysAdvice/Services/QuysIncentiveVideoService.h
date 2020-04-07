@@ -20,12 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param businessID 业务ID
 /// @param bussinessKey 业务Key
 /// @param cgFrame 弹窗frame
-/// @param imgReplace 弹窗背景视图
 /// @param delegate 回调代理
 - (instancetype)initWithID:businessID
                        key:bussinessKey
                     cgRect:(CGRect)cgFrame
-           backgroundImage:(UIImage*)imgReplace
              eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate;
 
 

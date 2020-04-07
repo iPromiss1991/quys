@@ -24,7 +24,7 @@
 
 
 @implementation QuysIncentiveVideoService
-- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  backgroundImage:(UIImage*)imgReplace eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate 
+- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate
 {
     if (self = [super init])
     {
@@ -33,14 +33,14 @@
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
         self.cgFrame = cgFrame;
-        [self config:imgReplace];
+        [self config];
     }return self;
 }
 
 #pragma mark - PrivateMethod
 
 
-- (void)config:(UIImage*)imgReplace
+- (void)config
 {
     //配置api 并请求数据
     QuysIncentiveVideoApi *api = [[QuysIncentiveVideoApi alloc]init];
@@ -48,12 +48,12 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    [self loadAdViewNow:imgReplace];
+    [self loadAdViewNow];
 }
 
 
 /// 开始加载视图
-- (void)loadAdViewNow:(UIImage*)imgReplace
+- (void)loadAdViewNow 
 {
     if ([[QuysAdviceManager shareManager] loadAdviceEnable])
     {

@@ -10,7 +10,7 @@
 #import <AFNetworking.h>
 #import <Masonry/Masonry.h>
 
-@interface QuysDemoViewController ()
+@interface QuysDemoViewController ()<QuysIncentiveVideoDelegate>
 @property (nonatomic,strong) QuysAdBaseService *service;
 @property (nonatomic, strong) UIView *viewContain;//!< <#Explement #>
 @property (nonatomic, strong) UIView *viewContainBottom;//!< <#Explement #>
@@ -217,8 +217,7 @@
                    self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jl_qys_ios_test"
                                                                            key:@"52C4305558DA476616E2B5B02C9DD315"
                                                                         cgRect:[UIScreen mainScreen].bounds
-                                                               backgroundImage:[UIImage imageNamed:@"Default-568h@2x"]
-                                                                 eventDelegate:self  ];
+                                                                  eventDelegate:self  ];
                }
         }
     else
@@ -228,8 +227,7 @@
                    self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp"
                                                                            key:@"1262DF2885ACB4EEC8FF0486502E7A6D"
                                                                         cgRect:[UIScreen mainScreen].bounds
-                                                               backgroundImage:[UIImage imageNamed:@"Default-568h@2x"]
-                                                                 eventDelegate:self  ];
+                                                                  eventDelegate:self  ];
                }
         }
     
