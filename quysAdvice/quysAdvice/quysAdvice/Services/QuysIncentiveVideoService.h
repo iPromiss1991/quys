@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
                        key:bussinessKey
                     cgRect:(CGRect)cgFrame
            backgroundImage:(UIImage*)imgReplace
-             eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate;
+             eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate;
 
 
 
