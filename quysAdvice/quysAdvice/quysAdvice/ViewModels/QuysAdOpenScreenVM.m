@@ -287,7 +287,7 @@
     {
         [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
         [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
-        [self uploadServer:self.adModel.clkTracking];
+        [self uploadServer:self.adModel.impTracking];
         self.adModel.statisticsModel.exposured = YES;
     }else
     {

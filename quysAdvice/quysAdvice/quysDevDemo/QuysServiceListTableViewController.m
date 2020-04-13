@@ -8,6 +8,8 @@
 
 #import "QuysServiceListTableViewController.h"
 #import "QuysDemoViewController.h"
+#import <quysAdvice/quysAdvice.h>
+
 @interface QuysServiceListTableViewController ()
 @property (nonatomic,strong) NSMutableArray *arrServiceList;
 
@@ -23,10 +25,20 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
+    self.tableView.frame = CGRectMake(0, CGRectGetMinY(self.tableView.frame), CGRectGetWidth(self.tableView.bounds), 300) ;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 //     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void)tengAi
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+         QuysTengAiTask * task =[QuysTengAiTask new];
+          [task start];
+    });
+}
+
 
 #pragma mark - Table view data source
 
@@ -110,6 +122,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 
 #pragma mark - Init

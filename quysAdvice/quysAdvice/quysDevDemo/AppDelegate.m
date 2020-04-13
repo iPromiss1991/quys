@@ -10,6 +10,7 @@
 #import <AFNetworking.h>
  #import "QuysServiceListTableViewController.h"
 #import <quysAdvice/quysAdvice.h>
+#import "QuysViewControllerB.h"
 @interface AppDelegate ()<QuysAdviceOpeenScreenDelegate>
 @property (nonatomic,strong) QuysAdOpenScreenService *service;
 
@@ -29,20 +30,32 @@
 {
     [[QuysAdviceManager shareManager] configSettings] ;
 
+//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.window.backgroundColor = [UIColor clearColor];
+//    QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
+//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
+//    [self.window makeKeyAndVisible];
+//
+//    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchIamge"];
+//    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc]
+//                                        initWithID:@"kp_ios_qys_test"
+//                                        key:@"206063F608B0A590F7ACCB7725207D37"
+//                                        cgRect:[UIScreen mainScreen].bounds
+//                                        launchScreenVC:viewController
+//                                        eventDelegate:self ];
+//    self.service = service;//需强引用该服务
+    ///
+    
+    
+    
+    
+    ///
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor clearColor];
-    QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
-    [self.window makeKeyAndVisible];
-
-    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchIamge"];
-    QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc]
-                                        initWithID:@"kp_ios_qys_test"
-                                        key:@"206063F608B0A590F7ACCB7725207D37"
-                                        cgRect:[UIScreen mainScreen].bounds
-                                        launchScreenVC:viewController
-                                        eventDelegate:self ];
-    self.service = service;//需强引用该服务
+       self.window.backgroundColor = [UIColor clearColor];
+       QuysViewControllerB *rootVC = [[QuysViewControllerB alloc] init];
+       self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
+       [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

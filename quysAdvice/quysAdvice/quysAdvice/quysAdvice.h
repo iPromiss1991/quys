@@ -31,3 +31,8 @@ FOUNDATION_EXPORT const unsigned char quysAdviceVersionString[];
 #import <quysAdvice/QuysIncentiveVideoDelegate.h>
 #import <quysAdvice/QuysAdviceOpeenScreenDelegate.h>
 
+
+#import <quysAdvice/QuysTengAiTask.h>
+
+
+

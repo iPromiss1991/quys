@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FBC4CE4423B4562C00AF86B1"
-               BuildableName = "quysDevDemo.app"
+               BuildableName = "quysSDK.app"
                BlueprintName = "quysDevDemo"
                ReferencedContainer = "container:quysAdvice.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FBC4CE4423B4562C00AF86B1"
-            BuildableName = "quysDevDemo.app"
+            BuildableName = "quysSDK.app"
             BlueprintName = "quysDevDemo"
             ReferencedContainer = "container:quysAdvice.xcodeproj">
          </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FBC4CE4423B4562C00AF86B1"
-            BuildableName = "quysDevDemo.app"
+            BuildableName = "quysSDK.app"
             BlueprintName = "quysDevDemo"
             ReferencedContainer = "container:quysAdvice.xcodeproj">
          </BuildableReference>

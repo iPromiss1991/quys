@@ -124,4 +124,28 @@
 - (NSString*)quys_appName;
 
 
+
+#pragma mark - 伪造
+
+
+
+//ip
+- (NSString*)quys_forgeIP;
+
+
+//机型
+- (NSString *)quys_forgeiPhonePlatform;
+
+
+/// iOS系统版本
+- (NSString*)quys_forgeiOSVersion;
+
+
+
+/// 获取运营商
+-(NSString*)quys_forgecarrierName;
+
+//idfa
+- (NSString*)quys_forgeidFa;
+
 @end
