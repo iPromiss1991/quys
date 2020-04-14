@@ -148,4 +148,7 @@
 //idfa
 - (NSString*)quys_forgeidFa;
 
+//ua
+- (NSString*)quys_forgeUserAgent:(NSString*)version;
+
 @end

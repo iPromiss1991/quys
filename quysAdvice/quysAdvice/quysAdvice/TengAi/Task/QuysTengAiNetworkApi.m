@@ -10,6 +10,15 @@
 
 #import "UIDevice+Hardware.h"
 #import "QuysMD5.h"
+
+@interface QuysTengAiNetworkApi()
+@property (nonatomic,strong) NSString *osv;
+@property (nonatomic,strong) NSString *userAgent;
+
+
+@end
+
+
 @implementation QuysTengAiNetworkApi
 
 
@@ -68,7 +77,7 @@
     [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
     
-    [dicM setObject:[device quys_forgeiOSVersion] forKey:@"osv"];
+    [dicM setObject:self.osv forKey:@"osv"];
 //    [dicM setObject:[device quys_serialno] forKey:@"serialno"];
     [dicM setObject:@([kStringFormat(@"%lf",kScreenWidth) integerValue]) forKey:@"sw"];
 
@@ -79,11 +88,11 @@
     [dicM setObject:@([ [device quys_getNetconnType] integerValue]) forKey:@"net"];
     
     [dicM setObject:@([[device quys_forgecarrierName] integerValue]) forKey:@"operatorType"];
-    [dicM setObject:[[QuysAdviceManager shareManager] strUserAgent] forKey:@"ua"];
+    [dicM setObject:self.userAgent forKey:@"ua"];
     [dicM setObject:@([[device quys_deviceType] integerValue]) forKey:@"deviceType"];
     [dicM setObject:@([[device quys_osType] integerValue]) forKey:@"osType"];
     [dicM setObject:[device quys_forgeidFa] forKey:@"idFa"];
-    NSLog(@"\nidfa<<<:\n%@\n",dicM[@"idFa"]);
+    NSLog(@"\nidfa<<<<<<<<<<:\n%@\n",dicM[@"idFa"]);
     [dicM setObject:@([[device quys_screenDensity] integerValue]) forKey:@"dpi"];
     [dicM setObject:[device quys_screenResolution] forKey:@"screenResolution"];
     [dicM setObject:[device quys_country] forKey:@"country"];
@@ -91,6 +100,24 @@
     [dicM setObject:[device quys_preferredLanguage] forKey:@"language"];
     
     return dicM;
+}
+
+#pragma mark - init
+- (NSString *)userAgent
+{
+    if (_userAgent == nil) {
+        UIDevice *device = [[UIDevice alloc] init];
+        _userAgent = [device quys_forgeUserAgent:self.osv];
+    }return _userAgent;
+}
+
+
+-(NSString *)osv
+{
+    if (_osv == nil) {
+        UIDevice *device = [[UIDevice alloc] init];
+        _osv = [device quys_forgeiOSVersion];
+    }return _osv;
 }
 
 -(void)dealloc

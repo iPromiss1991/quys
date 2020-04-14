@@ -12,6 +12,7 @@
 static NSInteger requestCount = 0;
 static NSInteger requestlegelCount = 0;
 
+//#define Quys_Test
 @interface QuysViewControllerB ()
 @property (nonatomic,strong) NSTimer *timer;
 
@@ -81,9 +82,15 @@ static NSInteger requestlegelCount = 0;
     
     self.currentDate = [NSDate date];
     
-    NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/4.0);
-//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeIntevel target:self selector:@selector(tengAi) userInfo:nil repeats:YES];
-//    self.timer = timer;
+#ifdef Quys_Test
+    
+#else
+    NSInteger threadCount = 1.0;//TOOD:根据方法 tengAi 中的线程数确定。
+    NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/threadCount);
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeIntevel target:self selector:@selector(tengAi) userInfo:nil repeats:YES];
+    self.timer = timer;
+#endif
+
     // Do any additional setup after loading the view.
 }
 
@@ -166,7 +173,12 @@ static NSInteger requestlegelCount = 0;
 {
     [super touchesEnded:touches withEvent:event];
     
-    [self tengAi];
+    #ifdef Quys_Test
+         [self tengAi];
+
+    #else
+        
+    #endif
 }
 
 

@@ -379,6 +379,8 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
         NSString *strTemp = [[QuysFileManager shareManager] getFormUserdefaultWithKey:kUserAgent];
         _strUserAgent = strTemp?strTemp:@"" ;//获取本地存储的
     }
+    //修改ua
+    
     return _strUserAgent;
 }
 

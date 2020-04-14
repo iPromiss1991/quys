@@ -35,7 +35,7 @@
 
 -(NSInteger)requestCount
 {
-    return 25000;
+    return 10000;
 }
 
 -(CGFloat)exposureRate
@@ -46,7 +46,7 @@
 
 -(CGFloat)clickRate
 {
-    return 0.06;
+    return 0.12;
 }
 
 

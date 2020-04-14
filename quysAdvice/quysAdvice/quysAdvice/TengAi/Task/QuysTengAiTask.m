@@ -10,6 +10,8 @@
 #import "QuysTengAiNetworkApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysTengAiCountManager.h"
+#import "UIDevice+Hardware.h"
+
 @interface QuysTengAiTask()
 @property (nonatomic,strong) QuysTengAiNetworkApi *api;
 @property (nonatomic,strong) NSMutableDictionary *dicMReplace;//!<需要“宏替换”的字符数组
@@ -160,6 +162,7 @@
 
 - (void)uploadUrl:(NSArray *)arrUrlArr
 {
+    __weak typeof (self) weakSelf= self;
     [arrUrlArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         //宏替换
         obj =  [[QuysAdviceManager shareManager] replaceSpecifiedString:obj];
@@ -168,7 +171,7 @@
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestUrl];
         request.HTTPMethod = @"GET";
         //设置请求头(可选, 在必要时添加)
-        NSString *strUserAgent = [[QuysAdviceManager shareManager] strUserAgent];
+        NSString *strUserAgent = weakSelf.api.requestArgument[@"ua"];
         if (!kISNullString(strUserAgent))
         {
             [request setValue:strUserAgent forHTTPHeaderField: @"User-Agent"];

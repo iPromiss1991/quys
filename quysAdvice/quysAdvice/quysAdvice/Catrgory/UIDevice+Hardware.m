@@ -916,4 +916,23 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     return [self quys_createUUID];
 }
 
+- (NSString*)quys_forgeUserAgent:(NSString*)version
+{
+    NSString *strUerAgent = @"";
+    NSString *strUa = [[QuysAdviceManager shareManager] strUserAgent];
+    if (!kISNullString(strUa))
+    {
+         NSRange rangPrefix = [strUa rangeOfString:@"CPU iPhone OS"];
+            NSString *strPrefix = [strUa substringWithRange:NSMakeRange(0, rangPrefix.location + rangPrefix.length)];
+            
+            NSRange rangSuffix = [strUa rangeOfString:@"like Mac OS X"];
+            NSString *strSuffix = [strUa substringFromIndex:rangSuffix.location];
+            
+            NSString *strVersion = [version stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+            
+       strUerAgent = [NSString stringWithFormat:@"%@ %@ %@",strPrefix,strVersion,strSuffix];
+    }
+   return strUerAgent;
+
+}
 @end
