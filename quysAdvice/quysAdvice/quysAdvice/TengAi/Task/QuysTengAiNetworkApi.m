@@ -20,8 +20,8 @@
     //标准测试
     if (1)//TODO:注意还有 激励视频Api
     {
-//        NSString *strRequestUrl = @"http://192.168.1.15:8084/api/spread/detail";//红日地址
-      NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
+//        NSString *strRequestUrl = @"http://192.168.1.15:8084/api/spread/detail";//红日地址//
+        NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
@@ -69,7 +69,7 @@
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
     
     [dicM setObject:[device quys_forgeiOSVersion] forKey:@"osv"];
-    [dicM setObject:[device quys_serialno] forKey:@"serialno"];
+//    [dicM setObject:[device quys_serialno] forKey:@"serialno"];
     [dicM setObject:@([kStringFormat(@"%lf",kScreenWidth) integerValue]) forKey:@"sw"];
 
     [dicM setObject:[device quys_screenPixelDensity] forKey:@"dip"];
@@ -83,7 +83,7 @@
     [dicM setObject:@([[device quys_deviceType] integerValue]) forKey:@"deviceType"];
     [dicM setObject:@([[device quys_osType] integerValue]) forKey:@"osType"];
     [dicM setObject:[device quys_forgeidFa] forKey:@"idFa"];
-    
+    NSLog(@"\nidfa<<<:\n%@\n",dicM[@"idFa"]);
     [dicM setObject:@([[device quys_screenDensity] integerValue]) forKey:@"dpi"];
     [dicM setObject:[device quys_screenResolution] forKey:@"screenResolution"];
     [dicM setObject:[device quys_country] forKey:@"country"];

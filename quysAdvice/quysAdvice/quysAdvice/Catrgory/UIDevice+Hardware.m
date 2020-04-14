@@ -796,6 +796,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 - (NSString*)quys_createUUID
 {
+    
     // 如果没有UUID 则保存设备号
     CFUUIDRef uuid_ref = CFUUIDCreate(NULL);
     CFStringRef uuid_string_ref= CFUUIDCreateString(NULL, uuid_ref);
@@ -911,6 +912,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString*)quys_forgeidFa
 {
  
+    return @"3ABC4050-8945-4936-B26B-BF1D7885F6ED";//TODO===
     return [self quys_createUUID];
 }
 

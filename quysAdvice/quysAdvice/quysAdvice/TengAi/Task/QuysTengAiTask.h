@@ -16,7 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *bussinessKey;
 
 
-@property (nonatomic,assign) BOOL uploadEnable;
+@property (nonatomic,assign) BOOL exposureEnable;
+
+
+@property (nonatomic,assign) float clickRate;//!<  曝光率
+@property (nonatomic,assign) BOOL clickEnable;
 - (void)start;
 
 @end

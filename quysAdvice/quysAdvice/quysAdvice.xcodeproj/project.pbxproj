@@ -31,6 +31,8 @@
 		FB1933F92440628F006D12F2 /* QuysTengAiNetworkApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB1933F72440628F006D12F2 /* QuysTengAiNetworkApi.h */; };
 		FB1933FA2440628F006D12F2 /* QuysTengAiNetworkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */; };
 		FB1933FD244070A4006D12F2 /* QuysViewControllerB.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1933FC244070A4006D12F2 /* QuysViewControllerB.m */; };
+		FB19349024456263006D12F2 /* QuysTengAiCountManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */; };
+		FB19349124456263006D12F2 /* QuysTengAiCountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */; };
 		FB1A0DEB23C4668300EADB4D /* zanting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DE923C4668300EADB4D /* zanting@2x.png */; };
 		FB1A0DEC23C4668300EADB4D /* zanting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DEA23C4668300EADB4D /* zanting@3x.png */; };
 		FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */; };
@@ -227,6 +229,8 @@
 		FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiNetworkApi.m; sourceTree = "<group>"; };
 		FB1933FB244070A4006D12F2 /* QuysViewControllerB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysViewControllerB.h; sourceTree = "<group>"; };
 		FB1933FC244070A4006D12F2 /* QuysViewControllerB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewControllerB.m; sourceTree = "<group>"; };
+		FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiCountManager.h; sourceTree = "<group>"; };
+		FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiCountManager.m; sourceTree = "<group>"; };
 		FB1A0DE923C4668300EADB4D /* zanting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@2x.png"; sourceTree = "<group>"; };
 		FB1A0DEA23C4668300EADB4D /* zanting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@3x.png"; sourceTree = "<group>"; };
 		FB1A0DED23C492EC00EADB4D /* QuysServiceListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysServiceListTableViewController.h; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 				FB1933F424406247006D12F2 /* QuysTengAiTask.m */,
 				FB1933F72440628F006D12F2 /* QuysTengAiNetworkApi.h */,
 				FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */,
+				FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */,
+				FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -870,6 +876,7 @@
 				FB955A6223BB26DC00AFA427 /* QuysIncentiveVideoDataModel.h in Headers */,
 				FB955A2D23B4B3AD00AFA427 /* QuysDownAddressModel.h in Headers */,
 				FB955A5323B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.h in Headers */,
+				FB19349024456263006D12F2 /* QuysTengAiCountManager.h in Headers */,
 				FB955A5A23B9FF8500AFA427 /* QuysIncentiveVideoApi.h in Headers */,
 				FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */,
 				FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */,
@@ -1183,6 +1190,7 @@
 				FBBA895923A7889A00D0088C /* QuysInformationFlowDefaultView.m in Sources */,
 				FB6A1C8923B20B3600E29B75 /* QuysPictureViewController.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
+				FB19349124456263006D12F2 /* QuysTengAiCountManager.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FB955A4023B9EAB000AFA427 /* QuysIncentiveVideoService.m in Sources */,
 				FB955A5B23B9FF8500AFA427 /* QuysIncentiveVideoApi.m in Sources */,
