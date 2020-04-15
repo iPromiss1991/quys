@@ -14,7 +14,6 @@ static NSInteger requestlegelCount = 0;
 
 static NSInteger requestThreadCount = 1;
 
-//#define Quys_Test
 @interface QuysViewControllerB ()
 @property (nonatomic,strong) NSTimer *timer;
 
@@ -23,6 +22,7 @@ static NSInteger requestThreadCount = 1;
 @property (nonatomic,strong) UILabel *lblrequestlegelMul;
 
 @property (nonatomic,strong) UILabel *lblEveryHours;
+@property (nonatomic,strong) UILabel *lblRealRequestForData;
 
 @property (nonatomic,strong) NSDate *currentDate;
  
@@ -82,12 +82,28 @@ static NSInteger requestThreadCount = 1;
     [self.view addSubview:lblEveryHours];
     self.lblEveryHours = lblEveryHours;
     
+    
+    UILabel *lblRealRequestForDataDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 500, 120, 60)];
+    lblRealRequestForDataDes.backgroundColor = [UIColor clearColor];
+    lblRealRequestForDataDes.text = @"真实数据填充：";
+    [self.view addSubview:lblRealRequestForDataDes];
+    
+    UILabel *lblRealRequestForData = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblRealRequestForDataDes.frame)+10, 500, 100, 100)];
+    lblRealRequestForData.numberOfLines = 0;
+    lblEveryHours.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:lblRealRequestForData];
+    self.lblRealRequestForData = lblRealRequestForData;
+    
     self.currentDate = [NSDate date];
     
     
-#ifdef Quys_Test
+#ifdef QuysDebug
     
 #else
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuysTengAiRealTaskNofifyEvent) name:kQuysTengAiRealTaskNofify object:nil];
+    
+    
      NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/requestThreadCount*1.0);//TOOD:根据方法 tengAi 中的线程数确定。
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeIntevel target:self selector:@selector(tengAi) userInfo:nil repeats:YES];
     self.timer = timer;
@@ -173,14 +189,25 @@ static NSInteger requestThreadCount = 1;
     }
 }
 
+
+- (void)QuysTengAiRealTaskNofifyEvent
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSInteger notifyCout = [self.lblRealRequestForData.text integerValue]+1;
+        NSInteger reealRequestCount = [self.lblrequestlegelCount.text integerValue];
+        CGFloat realRequestFordataRate = notifyCout*1.0/reealRequestCount*1.0;
+        self.lblRealRequestForData.text = [NSString stringWithFormat:@"%ld    真实填充率：%lf",notifyCout,realRequestFordataRate];
+    });
+}
+
+
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
     
-    #ifdef Quys_Test
-//         [self tengAi];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mqq://"]];
-
+    #ifdef QuysDebug
+         [self tengAi];
+ 
 
     #else
         

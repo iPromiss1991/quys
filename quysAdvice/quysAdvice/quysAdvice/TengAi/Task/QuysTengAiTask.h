@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define kQuysTengAiRealTaskNofify @"QuysTengAiRealTaskNofify"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QuysTengAiTask : NSObject

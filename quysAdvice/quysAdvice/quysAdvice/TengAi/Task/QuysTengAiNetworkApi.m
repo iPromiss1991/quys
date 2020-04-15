@@ -24,22 +24,9 @@
 
 - (NSString *)requestUrl
 {
-    //  NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
-    //    NSString *strRequestUrl = @"http://192.168.1.8:8086/spread/detail";
     //标准测试
-    if (1)//TODO:注意还有 激励视频Api
-    {
-//        NSString *strRequestUrl = @"http://192.168.1.15:8084/api/spread/detail";//红日地址//
-        NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
-        NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
-        NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
-        NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
-        return strUrl;
-        
-//        return @"http://192.168.1.8:8086/spread/detail";
-
-    }else
+#warning 调试、发布前，请在buildSettting preprocessor macros 中设置字段：QuysDebug
+#ifdef QuysDebug
     {
         NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";//http://192.168.1.11/advert/main.html
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
@@ -47,8 +34,18 @@
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
         NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
         return strUrl;
-        
     }
+#else
+    // NSString *strRequestUrl = @"http://192.168.1.15:8084/api/spread/detail";//红日地址//
+    NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
+    NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
+    NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
+    NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@?id=%@&apiToken=%@&timestamp=%@",strRequestUrl,self.businessID,strMd5ApiToken,strTimestam];
+    return strUrl;
+    
+#endif
+   
     
 }
 
