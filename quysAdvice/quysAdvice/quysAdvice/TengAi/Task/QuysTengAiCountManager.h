@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysTengAiCountManager : NSObject
 @property (nonatomic,assign) CGFloat exposureRate;
 @property (nonatomic,assign) CGFloat clickRate;
+@property (nonatomic,assign) CGFloat deeplinkRate;
 
 
 @property (nonatomic,assign) NSInteger requestCount;//!<  每小时请求量

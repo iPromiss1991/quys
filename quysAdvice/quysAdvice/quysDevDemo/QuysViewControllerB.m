@@ -12,6 +12,8 @@
 static NSInteger requestCount = 0;
 static NSInteger requestlegelCount = 0;
 
+static NSInteger requestThreadCount = 1;
+
 //#define Quys_Test
 @interface QuysViewControllerB ()
 @property (nonatomic,strong) NSTimer *timer;
@@ -82,11 +84,11 @@ static NSInteger requestlegelCount = 0;
     
     self.currentDate = [NSDate date];
     
+    
 #ifdef Quys_Test
     
 #else
-    NSInteger threadCount = 1.0;//TOOD:根据方法 tengAi 中的线程数确定。
-    NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/threadCount);
+     NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/requestThreadCount*1.0);//TOOD:根据方法 tengAi 中的线程数确定。
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:timeIntevel target:self selector:@selector(tengAi) userInfo:nil repeats:YES];
     self.timer = timer;
 #endif
@@ -96,77 +98,79 @@ static NSInteger requestlegelCount = 0;
 
 - (void)tengAi
 {
-    
-    
-    
-    requestCount ++;
-    self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",requestCount];
-    BOOL exposureEnable = NO;
-    NSInteger random = arc4random()%100;
-    CGFloat randomRate = 100 *[QuysTengAiCountManager shareManager].exposureRate;
-    if (random <= randomRate)
     {
-        exposureEnable = YES;
-        requestlegelCount++;
-        self.lblrequestlegelCount.text = [NSString stringWithFormat:@"%ld",requestlegelCount];
-        
-    }
-    
-    self.lblrequestlegelMul.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
-    NSDate *date =  [NSDate date];
-    NSTimeInterval  intevel =   [date timeIntervalSinceDate:self.currentDate];
-    if (intevel >= 60*60)
-    {
-        self.lblEveryHours.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
-        self.currentDate = date;
-    }
-    
-    
-    
-    {
-        //开屏
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-            taskBanner.businessID = @"kp_tengai_ios";
-            taskBanner.bussinessKey = @"1E6E6B4EE8FEF1A16217CBB156F67CF0";
-            taskBanner.exposureEnable = exposureEnable;
-            [taskBanner start];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //                         self.view.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];//必须浮点型
-                
+
+
+
+        requestCount ++;
+        self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",requestCount*requestThreadCount];
+        BOOL exposureEnable = NO;
+        NSInteger random = arc4random()%100;
+        CGFloat randomRate = 100 *[QuysTengAiCountManager shareManager].exposureRate;
+        if (random <= randomRate)
+        {
+            exposureEnable = YES;
+            requestlegelCount++;
+            self.lblrequestlegelCount.text = [NSString stringWithFormat:@"%ld",requestlegelCount*requestThreadCount];
+
+        }
+
+        self.lblrequestlegelMul.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
+        NSDate *date =  [NSDate date];
+        NSTimeInterval  intevel =   [date timeIntervalSinceDate:self.currentDate];
+        if (intevel >= 60*60)
+        {
+            self.lblEveryHours.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
+            self.currentDate = date;
+        }
+
+
+
+        {
+            //开屏
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                QuysTengAiTask *taskBanner= [QuysTengAiTask new];
+                taskBanner.businessID = @"kp_tengai_ios";
+                taskBanner.bussinessKey = @"1E6E6B4EE8FEF1A16217CBB156F67CF0";
+                taskBanner.exposureEnable = exposureEnable;
+                [taskBanner start];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //                         self.view.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];//必须浮点型
+
+                });
             });
-        });
-        
-//        //banner
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-//            taskBanner.businessID = @"br_tengai_ios";
-//            taskBanner.bussinessKey = @"1F7F6D5688BBA066A07816FE3C9292FA";
-//            taskBanner.exposureEnable = exposureEnable;
-//            [taskBanner start];
-//        });
-//        
-//        //信息流
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-//            taskBanner.businessID = @"xxl_tengai_ios";
-//            taskBanner.bussinessKey = @"38DDAF519B18A1A47093D5F4B614FFFD";
-//            taskBanner.exposureEnable = exposureEnable;
-//            [taskBanner start];
-//        });
-//        
-//        //插屏
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-//            taskBanner.businessID = @"cp_tengai_ios";
-//            taskBanner.bussinessKey = @"33E40C2E582024717BF1C21571CF24AD";
-//            taskBanner.exposureEnable = exposureEnable;
-//            [taskBanner start];
-//        });
-//        
+
+    //        //banner
+    //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
+    //            taskBanner.businessID = @"br_tengai_ios";
+    //            taskBanner.bussinessKey = @"1F7F6D5688BBA066A07816FE3C9292FA";
+    //            taskBanner.exposureEnable = exposureEnable;
+    //            [taskBanner start];
+    //        });
+    //
+    //        //信息流
+    //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
+    //            taskBanner.businessID = @"xxl_tengai_ios";
+    //            taskBanner.bussinessKey = @"38DDAF519B18A1A47093D5F4B614FFFD";
+    //            taskBanner.exposureEnable = exposureEnable;
+    //            [taskBanner start];
+    //        });
+    //
+    //        //插屏
+    //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
+    //            taskBanner.businessID = @"cp_tengai_ios";
+    //            taskBanner.bussinessKey = @"33E40C2E582024717BF1C21571CF24AD";
+    //            taskBanner.exposureEnable = exposureEnable;
+    //            [taskBanner start];
+    //        });
+    //
+        }
+
+
     }
-    
-    
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -174,7 +178,9 @@ static NSInteger requestlegelCount = 0;
     [super touchesEnded:touches withEvent:event];
     
     #ifdef Quys_Test
-         [self tengAi];
+//         [self tengAi];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mqq://"]];
+
 
     #else
         

@@ -49,5 +49,10 @@
     return 0.12;
 }
 
+- (CGFloat)deeplinkRate
+{
+    return 0.3;
+}
+
 
 @end

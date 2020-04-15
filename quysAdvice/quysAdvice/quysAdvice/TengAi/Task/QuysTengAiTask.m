@@ -11,10 +11,13 @@
 #import "QuysAdviceOuterlayerDataModel.h"
 #import "QuysTengAiCountManager.h"
 #import "UIDevice+Hardware.h"
-
+#import "QuysAppDownUrlApi.h"
+#import "QuysDownAddressModel.h"
 @interface QuysTengAiTask()
 @property (nonatomic,strong) QuysTengAiNetworkApi *api;
 @property (nonatomic,strong) NSMutableDictionary *dicMReplace;//!<需要“宏替换”的字符数组
+
+@property (nonatomic,strong) QuysAdviceModel *adModel;
 
 
 
@@ -53,6 +56,7 @@
                 if (outerModel && outerModel.data.count)
                 {
                     QuysAdviceModel *adviceModel = outerModel.data[0];
+                    self.adModel = adviceModel;
                     [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",adviceModel.width)];
                     [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",adviceModel.height)];
                     [self upload:adviceModel];
@@ -89,8 +93,8 @@
         {
             [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
             
-            NSInteger width = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] integerValue];
-            NSInteger height = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] integerValue];
+            int width = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] intValue];
+            int height = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] intValue];
             
             [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%d",[self getRandomInt:100 to:width])];
             [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%d",[self getRandomInt:100 to:height])];
@@ -107,36 +111,13 @@
             self.clickEnable = YES;
             if (self.clickEnable)
             {
+                NSInteger pointX = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] integerValue];
+                NSInteger pointY = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] integerValue];
                 
-                if (model.clkTracking.count)
-                {
-                    NSInteger pointX = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] integerValue];
-                    NSInteger pointY = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] integerValue];
-                    
-                    CGPoint cpClick = CGPointMake(arc4random()%pointX, arc4random()%pointY);
-                    CGPoint cpReClick = cpClick;
-                    
-                    NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-                    NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-                    
-                    NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
-                    NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
-                    
-                    //更新点击坐标
-                    [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-                    [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-                    
-                    [self updateReplaceDictionary:kClickUPX value:strCpX];
-                    [self updateReplaceDictionary:kClickUPY value:strCpY];
-                    //
-                    [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
-                    [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
-                    
-                    [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
-                    [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
-                    [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
-                    
-                    [self uploadUrl:model.clkTracking];
+                CGPoint cpClick = CGPointMake(arc4random()%pointX, arc4random()%pointY);
+                CGPoint cpReClick = cpClick;
+                [self interstitialOnClick:cpClick cpRe:cpReClick model:model];
+                
                     
                     NSLog(@"\n\n点击上报开始\n");
                     
@@ -144,17 +125,142 @@
                 
             }
         }
-        
-        
-        
-    }
-    
-    
-    
     //上报结束
     NSLog(@"\n\n上报结束\n");
     
 }
+
+#pragma mark - dianji
+
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick model:(QuysAdviceModel*)adModel
+{
+     if (kISNullString(adModel.deepLink))
+    {
+         switch (adModel.ctype)
+         {
+               case QuysAdviceActiveTypeHtmlSourceCode:
+               {
+                   [self updateClickAndUpload:cpClick cpRe:cpReClick model:adModel];
+
+               }
+                   break;
+               case QuysAdviceActiveTypeImageUrl:
+               {
+                   //判断后缀是否.ipa==直接下载； 或者加载web
+                   if ([adModel.ldp containsString:@".ipa"])
+                   {
+//                        [self openUrl:adModel.ldp];
+                   }else
+                   {
+        
+                   }
+                   [self updateClickAndUpload:cpClick cpRe:cpReClick model:adModel];
+               }
+                   break;
+               case QuysAdviceActiveTypeHtmlLink:
+               {
+                   [self updateClickAndUpload:cpClick cpRe:cpReClick model:adModel];
+
+               }
+                   break;
+               case QuysAdviceActiveTypeDownAppAppstore:
+               {
+                    [self updateClickAndUpload:cpClick cpRe:cpReClick model:adModel];
+               }
+                   break;
+               case QuysAdviceActiveTypeDownAppAppstoreSecond:
+               {
+                    [self updateClickAndUpload:cpClick cpRe:cpReClick model:adModel];
+               }
+                   break;
+               case QuysAdviceActiveTypeDownAppWebUrl:
+               {
+                   [self getRealDownUrl:adModel.downUrl point:cpClick cpRe:cpReClick];
+               }
+                   break;
+               default:
+                   break;
+           }
+    }else
+    {
+        //TODO:deepLink
+        NSInteger random = arc4random()%100;
+        CGFloat randomRate = 100*[[QuysTengAiCountManager shareManager] deeplinkRate];
+        if (random <= randomRate)
+        {
+            [self uploadUrl:adModel.reportDeeplinkSuccessUrl];
+        }else
+        {
+            [self uploadUrl:adModel.reportDeeplinkFailUrl];
+
+        }
+        
+    }
+}
+
+//- (void)openUrl:(NSString*)strUrl
+//{
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+//
+//}
+
+- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick model:(QuysAdviceModel*)model
+{
+     if (model.clkTracking.count)
+     {
+         NSString *strCpX = kStringFormat(@"%f",cpClick.x);
+         NSString *strCpY = kStringFormat(@"%f",cpClick.y);
+         
+         NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
+         NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
+         
+         //更新点击坐标
+         [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
+         [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
+         
+         [self updateReplaceDictionary:kClickUPX value:strCpX];
+         [self updateReplaceDictionary:kClickUPY value:strCpY];
+         //
+         [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
+         [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
+         
+         [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
+         [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
+         [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
+         
+         [self uploadUrl:model.clkTracking];
+     }
+}
+
+
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
+{
+    kWeakSelf(self)
+    strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
+    QuysAppDownUrlApi *api = [QuysAppDownUrlApi new];
+    api.downUrl = strWebUrl;
+    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request)
+     {
+        if ( request.responseJSONObject[@"data"])
+        {
+            QuysDownAddressModel *model = [QuysDownAddressModel yy_modelWithJSON:request.responseJSONObject[@"data"]];
+            if (!kISNullString(model.dstlink))
+            {
+//                [weakself openUrl:model.dstlink];
+            }
+            if (!kISNullString(model.clickid))
+                {
+//                    [weakself openUrl:model.dstlink];
+                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick model:weakself.adModel];
+                }
+        }
+    } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
+        
+    }];
+}
+
+
 
 
 #pragma mark - Help

@@ -64,6 +64,8 @@ typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
 @property (nonatomic , assign) QuysAdviceCreativeType              creativeType;
 @property (nonatomic , copy) NSString              * desc;
 @property (nonatomic , assign) NSInteger              clickPosition;
+@property (nonatomic,strong) NSString *deepLink;
+
 @property (nonatomic , strong) NSArray <NSString *>              * reportDeeplinkSuccessUrl;
 @property (nonatomic , strong) NSArray <NSString *>              * reportDeeplinkFailUrl;
 @property (nonatomic , assign) NSInteger              showDuration;
