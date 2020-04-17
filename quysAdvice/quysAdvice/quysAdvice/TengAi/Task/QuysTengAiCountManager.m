@@ -40,6 +40,8 @@ static const NSInteger kRequestDefaultCount = 50000;//TODO：默认请求数
 {
     return [QuysTengAiCountManager shareManager] ;
 }
+
+
 -(id) copyWithZone:(struct _NSZone *)zone
 {
     return [QuysTengAiCountManager shareManager] ;
@@ -50,7 +52,8 @@ static const NSInteger kRequestDefaultCount = 50000;//TODO：默认请求数
 
 - (void)QuysTengAiRealTaskNofifyEvent:(NSNotification*)notify
 {
-    if ([notify.userInfo[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"]) 
+    if ([notify.userInfo[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"])
+
     {
  
             self.recentRequestDate = [NSDate date];
