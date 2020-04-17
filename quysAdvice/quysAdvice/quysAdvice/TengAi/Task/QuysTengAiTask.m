@@ -47,32 +47,31 @@
 {
     self.api.businessID = self.businessID;
     self.api.bussinessKey = self.bussinessKey;
-    NSLog(@"\n\n获取广告数据开始\n");
-    
     [self.api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request) {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             {
                 QuysAdviceOuterlayerDataModel *outerModel = [QuysAdviceOuterlayerDataModel yy_modelWithJSON:request.responseJSONObject];
                 if (outerModel && outerModel.data.count)
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"Y"}];
                     QuysAdviceModel *adviceModel = outerModel.data[0];
                     self.adModel = adviceModel;
                     [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",adviceModel.width)];
                     [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",adviceModel.height)];
                     [self upload:adviceModel];
                     
+                }else
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"N"}];
                 }
                 NSLog(@"\n\n获取广告数据结束：%@\n",[outerModel yy_modelToJSONObject]);
             }
         });
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         NSLog(@"\n请求数据错误：<<<%@\n",request.error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"N"}];
+
     }];
-    
-    
-    NSLog(@"\n\n上报开始\n");
-    
 }
 
 - (void)upload:(QuysAdviceModel*)model

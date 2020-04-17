@@ -25,6 +25,8 @@
 - (NSString *)requestUrl
 {
     //标准测试
+    
+//#define QuysDebug
 #warning 调试、发布前，请在buildSettting preprocessor macros 中设置字段：QuysDebug
 #ifdef QuysDebug
     {
@@ -67,7 +69,7 @@
     
     [dicM setObject:[device quys_forgeIP] forKey:@"ip"];
 //    [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
-//    [dicM setObject:[device quys_customImei] forKey:@"imei"];
+    [dicM setObject:@"null" forKey:@"imei"];
 //
 //    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
     [dicM setObject:[[device quys_forgeiPhonePlatform] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];

@@ -55,6 +55,7 @@
        QuysViewControllerB *rootVC = [[QuysViewControllerB alloc] init];
        self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
        [self.window makeKeyAndVisible];
+    [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
     
     return YES;
 }

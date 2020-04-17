@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 
 #define kQuysTengAiRealTaskNofify @"QuysTengAiRealTaskNofify"
+#define kQuysTengAiRealTaskNofifyKey @"kQuysTengAiRealTaskNofifyKey"
+
+
+#define kQuysTengAiValidateTimerNofify @"kQuysTengAiValidateTimerNofify"
 
 NS_ASSUME_NONNULL_BEGIN
 
