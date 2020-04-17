@@ -56,7 +56,7 @@ static const NSInteger kRequestDefaultCount = 50000;//TODO：默认请求数
 
     {
  
-            self.recentRequestDate = [NSDate date];
+            self.recentRequestDate = [NSDate date];//TODO
     }else
     {
         NSDate  *currentDate = [NSDate date ];
