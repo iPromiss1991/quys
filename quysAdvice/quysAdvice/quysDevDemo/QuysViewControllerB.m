@@ -27,7 +27,7 @@ static NSInteger requestThreadCount = 1;
 @property (nonatomic,strong) UILabel *lblCountForHour;
 
 @property (nonatomic,strong) NSDate *currentDate;
- @property (nonatomic,assign) BOOL isAddValidTag;
+ @property (atomic,assign) BOOL isAddValidTag;
 
 
 @end
@@ -220,15 +220,26 @@ static NSInteger requestThreadCount = 1;
 - (void)QuysTengAiRealValidateTimerNofifyEvent
 {
 
-    [self.timer invalidate ];
-    self.timer = nil;
+
     if (self.isAddValidTag == NO)
     {
         self.isAddValidTag = YES;
+
+        if (self.timer.isValid)
+        {
+            [self.timer invalidate ];
+            self.timer = nil;
+        }else
+        {
+            
+        }
          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
              self.isAddValidTag = NO;
              [self.timer fire];
             });
+    }else
+    {
+        
     }
 }
 
@@ -248,7 +259,7 @@ static NSInteger requestThreadCount = 1;
 
 - (NSTimer *)timer
 {
-    if (_timer == nil || _timer.isValid == YES)
+    if (_timer == nil && self.isAddValidTag == NO)
     {
  
          NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/requestThreadCount*1.0);//TOOD:根据方法 tengAi 中的线程数确定。
