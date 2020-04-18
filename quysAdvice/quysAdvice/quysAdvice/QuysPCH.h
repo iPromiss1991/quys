@@ -23,4 +23,5 @@
 #import "UIViewController+QuysNavBar.h"
 #import "UIViewController+QuysGetRootController.h"
 #import "NSDate+QuysTimestamp.h"
+#import "NSDate+QuysFormat.h"
 #endif /* QuysPCH_h */

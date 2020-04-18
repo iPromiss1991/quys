@@ -45,7 +45,7 @@ static const NSInteger AsyncThreadCount = 100;//线程同步最大并发数
 {
     kWeakSelf(self);
     dispatch_async(self.queue, ^{
-        {
+        @autoreleasepool {
             [arrUrlArr enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 dispatch_semaphore_wait(self.semaphore, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));//注意单位（NSEC_PER_SEC）：不设置NSEC_PER_SEC则可能无法实现同步
                 //宏替换

@@ -7,12 +7,8 @@
 //
 
 #import "QuysViewControllerB.h"
-#import "QuysTengAiCountManager.h"
+#import "QuysTengAiTaskGroup.h"
 #import <quysAdvice/quysAdvice.h>
-static NSInteger requestCount = 0;
-static NSInteger requestlegelCount = 0;
-
-static NSInteger requestThreadCount = 1;
 
 @interface QuysViewControllerB ()
 @property (nonatomic,strong) NSTimer *timer;
@@ -27,7 +23,10 @@ static NSInteger requestThreadCount = 1;
 @property (nonatomic,strong) UILabel *lblCountForHour;
 
 @property (nonatomic,strong) NSDate *currentDate;
- @property (atomic,assign) BOOL isAddValidTag;
+@property (atomic,assign) BOOL isAddValidTag;
+
+//
+@property (nonatomic, strong) QuysTengAiTaskGroup *tengAi_Open_kp_tengai_ios;//!< <#Explement #>
 
 
 @end
@@ -37,6 +36,14 @@ static NSInteger requestThreadCount = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    //TODO:开始任务
+    self.tengAi_Open_kp_tengai_ios = [self createTaskGroup:@"kp_tengai_ios" key:@"1E6E6B4EE8FEF1A16217CBB156F67CF0" count:50000 exposure:.8 click:.12 deeplink:.3];
+    [self.tengAi_Open_kp_tengai_ios run];
+    
+    ////////
+    
     NSDate *date = [NSDate date];
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate: date];
@@ -108,187 +115,51 @@ static NSInteger requestThreadCount = 1;
     self.lblCountForHour = lblCountForHour;
     
     self.currentDate = [NSDate date];
-    
-    
-#ifdef QuysDebug
-    
-#else
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuysTengAiRealTaskNofifyEvent:) name:kQuysTengAiRealTaskNofify object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuysTengAiRealValidateTimerNofifyEvent) name:kQuysTengAiValidateTimerNofify object:nil];
+//////
 
-    [self.timer fire];;
-#endif
-
-    // Do any additional setup after loading the view.
-}
-
-- (void)tengAi
-{
-    @autoreleasepool {
-        {
-
-
-
-            requestCount ++;
-            self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",requestCount*requestThreadCount];
-            BOOL exposureEnable = NO;
-            NSInteger random = arc4random()%100;
-            CGFloat randomRate = 100 *[QuysTengAiCountManager shareManager].exposureRate;
-            if (random <= randomRate)
-            {
-                exposureEnable = YES;
-                requestlegelCount++;
-                self.lblrequestlegelCount.text = [NSString stringWithFormat:@"%ld",requestlegelCount*requestThreadCount];
-
-            }
-
-            self.lblrequestlegelMul.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
-            NSDate *date =  [NSDate date];
-            NSTimeInterval  intevel =   [date timeIntervalSinceDate:self.currentDate];
-            if (intevel >= 60*60)
-            {
-                self.lblEveryHours.text = [NSString stringWithFormat:@"%lf",requestlegelCount*1.0/requestCount*1.0];
-                self.currentDate = date;
-            }
-
-
-
-            {
-                //开屏
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                    QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-                    taskBanner.businessID = @"kp_tengai_ios";
-                    taskBanner.bussinessKey = @"1E6E6B4EE8FEF1A16217CBB156F67CF0";
-                    taskBanner.exposureEnable = exposureEnable;
-                    [taskBanner start];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        //                         self.view.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];//必须浮点型
-
-                    });
-                });
-
-        //        //banner
-        //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-        //            taskBanner.businessID = @"br_tengai_ios";
-        //            taskBanner.bussinessKey = @"1F7F6D5688BBA066A07816FE3C9292FA";
-        //            taskBanner.exposureEnable = exposureEnable;
-        //            [taskBanner start];
-        //        });
-        //
-        //        //信息流
-        //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-        //            taskBanner.businessID = @"xxl_tengai_ios";
-        //            taskBanner.bussinessKey = @"38DDAF519B18A1A47093D5F4B614FFFD";
-        //            taskBanner.exposureEnable = exposureEnable;
-        //            [taskBanner start];
-        //        });
-        //
-        //        //插屏
-        //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //            QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-        //            taskBanner.businessID = @"cp_tengai_ios";
-        //            taskBanner.bussinessKey = @"33E40C2E582024717BF1C21571CF24AD";
-        //            taskBanner.exposureEnable = exposureEnable;
-        //            [taskBanner start];
-        //        });
-        //
-            }
-
-
-        }
-    }
+#warning 无法监听变化？？
+   [ self addObserver:self.tengAi_Open_kp_tengai_ios forKeyPath:@"outPutExposureCount" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
 }
 
 
-- (void)QuysTengAiRealTaskNofifyEvent:(NSNotification*)notify
+
+
+- (QuysTengAiTaskGroup*)createTaskGroup:(NSString*)businessID key:(NSString*)bussinessKey count:(NSInteger)requestCount exposure:(CGFloat)exposureRate click:(CGFloat)clickRate deeplink:(CGFloat)deeplinkRate
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([notify.userInfo[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"] )
-        {
-             NSInteger notifyCout = [self.lblRealRequestForData.text integerValue]+1;
-                   NSInteger reealRequestCount = [self.lblrequestlegelCount.text integerValue];
-                   CGFloat realRequestFordataRate = notifyCout*1.0/reealRequestCount*1.0;
-                   self.lblRealRequestForData.text = [NSString stringWithFormat:@"%ld    真实填充率：%lf",notifyCout,realRequestFordataRate];
-        }
-    });
-}
-
-
-- (void)QuysTengAiRealValidateTimerNofifyEvent
-{
-
-
-    if (self.isAddValidTag == NO)
-    {
-        self.isAddValidTag = YES;
-
-        if (self.timer.isValid)
-        {
-            [self.timer invalidate ];
-            self.timer = nil;
-        }else
-        {
-            
-        }
-         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             self.isAddValidTag = NO;
-             [self.timer fire];
-            });
-    }else
-    {
-        
-    }
-}
-
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [super touchesEnded:touches withEvent:event];
+    QuysTengAiTaskGroup *taskGroup = [QuysTengAiTaskGroup new];
+    taskGroup.businessID = businessID;
+    taskGroup.bussinessKey = bussinessKey;
     
-    #ifdef QuysDebug
-         [self tengAi];
- 
-
-    #else
-        
-    #endif
-}
-
-
-- (NSTimer *)timer
-{
-    if (_timer == nil && self.isAddValidTag == NO)
-    {
- 
-         NSTimeInterval timeIntevel = 60*60*1.0/([QuysTengAiCountManager shareManager].requestCount*1.0/requestThreadCount*1.0);//TOOD:根据方法 tengAi 中的线程数确定。
-        _timer = [NSTimer scheduledTimerWithTimeInterval:timeIntevel target:self selector:@selector(tengAi) userInfo:nil repeats:YES];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-             self.lblCountForHour.text = [NSString stringWithFormat:@"每小时默认请求次数：%ld",[QuysTengAiCountManager shareManager].requestCount];
-
-        });
-    }return _timer;
+    taskGroup.requestCount = requestCount;
+    
+    taskGroup.exposureRate = exposureRate;
+    taskGroup.clickRate = clickRate;
+    taskGroup.deeplinkRate = deeplinkRate;
+    return taskGroup;
 }
 
 /*iOS
-
-开屏
-kp_tengai_ios
-1E6E6B4EE8FEF1A16217CBB156F67CF0
-
-插屏
-cp_tengai_ios
-33E40C2E582024717BF1C21571CF24AD
-
-信息流
-xxl_tengai_ios
-38DDAF519B18A1A47093D5F4B614FFFD
-
-banner
-br_tengai_ios
-1F7F6D5688BBA066A07816FE3C9292FA
+ 
+ 开屏
+ kp_tengai_ios
+ 1E6E6B4EE8FEF1A16217CBB156F67CF0
+ 
+ 插屏
+ cp_tengai_ios
+ 33E40C2E582024717BF1C21571CF24AD
+ 
+ 信息流
+ xxl_tengai_ios
+ 38DDAF519B18A1A47093D5F4B614FFFD
+ 
+ banner
+ br_tengai_ios
+ 1F7F6D5688BBA066A07816FE3C9292FA
  */
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",self.tengAi_Open_kp_tengai_ios.outPutExposureCount];
+
+}
 @end

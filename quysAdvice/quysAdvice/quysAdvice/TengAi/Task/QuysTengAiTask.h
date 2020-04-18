@@ -8,11 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define kQuysTengAiRealTaskNofify @"QuysTengAiRealTaskNofify"
-#define kQuysTengAiRealTaskNofifyKey @"kQuysTengAiRealTaskNofifyKey"
+ #define kQuysTengAiRealTaskNotifyKey @"kQuysTengAiRealTaskNotifyKey"//!<广告进度
 
-
-#define kQuysTengAiValidateTimerNofify @"kQuysTengAiValidateTimerNofify"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,12 +19,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *bussinessKey;
 
 
-@property (nonatomic,assign) BOOL exposureEnable;
 
 
-@property (nonatomic,assign) float clickRate;//!<  曝光率
-@property (nonatomic,assign) BOOL clickEnable;
-- (void)start;
+@property (nonatomic,assign) float exposureRate;//!<  曝光率
+@property (nonatomic,assign) float clickRate;//!<  点击率
+@property (nonatomic,assign) float deeplinkRate;//!<  deeplink率
+
+
+@property (nonatomic, strong) NSString *postNotifyName;//!< <#Explement #>
+
+ - (void)start;
 
 @end
 

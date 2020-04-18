@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -21,9 +21,15 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0F7770A4828CCBFC3F64CC4B /* libPods-quysAdvice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2721E5040C4072903A53B5F5 /* libPods-quysAdvice.a */; };
-		611B9B5EBD6242500F0CEE84 /* libPods-quysAdvice-quysDevDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99297E17B343A810DE93A615 /* libPods-quysAdvice-quysDevDemo.a */; };
+		579F004DECF785C934B4D18B /* Pods_quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */; };
+		5C718488D3D956414CE94906 /* Pods_quysAdvice_quysDevDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */; };
 		E078D3E32406B4690035E1BF /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E078D3E22406B4690035E1BF /* nav_back@2x.png */; };
+		E0B3CD9B244AEE9E00E4B524 /* QuysTengAiTaskGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B3CD99244AEE9E00E4B524 /* QuysTengAiTaskGroup.h */; };
+		E0B3CD9C244AEE9E00E4B524 /* QuysTengAiTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B3CD9A244AEE9E00E4B524 /* QuysTengAiTaskGroup.m */; };
+		E0B3CD9F244AFC4200E4B524 /* QuysTaskNotifyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B3CD9D244AFC4200E4B524 /* QuysTaskNotifyModel.h */; };
+		E0B3CDA0244AFC4200E4B524 /* QuysTaskNotifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B3CD9E244AFC4200E4B524 /* QuysTaskNotifyModel.m */; };
+		E0B3CDA3244B068300E4B524 /* NSDate+QuysFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B3CDA1244B068300E4B524 /* NSDate+QuysFormat.h */; };
+		E0B3CDA4244B068300E4B524 /* NSDate+QuysFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B3CDA2244B068300E4B524 /* NSDate+QuysFormat.m */; };
 		FB070948241B30B000135B3E /* VHLNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = FB070946241B30AF00135B3E /* VHLNavigation.h */; };
 		FB070949241B30B000135B3E /* VHLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = FB070947241B30AF00135B3E /* VHLNavigation.m */; };
 		FB1933F524406247006D12F2 /* QuysTengAiTask.h in Headers */ = {isa = PBXBuildFile; fileRef = FB1933F324406247006D12F2 /* QuysTengAiTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,8 +37,6 @@
 		FB1933F92440628F006D12F2 /* QuysTengAiNetworkApi.h in Headers */ = {isa = PBXBuildFile; fileRef = FB1933F72440628F006D12F2 /* QuysTengAiNetworkApi.h */; };
 		FB1933FA2440628F006D12F2 /* QuysTengAiNetworkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */; };
 		FB1933FD244070A4006D12F2 /* QuysViewControllerB.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1933FC244070A4006D12F2 /* QuysViewControllerB.m */; };
-		FB19349024456263006D12F2 /* QuysTengAiCountManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */; };
-		FB19349124456263006D12F2 /* QuysTengAiCountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */; };
 		FB1A0DEB23C4668300EADB4D /* zanting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DE923C4668300EADB4D /* zanting@2x.png */; };
 		FB1A0DEC23C4668300EADB4D /* zanting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1A0DEA23C4668300EADB4D /* zanting@3x.png */; };
 		FB1A0DEF23C492EC00EADB4D /* QuysServiceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DEE23C492EC00EADB4D /* QuysServiceListTableViewController.m */; };
@@ -214,13 +218,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2721E5040C4072903A53B5F5 /* libPods-quysAdvice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quysAdvice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58D747BB16B021851578C035 /* Pods-quysAdvice-quysDevDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysDevDemo.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo.release.xcconfig"; sourceTree = "<group>"; };
 		6B3DD88529F89B5CC8240F33 /* Pods-quysAdvice-quysDevDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysDevDemo.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		8D56AE8037303AF929E0C9C7 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
-		99297E17B343A810DE93A615 /* libPods-quysAdvice-quysDevDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quysAdvice-quysDevDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A624D97231D28409DA1E055 /* Pods-quysAdvice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.release.xcconfig"; sourceTree = "<group>"; };
+		A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice_quysDevDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E078D3E22406B4690035E1BF /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@2x.png"; sourceTree = "<group>"; };
+		E0B3CD99244AEE9E00E4B524 /* QuysTengAiTaskGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiTaskGroup.h; sourceTree = "<group>"; };
+		E0B3CD9A244AEE9E00E4B524 /* QuysTengAiTaskGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiTaskGroup.m; sourceTree = "<group>"; };
+		E0B3CD9D244AFC4200E4B524 /* QuysTaskNotifyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTaskNotifyModel.h; sourceTree = "<group>"; };
+		E0B3CD9E244AFC4200E4B524 /* QuysTaskNotifyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTaskNotifyModel.m; sourceTree = "<group>"; };
+		E0B3CDA1244B068300E4B524 /* NSDate+QuysFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+QuysFormat.h"; sourceTree = "<group>"; };
+		E0B3CDA2244B068300E4B524 /* NSDate+QuysFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QuysFormat.m"; sourceTree = "<group>"; };
 		FB070946241B30AF00135B3E /* VHLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHLNavigation.h; sourceTree = "<group>"; };
 		FB070947241B30AF00135B3E /* VHLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VHLNavigation.m; sourceTree = "<group>"; };
 		FB1933F324406247006D12F2 /* QuysTengAiTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiTask.h; sourceTree = "<group>"; };
@@ -229,8 +239,6 @@
 		FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiNetworkApi.m; sourceTree = "<group>"; };
 		FB1933FB244070A4006D12F2 /* QuysViewControllerB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysViewControllerB.h; sourceTree = "<group>"; };
 		FB1933FC244070A4006D12F2 /* QuysViewControllerB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysViewControllerB.m; sourceTree = "<group>"; };
-		FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiCountManager.h; sourceTree = "<group>"; };
-		FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiCountManager.m; sourceTree = "<group>"; };
 		FB1A0DE923C4668300EADB4D /* zanting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@2x.png"; sourceTree = "<group>"; };
 		FB1A0DEA23C4668300EADB4D /* zanting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zanting@3x.png"; sourceTree = "<group>"; };
 		FB1A0DED23C492EC00EADB4D /* QuysServiceListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysServiceListTableViewController.h; sourceTree = "<group>"; };
@@ -392,7 +400,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F7770A4828CCBFC3F64CC4B /* libPods-quysAdvice.a in Frameworks */,
+				579F004DECF785C934B4D18B /* Pods_quysAdvice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB955A1123B489CA00AFA427 /* quysAdvice.framework in Frameworks */,
-				611B9B5EBD6242500F0CEE84 /* libPods-quysAdvice-quysDevDemo.a in Frameworks */,
+				5C718488D3D956414CE94906 /* Pods_quysAdvice_quysDevDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,8 +445,8 @@
 		C5779DD56AD81B4BD46EE2DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2721E5040C4072903A53B5F5 /* libPods-quysAdvice.a */,
-				99297E17B343A810DE93A615 /* libPods-quysAdvice-quysDevDemo.a */,
+				DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */,
+				A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -458,8 +466,12 @@
 				FB1933F424406247006D12F2 /* QuysTengAiTask.m */,
 				FB1933F72440628F006D12F2 /* QuysTengAiNetworkApi.h */,
 				FB1933F82440628F006D12F2 /* QuysTengAiNetworkApi.m */,
-				FB19348E24456263006D12F2 /* QuysTengAiCountManager.h */,
-				FB19348F24456263006D12F2 /* QuysTengAiCountManager.m */,
+				E0B3CD99244AEE9E00E4B524 /* QuysTengAiTaskGroup.h */,
+				E0B3CD9A244AEE9E00E4B524 /* QuysTengAiTaskGroup.m */,
+				E0B3CD9D244AFC4200E4B524 /* QuysTaskNotifyModel.h */,
+				E0B3CD9E244AFC4200E4B524 /* QuysTaskNotifyModel.m */,
+				E0B3CDA1244B068300E4B524 /* NSDate+QuysFormat.h */,
+				E0B3CDA2244B068300E4B524 /* NSDate+QuysFormat.m */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -864,7 +876,9 @@
 				FBAC8A602435BFC4002183A1 /* UIApplication+QuysStatisical.h in Headers */,
 				FBBA894B23A77E8700D0088C /* QuysInformationFlowService.h in Headers */,
 				FB6A1C8C23B2215400E29B75 /* UIViewController+QuysGetRootController.h in Headers */,
+				E0B3CD9B244AEE9E00E4B524 /* QuysTengAiTaskGroup.h in Headers */,
 				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
+				E0B3CDA3244B068300E4B524 /* NSDate+QuysFormat.h in Headers */,
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
 				FB848D76239E56540092A260 /* NSDate+QuysTimestamp.h in Headers */,
 				FBBA896A23AB18BC00D0088C /* QuysAdBanner.h in Headers */,
@@ -876,7 +890,6 @@
 				FB955A6223BB26DC00AFA427 /* QuysIncentiveVideoDataModel.h in Headers */,
 				FB955A2D23B4B3AD00AFA427 /* QuysDownAddressModel.h in Headers */,
 				FB955A5323B9ECA500AFA427 /* QuysIncentiveVideoWindowVC.h in Headers */,
-				FB19349024456263006D12F2 /* QuysTengAiCountManager.h in Headers */,
 				FB955A5A23B9FF8500AFA427 /* QuysIncentiveVideoApi.h in Headers */,
 				FBBA893A23A71E8F00D0088C /* QuysUploadStatisticsModel.h in Headers */,
 				FBBA893E23A7288000D0088C /* QuysUploadApiTaskManager.h in Headers */,
@@ -895,6 +908,7 @@
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
 				FBBA895023A7819E00D0088C /* QuysInformationFlowSmallPictureView.h in Headers */,
 				FB6A1C7723B1B95F00E29B75 /* QuysWebViewController.h in Headers */,
+				E0B3CD9F244AFC4200E4B524 /* QuysTaskNotifyModel.h in Headers */,
 				FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -949,6 +963,7 @@
 				FBC4CE4223B4562C00AF86B1 /* Frameworks */,
 				FBC4CE4323B4562C00AF86B1 /* Resources */,
 				FB50AA102411E4CE007813C3 /* CopyFiles */,
+				E3E1B2E6753F5374CF86117B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1121,6 +1136,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E3E1B2E6753F5374CF86117B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FB135D6523CC0A13000E43DB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1148,6 +1180,7 @@
 				FB6A1C8523B1E93300E29B75 /* QuysWindowViewController.m in Sources */,
 				FB848D53239E26380092A260 /* UIDevice+Hardware.m in Sources */,
 				FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */,
+				E0B3CDA4244B068300E4B524 /* NSDate+QuysFormat.m in Sources */,
 				FBBA897523AB1F2700D0088C /* QuysAdOpenScreenDefaultView.m in Sources */,
 				FB955A5F23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.m in Sources */,
 				FB955A3A23B602F800AFA427 /* QuysAdBaseService.m in Sources */,
@@ -1155,7 +1188,9 @@
 				FBBA896B23AB18BC00D0088C /* QuysAdBanner.m in Sources */,
 				FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */,
 				FB8699E7240F4EBF00FBE09B /* QuysAdOpenScreenVideoView.m in Sources */,
+				E0B3CDA0244AFC4200E4B524 /* QuysTaskNotifyModel.m in Sources */,
 				FB6A1C7423B1B82600E29B75 /* QuysNavigationController.m in Sources */,
+				E0B3CD9C244AEE9E00E4B524 /* QuysTengAiTaskGroup.m in Sources */,
 				FB8699E3240E546400FBE09B /* QuysVideoCoverView.m in Sources */,
 				FB070949241B30B000135B3E /* VHLNavigation.m in Sources */,
 				FBBA897E23AB781300D0088C /* QuysFileManager.m in Sources */,
@@ -1190,7 +1225,6 @@
 				FBBA895923A7889A00D0088C /* QuysInformationFlowDefaultView.m in Sources */,
 				FB6A1C8923B20B3600E29B75 /* QuysPictureViewController.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
-				FB19349124456263006D12F2 /* QuysTengAiCountManager.m in Sources */,
 				FBBA892C23A216E000D0088C /* HLJViewTrackModel.m in Sources */,
 				FB955A4023B9EAB000AFA427 /* QuysIncentiveVideoService.m in Sources */,
 				FB955A5B23B9FF8500AFA427 /* QuysIncentiveVideoApi.m in Sources */,
@@ -1396,17 +1430,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8D56AE8037303AF929E0C9C7 /* Pods-quysAdvice.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3LW46M37JG;
+				DEVELOPMENT_TEAM = DM8LQ9XTTN;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = $SRCROOT/quysAdvice/QuysPCH.h;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/YTKNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/YYModel\"",
+				);
 				INFOPLIST_FILE = quysAdvice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1463,17 +1508,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A624D97231D28409DA1E055 /* Pods-quysAdvice.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3LW46M37JG;
+				DEVELOPMENT_TEAM = DM8LQ9XTTN;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = $SRCROOT/quysAdvice/QuysPCH.h;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/YTKNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/YYModel\"",
+				);
 				INFOPLIST_FILE = quysAdvice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1566,7 +1622,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DM8LQ9XTTN;
 				ENABLE_BITCODE = NO;
@@ -1598,9 +1654,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3LW46M37JG;
+				DEVELOPMENT_TEAM = DM8LQ9XTTN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = quysDevDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

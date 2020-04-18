@@ -9,10 +9,10 @@
 #import "QuysTengAiTask.h"
 #import "QuysTengAiNetworkApi.h"
 #import "QuysAdviceOuterlayerDataModel.h"
-#import "QuysTengAiCountManager.h"
 #import "UIDevice+Hardware.h"
 #import "QuysAppDownUrlApi.h"
 #import "QuysDownAddressModel.h"
+#import "QuysTaskNotifyModel.h"
 @interface QuysTengAiTask()
 @property (nonatomic,strong) QuysTengAiNetworkApi *api;
 @property (nonatomic,strong) NSMutableDictionary *dicMReplace;//!<需要“宏替换”的字符数组
@@ -53,24 +53,36 @@
                 QuysAdviceOuterlayerDataModel *outerModel = [QuysAdviceOuterlayerDataModel yy_modelWithJSON:request.responseJSONObject];
                 if (outerModel && outerModel.data.count)
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"Y"}];
+                    QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+                    notifyModel.requestStatus = YES;
+                    notifyModel.taskType = QuysTaskNotifyType_HasData;
+                    notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
+                    //
                     QuysAdviceModel *adviceModel = outerModel.data[0];
                     self.adModel = adviceModel;
-                    [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",adviceModel.width)];
-                    [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",adviceModel.height)];
+                    [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",(long)adviceModel.width)];
+                    [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",(long)adviceModel.height)];
                     [self upload:adviceModel];
                     
                 }else
                 {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"N"}];
+                    QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+                    notifyModel.requestStatus = NO;
+                    notifyModel.taskType = QuysTaskNotifyType_HasData;
+                    notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
                 }
                 NSLog(@"\n\n获取广告数据结束：%@\n",[outerModel yy_modelToJSONObject]);
             }
         });
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
         NSLog(@"\n请求数据错误：<<<%@\n",request.error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"N"}];
-
+        QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+        notifyModel.requestStatus = NO;
+        notifyModel.taskType = QuysTaskNotifyType_HasData;
+        notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
     }];
 }
 
@@ -82,10 +94,10 @@
     //3、视频播放开始：videoStart
     //4、视频播放结束：videoSuccess
     
-    if (self.exposureEnable)
+    NSInteger random = arc4random()%100;
+    CGFloat randomRate = 100 *self.exposureRate;
+    if (random <= randomRate)
     {
-        
-        
         //：上报事件参数构造
         NSLog(@"\n\nd<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<上报开始\n");
         
@@ -99,32 +111,38 @@
             [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%d",[self getRandomInt:100 to:width])];
             [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%d",[self getRandomInt:100 to:height])];
             [self uploadUrl:model.impTracking];
+            //
+            QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+            notifyModel.requestStatus = YES;
+            notifyModel.taskType = QuysTaskNotifyType_Exposure;
+            notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
             NSLog(@"\n\n曝光上报开始\n");
             
         }
         
         //:点击率
         NSInteger random = arc4random()%100;
-        CGFloat randomRate = 100*[[QuysTengAiCountManager shareManager] clickRate];
+        CGFloat randomRate = 100*self.clickRate;
         if (random <= randomRate)
         {
-            self.clickEnable = YES;
-            if (self.clickEnable)
-            {
-                NSInteger pointX = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] integerValue];
-                NSInteger pointY = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] integerValue];
-                
-                CGPoint cpClick = CGPointMake(arc4random()%pointX, arc4random()%pointY);
-                CGPoint cpReClick = cpClick;
-                [self interstitialOnClick:cpClick cpRe:cpReClick model:model];
-                
-                    
-                    NSLog(@"\n\n点击上报开始\n");
-                    
-                }
-                
-            }
+            NSInteger pointX = [[NSString stringWithFormat:@"%lf",CGRectGetWidth([UIScreen mainScreen].bounds) ] integerValue];
+            NSInteger pointY = [[NSString stringWithFormat:@"%lf",CGRectGetHeight([UIScreen mainScreen].bounds) ] integerValue];
+            
+            CGPoint cpClick = CGPointMake(arc4random()%pointX, arc4random()%pointY);
+            CGPoint cpReClick = cpClick;
+            [self interstitialOnClick:cpClick cpRe:cpReClick model:model];
+            //
+            QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+            notifyModel.requestStatus = YES;
+            notifyModel.taskType = QuysTaskNotifyType_Click;
+            notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
+            
+            NSLog(@"\n\n点击上报开始\n");
+            
         }
+    }
     //上报结束
     NSLog(@"\n\n上报结束\n");
     
@@ -185,15 +203,22 @@
     {
         //TODO:deepLink
         NSInteger random = arc4random()%100;
-        CGFloat randomRate = 100*[[QuysTengAiCountManager shareManager] deeplinkRate];
+        CGFloat randomRate = 100*self.deeplinkRate;
         if (random <= randomRate)
         {
             [self uploadUrl:adModel.reportDeeplinkSuccessUrl];
+            //
+            QuysTaskNotifyModel *notifyModel = [QuysTaskNotifyModel new];
+            notifyModel.requestStatus = YES;
+            notifyModel.taskType = QuysTaskNotifyType_Deeplink;
+            notifyModel.currentDate = [NSDate buildDate:[NSDate date]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:self.postNotifyName object:notifyModel];
         }else
         {
             [self uploadUrl:adModel.reportDeeplinkFailUrl];
 
         }
+        
         
     }
 }
@@ -268,35 +293,37 @@
 
 - (void)uploadUrl:(NSArray *)arrUrlArr
 {
-    __weak typeof (self) weakSelf= self;
-    [arrUrlArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        //宏替换
-        obj =  [[QuysAdviceManager shareManager] replaceSpecifiedString:obj];
-        //发起网络请求
-        NSURL *requestUrl = [NSURL URLWithString:kStringFormat(@"%@",obj)];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestUrl];
-        request.HTTPMethod = @"GET";
-        //设置请求头(可选, 在必要时添加)
-        NSString *strUserAgent = weakSelf.api.requestArgument[@"ua"];
-        if (!kISNullString(strUserAgent))
-        {
-            [request setValue:strUserAgent forHTTPHeaderField: @"User-Agent"];
-        }
-        NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request  completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            if (error)
+    @autoreleasepool {
+        __weak typeof (self) weakSelf= self;
+        [arrUrlArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            //宏替换
+            obj =  [[QuysAdviceManager shareManager] replaceSpecifiedString:obj];
+            //发起网络请求
+            NSURL *requestUrl = [NSURL URLWithString:kStringFormat(@"%@",obj)];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestUrl];
+            request.HTTPMethod = @"GET";
+            //设置请求头(可选, 在必要时添加)
+            NSString *strUserAgent = weakSelf.api.requestArgument[@"ua"];
+            if (!kISNullString(strUserAgent))
             {
-                 
-            }else
-            {
-                NSLog(@"\n上报请求完成:%@d\n",obj);
+                [request setValue:strUserAgent forHTTPHeaderField: @"User-Agent"];
             }
+            NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+            NSURLSessionDataTask *task = [session dataTaskWithRequest:request  completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if (error)
+                {
+                    
+                }else
+                {
+                    NSLog(@"\n上报请求完成:%@d\n",obj);
+                }
+            }];
+            
+            [task resume];
+            NSLog(@"\n开始上报请求:%@\n",obj);
         }];
-        
-        [task resume];
-        NSLog(@"\n开始上报请求:%@\n",obj);
-    }];
+    }
 }
 
 - (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
@@ -313,12 +340,14 @@
     [[self dicMReplace] setObject:[NSDate quys_getNowTimeSecond] forKey:kEVENT_TIME];
     [[self dicMReplace] setObject:[NSDate quys_getNowTimeTimestamp] forKey:kMILI_MISECONDS];
     //
-    [[self dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
-        if ([strTemp containsString:key])
-        {
-            strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
-        }
-    }];
+    @autoreleasepool {
+        [[self dicMReplace] enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString *obj, BOOL * _Nonnull stop) {
+            if ([strTemp containsString:key])
+            {
+                strTemp = [strTemp stringByReplacingOccurrencesOfString:key withString:obj];
+            }
+        }];
+    }
     return strTemp;
 }
 
