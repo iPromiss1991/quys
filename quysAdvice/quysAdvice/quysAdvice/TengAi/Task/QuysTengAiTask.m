@@ -53,6 +53,7 @@
                 QuysAdviceOuterlayerDataModel *outerModel = [QuysAdviceOuterlayerDataModel yy_modelWithJSON:request.responseJSONObject];
                 if (outerModel && outerModel.data.count)
                 {
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:kQuysTengAiRealTaskNofify object:@{kQuysTengAiRealTaskNofifyKey:@"Y"}];
                     QuysAdviceModel *adviceModel = outerModel.data[0];
                     self.adModel = adviceModel;

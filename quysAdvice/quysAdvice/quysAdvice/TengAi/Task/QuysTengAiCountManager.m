@@ -52,7 +52,7 @@ static const NSInteger kRequestDefaultCount = 50000;//TODO：默认请求数
 
 - (void)QuysTengAiRealTaskNofifyEvent:(NSNotification*)notify
 {
-    if ([notify.userInfo[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"])
+    if ([notify.object[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"])
 
     {
  

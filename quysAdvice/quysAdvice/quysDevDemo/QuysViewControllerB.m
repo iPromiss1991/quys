@@ -158,8 +158,8 @@ static NSInteger requestThreadCount = 1;
                 //开屏
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     QuysTengAiTask *taskBanner= [QuysTengAiTask new];
-                    taskBanner.businessID = @"kp_tengai_ios";
-                    taskBanner.bussinessKey = @"1E6E6B4EE8FEF1A16217CBB156F67CF0";
+                    taskBanner.businessID = @"kp_tengai_ios2";
+                    taskBanner.bussinessKey = @"46E3AAE0C42B26D667975A8DED3414E0";
                     taskBanner.exposureEnable = exposureEnable;
                     [taskBanner start];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -206,7 +206,7 @@ static NSInteger requestThreadCount = 1;
 - (void)QuysTengAiRealTaskNofifyEvent:(NSNotification*)notify
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([notify.userInfo[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"] )
+        if ([notify.object[kQuysTengAiRealTaskNofifyKey] isEqualToString:@"Y"] )
         {
              NSInteger notifyCout = [self.lblRealRequestForData.text integerValue]+1;
                    NSInteger reealRequestCount = [self.lblrequestlegelCount.text integerValue];
