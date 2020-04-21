@@ -21,6 +21,7 @@ static NSInteger timerIntervalUnit = 60 * 30;
 @property (nonatomic, strong) NSDate *lastReturnDataDate;//!<   上一次数据返回时间
 @property (nonatomic, strong) NSString *strUniqueNotifyName;//!< 有数据返回的通知名称
 
+@property (nonatomic, assign) NSUInteger lastHourRequestCount;//!< 前一小时截止的请求量
 @property (nonatomic, assign) NSUInteger requestTimeInterval;//!< 多长时间没数据时，就去更改请求数量。eg：默认30分钟
 @end
 @implementation QuysTengAiTaskGroup
@@ -37,7 +38,7 @@ static NSInteger timerIntervalUnit = 60 * 30;
 {
     self.runStartDate = [NSDate buildDate:[NSDate date]];
 #warning 可以在此处设置默认参数
-//    self.requestTimeInterval = 3;
+    //    self.requestTimeInterval = 3;
     
     
 }
@@ -64,6 +65,7 @@ static NSInteger timerIntervalUnit = 60 * 30;
 - (void)runTask
 {
     @autoreleasepool {
+        self.outPutRequestDataCount ++;
         QuysTengAiTask *api = [QuysTengAiTask new];
         api.businessID = self.businessID;
         api.bussinessKey = self.bussinessKey;
@@ -90,23 +92,39 @@ static NSInteger timerIntervalUnit = 60 * 30;
                     
                 case QuysTaskNotifyType_HasData:
                 {
-                    
+                    self.outPutHasDataCount++;
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    {
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutHasDataCount];
+                    }
                     //TODO
                 }
                     break;
                 case QuysTaskNotifyType_Exposure:
                 {
                     self.outPutExposureCount++;
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    {
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutExposureCount];
+                    }
                 }
                     break;
                 case QuysTaskNotifyType_Click:
                 {
                     self.outPutClickCount++;
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    {
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutClickCount];
+                    }
                 }
                     break;
                 case QuysTaskNotifyType_Deeplink:
                 {
                     self.outPutDeeplinkCunt++;
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    {
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutDeeplinkCunt];
+                    }
                 }
                     break;
                 default:
@@ -118,8 +136,6 @@ static NSInteger timerIntervalUnit = 60 * 30;
             [self QuysTengAiRealValidateTimerNofifyEvent:model.currentDate];
         }
 #warning 此处监听值变化
-        
-        
         //每间隔 timerIntervalUnit 秒，输出一次数据
         NSTimeInterval interval = [model.currentDate timeIntervalSinceDate:self.runStartDate];
         NSInteger interInterval = [[NSString stringWithFormat:@"%0lf",interval] integerValue];
@@ -128,6 +144,11 @@ static NSInteger timerIntervalUnit = 60 * 30;
             //取余为0
             //TODO：
             
+            if ([self.delegate performSelector:@selector(QuysTengPerHourHasDataRequestCount:)])
+            {
+                [self.delegate QuysTengPerHourHasDataRequestCount:(self.outPutHasDataCount - self.lastHourRequestCount) ];
+            }
+            self.lastHourRequestCount = self.outPutHasDataCount;
         }
     });
 }

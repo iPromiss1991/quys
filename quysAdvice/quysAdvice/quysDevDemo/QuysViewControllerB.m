@@ -10,7 +10,7 @@
 #import "QuysTengAiTaskGroup.h"
 #import <quysAdvice/quysAdvice.h>
 
-@interface QuysViewControllerB ()
+@interface QuysViewControllerB ()<QuysTengAiTaskGroupDelegate>
 @property (nonatomic,strong) NSTimer *timer;
 
 @property (nonatomic,strong) UILabel *lblrequestCount;
@@ -39,8 +39,11 @@
     
     
     //TODO:开始任务
-    self.tengAi_Open_kp_tengai_ios = [self createTaskGroup:@"kp_tengai_ios" key:@"1E6E6B4EE8FEF1A16217CBB156F67CF0" count:50000 exposure:.8 click:.12 deeplink:.3];
+    self.tengAi_Open_kp_tengai_ios = [self createTaskGroup:@"kp_tengai_ios2" key:@"46E3AAE0C42B26D667975A8DED3414E0" count:50000 exposure:.8 click:.12 deeplink:.3];
+    self.tengAi_Open_kp_tengai_ios.delegate = self;
     [self.tengAi_Open_kp_tengai_ios run];
+    
+    
     
     ////////
     
@@ -52,9 +55,9 @@
     self.title = [NSString stringWithFormat:@"开始统计%@:",localeDate];
     self.view.backgroundColor = [UIColor purpleColor];
     
-    UILabel *lblrequestCountDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, 100, 60)];
+    UILabel *lblrequestCountDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, 150, 60)];
     lblrequestCountDes.backgroundColor = [UIColor clearColor];
-    lblrequestCountDes.text = @"请求次数：";
+    lblrequestCountDes.text = @"发起请求次数：";
     [self.view addSubview:lblrequestCountDes];
     
     UILabel *lblrequestCount = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblrequestCountDes.frame)+10, 100, 200, 60)];
@@ -65,7 +68,7 @@
     
     UILabel *lblrequestlegelCountDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 200, 250, 60)];
     lblrequestlegelCountDes.backgroundColor = [UIColor clearColor];
-    lblrequestlegelCountDes.text = @"有效请求（曝光）次数：";
+    lblrequestlegelCountDes.text = @"有效请求次数：";
     [self.view addSubview:lblrequestlegelCountDes];
     
     UILabel *lblrequestlegelCount = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblrequestlegelCountDes.frame)+10, 200, 200, 60)];
@@ -77,7 +80,7 @@
     
     UILabel *lblrequestlegelMulDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 300, 100, 60)];
     lblrequestlegelMulDes.backgroundColor = [UIColor clearColor];
-    lblrequestlegelMulDes.text = @"实时填充率：";
+    lblrequestlegelMulDes.text = @"曝光次数：";
     [self.view addSubview:lblrequestlegelMulDes];
     
     UILabel *lblrequestlegelMul = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblrequestlegelMulDes.frame)+10, 300, 200, 60)];
@@ -88,7 +91,7 @@
     
     UILabel *lblEveryHoursDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 400, 200, 60)];
     lblEveryHoursDes.backgroundColor = [UIColor clearColor];
-    lblEveryHoursDes.text = @"每小时填充率：";
+    lblEveryHoursDes.text = @"每小时有效请求量：";
     [self.view addSubview:lblEveryHoursDes];
     
     UILabel *lblEveryHours = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblEveryHoursDes.frame)+10, 400, 200, 60)];
@@ -97,9 +100,9 @@
     self.lblEveryHours = lblEveryHours;
     
     
-    UILabel *lblRealRequestForDataDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 500, 120, 60)];
+    UILabel *lblRealRequestForDataDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 500, 150, 60)];
     lblRealRequestForDataDes.backgroundColor = [UIColor clearColor];
-    lblRealRequestForDataDes.text = @"真实数据填充：";
+    lblRealRequestForDataDes.text = @"实时数据填充率：";
     [self.view addSubview:lblRealRequestForDataDes];
     
     UILabel *lblRealRequestForData = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblRealRequestForDataDes.frame)+10, 500, 100, 100)];
@@ -112,14 +115,13 @@
     UILabel *lblCountForHour = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(lblRealRequestForData.frame) +10, 300, 60)];
     lblCountForHour.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:lblCountForHour];
+    lblCountForHour.textColor = [UIColor redColor];
     self.lblCountForHour = lblCountForHour;
     
     self.currentDate = [NSDate date];
 //////
 
-#warning 无法监听变化？？
-   [ self addObserver:self.tengAi_Open_kp_tengai_ios forKeyPath:@"outPutExposureCount" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
-}
+  }
 
 
 
@@ -137,6 +139,53 @@
     taskGroup.deeplinkRate = deeplinkRate;
     return taskGroup;
 }
+
+
+#pragma mark - Delegate
+
+- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount
+{
+    
+    switch (eventType)
+               {
+                       
+                   case QuysTaskNotifyType_HasData:
+                   {
+                       self.lblrequestlegelCount.text = [NSString stringWithFormat:@"%ld",eventCount];
+                   }
+                       break;
+                   case QuysTaskNotifyType_Exposure:
+                   {
+                       self.lblrequestlegelMul.text = [NSString stringWithFormat:@"%ld",eventCount];
+                   }
+                       break;
+                   case QuysTaskNotifyType_Click:
+                   {
+ 
+                   }
+                       break;
+                   case QuysTaskNotifyType_Deeplink:
+                   {
+ 
+                   }
+                       break;
+                   default:
+                       break;
+               }
+    
+    self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",self.tengAi_Open_kp_tengai_ios.outPutRequestDataCount];
+    self.lblRealRequestForData.text = [NSString stringWithFormat:@"%lf",self.self.tengAi_Open_kp_tengai_ios.outPutHasDataCount*1.0/self.tengAi_Open_kp_tengai_ios.outPutRequestDataCount*1.0];
+    self.lblCountForHour.text = [NSString stringWithFormat:@"设置的每小时请求量：%ld",self.tengAi_Open_kp_tengai_ios.requestCount];
+}
+
+
+- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount
+{
+    self.lblEveryHours.text = [NSString stringWithFormat:@"%ld",eventCount];
+
+    
+}
+
 
 /*iOS
  
@@ -157,9 +206,5 @@
  1F7F6D5688BBA066A07816FE3C9292FA
  */
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",self.tengAi_Open_kp_tengai_ios.outPutExposureCount];
-
-}
+ 
 @end

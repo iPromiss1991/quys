@@ -7,6 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QuysTaskNotifyModel.h"
+@protocol QuysTengAiTaskGroupDelegate <NSObject>
+
+- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount;
+
+- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount;
+
+@end
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,11 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *bussinessKey;
 
 //输出
+@property (nonatomic, assign) NSInteger  outPutRequestDataCount;//!< 截止此刻发起请求的次数
+@property (nonatomic, assign) NSInteger  outPutHasDataCount;//!< <#Explement #>
 @property (nonatomic, assign) NSInteger  outPutExposureCount;//!< <#Explement #>
 @property (nonatomic, assign) NSInteger  outPutClickCount;//!< <#Explement #>
 @property (nonatomic, assign) NSInteger  outPutDeeplinkCunt;//!< <#Explement #>
 
 
+@property (nonatomic,assign) id <QuysTengAiTaskGroupDelegate> delegate;
 
 - (void)run;
 @end
