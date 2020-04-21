@@ -15,7 +15,7 @@
 
 - (NSString *)requestUrl
 {
-     if (1)
+#ifdef IsReleaseVersion
     {
 //        NSString *strRequestUrl = @"http://192.168.1.30:8093/list";
   NSString *strRequestUrl = @"http://jl.quyuansu.com/pull/list";
@@ -27,7 +27,8 @@
         
 //        return @"http://192.168.1.8:8086/spread/detail";
 
-    }else
+    }
+#else
     {
         NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
@@ -39,7 +40,7 @@
         return strUrl;
         
     }
-    
+#endif
 }
 
 

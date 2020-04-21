@@ -17,7 +17,8 @@
     //  NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
     //    NSString *strRequestUrl = @"http://192.168.1.8:8086/spread/detail";
     //标准测试
-    if (1)//TODO:注意还有 激励视频Api
+//#define IsReleaseVersion
+#ifdef IsReleaseVersion//TODO:注意还有 激励视频Api
     {
 //        NSString *strRequestUrl = @"http://192.168.1.8:8086/spread/detail";
       NSString *strRequestUrl = @"http://adx.quyuansu.com/api/spread/detail";
@@ -29,7 +30,8 @@
         
 //        return @"http://192.168.1.8:8086/spread/detail";
 
-    }else
+    }
+#else
     {
         NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
@@ -39,7 +41,7 @@
         return strUrl;
         
     }
-    
+#endif
 }
 
 - (YTKRequestMethod)requestMethod

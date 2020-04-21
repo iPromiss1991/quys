@@ -76,7 +76,7 @@
     CGContextSetBlendMode(context, kCGBlendModeNormal);
     CGRect rect = CGRectMake(0, 0, backItemImage.size.width, backItemImage.size.height);
     CGContextClipToMask(context, rect, backItemImage.CGImage);
-    [self.qus_navBackButtonColor?:[UIColor whiteColor] setFill];             // **
+    [self.qus_navBackButtonColor?:self.navigationController.navigationBar.tintColor setFill];             // **
     CGContextFillRect(context, rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

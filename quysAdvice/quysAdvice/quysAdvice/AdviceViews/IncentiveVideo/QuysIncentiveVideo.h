@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) QuysAdviceLoadFailCallBackBlock quysAdviceLoadFailCallBackBlockItem;
 
 
+@property (nonatomic,assign) BOOL isPlayToEnd;//是否播放完成
+
+
 - (void)updateBlockItemsAndPalyStart;
 @end
 

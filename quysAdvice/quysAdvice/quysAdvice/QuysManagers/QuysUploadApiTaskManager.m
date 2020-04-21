@@ -52,12 +52,14 @@ static const NSInteger AsyncThreadCount = 5;//线程同步最大并发数
                 obj =  [weakself replaceSpecifiedString:obj];
                 //发起网络请求
                 NSURL *requestUrl = [NSURL URLWithString:kStringFormat(@"%@",obj)];
+                NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestUrl];
+                request.HTTPMethod = @"GET";
                 NSURLSessionConfiguration *config= [NSURLSessionConfiguration defaultSessionConfiguration];
                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-                NSURLSessionDataTask *task = [session dataTaskWithURL:requestUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                     NSLog(@"上报请求完成:%@d\n",obj);
                     dispatch_semaphore_signal(self.semaphore);
-                }];
+                } ];
                 [task resume];
                 NSLog(@"上报请求:%@\n",obj);
             }];

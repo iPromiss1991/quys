@@ -48,6 +48,7 @@
     [self vhl_setNavBarShadowImageHidden:YES];
     [self vhl_setNavBarBackgroundAlpha:1.0f];
     [self vhl_setNavBarHidden:NO];
+    [self setQus_navBackButtonColor:self.navigationController.navigationBar.tintColor ];
     [self setQus_navBackButtonTitle:@"返回"];
     [self vhl_setInteractivePopGestureRecognizerEnable:NO];
     

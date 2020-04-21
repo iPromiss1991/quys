@@ -9,7 +9,7 @@
 #import "QuysIncentiveVideo.h"
 #import "QuysVideoPlayerView.h"
 #import "QuysImgPlayendCoverView.h"
-@interface QuysIncentiveVideo()<QuysVideoPlayerDelegate>
+@interface QuysIncentiveVideo()<QuysVideoPlayerDelegate,CAAnimationDelegate>
 @property (nonatomic,strong) UIView *viewContain;
 
 @property (nonatomic,strong) UIButton *btnCounntdown;//!< 倒计时
@@ -55,7 +55,7 @@
     
     QuysVideoPlayerView *playerView = [[QuysVideoPlayerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     playerView.delegate = self;
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [playerView addGestureRecognizer:tap];
     [self.viewContain addSubview:playerView];
     self.playerView = playerView;
@@ -79,7 +79,7 @@
     //
     UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
     viewFootContain.backgroundColor = kRGB16(BackgroundColor1, .7);
-     [self.viewContain addSubview:viewFootContain];
+    [self.viewContain addSubview:viewFootContain];
     self.viewFootContain = viewFootContain;
     
     UIImageView *imgLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
@@ -88,14 +88,14 @@
     self.imgLogo = imgLogo;
     
     UILabel *lblTitle = [[UILabel alloc] init];
-       lblTitle.numberOfLines = 1;
+    lblTitle.numberOfLines = 1;
     lblTitle.textAlignment =NSTextAlignmentCenter;
-       lblTitle.text = @"文案";
-       [lblTitle setFont:kScaleFont(17)];
-       [lblTitle setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-       [lblTitle setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-       self.lblTitle = lblTitle;
-       [self.viewFootContain addSubview:lblTitle];
+    lblTitle.text = @"文案";
+    [lblTitle setFont:kScaleFont(17)];
+    [lblTitle setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [lblTitle setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    self.lblTitle = lblTitle;
+    [self.viewFootContain addSubview:lblTitle];
     
     UILabel *lblContent = [[UILabel alloc] init];
     lblContent.numberOfLines = 3;
@@ -167,10 +167,10 @@
     }];
     
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.lblTitle.mas_bottom).offset(1);
+        make.top.mas_greaterThanOrEqualTo(self.lblTitle.mas_bottom).offset(1);
         make.left.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(5));
         make.width.height.mas_equalTo(kScale_W(60));
-        make.bottom.mas_lessThanOrEqualTo(self.viewFootContain);
+        make.bottom.mas_lessThanOrEqualTo(self.viewFootContain).offset(-kScale_H(5));
     }];
     
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -210,16 +210,16 @@
     //当播放时点击触发playStatesChanged，弹出QuysVidoePlayButtonView会拦截点击事件，所以该方法仅需要处理播放时的点击事件，即可。
     if (self.playerView.player.rate)
     {
-         if (self.vm.isClickable )
-         {
-             //获取触发触摸的点
-             CGPoint cpBegain = [sender locationInView:self];
-             CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
-             if (self.quysAdviceClickEventBlockItem)
-             {
-                 self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
-             }
-         }
+        if (self.vm.isClickable )
+        {
+            //获取触发触摸的点
+            CGPoint cpBegain = [sender locationInView:self];
+            CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+            if (self.quysAdviceClickEventBlockItem)
+            {
+                self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
+            }
+        }
         [self playStatesChanged];
     }else
     {
@@ -232,17 +232,58 @@
 /// @param sender UIButton
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    [self closeAndRemovePlayer];
-    if (self.quysAdviceCloseEventBlockItem)
+    kWeakSelf(self)
+    if (self.playerView.player.rate)
     {
-        self.quysAdviceCloseEventBlockItem();
+        [self playStatesChanged];
+    }
+    if (!self.isPlayToEnd)
+    {
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"继续观看" message:@"继续观看广告获取奖励！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"继续播放" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+            //响应事件
+            if (!self.playerView.player.rate)
+            {
+                [self playStatesChanged];
+            }
+            
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"残忍退出" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+            //响应事件
+            [weakself closeAndRemovePlayer];
+            if (weakself.quysAdviceCloseEventBlockItem)
+            {
+                weakself.quysAdviceCloseEventBlockItem();
+            }
+        }];
+        
+        [alertVC addAction:defaultAction];
+        [alertVC addAction:cancelAction];
+        [[UIViewController quys_findVisibleViewController:NSClassFromString(@"QuysIncentiveVideoWindow")] presentViewController:alertVC animated:YES completion:nil];
+        
+    }else
+    {
+        [self closeAndRemovePlayer];
+        if (self.quysAdviceCloseEventBlockItem)
+        {
+            self.quysAdviceCloseEventBlockItem();
+        }
     }
 }
 
 - (void)closeAndRemovePlayer
 {
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
-    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveIncentiveBackgroundImageViewNotify object:nil];
+    CGFloat duration = .3;
+    CABasicAnimation *transition = [CABasicAnimation animationWithKeyPath:@"position"];
+    transition.duration = duration;
+    transition.delegate = self;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    transition.toValue = @(CGPointMake(kScreenWidth*3*1.0/2.0, CGRectGetMidY(self.frame)));
+    transition.removedOnCompletion = NO;
+    transition.fillMode = kCAFillModeForwards;
+    [self.layer addAnimation:transition forKey:@"remove"];
 }
 
 /// 静音设置
@@ -293,7 +334,7 @@
             {
                 case QuysAdviceVideoEndShowTypeNone:
                 {
-                     self.imgPlayendCover.hidden = YES;
+                    self.imgPlayendCover.hidden = YES;
                 }
                     break;
                 case QuysAdviceVideoEndShowTypeImageUrl:
@@ -320,6 +361,7 @@
                 default:
                     break;
             }
+            self.isPlayToEnd = YES;
         }else
         {
             self.imgPlayendCover.strImageUrl = self.vm.videoAlternateEndShowValue;
@@ -338,7 +380,7 @@
 }
 
 
- 
+
 
 #pragma mark -QuysVideoPlayerDelegate
 
@@ -413,6 +455,11 @@
         //尾帧关闭
         weakself.imgPlayendCover.hidden = YES;
         weakself.quysAdviceEndViewCloseEventBlockItem();
+        [weakself closeAndRemovePlayer];
+        if (weakself.quysAdviceCloseEventBlockItem)
+        {
+            weakself.quysAdviceCloseEventBlockItem();
+        }
     };
     
     self.imgPlayendCover.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
@@ -429,7 +476,14 @@
 }
 
 
-
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    if (flag)
+    {
+         [[NSNotificationCenter defaultCenter ] postNotificationName:kAVPlayerItemDidRemoveNotification object:nil];
+         [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveIncentiveBackgroundImageViewNotify object:nil];
+    }
+}
 - (void)dealloc
 {
     

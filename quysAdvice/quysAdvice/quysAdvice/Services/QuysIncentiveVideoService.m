@@ -92,7 +92,8 @@
     NSArray *windows = [[UIApplication sharedApplication] windows];
 
     for (UIWindow *__strong windowItem in windows) {
-        if ([windowItem isKindOfClass:[QuysIncentiveVideoWindow class]]) {
+        if ([windowItem isKindOfClass:[QuysIncentiveVideoWindow class]])
+        {
             windowItem.hidden = YES;
             windowItem.windowLevel = - 1000;
             windowItem = nil;

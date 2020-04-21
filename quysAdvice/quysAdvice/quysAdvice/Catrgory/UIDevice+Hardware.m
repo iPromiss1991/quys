@@ -460,7 +460,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString*)quys_screenOritation
 {
    __block NSString *screenOritation = @"";
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
          UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
             if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
             {
@@ -711,8 +711,11 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceAdvertisingIdentifier];
     if (strUniqueID.length <= 0)
     {
-        strUniqueID = [[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
+        if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled])//TODO
+               {
+                    strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+                    [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
+               }
     }else
     {
         
@@ -727,7 +730,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceVenderIdentifier];
     if (strUniqueID.length <= 0)
     {
-        strUniqueID =[ [[[UIDevice currentDevice] identifierForVendor] UUIDString]stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        strUniqueID =[ [[UIDevice currentDevice] identifierForVendor] UUIDString];
         [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceVenderIdentifier];
     }else
     {
@@ -797,7 +800,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     NSString *uuid = [NSString stringWithString:(__bridge NSString *)uuid_string_ref];
     CFRelease(uuid_ref);
     CFRelease(uuid_string_ref);
-    return [[uuid lowercaseString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return [uuid uppercaseString]  ;
 }
 
 

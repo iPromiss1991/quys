@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIView *viewContain;//!< <#Explement #>
 @property (nonatomic, strong) UIView *viewContainBottom;//!< <#Explement #>
 @property (nonatomic, strong) UIView *adviceView;//!< <#Explement #>
-@property (nonatomic,assign) BOOL isReleaseVersion;
+
 @end
 
 @implementation QuysDemoViewController
@@ -37,8 +37,8 @@
     NSString *strService = self.title;
     
     //TODO：正式环境测试数据
-    self.isReleaseVersion = 1;
-    if (self.isReleaseVersion)
+    
+#ifdef IsReleaseVersion
     {
 
          if ([strService isEqualToString:@"banner"])
@@ -69,7 +69,8 @@
             }
             
          
-    }else
+    }
+# else
     {
         //
            if ([strService isEqualToString:@"banner"])
@@ -100,7 +101,7 @@
            }
     }
    
-    
+#endif
     if (self.service)
     {
         [self.service performSelector:@selector(loadAdViewNow)];
@@ -210,17 +211,17 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
-    if (self.isReleaseVersion)
-        {
-            if ([self.title containsString:@"激励视频"])
-               {
-                   self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jl_qys_ios_test"
-                                                                           key:@"52C4305558DA476616E2B5B02C9DD315"
-                                                                        cgRect:[UIScreen mainScreen].bounds
-                                                                  eventDelegate:self  ];
-               }
-        }
-    else
+#ifdef IsReleaseVersion
+    {
+        if ([self.title containsString:@"激励视频"])
+           {
+               self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jl_qys_ios_test"
+                                                                       key:@"52C4305558DA476616E2B5B02C9DD315"
+                                                                    cgRect:[UIScreen mainScreen].bounds
+                                                              eventDelegate:self  ];
+           }
+    }
+#else
         {
              if ([self.title containsString:@"激励视频"])
                {
@@ -231,7 +232,7 @@
                }
         }
     
-    
+#endif
 }
 
 #pragma mark - Init
