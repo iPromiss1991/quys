@@ -46,12 +46,12 @@
     self.tengAi_Open_kp_tengai_ios.delegate = self;
     [self.tengAi_Open_kp_tengai_ios run];
 
-    self.tengAi_Open_kp_tengai_ios3 = [self createTaskGroup:@"kp_tengai_ios3" key:@"A13C312503640AB253C20C6FE8D6B0C8" count:50000*0.5 exposure:.8 click:.12 deeplink:.3];
+    self.tengAi_Open_kp_tengai_ios3 = [self createTaskGroup:@"kp_tengai_ios3" key:@"A13C312503640AB253C20C6FE8D6B0C8" count:50000*0.5 exposure:.8 click:.15 deeplink:.3];
 //    self.tengAi_Open_kp_tengai_ios3.delegate = self;
     [self.tengAi_Open_kp_tengai_ios3 run];
 //
 
-    self.tengAi_Open_kp_tengai_ios4 = [self createTaskGroup:@"kp_tengai_iOS4" key:@"3BCA86C7FA0E9F84E21987802DAC15E0" count:50000*0.5 exposure:.8 click:.12 deeplink:.3];
+    self.tengAi_Open_kp_tengai_ios4 = [self createTaskGroup:@"kp_tengai_iOS4" key:@"3BCA86C7FA0E9F84E21987802DAC15E0" count:50000*0.5 exposure:.8 click:.15 deeplink:.3];
 //    self.tengAi_Open_kp_tengai_ios4.delegate = self;
     [self.tengAi_Open_kp_tengai_ios4 run];
 
