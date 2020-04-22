@@ -20,6 +20,7 @@
 @property (nonatomic,strong) UILabel *lblEveryHours;
 @property (nonatomic,strong) UILabel *lblRealRequestForData;
 
+
 @property (nonatomic,strong) UILabel *lblCountForHour;
 
 @property (nonatomic,strong) NSDate *currentDate;
@@ -27,6 +28,8 @@
 
 //
 @property (nonatomic, strong) QuysTengAiTaskGroup *tengAi_Open_kp_tengai_ios;//!< <#Explement #>
+@property (nonatomic, strong) QuysTengAiTaskGroup *tengAi_Open_kp_tengai_ios3;//!< <#Explement #>
+@property (nonatomic, strong) QuysTengAiTaskGroup *tengAi_Open_kp_tengai_ios4;//!< <#Explement #>
 
 
 @end
@@ -42,10 +45,22 @@
     self.tengAi_Open_kp_tengai_ios = [self createTaskGroup:@"kp_tengai_ios2" key:@"46E3AAE0C42B26D667975A8DED3414E0" count:50000 exposure:.8 click:.12 deeplink:.3];
     self.tengAi_Open_kp_tengai_ios.delegate = self;
     [self.tengAi_Open_kp_tengai_ios run];
-    
-    
-    
-    ////////
+
+    self.tengAi_Open_kp_tengai_ios3 = [self createTaskGroup:@"kp_tengai_ios3" key:@"A13C312503640AB253C20C6FE8D6B0C8" count:50000*0.5 exposure:.8 click:.12 deeplink:.3];
+//    self.tengAi_Open_kp_tengai_ios3.delegate = self;
+    [self.tengAi_Open_kp_tengai_ios3 run];
+//
+
+    self.tengAi_Open_kp_tengai_ios4 = [self createTaskGroup:@"kp_tengai_iOS4" key:@"3BCA86C7FA0E9F84E21987802DAC15E0" count:50000*0.5 exposure:.8 click:.12 deeplink:.3];
+//    self.tengAi_Open_kp_tengai_ios4.delegate = self;
+    [self.tengAi_Open_kp_tengai_ios4 run];
+
+//    //TODO：测试
+//    self.tengAi_Open_kp_tengai_ios = [self createTaskGroup:@"kp_tengai_iOS4" key:@"3BCA86C7FA0E9F84E21987802DAC15E0" count:50000 exposure:.8 click:.12 deeplink:.3];
+//      self.tengAi_Open_kp_tengai_ios.delegate = self;
+//      [self.tengAi_Open_kp_tengai_ios run];
+//
+//    ////////
     
     NSDate *date = [NSDate date];
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
@@ -100,19 +115,18 @@
     self.lblEveryHours = lblEveryHours;
     
     
-    UILabel *lblRealRequestForDataDes = [[UILabel alloc]initWithFrame:CGRectMake(20, 500, 150, 60)];
+    UILabel *lblRealRequestForDataDes = [[UILabel alloc]initWithFrame:CGRectMake(20,  CGRectGetMaxY(lblEveryHoursDes.frame) +10, 150, 60)];
     lblRealRequestForDataDes.backgroundColor = [UIColor clearColor];
     lblRealRequestForDataDes.text = @"实时数据填充率：";
     [self.view addSubview:lblRealRequestForDataDes];
     
-    UILabel *lblRealRequestForData = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblRealRequestForDataDes.frame)+10, 500, 100, 100)];
-    lblRealRequestForData.numberOfLines = 0;
-    lblEveryHours.backgroundColor = [UIColor clearColor];
+    UILabel *lblRealRequestForData = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lblRealRequestForDataDes.frame)+10, CGRectGetMaxY(lblEveryHoursDes.frame) +10, 100, 60)];
+    lblRealRequestForData.backgroundColor = [UIColor clearColor];
     [self.view addSubview:lblRealRequestForData];
     self.lblRealRequestForData = lblRealRequestForData;
     
     
-    UILabel *lblCountForHour = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(lblRealRequestForData.frame) +10, 300, 60)];
+    UILabel *lblCountForHour = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(lblRealRequestForDataDes.frame) +10, 300, 60)];
     lblCountForHour.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:lblCountForHour];
     lblCountForHour.textColor = [UIColor redColor];
@@ -143,7 +157,7 @@
 
 #pragma mark - Delegate
 
-- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount
+- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount task:(QuysTengAiTaskGroup *)task
 {
     
     switch (eventType)
@@ -172,14 +186,14 @@
                    default:
                        break;
                }
-    
+
     self.lblrequestCount.text = [NSString stringWithFormat:@"%ld",self.tengAi_Open_kp_tengai_ios.outPutRequestDataCount];
     self.lblRealRequestForData.text = [NSString stringWithFormat:@"%lf",self.self.tengAi_Open_kp_tengai_ios.outPutHasDataCount*1.0/self.tengAi_Open_kp_tengai_ios.outPutRequestDataCount*1.0];
     self.lblCountForHour.text = [NSString stringWithFormat:@"设置的每小时请求量：%ld",self.tengAi_Open_kp_tengai_ios.requestCount];
 }
 
 
-- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount
+- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount task:(QuysTengAiTaskGroup *)task
 {
     self.lblEveryHours.text = [NSString stringWithFormat:@"%ld",eventCount];
 

@@ -5,15 +5,15 @@ platform :ios, '9.0'
 #inhibit_all_warnings! #忽略所有依赖库的所有警告
 target 'quysAdvice' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!##use_modular_headers：使用use_frameworks后问题修复
- pod 'Masonry'
- pod 'YTKNetwork', '~> 2.0.2' #:inhibit_warnings => true #true 忽略警告
- pod 'YYModel'
- pod 'SDWebImage'
- pod 'Reachability'
+  use_modular_headers!##use_modular_headers：使用use_frameworks后问题修复
+ pod 'Masonry',:modular_headers => false
+ pod 'YTKNetwork', '~> 2.0.2' ,:modular_headers => false#:inhibit_warnings => true #true 忽略警告
+ pod 'YYModel',:modular_headers => false
+ pod 'SDWebImage',:modular_headers => false
+ pod 'Reachability',:modular_headers => false
  
   target 'quysDevDemo' do
-    pod 'Masonry'
+    pod 'Masonry',:modular_headers => false
 
   end
 

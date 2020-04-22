@@ -21,8 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		579F004DECF785C934B4D18B /* Pods_quysAdvice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */; };
-		5C718488D3D956414CE94906 /* Pods_quysAdvice_quysDevDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */; };
+		B27A0CE89BD82E5540892419 /* libPods-quysAdvice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED47128D603246A3E7F766F3 /* libPods-quysAdvice.a */; };
+		CFCDA3060BB836612ACDDE08 /* libPods-quysAdvice-quysDevDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B82F31856FD66F1A21825476 /* libPods-quysAdvice-quysDevDemo.a */; };
 		E078D3E32406B4690035E1BF /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E078D3E22406B4690035E1BF /* nav_back@2x.png */; };
 		E0B3CD9B244AEE9E00E4B524 /* QuysTengAiTaskGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B3CD99244AEE9E00E4B524 /* QuysTengAiTaskGroup.h */; };
 		E0B3CD9C244AEE9E00E4B524 /* QuysTengAiTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B3CD9A244AEE9E00E4B524 /* QuysTengAiTaskGroup.m */; };
@@ -222,8 +222,7 @@
 		6B3DD88529F89B5CC8240F33 /* Pods-quysAdvice-quysDevDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice-quysDevDemo.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		8D56AE8037303AF929E0C9C7 /* Pods-quysAdvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.debug.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.debug.xcconfig"; sourceTree = "<group>"; };
 		9A624D97231D28409DA1E055 /* Pods-quysAdvice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quysAdvice.release.xcconfig"; path = "Target Support Files/Pods-quysAdvice/Pods-quysAdvice.release.xcconfig"; sourceTree = "<group>"; };
-		A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice_quysDevDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quysAdvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B82F31856FD66F1A21825476 /* libPods-quysAdvice-quysDevDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quysAdvice-quysDevDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E078D3E22406B4690035E1BF /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@2x.png"; sourceTree = "<group>"; };
 		E0B3CD99244AEE9E00E4B524 /* QuysTengAiTaskGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiTaskGroup.h; sourceTree = "<group>"; };
 		E0B3CD9A244AEE9E00E4B524 /* QuysTengAiTaskGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTengAiTaskGroup.m; sourceTree = "<group>"; };
@@ -231,6 +230,7 @@
 		E0B3CD9E244AFC4200E4B524 /* QuysTaskNotifyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysTaskNotifyModel.m; sourceTree = "<group>"; };
 		E0B3CDA1244B068300E4B524 /* NSDate+QuysFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+QuysFormat.h"; sourceTree = "<group>"; };
 		E0B3CDA2244B068300E4B524 /* NSDate+QuysFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QuysFormat.m"; sourceTree = "<group>"; };
+		ED47128D603246A3E7F766F3 /* libPods-quysAdvice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quysAdvice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB070946241B30AF00135B3E /* VHLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHLNavigation.h; sourceTree = "<group>"; };
 		FB070947241B30AF00135B3E /* VHLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VHLNavigation.m; sourceTree = "<group>"; };
 		FB1933F324406247006D12F2 /* QuysTengAiTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysTengAiTask.h; sourceTree = "<group>"; };
@@ -400,7 +400,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				579F004DECF785C934B4D18B /* Pods_quysAdvice.framework in Frameworks */,
+				B27A0CE89BD82E5540892419 /* libPods-quysAdvice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB955A1123B489CA00AFA427 /* quysAdvice.framework in Frameworks */,
-				5C718488D3D956414CE94906 /* Pods_quysAdvice_quysDevDemo.framework in Frameworks */,
+				CFCDA3060BB836612ACDDE08 /* libPods-quysAdvice-quysDevDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,8 +445,8 @@
 		C5779DD56AD81B4BD46EE2DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DA7A94615FB60FCA4A8E7392 /* Pods_quysAdvice.framework */,
-				A80E72EAC0DFCDD054170E77 /* Pods_quysAdvice_quysDevDemo.framework */,
+				ED47128D603246A3E7F766F3 /* libPods-quysAdvice.a */,
+				B82F31856FD66F1A21825476 /* libPods-quysAdvice-quysDevDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -963,7 +963,6 @@
 				FBC4CE4223B4562C00AF86B1 /* Frameworks */,
 				FBC4CE4323B4562C00AF86B1 /* Resources */,
 				FB50AA102411E4CE007813C3 /* CopyFiles */,
-				E3E1B2E6753F5374CF86117B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1134,23 +1133,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E3E1B2E6753F5374CF86117B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-quysAdvice-quysDevDemo/Pods-quysAdvice-quysDevDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB135D6523CC0A13000E43DB /* ShellScript */ = {
@@ -1441,7 +1423,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = $SRCROOT/quysAdvice/QuysPCH.h;
+				GCC_PREFIX_HEADER = "$SRCROOT/quysAdvice/QuysPCH.h";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1519,7 +1501,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = $SRCROOT/quysAdvice/QuysPCH.h;
+				GCC_PREFIX_HEADER = "$SRCROOT/quysAdvice/QuysPCH.h";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",

@@ -93,9 +93,9 @@ static NSInteger timerIntervalUnit = 60 * 30;
                 case QuysTaskNotifyType_HasData:
                 {
                     self.outPutHasDataCount++;
-                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count:task: )])
                     {
-                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutHasDataCount];
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutHasDataCount task:self];
                     }
                     //TODO
                 }
@@ -103,27 +103,27 @@ static NSInteger timerIntervalUnit = 60 * 30;
                 case QuysTaskNotifyType_Exposure:
                 {
                     self.outPutExposureCount++;
-                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count:task: )])
                     {
-                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutExposureCount];
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutExposureCount task:self];
                     }
                 }
                     break;
                 case QuysTaskNotifyType_Click:
                 {
                     self.outPutClickCount++;
-                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count:task: )])
                     {
-                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutClickCount];
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutClickCount task:self];
                     }
                 }
                     break;
                 case QuysTaskNotifyType_Deeplink:
                 {
                     self.outPutDeeplinkCunt++;
-                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count: )])
+                    if ([self.delegate performSelector:@selector(QuysTengAiNofifyEventType:count:task: )])
                     {
-                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutDeeplinkCunt];
+                        [self.delegate QuysTengAiNofifyEventType:model.taskType count:self.outPutDeeplinkCunt task:self];
                     }
                 }
                     break;
@@ -144,9 +144,9 @@ static NSInteger timerIntervalUnit = 60 * 30;
             //取余为0
             //TODO：
             
-            if ([self.delegate performSelector:@selector(QuysTengPerHourHasDataRequestCount:)])
+            if ([self.delegate performSelector:@selector(QuysTengPerHourHasDataRequestCount:task:)])
             {
-                [self.delegate QuysTengPerHourHasDataRequestCount:(self.outPutHasDataCount - self.lastHourRequestCount) ];
+                [self.delegate QuysTengPerHourHasDataRequestCount:(self.outPutHasDataCount - self.lastHourRequestCount) task:self];
             }
             self.lastHourRequestCount = self.outPutHasDataCount;
         }
