@@ -11,9 +11,9 @@
 @class QuysTengAiTaskGroup;
 @protocol QuysTengAiTaskGroupDelegate <NSObject>
 
-- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount task:(QuysTengAiTaskGroup*)task;
+- (void)QuysTengAiNofifyEventType:(QuysTaskNotifyType)eventType count:(NSInteger)eventCount  ;
 
-- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount task:(QuysTengAiTaskGroup *)task;
+- (void)QuysTengPerHourHasDataRequestCount:(NSInteger)eventCount  ;
 @end
 
 NS_ASSUME_NONNULL_BEGIN
