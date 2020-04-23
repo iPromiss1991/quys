@@ -861,16 +861,6 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString *)quys_forgeiPhonePlatform 
 {
     NSArray *arrPlatform = @[
-        @"iPhone 2G",
-        @"iPhone 3G",
-        @"iPhone 3GS",
-        @"iPhone 4",
-        @"iPhone 4S",
-        @"iPhone 5" ,
-        @"iPhone 5c" ,
-        @"iPhone 5s" ,
-        @"iPhone 6" ,
-        @"iPhone 6 Plus"  ,
         @"iPhone 6s",
         @"iPhone 6s Plus" ,
         @"iPhone SE" ,
