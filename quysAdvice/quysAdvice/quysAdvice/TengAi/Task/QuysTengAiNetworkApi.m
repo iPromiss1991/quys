@@ -14,8 +14,8 @@
 @interface QuysTengAiNetworkApi()
 @property (nonatomic,strong) NSString *osv;
 @property (nonatomic,strong) NSString *userAgent;
-
-
+@property (nonatomic, strong) UIDevice *device;//!< <#Explement #>
+@property (nonatomic, strong) NSString *platform;//!< <#Explement #>
 @end
 
 
@@ -62,6 +62,7 @@
 - (id)requestArgument
 {
     UIDevice *device = [[UIDevice alloc] init];
+    self.device = device;
     NSMutableDictionary *dicM = [NSMutableDictionary new];
     [dicM setObject:kBundleID forKey:@"pkgName"];
     [dicM setObject:[device quys_appVersionByFloat] forKey:@"versionName"];
@@ -73,6 +74,7 @@
 //
 //    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
     [dicM setObject:[[device quys_forgeiPhonePlatform] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
+    self.platform = dicM[@"Model"];
     [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
     
@@ -114,8 +116,7 @@
 -(NSString *)osv
 {
     if (_osv == nil) {
-        UIDevice *device = [[UIDevice alloc] init];
-        _osv = [device quys_forgeiOSVersion];
+        _osv = [self.device quys_forgeiOSVersion:self.platform];
     }return _osv;
 }
 

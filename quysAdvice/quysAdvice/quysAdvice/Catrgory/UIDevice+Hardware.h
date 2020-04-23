@@ -138,8 +138,7 @@
 
 
 /// iOS系统版本
-- (NSString*)quys_forgeiOSVersion;
-
+- (NSString*)quys_forgeiOSVersion:(NSString*)strPlatform;
 
 
 /// 获取运营商

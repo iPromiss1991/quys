@@ -715,8 +715,8 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     {
         if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled])//TODO
         {
-             strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-             [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
+            strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+            [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
         }
     }else
     {
@@ -861,29 +861,97 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 - (NSString *)quys_forgeiPhonePlatform 
 {
     NSArray *arrPlatform = @[
-        @"iPhone 6s",
-        @"iPhone 6s Plus" ,
-        @"iPhone SE" ,
-        @"iPhone 7"  ,
-        @"iPhone 7 Plus",
-        @"iPhone 8",
-        @"iPhone 8 Plus",
-        @"iPhone X",
-        @"iPhone XR",
-        @"iPhone XS Max",
-        @"iPhone 11",
-        @"iPhone 11 Pro",
-        @"iPhone 11 Pro Max"
-    ];
+                             @"iPhone 5s",
+                             @"iPhone 6",
+                             @"iPhone 6s",
+                             @"iPhone 6s Plus" ,
+                             @"iPhone 7"  ,
+                             @"iPhone 7 Plus",
+                             @"iPhone 8",
+                             @"iPhone 8 Plus",
+                             @"iPhone X",
+                             @"iPhone XR",
+                             @"iPhone XS Max",
+                             @"iPhone 11",
+                             @"iPhone 11 Pro",
+                             @"iPhone 11 Pro Max"
+                             ];
     return arrPlatform[arc4random()%arrPlatform.count];
 }
 
 
 /// iOS系统版本
-- (NSString*)quys_forgeiOSVersion{
+- (NSString*)quys_forgeiOSVersion:(NSString*)strPlatform
+{
+    NSString *strSystem = @"";
     
-    NSArray *arrSys = @[@"13.1.1",@"13.1.3",@"13.2.3",@"13.3.1",@"13.4.1",[self systemVersion]];
-    NSString * strSystem =  arrSys[arc4random()%arrSys.count];
+    
+    if ([strPlatform containsString:@"iPhone 5s"] || [strPlatform containsString:@"iPhone 6"])
+    {
+        NSArray *arrSys = @[
+                            @"9.3.1",
+                            @"10.0.2",
+                            @"10.2",
+                            @"10.2.1",
+                            @"10.3",
+                            @"10.3.2",
+                            @"10.3.3",
+                            @"11.0.3",
+                            @"11.1.1",
+                            @"11.2.2",
+                            @"11.2.5",
+                            @"11.3.1",
+                            @"11.4",
+                            @"11.4.1",
+                            @"12.0",
+                            @"12.0.1",
+                            @"12.1.1",
+                            @"12.1.2",
+                            @"12.1.4",
+                            @"12.2",
+                            @"12.3.2",
+                            @"12.3.1",
+                            @"12.4",
+                            @"12.4.1"
+                           ];
+        strSystem =  arrSys[arc4random()%arrSys.count];
+    }else
+    {
+        NSArray *arrSys = @[
+                            @"9.3.1",
+                            @"10.0.2",
+                            @"10.2",
+                            @"10.2.1",
+                            @"10.3",
+                            @"10.3.2",
+                            @"10.3.3",
+                            @"11.0.3",
+                            @"11.1.1",
+                            @"11.2.2",
+                            @"11.2.5",
+                            @"11.3.1",
+                            @"11.4",
+                            @"11.4.1",
+                            @"12.0",
+                            @"12.0.1",
+                            @"12.1.1",
+                            @"12.1.2",
+                            @"12.1.4",
+                            @"12.2",
+                            @"12.3.2",
+                            @"12.3.1",
+                            @"12.4",
+                            @"12.4.1",
+                            @"13.0",
+                            @"13.1.1",
+                            @"13.1.3",
+                            @"13.3",
+                            @"13.2.3",
+                            @"13.3.1",
+                            @"13.4",
+                            @"13.4.1",[self systemVersion]];
+        strSystem =  arrSys[arc4random()%arrSys.count];
+    }
     return strSystem;
 }
 
@@ -901,8 +969,8 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 获取IDFA
 - (NSString*)quys_forgeidFa
 {
- 
-//    return @"3ABC4050-8945-4936-B26B-BF1D7885F6ED";//TODO===
+    
+    //    return @"3ABC4050-8945-4936-B26B-BF1D7885F6ED";//TODO===
     return [self quys_createUUID];
 }
 
@@ -912,17 +980,17 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     NSString *strUa = [[QuysAdviceManager shareManager] strUserAgent];
     if (!kISNullString(strUa))
     {
-         NSRange rangPrefix = [strUa rangeOfString:@"CPU iPhone OS"];
-            NSString *strPrefix = [strUa substringWithRange:NSMakeRange(0, rangPrefix.location + rangPrefix.length)];
-            
-            NSRange rangSuffix = [strUa rangeOfString:@"like Mac OS X"];
-            NSString *strSuffix = [strUa substringFromIndex:rangSuffix.location];
-            
-            NSString *strVersion = [version stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-            
-       strUerAgent = [NSString stringWithFormat:@"%@ %@ %@",strPrefix,strVersion,strSuffix];
+        NSRange rangPrefix = [strUa rangeOfString:@"CPU iPhone OS"];
+        NSString *strPrefix = [strUa substringWithRange:NSMakeRange(0, rangPrefix.location + rangPrefix.length)];
+        
+        NSRange rangSuffix = [strUa rangeOfString:@"like Mac OS X"];
+        NSString *strSuffix = [strUa substringFromIndex:rangSuffix.location];
+        
+        NSString *strVersion = [version stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        
+        strUerAgent = [NSString stringWithFormat:@"%@ %@ %@",strPrefix,strVersion,strSuffix];
     }
-   return strUerAgent;
-
+    return strUerAgent;
+    
 }
 @end
