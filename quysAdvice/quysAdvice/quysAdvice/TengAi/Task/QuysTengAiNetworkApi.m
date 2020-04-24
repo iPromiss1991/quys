@@ -73,7 +73,7 @@
     [dicM setObject:@"null" forKey:@"imei"];
 //
 //    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
-    [dicM setObject:[[device quys_forgeiPhonePlatform] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
+    [dicM setObject:[device quys_platformString] forKey:@"Model"];//TODO:去除编码
     self.platform = dicM[@"Model"];
     [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
