@@ -15,7 +15,6 @@
 @interface QuysAdOpenScreenService()<YTKRequestDelegate>
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
-@property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIWindow *window;
 @property (nonatomic,strong) QuysAdOpenScreenVM *vm;
 
@@ -33,16 +32,14 @@
 
 
 @implementation QuysAdOpenScreenService
-- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame launchScreenVC:(nonnull UIViewController *)launchScreenVC eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate
+- (instancetype)initWithID:businessID key:bussinessKey  launchScreenVC:(nonnull UIViewController *)launchScreenVC eventDelegate:(nonnull id<QuysAdviceOpeenScreenDelegate>)delegate
 {
     if (self = [super init])
     {
-        self.dateInitRequest = [NSDate date];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundImageViewAndWindow) name:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
-        self.cgFrame = cgFrame;
         self.bgShowDuration = 1;
         [self config:launchScreenVC];
     }return self;
@@ -59,9 +56,15 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    [self loadAdViewNow:launchScreenVC];
+    self.launchScreenVC = launchScreenVC;
 }
 
+- (void)loadAdViewAndShow
+{
+    self.dateInitRequest = [NSDate date];
+    [self loadAdViewNow:self.launchScreenVC];
+
+}
 
 /// 开始加载视图
 - (void)loadAdViewNow:(UIViewController*)launchScreenVC
@@ -86,7 +89,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
-    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame  ];
+    QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:[UIScreen mainScreen].bounds  ];
     self.adviceView = [vm createAdviceView];
     self.vm = vm;
 }

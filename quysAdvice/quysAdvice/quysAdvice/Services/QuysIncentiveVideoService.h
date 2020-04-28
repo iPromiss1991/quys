@@ -19,14 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 创建弹窗广告
 /// @param businessID 业务ID
 /// @param bussinessKey 业务Key
-/// @param cgFrame 弹窗frame
 /// @param delegate 回调代理
 - (instancetype)initWithID:businessID
                        key:bussinessKey
-                    cgRect:(CGRect)cgFrame
-             eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate;
+              eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate;
 
-
+/// 开始加载视图 & 并展示
+- (void)loadAdViewAndShow;
 
 @end
 

@@ -14,8 +14,7 @@
 
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
-@property (nonatomic,assign) CGRect cgFrame;
-
+ 
 
 @property (nonatomic,strong) QuysIncentiveVideoApi *api;
 
@@ -24,7 +23,7 @@
 
 
 @implementation QuysIncentiveVideoService
-- (instancetype)initWithID:businessID key:bussinessKey cgRect:(CGRect)cgFrame  eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate
+- (instancetype)initWithID:businessID key:bussinessKey    eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate
 {
     if (self = [super init])
     {
@@ -32,8 +31,7 @@
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
-        self.cgFrame = cgFrame;
-        [self config];
+         [self config];
     }return self;
 }
 
@@ -48,10 +46,14 @@
     api.bussinessKey = self.bussinessKey;
     api.delegate = self;
     self.api = api;
-    [self loadAdViewNow];
 }
 
 
+- (void)loadAdViewAndShow
+{
+    [self loadAdViewNow];
+
+}
 /// 开始加载视图
 - (void)loadAdViewNow 
 {
@@ -74,7 +76,7 @@
 /// @param adViewModel 响应数据包装后的viewModel
 - (void)configAdviceViewVM:(QuysIncentiveVideoDataModel*)adViewModel
 {
-    QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:self.cgFrame  ];
+    QuysIncentiveVideoVM *vm =  [[QuysIncentiveVideoVM alloc] initWithModel:adViewModel delegate:self.delegate frame:[UIScreen mainScreen].bounds ];
     self.adviceView = [vm createAdviceView];
 }
 

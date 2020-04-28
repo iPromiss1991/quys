@@ -114,12 +114,13 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    self.frame = CGRectZero;
-    [self removeFromSuperview];
+
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
+    self.frame = CGRectZero;
+    [self removeFromSuperview];
 }
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）

@@ -34,7 +34,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]init];
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -43,7 +43,7 @@
     imgView.userInteractionEnabled = YES;
     [self.viewContain addSubview:imgView];
     self.imgView = imgView;
-
+    
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -72,9 +72,9 @@
     
     
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
-           make.top.mas_equalTo(self.viewContain);
-           make.left.right.bottom.mas_equalTo(self.viewContain);
-       }];
+        make.top.mas_equalTo(self.viewContain);
+        make.left.right.bottom.mas_equalTo(self.viewContain);
+    }];
     
     [super updateConstraints];
 }
@@ -98,7 +98,7 @@
 
 - (void)tapImageVIewEvent:(UITapGestureRecognizer*)sender
 {
-     //获取触发触摸的点
+    //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
     if (self.quysAdviceClickEventBlockItem)
@@ -109,27 +109,24 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    self.frame = CGRectZero;
-    [self setNeedsUpdateConstraints];
-    [self updateConstraintsIfNeeded];
     if (self.quysAdviceCloseEventBlockItem)
-       {
-           self.quysAdviceCloseEventBlockItem();
-       }
-
-}
+    {
+        self.quysAdviceCloseEventBlockItem();
+    }
+    self.frame = CGRectZero;
+    [self removeFromSuperview];}
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
 - (void)hlj_viewStatisticalCallBack
 {
     
     if (self.quysAdviceStatisticalCallBackBlockItem)
-           {
-               self.quysAdviceStatisticalCallBackBlockItem();
-           }
+    {
+        self.quysAdviceStatisticalCallBackBlockItem();
+    }
 }
 
- 
+
 - (void)setVm:(QuysAdBannerVM *)vm
 {
     _vm = vm;

@@ -115,14 +115,14 @@
 
 - (void)closeEvent
 {
-    self.frame = CGRectZero;
-    [self setNeedsUpdateConstraints];
-    [self updateConstraintsIfNeeded];
+
 
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
+    self.frame = CGRectZero;
+    [self removeFromSuperview];;
 }
 
 - (void)statisticalEvent

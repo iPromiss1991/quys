@@ -401,7 +401,7 @@
                 _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[i]];
             }
             _arrImgUrl =  [_arrImgUrl arrayByAddingObject:self.adModel.imgUrlList[arc4random()%1]];
-        }else
+        }else  if (self.adModel.imgUrlList.count >= 3)
         {
             for (int i=0; i<3; i++)
             {

@@ -253,7 +253,20 @@
 {
     if (_strImgUrl == nil)
     {
-        _strImgUrl = self.adModel.imgUrl;
+        if (!kISNullString(self.adModel.imgUrl))
+        {
+             _strImgUrl = self.adModel.imgUrl;
+        }else
+        {
+
+            if (self.adModel.imgUrlList.count)
+            {
+                 _strImgUrl = self.adModel.imgUrlList[0];
+            }else
+            {
+                _strImgUrl = @"";
+            }
+        }
     }return _strImgUrl;
 }
 @end

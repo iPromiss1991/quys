@@ -217,8 +217,8 @@
            {
                self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jl_qys_ios_test"
                                                                        key:@"52C4305558DA476616E2B5B02C9DD315"
-                                                                    cgRect:[UIScreen mainScreen].bounds
-                                                              eventDelegate:self  ];
+                                                               eventDelegate:self  ];
+               [(QuysIncentiveVideoService*)self.service loadAdViewAndShow];
            }
     }
 #else
@@ -227,8 +227,8 @@
                {
                    self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp"
                                                                            key:@"1262DF2885ACB4EEC8FF0486502E7A6D"
-                                                                        cgRect:[UIScreen mainScreen].bounds
-                                                                  eventDelegate:self  ];
+                                                                   eventDelegate:self  ];
+                   [(QuysIncentiveVideoService*)self.service loadAdViewAndShow];
                }
         }
     

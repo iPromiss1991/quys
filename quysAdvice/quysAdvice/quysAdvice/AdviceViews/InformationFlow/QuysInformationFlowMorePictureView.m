@@ -185,14 +185,14 @@
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-    self.frame = CGRectZero;
-    [self setNeedsUpdateConstraints];
-    [self updateConstraintsIfNeeded];
 
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
+    self.frame = CGRectZero;
+    [self removeFromSuperview];;
+
 }
 
 //根据：runtime消息传递机制，子类先找到function的selector，然后直接调用实现（覆盖了：父类以及父类的类别）
@@ -219,7 +219,7 @@
         [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
         [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];
         [self.imgViewThree sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
-    }else
+    }else if (self.vm.arrImgUrl.count >= 3)
     {
         [self.imgViewOne sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[0]]];
         [self.imgViewTwo sd_setImageWithURL:[NSURL URLWithString:vm.arrImgUrl[1]]];

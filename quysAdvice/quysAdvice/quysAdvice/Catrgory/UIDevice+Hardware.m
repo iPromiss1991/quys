@@ -740,26 +740,25 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 }
 
 
-/// 屏幕分辨率（像素）
+/// 屏幕分辨率（eg：定义：横纵向上的像素点   ）
 - (NSString*)quys_screenResolution
 {
     double dbScreenResolution = kScreenWidth * kScreenHeight*powf([UIScreen mainScreen].scale, 2);
     return  [NSString stringWithFormat:@"%.0f",dbScreenResolution];
 }
 
-/// 屏幕像素密度（该属性是按照android理解的，如：3.0）               相关资料：https://www.cnblogs.com/weekbo/p/9013388.html
+/// 屏幕像素密度（eg：320 dpi ）    每英寸屏幕所拥有的像素数，英文简称PPI
 - (NSString*)quys_screenPixelDensity
 {
     float screenInch = [[self quys_iPhoneDiagonalByPlatform:[self quys_platformString]] floatValue];
-    double dbScreenResolution = sqrtl(powf(kScreenWidth*[UIScreen mainScreen].nativeScale, 2) + powf(kScreenHeight*[UIScreen mainScreen].scale, 2))/screenInch/160.0;
+    double dbScreenResolution = sqrtl(powf(kScreenWidth*[UIScreen mainScreen].nativeScale, 2) + powf(kScreenHeight*[UIScreen mainScreen].scale, 2))/screenInch;
     return  [NSString stringWithFormat:@"%lf",dbScreenResolution];
 }
 
-/// 屏幕密度（屏幕像素密度 * 标准dpi（160））
+/// 屏幕密度（像素比例：0.75/1.0/1.5/2.0）表示每英寸有多少个显示点
 - (NSString*)quys_screenDensity
 {
-    CGFloat screenDensity = [[self quys_screenPixelDensity] floatValue]*160.0;
-    return [NSString stringWithFormat:@"%.0f",screenDensity];
+     return [NSString stringWithFormat:@"%.0f",[UIScreen mainScreen].scale];
 }
 
 /// 国家，使用ISO-3166-1   Alpha-3

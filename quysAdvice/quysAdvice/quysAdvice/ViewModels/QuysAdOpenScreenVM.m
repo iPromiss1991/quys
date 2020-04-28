@@ -50,7 +50,6 @@
     [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",_adModel.height)];
     [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
     [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
-    self.strImgUrl = model.imgUrl;
     self.iconUrl = model.iconUrl;
     self.materialUrl = model.materialUrl;
 }
@@ -327,6 +326,28 @@
     AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
     NSInteger totalSecond = urlAsset.duration.value / urlAsset.duration.timescale;
     return totalSecond;
+}
+
+
+- (NSString *)strImgUrl
+{
+    if (_strImgUrl == nil)
+    {
+        if (!kISNullString(self.adModel.imgUrl))
+        {
+             _strImgUrl = self.adModel.imgUrl;
+        }else
+        {
+
+            if (self.adModel.imgUrlList.count)
+            {
+                 _strImgUrl = self.adModel.imgUrlList[0];
+            }else
+            {
+                _strImgUrl = @"";
+            }
+        }
+    }return _strImgUrl;
 }
 
 - (void)dealloc

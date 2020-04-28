@@ -39,9 +39,10 @@
     QuysAdOpenScreenService *service = [[QuysAdOpenScreenService alloc]
                                         initWithID:@"kp_ios_qys_test"
                                         key:@"206063F608B0A590F7ACCB7725207D37"
-                                        cgRect:[UIScreen mainScreen].bounds
                                         launchScreenVC:viewController
                                         eventDelegate:self ];
+    service.bgShowDuration = 2;
+    [service loadAdViewAndShow];
     self.service = service;//需强引用该服务
     return YES;
 }
@@ -54,7 +55,8 @@
 }
 
 - (void)quys_requestSuccess:(QuysAdBaseService*)service{
- 
+
+    
 }
 - (void)quys_requestFial:(QuysAdBaseService*)service error:(NSError*)error{
     
