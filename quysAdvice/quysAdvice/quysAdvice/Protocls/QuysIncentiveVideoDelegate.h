@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 ///激励视频广告协议
 @protocol QuysIncentiveVideoDelegate <QuysAdviceBaseDelegate>
+@optional
 
 /// 广告加载成功
 /// @param service 广告请求服务基类（实际接收时转换为响应的类即可）
