@@ -20,6 +20,10 @@
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
+#import<SystemConfiguration/CaptiveNetwork.h>
+#import <CoreLocation/CoreLocation.h>
+
+
 TT_FIX_CATEGORY_BUG(qys_Hardware)
 @implementation UIDevice (Hardware)
 #pragma mark sysctlbyname utils
@@ -32,7 +36,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     sysctlbyname(typeSpecifier, answer, &size, NULL, 0);
     
     NSString *results = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
-
+    
     free(answer);
     return results;
 }
@@ -42,7 +46,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     struct utsname systemInfo;
     uname(&systemInfo);
     NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-
+    
     return deviceString;
 }
 
@@ -92,7 +96,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
  extern NSString *NSFileSystemNodes;
  extern NSString *NSFileSystemFreeNodes;
  extern NSString *NSFileSystemNumber;
-*/
+ */
 
 - (NSNumber *)quys_totalDiskSpace
 {
@@ -224,7 +228,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     if ([platform isEqualToString:@"iPad11,2"])   return @"iPad mini (5th generation)";
     if ([platform isEqualToString:@"iPad11,3"])   return @"iPad Air (3rd generation)";
     if ([platform isEqualToString:@"iPad11,4"])   return @"iPad Air (3rd generation)";
-
+    
     return @"Unknown iPad";
 }
 
@@ -238,7 +242,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     if ([platform isEqualToString:@"iPod7,1"])      return @"iPod touch (6th generation)";
     //2019年5月发布，更新三种机型：iPod touch (7th generation)
     if ([platform isEqualToString:@"iPod9,1"])      return @"iPod touch (7th generation)";
-
+    
     return @"Unknown iPod";
 }
 
@@ -336,7 +340,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     sdl = (struct sockaddr_dl *)(ifm + 1);
     ptr = (unsigned char *)LLADDR(sdl);
     NSString *outstring = [NSString stringWithFormat:@"%02X:%02X:%02X:%02X:%02X:%02X", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
-
+    
     free(buf);
     return outstring;
 }
@@ -403,7 +407,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 获取app版本:eg:3.0.1
 - (NSString*)quys_appVersionByFloat
 {
-   return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
 
@@ -411,14 +415,14 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 获取app版本号:eg:301
 - (NSString*)quys_appVersionWithoutFloat
 {
-   return  [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] stringByReplacingOccurrencesOfString:@"." withString:@""];
+    return  [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] stringByReplacingOccurrencesOfString:@"." withString:@""];
 }
 
 
 ///自定义mac
 - (NSString*)quys_customMacAddress
 {
-    return [self quys_getUniqueID];
+    return [self quys_getUniqueID];//TODO:格式是否正确
 }
 
 
@@ -459,16 +463,16 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 ///手机屏幕方向：1 竖屏，2 横屏
 - (NSString*)quys_screenOritation
 {
-   __block NSString *screenOritation = @"";
+    __block NSString *screenOritation = @"";
     dispatch_async(dispatch_get_main_queue(), ^{
-         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-            if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-            {
-                screenOritation = @"1";
-            }else
-            {
-                screenOritation = @"2";
-            }
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+        {
+            screenOritation = @"1";
+        }else
+        {
+            screenOritation = @"2";
+        }
     });
     return screenOritation;
 }
@@ -476,162 +480,162 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 
 /// 网络类型
 /*
-0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
-*/
+ 0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
+ */
 - (NSString *)quys_getNetconnType
 {
-
+    
     NSString *netconnType = @"";
-
+    
     Reachability *reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-
+    
     switch ([reach currentReachabilityStatus])
     {
         case NotReachable:// 没有网络
         {
-
+            
             netconnType = @"0";//no network
         }
             break;
-
+            
         case ReachableViaWiFi:// Wifi
         {
             netconnType = @"1";
         }
             break;
-
+            
         case ReachableViaWWAN:// 手机自带网络
         {
             // 获取手机网络类型
             CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
-
+            
             NSString *currentStatus = info.currentRadioAccessTechnology;
-
+            
             if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyGPRS"]) {
-
+                
                 netconnType = @"2";//@"GPRS"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyEdge"]) {
-
+                
                 netconnType = @"2";// @"2.75G EDGE"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyWCDMA"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSDPA"]){
-
+                
                 netconnType = @"3";//@"3.5G HSDPA"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSUPA"]){
-
+                
                 netconnType = @"3";//@"3.5G HSUPA";
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMA1x"]){
-
+                
                 netconnType = @"2";//@"2G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORev0"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevA"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevB"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyeHRPD"]){
-
+                
                 netconnType = @"3";//@"HRPD"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyLTE"]){
-
+                
                 netconnType = @"4";//@"4G"
             }else{
                 netconnType = @"0";//@"未知"
-
+                
             }
         }
             break;
-
+            
         default:
             break;
     }
-
+    
     return netconnType;
 }
 
 
 /// 网络类型
 /*
-0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
-*/
+ 0：没有网络, 1：WIFI，2：2G，3：3G，4：4G，5：未知移动网络
+ */
 - (NSString *)quys_getNetconnTypeForIncentiveVideo
 {
-
+    
     NSString *netconnType = @"";
-
+    
     Reachability *reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-
+    
     switch ([reach currentReachabilityStatus])
     {
         case NotReachable:// 没有网络
         {
-
+            
             netconnType = @"0";//no network
         }
             break;
-
+            
         case ReachableViaWiFi:// Wifi
         {
             netconnType = @"1";
         }
             break;
-
+            
         case ReachableViaWWAN:// 手机自带网络
         {
             // 获取手机网络类型
             CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
-
+            
             NSString *currentStatus = info.currentRadioAccessTechnology;
-
+            
             if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyGPRS"]) {
-
+                
                 netconnType = @"2";//@"GPRS"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyEdge"]) {
-
+                
                 netconnType = @"2";// @"2.75G EDGE"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyWCDMA"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSDPA"]){
-
+                
                 netconnType = @"3";//@"3.5G HSDPA"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyHSUPA"]){
-
+                
                 netconnType = @"3";//@"3.5G HSUPA";
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMA1x"]){
-
+                
                 netconnType = @"2";//@"2G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORev0"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevA"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyCDMAEVDORevB"]){
-
+                
                 netconnType = @"3";// @"3G"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyeHRPD"]){
-
+                
                 netconnType = @"3";//@"HRPD"
             }else if ([currentStatus isEqualToString:@"CTRadioAccessTechnologyLTE"]){
-
+                
                 netconnType = @"4";//@"4G"
             }else{
                 netconnType = @"999";//@"未知"
-
+                
             }
         }
             break;
-
+            
         default:
             break;
     }
-
+    
     return netconnType;
 }
 
@@ -700,10 +704,10 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 获取设备类型
 - (NSString*)quys_osType
 {
-   return  @"1";
+    return  @"1";
 }
 
-    
+
 /// 获取IDFA
 - (NSString*)quys_idFa
 {
@@ -712,10 +716,10 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     if (strUniqueID.length <= 0)
     {
         if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled])//TODO
-               {
-                    strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                    [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
-               }
+        {
+            strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+            [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
+        }
     }else
     {
         
@@ -758,7 +762,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 屏幕密度（像素比例：0.75/1.0/1.5/2.0）表示每英寸有多少个显示点
 - (NSString*)quys_screenDensity
 {
-     return [NSString stringWithFormat:@"%.0f",[UIScreen mainScreen].scale];
+    return [NSString stringWithFormat:@"%.0f",[UIScreen mainScreen].scale];
 }
 
 /// 国家，使用ISO-3166-1   Alpha-3
@@ -783,7 +787,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 /// 获取app名称
 - (NSString*)quys_appName
 {
-   return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 }
 
 
@@ -817,6 +821,73 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
         
     }
     return strUniqueID;
+}
+
+
+//
+
+//wifi信息
+
+#pragma mark 获取Wifi信息
+- (NSDictionary*)fetchSSIDInfo
+{
+    if (@available(iOS 13.0, *))
+    {
+    //如果是iOS13 未开启地理位置权限 需要提示一下
+        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
+        {
+            CLLocationManager* locationManager = [[CLLocationManager alloc] init];
+            [locationManager requestWhenInUseAuthorization];
+            return [self fetchSSIDInfoDetail];
+        }else
+        {
+           return [self fetchSSIDInfoDetail];
+        }
+    }else
+    {
+       return  [self fetchSSIDInfoDetail];
+    }
+   
+}
+/*
+ wifi info {
+     BSSID = "a4:2b:8c:92:47:3c";
+     SSID = "XF-WORLD";
+     SSIDDATA = <58462d57 4f524c44>;
+ }
+*/
+- (NSDictionary*)fetchSSIDInfoDetail
+{
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+       NSDictionary * info = @{};
+       for (NSString *ifnam in ifs)
+       {
+           info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+           
+           if (info && [info count])
+           {
+               break;
+           }
+       }
+       return info;
+}
+#pragma mark 获取WIFI名字
+- (NSString *)getWifiSSID
+{
+    NSString *strSSID = [self fetchSSIDInfo][@"SSID"]?[self fetchSSIDInfo][@"SSID"]:@"";
+    return strSSID;
+}
+#pragma mark 获取WIFI的MAC地址
+- (NSString *)getWifiBSSID
+{
+    NSString *strBSSID = [self fetchSSIDInfo][@"BSSID"]?[self fetchSSIDInfo][@"BSSID"]:@"";
+    return strBSSID;
+}
+
+- (NSString*)getScreenInch
+{
+    double dbScreenResolution = sqrtl(powf(kScreenWidth, 2) + powf(kScreenHeight, 2));
+    return [NSString stringWithFormat:@"%.1f",dbScreenResolution];
 }
 
 @end

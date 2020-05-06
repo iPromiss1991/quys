@@ -30,7 +30,7 @@
     }
 #else
     {
-        NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";
+        NSString *strRequestUrl = @"http://192.168.1.12/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
@@ -57,8 +57,8 @@
     UIDevice *device = [[UIDevice alloc] init];
     NSMutableDictionary *dicM = [NSMutableDictionary new];
     
-    [dicM setObject:[device quys_customImei] forKey:@"Imei"];
-    [dicM setObject:[device quys_customMacAddress] forKey:@"Mac"];
+//    [dicM setObject:[device quys_customImei] forKey:@"Imei"];
+//    [dicM setObject:[device quys_customMacAddress] forKey:@"Mac"];
     [dicM setObject:[[QuysAdviceManager shareManager] strIPAddress] forKey:@"IP"];
     
     [dicM setObject:[[device quys_platformString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
@@ -89,9 +89,13 @@
     
     [dicM setObject:[device quys_country] forKey:@"Country"];
     [dicM setObject:[device quys_preferredLanguage] forKey:@"Language"];
-    [dicM setObject:[device quys_customImsi] forKey:@"Imsi"];
+//    [dicM setObject:[device quys_customImsi] forKey:@"Imsi"];
 
     [dicM setObject:[device quys_screenDensity] forKey:@"Dpi"];
+    [dicM setObject:[NSString stringWithFormat:@"%@,%@",[device getWifiBSSID],[device getWifiSSID]] forKey:@"wifi"];
+    [dicM setObject:[device getScreenInch] forKey:@"screenInch"];
+
+    
     return dicM;
 }
 

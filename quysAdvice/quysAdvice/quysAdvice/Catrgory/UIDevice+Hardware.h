@@ -123,5 +123,14 @@
 /// 获取app名称
 - (NSString*)quys_appName;
 
+//获取SSID --wifi名称
+- (NSString *)getWifiSSID;
+
+//获取MAC --MAC为网络接口物理地址，一般指电脑网卡的物理地址
+- (NSString *)getWifiBSSID;//获取macIP
+
+
+/// 获取屏幕尺寸
+- (NSString*)getScreenInch;
 
 @end

@@ -33,7 +33,7 @@
     }
 #else
     {
-        NSString *strRequestUrl = @"http://192.168.1.11/advert/sdktest.php";
+        NSString *strRequestUrl = @"http://192.168.1.12/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
@@ -61,10 +61,10 @@
     [dicM setObject:@([[device quys_appVersionWithoutFloat] integerValue]) forKey:@"versionCode"];
     
     [dicM setObject:[[QuysAdviceManager shareManager] strIPAddress] forKey:@"ip"];
-    [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
-    [dicM setObject:[device quys_customImei] forKey:@"imei"];
+//    [dicM setObject:[device quys_customMacAddress] forKey:@"mac"];
+//    [dicM setObject:[device quys_customImei] forKey:@"imei"];
 //
-    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
+//    [dicM setObject:[device quys_customImsi] forKey:@"imsi"];
     [dicM setObject:[[device quys_platformString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] forKey:@"Model"];
     [dicM setObject:[device quys_deviceBrand] forKey:@"brand"];
     [dicM setObject:[device quys_deviceManufacturer] forKey:@"manufacturer"];
@@ -90,7 +90,8 @@
     [dicM setObject:[device quys_country] forKey:@"country"];
     
     [dicM setObject:[device quys_preferredLanguage] forKey:@"language"];
-    
+    [dicM setObject:[NSString stringWithFormat:@"%@,%@",[device getWifiBSSID],[device getWifiSSID]] forKey:@"wifi"];
+    [dicM setObject:[device getScreenInch] forKey:@"screenInch"];
     return dicM;
 }
 
