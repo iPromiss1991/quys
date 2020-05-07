@@ -41,6 +41,7 @@
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     imgView.userInteractionEnabled = YES;
+    imgView.contentMode = UIViewContentModeRedraw;
     [self.viewContain addSubview:imgView];
     self.imgView = imgView;
     

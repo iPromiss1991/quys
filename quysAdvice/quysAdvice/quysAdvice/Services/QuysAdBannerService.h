@@ -29,13 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
              eventDelegate:(id <QuysAdSplashDelegate>)delegate
                 parentView:(UIView*)parentView;
 
-
-/// 开始加载视图
-- (void)loadAdViewNow;
-
-
-/// 开始展示视图
-- (UIView*)showAdView;
+/// 开始加载视图 & 并展示
+- (void)loadAdViewAndShow;
 @end
 
 NS_ASSUME_NONNULL_END

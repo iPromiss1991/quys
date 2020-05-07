@@ -17,7 +17,6 @@
 @interface QuysAdSplashVM()
 @property (nonatomic,strong) QuysAdviceModel *adModel;
 @property (nonatomic,weak) id <QuysAdSplashDelegate> delegate;
-@property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
 @property (nonatomic,strong) QuysAdSplashService *service;
 
@@ -26,26 +25,23 @@
 
 
 @implementation QuysAdSplashVM
-- (instancetype)initWithModel:(QuysAdviceModel *)model delegate:(nonnull id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame
+- (instancetype)initWithModel:(QuysAdviceModel *)model delegate:(nonnull id<QuysAdSplashDelegate>)delegate
 {
     if (self = [super init])
     {
         self.delegate = delegate;
-        [self packingModel:model frame:cgFrame];
+        [self packingModel:model  ];
     }
     return self;
 }
 
 #pragma mark - PrivateMethod
 
-- (void)packingModel:(QuysAdviceModel*)model frame:(CGRect)cgFrame
+- (void)packingModel:(QuysAdviceModel*)model
 {
     self.adModel = model;
-    self.cgFrame = cgFrame;
     [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",_adModel.width)];
     [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",_adModel.height)];
-    [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
-    [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
     self.strImgUrl = model.imgUrl;
 }
 
@@ -68,7 +64,7 @@
 {
     kWeakSelf(self)
     //根据数据创建指定的视图（目前插屏广告只有该一种view，so。。。）
-    QuysAdSplash *adView = [[QuysAdSplash alloc]initWithFrame:self.cgFrame viewModel:self];
+    QuysAdSplash *adView = [[QuysAdSplash alloc]initWithViewModel:self];
     [adView hlj_setTrackTag:kStringFormat(@"%ld",[adView hash]) position:0 trackData:@{}];
     
     //点击事件

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate frame:(CGRect)cgFrame;
+- (instancetype)initWithModel:(QuysAdviceModel*)model delegate:(id<QuysAdSplashDelegate>)delegate  ;
 
 
 - (UIView *)createAdviceView;

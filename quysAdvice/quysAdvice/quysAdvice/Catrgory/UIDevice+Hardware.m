@@ -831,23 +831,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 #pragma mark 获取Wifi信息
 - (NSDictionary*)fetchSSIDInfo
 {
-    if (@available(iOS 13.0, *))
-    {
-    //如果是iOS13 未开启地理位置权限 需要提示一下
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-        {
-            CLLocationManager* locationManager = [[CLLocationManager alloc] init];
-            [locationManager requestWhenInUseAuthorization];
-            return [self fetchSSIDInfoDetail];
-        }else
-        {
-           return [self fetchSSIDInfoDetail];
-        }
-    }else
-    {
-       return  [self fetchSSIDInfoDetail];
-    }
-   
+   return  [self fetchSSIDInfoDetail];
 }
 /*
  wifi info {
@@ -874,13 +858,15 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 #pragma mark 获取WIFI名字
 - (NSString *)getWifiSSID
 {
-    NSString *strSSID = [self fetchSSIDInfo][@"SSID"]?[self fetchSSIDInfo][@"SSID"]:@"";
+    NSDictionary *dicSSIDInfo = [self fetchSSIDInfo];
+    NSString *strSSID = dicSSIDInfo[@"SSID"]?dicSSIDInfo[@"SSID"]:@"";
     return strSSID;
 }
 #pragma mark 获取WIFI的MAC地址
 - (NSString *)getWifiBSSID
 {
-    NSString *strBSSID = [self fetchSSIDInfo][@"BSSID"]?[self fetchSSIDInfo][@"BSSID"]:@"";
+    NSDictionary *dicSSIDInfo = [self fetchSSIDInfo];
+    NSString *strBSSID = dicSSIDInfo[@"BSSID"]?dicSSIDInfo[@"BSSID"]:@"";
     return strBSSID;
 }
 

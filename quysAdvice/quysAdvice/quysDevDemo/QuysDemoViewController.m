@@ -95,19 +95,23 @@
            {
                self.service = [[QuysAdSplashService alloc ]initWithID:@"ziyanapp_cp"
                                                                   key:@"8EB8AC0B397CA55C2D78DE88DF8587C2"
-                                                               cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200)
+                                                             
                                                         eventDelegate:self
-                                                           parentView:viewContain];
+                                                           parentViewController:self];
            }
     }
    
 #endif
-    if (self.service)
+    if (![self.service isKindOfClass:[QuysAdBannerService class]])
     {
         [self.service performSelector:@selector(loadAdViewNow)];
-    }else
+    }else if ([self.service isKindOfClass:[QuysIncentiveVideoService class]])
     {
         //激励视频
+    }else
+    {
+        [self.service performSelector:@selector(loadAdViewAndShow)];
+
     }
     
 }

@@ -118,11 +118,11 @@
     {
         QuysIncentiveVideoDataModel *adviceModel = outerModel.data[0];
         [self configAdviceViewVM:adviceModel];
+        [self showAdView];
         if ([self.delegate respondsToSelector:@selector(quys_requestSuccess:)])
         {
             [self.delegate quys_requestSuccess:self];
         }
-        [self showAdView];
     }else
     {
         [self removeBackgroundImageView];

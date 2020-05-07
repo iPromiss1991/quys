@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface QuysAdSplash : UIView
-- (instancetype)initWithFrame:(CGRect)frame viewModel:(QuysAdSplashVM*)viewModel;
+- (instancetype)initWithViewModel:(QuysAdSplashVM*)viewModel;
 
 @property (nonatomic,strong) QuysAdSplashVM *vm;
 @property (nonatomic,copy) QuysAdviceCloseEventBlock quysAdviceCloseEventBlockItem;
