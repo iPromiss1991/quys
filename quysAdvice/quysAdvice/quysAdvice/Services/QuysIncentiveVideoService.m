@@ -92,8 +92,8 @@
 - (void)removeBackgroundImageView
 {
     NSArray *windows = [[UIApplication sharedApplication] windows];
-
-    for (UIWindow *__strong windowItem in windows) {
+    for (UIWindow *__strong windowItem in windows)
+    {
         if ([windowItem isKindOfClass:[QuysIncentiveVideoWindow class]])
         {
             windowItem.hidden = YES;
@@ -114,6 +114,7 @@
 -(void)requestFinished:(__kindof YTKBaseRequest *)request
 {
     QuysIncentiveVideoOutLayerDataModel *outerModel = [QuysIncentiveVideoOutLayerDataModel yy_modelWithJSON:request.responseJSONObject];
+    NSLog(@"激励视屏：%@",request.responseObject);
     if (outerModel && outerModel.data.count)
     {
         QuysIncentiveVideoDataModel *adviceModel = outerModel.data[0];

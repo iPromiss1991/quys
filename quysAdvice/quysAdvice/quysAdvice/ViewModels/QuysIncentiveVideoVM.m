@@ -55,6 +55,10 @@
 
 - (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
 {
+    if (kISNullString(replaceKey) || kISNullString(replaceVlue)|| [replaceVlue isEqualToString:@"(null)"])
+    {
+        replaceVlue = @"";
+    }
     [[[QuysAdviceManager shareManager] dicMReplace] setObject:replaceVlue forKey:replaceKey];
 }
 

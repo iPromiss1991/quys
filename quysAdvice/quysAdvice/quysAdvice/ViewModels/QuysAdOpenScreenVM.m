@@ -102,6 +102,8 @@
                 [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
             }
         };
+        
+        
         self.adView = adView;
         return adView;
         

@@ -36,9 +36,11 @@
         {
             QuysAdOpenScreenVideoView *view = [[QuysAdOpenScreenVideoView alloc] initWithFrame:[UIScreen mainScreen].bounds viewModel:self.vm];
               self.view = view;
-              view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
-              view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
-              view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+            view.quysAdviceClickEventBlockItem = self.quysAdviceClickEventBlockItem;
+            view.quysAdviceCloseEventBlockItem = self.quysAdviceCloseEventBlockItem;
+            view.quysAdviceStatisticalCallBackBlockItem = self.quysAdviceStatisticalCallBackBlockItem;
+            view.quysAdvicePlayStartCallBackBlockItem = self.quysAdvicePlayStartCallBackBlockItem;
+            view.quysAdvicePlayEndCallBackBlockItem = self.quysAdvicePlayEndCallBackBlockItem;
         }
             break;
         default:

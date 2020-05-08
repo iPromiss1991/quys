@@ -52,6 +52,7 @@
     self.imgView = imgView;
     
     UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnClose.titleLabel.textAlignment = NSTextAlignmentCenter;
     [btnClose setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     btnClose.backgroundColor = kRGB16(BackgroundColor1, .7);
     [btnClose addTarget:self action:@selector(clickCloseBtEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -103,9 +104,9 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain).mas_offset(kScale_H(StatusBarHeight)).priorityHigh();
         make.left.mas_greaterThanOrEqualTo(self.viewContain);
-        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20));
-        make.width.mas_greaterThanOrEqualTo(kScale_W(60)).priorityHigh();
-        make.height.mas_equalTo(kScale_W(22)).priorityHigh();
+        make.right.mas_equalTo(self.viewContain).mas_offset(kScale_W(-20)).priorityHigh();
+        make.width.mas_equalTo(kScale_W(60));
+        make.height.mas_equalTo(kScale_H(22)).priorityHigh();
         make.bottom.mas_lessThanOrEqualTo(self.viewContain).priorityHigh();
     }];
     
@@ -143,7 +144,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    kViewRadius(self.btnClose, kScale_H(10));
+    kViewRadius(self.btnClose, kScale_W(10));
     
     
 }

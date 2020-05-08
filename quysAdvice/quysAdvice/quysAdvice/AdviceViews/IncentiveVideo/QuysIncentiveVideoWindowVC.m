@@ -89,8 +89,8 @@
     //模仿nav推出效果
     CATransition * ani = [CATransition animation];
     ani.type = kCATransitionPush;
-    ani.subtype = kCATransitionFromRight;
-    ani.duration = .3;
+    ani.subtype = kCATransitionFromTop;
+    ani.duration = .2;
     [self.view.layer addAnimation:ani forKey:@"transitionAni"];
     
  

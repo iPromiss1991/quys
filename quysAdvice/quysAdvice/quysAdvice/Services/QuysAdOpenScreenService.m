@@ -106,7 +106,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(differFinal* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.adviceView.hidden = NO;
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self removeBackgroundImageView];
         });
     });
@@ -152,7 +152,7 @@
 {
     kWeakSelf(self)
     //移除delegate.window的遮罩图
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakself.launchScreenVC.view removeFromSuperview];
     });
 }
@@ -166,13 +166,13 @@
     }
     __block UIWindow* windowTemp = window;
     //淡入淡出效果
-    //    CATransition * ani = [CATransition animation];
-    //    ani.type = kCATransitionFade;
-    //    ani.subtype = kCATransitionFromRight;
-    //    ani.duration = .2;
-    //    [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
+        CATransition * ani = [CATransition animation];
+        ani.type = kCATransitionPush;
+        ani.subtype = kCATransitionFromBottom;
+        ani.duration = .3;
+        [windowTemp.layer addAnimation:ani forKey:@"transitionAni"];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         windowTemp.hidden = YES;
         windowTemp = nil;
     });

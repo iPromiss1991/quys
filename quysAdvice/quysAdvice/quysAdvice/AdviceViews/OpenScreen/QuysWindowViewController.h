@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) QuysAdviceClickEventBlock quysAdviceClickEventBlockItem;
 @property (nonatomic,copy) QuysAdviceStatisticalCallBackBlock quysAdviceStatisticalCallBackBlockItem;
 
+
+@property (nonatomic,copy) QuysAdvicePlayStartCallBackBlock quysAdvicePlayStartCallBackBlockItem;
+@property (nonatomic,copy) QuysAdvicePlayEndCallBackBlock quysAdvicePlayEndCallBackBlockItem;
 @end
 
 NS_ASSUME_NONNULL_END

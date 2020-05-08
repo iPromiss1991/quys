@@ -178,7 +178,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];       \
 
 #pragma mark -判空
 //字符串是否为空
-#define kISNullString(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length] < 1 ? YES : NO )
+#define kISNullString(str) ([str isKindOfClass:[NSNull class]] ||[str isEqualToString:@"<null>"] ||[str isEqualToString:@"null"]|| str == nil || [str length] < 1 ? YES : NO )
 //数组是否为空
 #define kISNullArray(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0 ||[array isEqual:[NSNull null]])
 //字典是否为空

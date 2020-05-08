@@ -78,7 +78,7 @@
     
     //
     UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
-    viewFootContain.backgroundColor = kRGB16(BackgroundColor1, .7);
+    viewFootContain.backgroundColor = kRGB16(BackgroundColor1, .5);
     [self.viewContain addSubview:viewFootContain];
     self.viewFootContain = viewFootContain;
     
@@ -156,21 +156,23 @@
     
     [self.viewFootContain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.playerView.mas_bottom).priorityHigh();
-        make.left.right.bottom.mas_equalTo(self.viewContain);
+        make.left.mas_equalTo(self.viewContain).offset(kScale_W(10));
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-10));
+        make.bottom.mas_equalTo(self.viewContain).offset(-kScale_H(10));
         make.height.mas_equalTo(kScale_H(100)).priorityHigh();
     }];
     
     [self.lblTitle mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.viewFootContain).offset(2);
-        make.right.mas_equalTo(self.viewFootContain).offset(-2);
-        make.top.mas_equalTo(self.viewFootContain).offset(1);
+        make.left.mas_equalTo(self.viewFootContain).offset(10);
+        make.right.mas_equalTo(self.viewFootContain).offset(-10);
+        make.top.mas_equalTo(self.viewFootContain).offset(5);
     }];
     
     [self.imgLogo mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_greaterThanOrEqualTo(self.lblTitle.mas_bottom).offset(1);
-        make.left.mas_equalTo(self.viewFootContain).mas_offset(kScale_W(5));
+        make.left.mas_equalTo(self.viewFootContain).offset(kScale_W(10));
         make.width.height.mas_equalTo(kScale_W(60));
-        make.bottom.mas_lessThanOrEqualTo(self.viewFootContain).offset(-kScale_H(5));
+        make.bottom.mas_lessThanOrEqualTo(self.viewFootContain).offset(-kScale_H(10));
     }];
     
     [self.lblContent mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -194,7 +196,8 @@
 {
     [super layoutSubviews];
     kViewRadius(self.btnCounntdown, kScale_H(20));
-    
+    kViewRadius(self.viewFootContain, kScale_W(20));
+
 }
 
 
@@ -279,11 +282,13 @@
     CABasicAnimation *transition = [CABasicAnimation animationWithKeyPath:@"position"];
     transition.duration = duration;
     transition.delegate = self;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    transition.toValue = @(CGPointMake(kScreenWidth*3*1.0/2.0, CGRectGetMidY(self.frame)));
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+    transition.toValue = @(CGPointMake(CGRectGetMidX(self.frame),kScreenHeight*3*1.0/2.0));
     transition.removedOnCompletion = NO;
     transition.fillMode = kCAFillModeForwards;
     [self.layer addAnimation:transition forKey:@"remove"];
+    
+    
 }
 
 /// 静音设置
@@ -328,7 +333,7 @@
         weakself.btnCounntdown.hidden = YES;
         [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateNormal];
         [weakself.btnCounntdown setTitle:kStringFormat(@"0s") forState:UIControlStateHighlighted];
-        if (self.vm.videoEndShowValue)
+        if (!kISNullString(self.vm.videoEndShowValue))
         {
             switch (self.vm.videoEndShowType)
             {
@@ -362,10 +367,13 @@
                     break;
             }
             self.isPlayToEnd = YES;
-        }else
+        }else if (!kISNullString(self.vm.videoAlternateEndShowValue))
         {
             self.imgPlayendCover.strImageUrl = self.vm.videoAlternateEndShowValue;
             self.imgPlayendCover.hidden = NO;
+        }else
+        {
+            self.imgPlayendCover.hidden = YES;
         }
     }
     [self setNeedsUpdateConstraints];
