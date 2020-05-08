@@ -12,7 +12,7 @@
 @property (nonatomic,strong) UIImageView *imgView;
 
 @property (nonatomic,strong) UIButton *btnClose;
- 
+
 @end
 
 
@@ -25,7 +25,7 @@
     {
         [self createUI];
         self.vm = viewModel;
-     }
+    }
     return self;
 }
 
@@ -33,7 +33,7 @@
 {
     self.backgroundColor = kRGB16(MaskColor1, .8);
     UIView *viewContain = [[UIView alloc]init];
-     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
     self.viewContain = viewContain;
@@ -63,7 +63,7 @@
         make.left.mas_equalTo(self).offset(kScale_H(30));
         make.right.mas_equalTo(self).offset(kScale_H(-30));
         make.bottom.mas_equalTo(self).offset(kScale_H(-kNavBarHeight));
-
+        
     }];
     
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -78,7 +78,7 @@
     [self.imgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.viewContain);
         make.left.right.bottom.mas_equalTo(self.viewContain);
-       }];
+    }];
     
     [super updateConstraints];
 }
@@ -110,19 +110,38 @@
     {
         self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
     }
-    self.frame = CGRectZero;
-    [self removeFromSuperview];
+    [UIView animateWithDuration:.3 animations:^{
+        self.frame = CGRectZero;
+        [self removeFromSuperview];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)clickCloseBtEvent:(UIButton*)sender
 {
-
+    
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();
     }
-    self.frame = CGRectZero;
-    [self removeFromSuperview];
+    [self removeView];
+}
+
+- (void)removeView
+{
+    CGFloat duration = .3;
+    CABasicAnimation *transition = [CABasicAnimation animationWithKeyPath:@"position"];
+    transition.duration = duration;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+    transition.toValue = @(CGPointMake(CGRectGetMidX(self.frame),kScreenHeight*3*1.0/2.0));
+    transition.removedOnCompletion = NO;
+    transition.fillMode = kCAFillModeForwards;
+    [self.layer addAnimation:transition forKey:@"remove"];
+    
+       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+           self.frame = CGRectZero;
+           [self removeFromSuperview];
+       });
 }
 
 
@@ -137,12 +156,12 @@
 {
     
     if (self.quysAdviceStatisticalCallBackBlockItem)
-           {
-               self.quysAdviceStatisticalCallBackBlockItem();
-           }
+    {
+        self.quysAdviceStatisticalCallBackBlockItem();
+    }
 }
 
- 
+
 - (void)setVm:(QuysAdSplashVM *)vm
 {
     _vm = vm;

@@ -41,6 +41,7 @@
 - (void)createUI
 {
     UIView *viewContain = [[UIView alloc]init];
+    viewContain.backgroundColor = [UIColor whiteColor];
      UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageVIewEvent:)];
     [viewContain addGestureRecognizer:tap];
     [self addSubview:viewContain];
@@ -146,7 +147,7 @@
     [self.btnClose mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.imgViewThree.mas_bottom).offset(kScale_H(2));
         make.left.mas_equalTo(self.lblType.mas_right).offset(kScale_W(2));
-        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-0));
+        make.right.mas_equalTo(self.viewContain).offset(kScale_W(-2));
         make.height.width.mas_lessThanOrEqualTo(kScale_W(20));
         make.bottom.mas_equalTo(self.viewContain).offset(kScale_H(-2));
     }];

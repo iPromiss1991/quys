@@ -26,7 +26,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor orangeColor];
     UIView *viewContain = [[UIView alloc]init];
-    viewContain.backgroundColor = [UIColor whiteColor];
+    viewContain.backgroundColor = [UIColor blueColor];
     [self.view addSubview:viewContain];
     self.viewContain=  viewContain;
     
@@ -77,7 +77,7 @@
            {
                self.service = [[QuysAdBannerService alloc ]initWithID:@"qystest_banner"
                                                                   key:@"DF6CB421D36AE5B518700B40A77105A7"
-                                                               cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200)
+                                                               cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 300)
                                                         eventDelegate:self
                                                            parentView:viewContain];
            }
@@ -86,7 +86,7 @@
            {
                self.service =  [[QuysInformationFlowService alloc ]initWithID:@"quystest-xx"
                                                                           key:@"3A6511273E535FA02C15F37D17D22A95"
-                                                                       cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200)
+                                                                       cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 180)
                                                                 eventDelegate:self
                                                                    parentView:viewContain];
            }
@@ -95,7 +95,6 @@
            {
                self.service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp"
                                                                   key:@"8EB8AC0B397CA55C2D78DE88DF8587C2"
-                                                             
                                                         eventDelegate:self
                                                            parentViewController:self];
            }
