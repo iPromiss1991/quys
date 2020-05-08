@@ -75,7 +75,7 @@
         //
            if ([strService isEqualToString:@"banner"])
            {
-               self.service = [[QuysAdBannerService alloc ]initWithID:@"ziyanapp_banner"
+               self.service = [[QuysAdBannerService alloc ]initWithID:@"qystest_banner"
                                                                   key:@"DF6CB421D36AE5B518700B40A77105A7"
                                                                cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200)
                                                         eventDelegate:self
@@ -93,7 +93,7 @@
            
            if ([strService isEqualToString:@"插屏"])
            {
-               self.service = [[QuysAdSplashService alloc ]initWithID:@"ziyanapp_cp"
+               self.service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp"
                                                                   key:@"8EB8AC0B397CA55C2D78DE88DF8587C2"
                                                              
                                                         eventDelegate:self

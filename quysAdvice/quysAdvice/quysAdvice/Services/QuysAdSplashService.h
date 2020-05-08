@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param businessID 业务ID
 /// @param bussinessKey 业务Key
 /// @param delegate 回调代理
-/// @param parentVC 弹窗父视图（展示弹窗的容器视图,nil的话默认使用 [UIApplication sharedApplication].delegate.window）
+/// @param parentVC 弹窗父视图
 - (instancetype)initWithID:businessID
                        key:bussinessKey
              eventDelegate:(id <QuysAdSplashDelegate>)delegate
