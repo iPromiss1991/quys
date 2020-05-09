@@ -21,11 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param businessID 业务ID
 /// @param bussinessKey 业务Key
 /// @param delegate 回调代理
-/// @param parentVC 弹窗父视图
+/// @param presentVCiewController 弹窗父视图
 - (instancetype)initWithID:businessID
                        key:bussinessKey
              eventDelegate:(id <QuysAdSplashDelegate>)delegate
-                parentViewController:(nullable UIViewController*)parentVC;
+                presentVCiewController:(nullable UIViewController*)presentVCiewController;
 
 
 /// 开始加载视图

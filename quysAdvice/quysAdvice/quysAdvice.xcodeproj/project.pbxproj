@@ -36,6 +36,12 @@
 		FB22D0A4240E47D9005E0E44 /* QuysVideoContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB22D0A2240E47D9005E0E44 /* QuysVideoContentView.h */; };
 		FB22D0A5240E47D9005E0E44 /* QuysVideoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB22D0A3240E47D9005E0E44 /* QuysVideoContentView.m */; };
 		FB4251F424626BDF00960FF9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4251F324626BDF00960FF9 /* ExternalAccessory.framework */; };
+		FB42525424664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = FB42525224664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h */; };
+		FB42525524664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m in Sources */ = {isa = PBXBuildFile; fileRef = FB42525324664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m */; };
+		FB4252582466627800960FF9 /* UIViewController+QuysShowAppStore.h in Headers */ = {isa = PBXBuildFile; fileRef = FB4252562466627800960FF9 /* UIViewController+QuysShowAppStore.h */; };
+		FB4252592466627800960FF9 /* UIViewController+QuysShowAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB4252572466627800960FF9 /* UIViewController+QuysShowAppStore.m */; };
+		FB42525C24668C2400960FF9 /* QuysDisplayViewModelEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = FB42525A24668C2400960FF9 /* QuysDisplayViewModelEvent.h */; };
+		FB42525D24668C2400960FF9 /* QuysDisplayViewModelEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = FB42525B24668C2400960FF9 /* QuysDisplayViewModelEvent.m */; };
 		FB50AA1624122A4A007813C3 /* guanbi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB50AA1324122A49007813C3 /* guanbi@2x.png */; };
 		FB50AA1724122A4A007813C3 /* guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB50AA1424122A4A007813C3 /* guanbi@3x.png */; };
 		FB50AA1A24122AE6007813C3 /* guanbi_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB50AA1824122AE6007813C3 /* guanbi_press@2x.png */; };
@@ -231,6 +237,12 @@
 		FB4251F224626BDE00960FF9 /* quysDevDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = quysDevDemo.entitlements; sourceTree = "<group>"; };
 		FB4251F324626BDF00960FF9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		FB4251F52462730700960FF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FB42525224664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionDataTask+Redirect.h"; sourceTree = "<group>"; };
+		FB42525324664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionDataTask+Redirect.m"; sourceTree = "<group>"; };
+		FB4252562466627800960FF9 /* UIViewController+QuysShowAppStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QuysShowAppStore.h"; sourceTree = "<group>"; };
+		FB4252572466627800960FF9 /* UIViewController+QuysShowAppStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QuysShowAppStore.m"; sourceTree = "<group>"; };
+		FB42525A24668C2400960FF9 /* QuysDisplayViewModelEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysDisplayViewModelEvent.h; sourceTree = "<group>"; };
+		FB42525B24668C2400960FF9 /* QuysDisplayViewModelEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysDisplayViewModelEvent.m; sourceTree = "<group>"; };
 		FB50AA1324122A49007813C3 /* guanbi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guanbi@2x.png"; sourceTree = "<group>"; };
 		FB50AA1424122A4A007813C3 /* guanbi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guanbi@3x.png"; sourceTree = "<group>"; };
 		FB50AA1824122AE6007813C3 /* guanbi_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guanbi_press@2x.png"; sourceTree = "<group>"; };
@@ -543,6 +555,8 @@
 				FBBA894623A77B8800D0088C /* QuysInformationFlowVM.m */,
 				FB955A4123B9EB3200AFA427 /* QuysIncentiveVideoVM.h */,
 				FB955A4223B9EB3200AFA427 /* QuysIncentiveVideoVM.m */,
+				FB42525A24668C2400960FF9 /* QuysDisplayViewModelEvent.h */,
+				FB42525B24668C2400960FF9 /* QuysDisplayViewModelEvent.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -612,6 +626,10 @@
 				FB955A1B23B48E7E00AFA427 /* UIViewController+QuysNavBar.m */,
 				FBAC8A5E2435BFC4002183A1 /* UIApplication+QuysStatisical.h */,
 				FBAC8A5F2435BFC4002183A1 /* UIApplication+QuysStatisical.m */,
+				FB42525224664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h */,
+				FB42525324664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m */,
+				FB4252562466627800960FF9 /* UIViewController+QuysShowAppStore.h */,
+				FB4252572466627800960FF9 /* UIViewController+QuysShowAppStore.m */,
 			);
 			path = Catrgory;
 			sourceTree = "<group>";
@@ -805,6 +823,7 @@
 				FB955A3C23B9E9E700AFA427 /* QuysIncentiveVideoDelegate.h in Headers */,
 				FB955A6523BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
+				FB42525424664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h in Headers */,
 				FB848D48239E24540092A260 /* QuysAdviceBaseDelegate.h in Headers */,
 				FB955A9123BEEB8D00AFA427 /* QuysImgPlayendCoverView.h in Headers */,
 				FB955A5E23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.h in Headers */,
@@ -817,6 +836,7 @@
 				FB955A7023BD8DE400AFA427 /* QuysVideoPlayerView.h in Headers */,
 				FB848D54239E26380092A260 /* UIDevice+Hardware.h in Headers */,
 				FBBA892A23A216E000D0088C /* UIView+Statistical.h in Headers */,
+				FB4252582466627800960FF9 /* UIViewController+QuysShowAppStore.h in Headers */,
 				FB955A1C23B48E7E00AFA427 /* UIViewController+QuysNavBar.h in Headers */,
 				FB848D33239DFC6D0092A260 /* QuysAdSplashService.h in Headers */,
 				FBBA896823AB18BC00D0088C /* QuysAdBannerService.h in Headers */,
@@ -830,6 +850,7 @@
 				FB8699E2240E546400FBE09B /* QuysVideoCoverView.h in Headers */,
 				FBAC8A602435BFC4002183A1 /* UIApplication+QuysStatisical.h in Headers */,
 				FBBA894B23A77E8700D0088C /* QuysInformationFlowService.h in Headers */,
+				FB42525C24668C2400960FF9 /* QuysDisplayViewModelEvent.h in Headers */,
 				FB6A1C8C23B2215400E29B75 /* UIViewController+QuysGetRootController.h in Headers */,
 				FB848CFD239DE2D60092A260 /* quysAdvice.h in Headers */,
 				FB848D4E239E25E20092A260 /* QuysBaseNetworkApi.h in Headers */,
@@ -1115,8 +1136,10 @@
 				FB848D53239E26380092A260 /* UIDevice+Hardware.m in Sources */,
 				FB848D34239DFC6D0092A260 /* QuysAdSplashService.m in Sources */,
 				FBBA897523AB1F2700D0088C /* QuysAdOpenScreenDefaultView.m in Sources */,
+				FB42525524664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m in Sources */,
 				FB955A5F23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.m in Sources */,
 				FB955A3A23B602F800AFA427 /* QuysAdBaseService.m in Sources */,
+				FB42525D24668C2400960FF9 /* QuysDisplayViewModelEvent.m in Sources */,
 				FB6A1C7C23B1C20E00E29B75 /* QuysAppDownUrlApi.m in Sources */,
 				FBBA896B23AB18BC00D0088C /* QuysAdBanner.m in Sources */,
 				FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */,
@@ -1126,6 +1149,7 @@
 				FB070949241B30B000135B3E /* VHLNavigation.m in Sources */,
 				FBBA897E23AB781300D0088C /* QuysFileManager.m in Sources */,
 				FB6A1C8D23B2215400E29B75 /* UIViewController+QuysGetRootController.m in Sources */,
+				FB4252592466627800960FF9 /* UIViewController+QuysShowAppStore.m in Sources */,
 				FB955A6323BB26DC00AFA427 /* QuysIncentiveVideoDataModel.m in Sources */,
 				FB848D4F239E25E20092A260 /* QuysBaseNetworkApi.m in Sources */,
 				FB955A5223B9ECA500AFA427 /* QuysIncentiveVideo.m in Sources */,

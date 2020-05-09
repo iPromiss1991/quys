@@ -76,6 +76,8 @@ typedef NS_ENUM(NSInteger,QuysAdviceActiveType) {
 
 @property (nonatomic , copy) NSString              * imgUrl;
 @property (nonatomic , copy) NSString              * ldp;
+@property (nonatomic , copy) NSString              * deepLink;
+
 @property (nonatomic , strong) NSArray <NSString *>              * imgUrlList;
 
 @property (nonatomic,strong) QuysUploadStatisticsModel *statisticsModel;//!<上报统计模型

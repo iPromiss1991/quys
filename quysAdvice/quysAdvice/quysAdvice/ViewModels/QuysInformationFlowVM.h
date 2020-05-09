@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strTitle;
 @property (nonatomic,strong) NSString *strImgUrl;//!> 单图展示
 @property (nonatomic,strong) NSArray *arrImgUrl;//!> 多图展示
+@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
 
 
 
@@ -26,10 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIView *)createAdviceView;
 
 
-/// 更新宏替换键&值
-/// @param replaceKey key
-/// @param replaceVlue value
-- (void)updateReplaceDictionary:(NSString*)replaceKey value:(NSString*)replaceVlue;
 
 
 @end

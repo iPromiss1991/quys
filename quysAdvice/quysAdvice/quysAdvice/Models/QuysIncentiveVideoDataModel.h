@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , assign) BOOL              isDownLoadType;
 @property (nonatomic , assign) BOOL              isAutoLanding;
 @property (nonatomic , copy) NSString              * fileUrl;
+@property (nonatomic , copy) NSString              * deepLink;
 @property (nonatomic , copy) NSString              * landingPageUrl;
 @property (nonatomic , assign) BOOL              isReportRepeatAble;
 @property (nonatomic , assign) QuysAdviceVideoEndShowType              videoEndShowType;

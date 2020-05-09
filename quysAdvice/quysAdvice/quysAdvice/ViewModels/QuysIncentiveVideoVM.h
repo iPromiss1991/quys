@@ -33,10 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIWindow *)createAdviceView;
 
-/// 更新宏替换键&值
-/// @param replaceKey key
-/// @param replaceVlue value
-- (void)updateReplaceDictionary:(NSString*)replaceKey value:(NSString*)replaceVlue;
 
 
 

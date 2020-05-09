@@ -13,12 +13,18 @@
 #import "QuysPictureViewController.h"
 #import "QuysAppDownUrlApi.h"
 #import "QuysDownAddressModel.h"
-@interface QuysIncentiveVideoVM()
+
+#import <StoreKit/StoreKit.h>
+
+
+@interface QuysIncentiveVideoVM()<SKStoreProductViewControllerDelegate,NSURLSessionTaskDelegate>
 @property (nonatomic,strong) QuysIncentiveVideoDataModel *adModel;
 @property (nonatomic,weak) id <QuysIncentiveVideoDelegate> delegate;
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
 @property (nonatomic,strong) QuysIncentiveVideoService *service;
+@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
+
 
 @end
 
@@ -74,7 +80,8 @@
 {
     kWeakSelf(self)
     QuysIncentiveVideoWindow *adView = [[QuysIncentiveVideoWindow alloc]initWithFrame:self.cgFrame viewModel:self];
-    
+    UIViewController *presentVC = self.adView.window.rootViewController;
+    self.presentVC = presentVC;
     //点击事件
     adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
         [weakself interstitialOnClick:cp cpRe:cpRe];
@@ -267,7 +274,6 @@
     
 }
 
-
 #pragma mark - Event
 
 
@@ -275,7 +281,10 @@
 /// @param cpClick 点击坐标
 - (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpRe
 {
-    if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
+    if (!kISNullString(self.adModel.deepLink))
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.adModel.deepLink]];
+    }else
     {
         /*点击事件优先级：
          1\deep:
@@ -292,7 +301,7 @@
                 [self openUrl:strMacroReplace];
                 [self updateClickAndUpload:cpClick cpRe:cpRe] ;
             }
-            
+
         }else
         {
             if ([self.adModel.landingPageUrl containsString:@"ipa"])
@@ -312,7 +321,7 @@
     }
 }
 
-
+ 
 
 
 - (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
@@ -344,7 +353,7 @@
         [self updateReplaceDictionary:kCLICK_UP_X value:strReCpX];
         [self updateReplaceDictionary:kCLICK_UP_Y value:strReCpY];
         
-        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",self.showDuration)];
+        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",(long)self.showDuration)];
 
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.reportVideoClickUrl];
@@ -359,8 +368,8 @@
     if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
     {
         /*点击事件优先级：
-         1\deep:
-         2\isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
+         1、deep:deepLink
+         2、isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
          */
         if (self.adModel.isDownLoadType)
         {
@@ -425,7 +434,7 @@
         [self updateReplaceDictionary:kCLICK_UP_X value:strReCpX];
         [self updateReplaceDictionary:kCLICK_UP_Y value:strReCpY];
         
-        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",self.showDuration)];
+        [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",(long)self.showDuration)];
         
         self.adModel.statisticsModel.endViewClicked = YES;
         [self updateClientTimeStamp];
@@ -439,7 +448,9 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
     
 }
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpRe
+
+
+- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
     kWeakSelf(self)
     strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
@@ -450,16 +461,20 @@
         if ( request.responseJSONObject[@"data"])
         {
             QuysDownAddressModel *model = [QuysDownAddressModel yy_modelWithJSON:request.responseJSONObject[@"data"]];
+            
             if (!kISNullString(model.dstlink))
             {
-                [weakself openUrl:model.dstlink];
-            }
-            
-            if (!kISNullString(model.clickid))
-            {
-                [weakself openUrl:model.dstlink];
-                [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                [weakself updateClickAndUpload:cpClick  cpRe:cpRe] ;
+                NSURLSessionDataTask *dataTask = [[NSURLSessionDataTask alloc] init];
+                [dataTask redirectToAppStore:model.dstlink callBack:^(NSString * _Nonnull strAppstoreUrl)
+                 {
+                    [self.presentVC openAppWithUrl:strAppstoreUrl];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick ];
+                    if (!kISNullString(model.clickid))
+                    {
+                        [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
+                    }
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick ];
+                }];
             }
         }
         

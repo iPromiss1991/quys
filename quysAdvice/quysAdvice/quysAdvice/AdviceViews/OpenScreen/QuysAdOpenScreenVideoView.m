@@ -70,6 +70,7 @@
 
 - (void)clickEvent:(CGPoint)cp cpRe:(CGPoint)cpRe
 {
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
     if (self.quysAdviceClickEventBlockItem)
     {
         self.quysAdviceClickEventBlockItem(cp,cpRe);
@@ -78,6 +79,7 @@
 
 - (void)closeEvent
 {
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
     if (self.quysAdviceCloseEventBlockItem)
     {
         self.quysAdviceCloseEventBlockItem();

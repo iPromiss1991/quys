@@ -39,6 +39,7 @@
     QuysVideoCoverView *coverView = [[QuysVideoCoverView alloc] initWithFrame:CGRectZero];
     coverView.alpha = .0;
     coverView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
+        [weakself quys_remove];
         [weakself clickEvent:cp reCp:cpRe];
     };
     

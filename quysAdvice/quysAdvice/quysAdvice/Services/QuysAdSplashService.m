@@ -17,7 +17,7 @@
 @property (nonatomic,strong) NSString *businessID;
 @property (nonatomic,strong) NSString *bussinessKey;
  
-@property (nonatomic,strong) UIViewController *parentVC;
+@property (nonatomic,strong) UIViewController *presentVCiewController;
 
 @property (nonatomic,strong) QuysAdSplashApi *api;
 
@@ -26,14 +26,14 @@
 
 
 @implementation QuysAdSplashService
-- (instancetype)initWithID:businessID key:bussinessKey eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate  parentViewController:(nullable UIViewController*)parentVC
+- (instancetype)initWithID:businessID key:bussinessKey eventDelegate:(nonnull id<QuysAdSplashDelegate>)delegate  presentVCiewController:(nullable UIViewController*)presentVCiewController
 {
     if (self = [super init])
     {
         self.businessID = businessID;
         self.bussinessKey = bussinessKey;
         self.delegate = delegate;
-        self.parentVC = parentVC;
+        self.presentVCiewController = presentVCiewController;
         [self config];
     }return self;
 }
@@ -76,6 +76,7 @@
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
     QuysAdSplashVM *vm =  [[QuysAdSplashVM alloc] initWithModel:adViewModel delegate:self.delegate  ];
+    vm.presentVC = self.presentVCiewController;
     self.adviceView = [vm createAdviceView];
 
 }
@@ -85,8 +86,8 @@
 /// 展示视图
 - (UIView*)showAdView
 {
-    self.parentVC.view.hlj_viewVisible = YES;
-    [self.parentVC.view.window addSubview:self.adviceView];
+    self.presentVCiewController.view.hlj_viewVisible = YES;
+    [self.presentVCiewController.view.window addSubview:self.adviceView];
     return self.adviceView;
 }
 

@@ -162,6 +162,7 @@
     //获取触发触摸的点
     CGPoint cpBegain = [sender locationInView:self];
     CGPoint cpBegainResult = [self convertPoint:cpBegain toView:[UIApplication sharedApplication].keyWindow];//相对于屏幕的坐标
+    [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
     if (self.quysAdviceClickEventBlockItem)
     {
         self.quysAdviceClickEventBlockItem(cpBegainResult,cpBegain);
@@ -209,10 +210,7 @@
         {
             dispatch_source_cancel(weakself.source_t );
             weakself.btnClose.titleLabel.attributedText = nil;
-            if (self.vm.closeWindowEnable)
-            {
-                 [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
-            }
+            [[NSNotificationCenter defaultCenter ] postNotificationName:kRemoveOpenScreenBackgroundImageViewNotify object:nil];
         }
         
     });

@@ -78,8 +78,8 @@
                self.service = [[QuysAdBannerService alloc ]initWithID:@"qystest_banner"
                                                                   key:@"DF6CB421D36AE5B518700B40A77105A7"
                                                                cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 300)
-                                                        eventDelegate:self
-                                                           parentView:viewContain];
+                                                        eventDelegate:self presentVCiewController:self
+                                                           ];
            }
            
            if ([strService isEqualToString:@"信息流"])
@@ -88,7 +88,7 @@
                                                                           key:@"3A6511273E535FA02C15F37D17D22A95"
                                                                        cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 180)
                                                                 eventDelegate:self
-                                                                   parentView:viewContain];
+                                                                   presentVCiewController:self];
            }
            
            if ([strService isEqualToString:@"插屏"])
@@ -96,7 +96,7 @@
                self.service = [[QuysAdSplashService alloc ]initWithID:@"quystest-cp"
                                                                   key:@"8EB8AC0B397CA55C2D78DE88DF8587C2"
                                                         eventDelegate:self
-                                                           parentViewController:self];
+                                                           presentVCiewController:self];
            }
     }
    
@@ -134,11 +134,20 @@
                 make.height.mas_greaterThanOrEqualTo(400);
             }];
             
-            if (![self.title containsString:@"插屏"]) {
-                [self.viewContainBottom mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(self.adviceView.mas_bottom);
+            
+            
+            if (![self.title containsString:@"插屏"])
+            {
+                [self.adviceView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(self.viewContain).offset(10);
                     make.left.right.mas_equalTo(self.viewContain);
-                    make.bottom.mas_equalTo(self.viewContain);
+                    make.height.mas_greaterThanOrEqualTo(100).priorityHigh();
+                }];
+                
+                [self.viewContainBottom mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.top.mas_equalTo(self.adviceView.mas_bottom).offset(10);
+                    make.left.right.mas_equalTo(self.viewContain);
+                    make.bottom.mas_equalTo(self.viewContain).offset(-10);
                     make.height.mas_greaterThanOrEqualTo(100);
                 }];
             }

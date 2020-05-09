@@ -32,7 +32,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     QuysServiceListTableViewController *rootVC = [[QuysServiceListTableViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
+    if (1)
+    {
+         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController :rootVC];
+    }else
+    {
+            UITabBarController *tabVC = [[UITabBarController alloc]init];
+            tabVC.viewControllers = @[rootVC];
+            self.window.rootViewController = tabVC;
+    }
+
+
     [self.window makeKeyAndVisible];
 
     UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchIamge"];

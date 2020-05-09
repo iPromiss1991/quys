@@ -20,14 +20,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 创建弹窗广告
 /// @param businessID 业务ID
 /// @param bussinessKey 业务Key
-/// @param frame 弹窗frame
+/// @param cgFrame 弹窗frame
 /// @param delegate 回调代理
-/// @param parentView 弹窗父视图（展示弹窗的容器视图）
+/// @param presentVCiewController 弹窗父视图（展示弹窗的容器视图）
 - (instancetype)initWithID:businessID
                        key:bussinessKey
-                    cgRect:(CGRect)frame
+                    cgRect:(CGRect)cgFrame
              eventDelegate:(id <QuysAdSplashDelegate>)delegate
-                parentView:(UIView*)parentView;
+               presentVCiewController:(UIViewController*)presentVCiewController;
 
 /// 开始加载视图 & 并展示
 - (void)loadAdViewAndShow;

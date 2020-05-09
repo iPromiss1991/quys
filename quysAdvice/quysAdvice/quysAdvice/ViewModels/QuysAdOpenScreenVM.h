@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *materialUrl;
 @property (nonatomic,strong) NSString *title;
 
-@property (nonatomic,assign) BOOL closeWindowEnable;//!<  是否可以关闭window
+@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
 
 
 
@@ -32,10 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIWindow *)createAdviceView;
 
-/// 更新宏替换键&值
-/// @param replaceKey key
-/// @param replaceVlue value
-- (void)updateReplaceDictionary:(NSString*)replaceKey value:(NSString*)replaceVlue;
 
 
 

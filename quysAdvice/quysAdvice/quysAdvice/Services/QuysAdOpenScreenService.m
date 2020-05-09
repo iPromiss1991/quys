@@ -90,6 +90,7 @@
 - (void)configAdviceViewVM:(QuysAdviceModel*)adViewModel
 {
     QuysAdOpenScreenVM *vm =  [[QuysAdOpenScreenVM alloc] initWithModel:adViewModel delegate:self.delegate frame:[UIScreen mainScreen].bounds  ];
+    vm.presentVC = [UIApplication sharedApplication].delegate.window.rootViewController;
     self.adviceView = [vm createAdviceView];
     self.vm = vm;
 }

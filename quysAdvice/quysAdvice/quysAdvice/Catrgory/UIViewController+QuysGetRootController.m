@@ -72,13 +72,20 @@
     if ([self.parentViewController isKindOfClass:[UITabBarController class]])
     {
         [self presentViewController:viewControllerToPresent animated:flag completion:completion];
-    }else
+    }else  if ([self.parentViewController isKindOfClass:[UINavigationController class]])
     {
         [self.navigationController pushViewController:viewControllerToPresent animated:flag];
         if (completion)
         {
             completion();
         }
+    }else if ([self isKindOfClass:[UINavigationController class]])
+    {
+        [(UINavigationController*)self pushViewController:viewControllerToPresent animated:flag];
+               if (completion)
+               {
+                   completion();
+               }
     }
     
 }

@@ -20,6 +20,7 @@
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
 @property (nonatomic,strong) QuysAdBannerService *service;
+@property (nonatomic,strong) QuysDisplayViewModelEvent *viewModelEvent;//!< 事件处理
 
 @end
 
@@ -40,25 +41,15 @@
 
 - (void)packingModel:(QuysAdviceModel*)model frame:(CGRect)cgFrame
 {
+    QuysDisplayViewModelEvent *viewModelEvent = [QuysDisplayViewModelEvent new];
+    self.viewModelEvent = viewModelEvent;
     self.adModel = model;
     self.cgFrame = cgFrame;
-    [self updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",_adModel.width)];
-    [self updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",_adModel.height)];
-    [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
-    [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
+    [self.viewModelEvent updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",_adModel.width)];
+    [self.viewModelEvent updateReplaceDictionary:kResponeAdHeight value:kStringFormat(@"%ld",_adModel.height)];
+    [self.viewModelEvent updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",cgFrame.size.width)];
+    [self.viewModelEvent updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",cgFrame.size.height)];
     self.strImgUrl = model.imgUrl;
-}
-
-
-
-- (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
-{
-    [[[QuysAdviceManager shareManager] dicMReplace] setObject:replaceVlue forKey:replaceKey];
-}
-
-- (void)uploadServer:(NSArray*)uploadUrlArr
-{
-    [[QuysUploadApiTaskManager shareManager] addTaskUrls:uploadUrlArr];
 }
 
 
@@ -72,7 +63,7 @@
     
     //点击事件
     adView.quysAdviceClickEventBlockItem = ^(CGPoint cp, CGPoint cpRe) {
-        [weakself interstitialOnClick:cp cpRe:cpRe];
+        [self.viewModelEvent interstitialOnClick:cp cpRe:cpRe presentViewController:self.presentVC adviceModel:self.adModel];
         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnClick:relativeClickPoint:service:)])
         {
             [weakself.delegate quys_interstitialOnClick:cp relativeClickPoint:cpRe service:(QuysAdBaseService*)weakself.service];
@@ -89,7 +80,7 @@
     
     //曝光事件
     adView.quysAdviceStatisticalCallBackBlockItem = ^{
-        [weakself interstitialOnExposure];
+        [self.viewModelEvent interstitialOnExposure:self.adView.frame adviceModel:self.adModel];
         if ([weakself.delegate respondsToSelector:@selector(quys_interstitialOnExposure:)])
         {
             [weakself.delegate quys_interstitialOnExposure:(QuysAdBaseService*)weakself.service];
@@ -100,148 +91,6 @@
     
 }
 
-
-#pragma mark - Event
-
-
-- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
-{
-    kWeakSelf(self)
-    if ([self.adView isMemberOfClass:[QuysAdBanner class]])
-    {
-        switch (self.adModel.ctype) {
-            case QuysAdviceActiveTypeHtmlSourceCode:
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
-                }];
-            }
-                break;
-            case QuysAdviceActiveTypeImageUrl:
-            {
-                //判断后缀是否.ipa==直接下载； 或者加载web
-                if ([self.adModel.ldp containsString:@".ipa"])
-                {
-                     [self openUrl:self.adModel.ldp];
-                }else
-                {
-                    QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.ldp];
-                     UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                     [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                     }];
-                }
-                [self updateClickAndUpload:cpClick cpRe:cpReClick];
-            }
-                break;
-            case QuysAdviceActiveTypeHtmlLink:
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithHtml:self.adModel.htmStr];
-                UIViewController* rootVC = [UIViewController quys_findVisibleViewController:[UIWindow class]] ;
-                [rootVC quys_presentViewController:webVC animated:YES completion:^{
-                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
-                }];
-            }
-                break;
-            case QuysAdviceActiveTypeDownAppAppstore:
-            {
-                [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick cpRe:cpReClick];
-            }
-                break;
-            case QuysAdviceActiveTypeDownAppAppstoreSecond:
-            {
-                [self openUrl:self.adModel.downUrl];
-                [self updateClickAndUpload:cpClick cpRe:cpReClick];
-            }
-                break;
-            case QuysAdviceActiveTypeDownAppWebUrl:
-            {
-                [self getRealDownUrl:self.adModel.downUrl point:cpClick cpRe:cpReClick];
-            }
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-- (void)openUrl:(NSString*)strUrl
-{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
-    
-}
-
-- (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
-{
-    if (self.adModel.clickeUploadEnable)
-    {
-        NSString *strCpX = kStringFormat(@"%f",cpClick.x);
-        NSString *strCpY = kStringFormat(@"%f",cpClick.y);
-        
-        NSString *strReCpX = kStringFormat(@"%f",cpReClick.x);
-        NSString *strReCpY = kStringFormat(@"%f",cpReClick.y);
-        
-        //更新点击坐标
-        [self updateReplaceDictionary:kClickInsideDownX value:strCpX];
-        [self updateReplaceDictionary:kClickInsideDownY value:strCpY];
-        
-        [self updateReplaceDictionary:kClickUPX value:strCpX];
-        [self updateReplaceDictionary:kClickUPY value:strCpY];
-        //
-        [self updateReplaceDictionary:k_RE_DOWN_X value:strReCpX];
-        [self updateReplaceDictionary:k_RE_DOWN_Y value:strReCpY];
-        
-        [self updateReplaceDictionary:k_RE_UP_X value:strReCpX];
-        [self updateReplaceDictionary:k_RE_UP_Y value:strReCpY];
-        [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
-
-        self.adModel.statisticsModel.clicked = YES;
-        [self uploadServer:self.adModel.clkTracking];
-    }
-}
-
-
-- (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
-{
-    kWeakSelf(self)
-    strWebUrl = [[QuysAdviceManager shareManager] replaceSpecifiedString:strWebUrl];
-    QuysAppDownUrlApi *api = [QuysAppDownUrlApi new];
-    api.downUrl = strWebUrl;
-    [api startWithCompletionBlockWithSuccess:^(__kindof YTKBaseRequest * _Nonnull request)
-     {
-        if ( request.responseJSONObject[@"data"])
-        {
-            QuysDownAddressModel *model = [QuysDownAddressModel yy_modelWithJSON:request.responseJSONObject[@"data"]];
-            if (!kISNullString(model.dstlink))
-            {
-                [weakself openUrl:model.dstlink];
-            }
-            if (!kISNullString(model.clickid))
-                {
-                    [weakself openUrl:model.dstlink];
-                    [weakself updateReplaceDictionary:kClickClickID value:model.clickid];
-                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
-                }
-        }
-    } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
-        
-    }];
-}
-
--(void)interstitialOnExposure
-{
-    if (self.adModel.exposuredUploadEnable)
-    {
-        [self updateReplaceDictionary:kRealAdWidth value:kStringFormat(@"%f",self.adView.frame.size.width)];
-        [self updateReplaceDictionary:kRealAdHeight value:kStringFormat(@"%f",self.adView.frame.size.height)];
-        [self uploadServer:self.adModel.impTracking];
-        self.adModel.statisticsModel.exposured = YES;
-    }else
-    {
-    }
-}
 
 
 

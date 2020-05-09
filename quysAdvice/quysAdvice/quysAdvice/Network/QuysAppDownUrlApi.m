@@ -15,5 +15,20 @@
     return self.downUrl;
 }
 
+-(YTKRequestMethod)requestMethod
+{
+    return YTKRequestMethodGET;
+}
 
+
+-(YTKRequestSerializerType)requestSerializerType
+{
+    return YTKRequestSerializerTypeJSON;
+}
+
+
+-(YTKResponseSerializerType)responseSerializerType
+{
+    return YTKResponseSerializerTypeHTTP;
+}
 @end
