@@ -237,7 +237,7 @@
         {
              if ([self.title containsString:@"激励视频"])
                {
-                   self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdziyanapp"
+                   self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdtest"
                                                                            key:@"1262DF2885ACB4EEC8FF0486502E7A6D"
                                                                    eventDelegate:self  ];
                    [(QuysIncentiveVideoService*)self.service loadAdViewAndShow];

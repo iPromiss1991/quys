@@ -174,7 +174,7 @@
         }
         
     } failure:^(__kindof YTKBaseRequest * _Nonnull request) {
-        
+        NSLog(@"\n上报失败：%@\n",request.error);
     }];
 }
 

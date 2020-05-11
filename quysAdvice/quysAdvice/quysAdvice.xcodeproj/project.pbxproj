@@ -526,6 +526,8 @@
 		FB848D17239DEBEC0092A260 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FB955A3723B602F800AFA427 /* QuysAdBaseService.h */,
+				FB955A3823B602F800AFA427 /* QuysAdBaseService.m */,
 				FBBA897123AB1F2600D0088C /* QuysAdOpenScreenService.h */,
 				FBBA897223AB1F2700D0088C /* QuysAdOpenScreenService.m */,
 				FBBA896123AB18BB00D0088C /* QuysAdBannerService.h */,
@@ -534,8 +536,6 @@
 				FB848D32239DFC6D0092A260 /* QuysAdSplashService.m */,
 				FBBA894923A77E8700D0088C /* QuysInformationFlowService.h */,
 				FBBA894A23A77E8700D0088C /* QuysInformationFlowService.m */,
-				FB955A3723B602F800AFA427 /* QuysAdBaseService.h */,
-				FB955A3823B602F800AFA427 /* QuysAdBaseService.m */,
 				FB955A3D23B9EAB000AFA427 /* QuysIncentiveVideoService.h */,
 				FB955A3E23B9EAB000AFA427 /* QuysIncentiveVideoService.m */,
 			);

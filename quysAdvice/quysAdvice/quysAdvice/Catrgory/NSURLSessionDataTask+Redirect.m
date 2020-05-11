@@ -15,12 +15,12 @@
 @implementation NSURLSessionDataTask (Redirect)
 - (void)redirectToAppStore:(NSString*)redirectUrl  callBack:(void(^)(NSString* strAppstoreUrl))callBackBlock
 {
-    if ([redirectUrl containsString:@"itms-apps://"] || [redirectUrl containsString:@"itms://"])
+    if ([redirectUrl containsString:@"itms-apps"] || [redirectUrl containsString:@"itms://"])//1、itms-appss://    2、itms-apps://
     {
         callBackBlock(redirectUrl);
     }else
     {
-        NSURL *url = [NSURL URLWithString:@"http://suo.im/6dKUUu"];//http://suo.im/6dKUUu
+        NSURL *url = [NSURL URLWithString:redirectUrl];//http://suo.im/6dKUUu
         NSMutableURLRequest *quest = [NSMutableURLRequest requestWithURL:url];
         quest.HTTPMethod = @"GET";
 
@@ -32,10 +32,10 @@
                                              NSHTTPURLResponse *urlResponse = (NSHTTPURLResponse *)response;
 
                                              NSLog(@"statusCode: %ld", urlResponse.statusCode);
-                                             NSLog(@"%@", urlResponse.allHeaderFields);//x-apple-orig-url
+                                             NSLog(@"allHeaderFields:\n%@", urlResponse.allHeaderFields);//x-apple-orig-url
             if (callBackBlock)
             {
-                callBackBlock(urlResponse.allHeaderFields[@"x-apple-orig-url"]);
+                callBackBlock(urlResponse.URL.absoluteString);
             }
                                          }];
         [task resume];

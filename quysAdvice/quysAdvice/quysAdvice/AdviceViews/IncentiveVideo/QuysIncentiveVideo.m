@@ -78,7 +78,8 @@
     
     //
     UIView *viewFootContain = [[UIView alloc]initWithFrame:self.frame];
-    viewFootContain.backgroundColor = kRGB16(BackgroundColor1, .5);
+    viewFootContain.backgroundColor = [UIColor whiteColor];
+    viewFootContain.layer.shadowOpacity = 1;
     [self.viewContain addSubview:viewFootContain];
     self.viewFootContain = viewFootContain;
     
@@ -196,8 +197,11 @@
 {
     [super layoutSubviews];
     kViewRadius(self.btnCounntdown, kScale_H(20));
-    kViewRadius(self.viewFootContain, kScale_W(20));
 
+    self.viewFootContain.layer.cornerRadius = kScale_W(20);
+    self.viewFootContain.clipsToBounds = NO;
+    self.viewFootContain.layer.shadowOffset = CGSizeMake(0, kScale_W(3));
+    self.viewFootContain.layer.shadowRadius = kScale_W(10);
 }
 
 

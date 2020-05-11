@@ -59,20 +59,6 @@
 
 
 
-- (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
-{
-    if (kISNullString(replaceKey) || kISNullString(replaceVlue)|| [replaceVlue isEqualToString:@"(null)"])
-    {
-        replaceVlue = @"";
-    }
-    [[[QuysAdviceManager shareManager] dicMReplace] setObject:replaceVlue forKey:replaceKey];
-}
-
-- (void)uploadServer:(NSArray*)uploadUrlArr
-{
-    [[QuysUploadApiTaskManager shareManager] addTaskUrls:uploadUrlArr];
-}
-
 
 #pragma mark - QuysIncentiveVideoDelegate
 
@@ -279,49 +265,48 @@
 
 /// 视频播放点击
 /// @param cpClick 点击坐标
-- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpRe
+- (void)interstitialOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
+    kWeakSelf(self)
+    NSURLSessionDataTask *dataTask = [[NSURLSessionDataTask alloc]init];
     if (!kISNullString(self.adModel.deepLink))
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.adModel.deepLink]];
+        [self openUrl:self.adModel.deepLink];
     }else
     {
         /*点击事件优先级：
          1\deep:
-         2\isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
+         2\isDownLoadType？fileUrl： landingPageUrl（判断是否.ipa）。
          */
         if (self.adModel.isDownLoadType)
         {
             if (self.adModel.clickPosition == 1)
             {
-                [self getRealDownUrl:self.adModel.fileUrl point:cpClick cpRe:cpRe] ;
+                [self getRealDownUrl:self.adModel.fileUrl point:cpClick cpRe:cpReClick] ;
             }else
             {
-                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
-                [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }
+                //app下载地址
+                [dataTask redirectToAppStore:self.adModel.fileUrl callBack:^(NSString * _Nonnull strAppstoreUrl)
+                 {
+                    [weakself.presentVC openAppWithUrl:strAppstoreUrl];
+                    [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
+                }];
 
+            }
+            
         }else
         {
-            if ([self.adModel.landingPageUrl containsString:@"ipa"])
-            {
-                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
-                [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }else
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
-                QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
-                QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
-                [nav pushViewController:webVC animated:YES];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }
+            //app下载地址or网页
+            [dataTask redirectToAppStore:self.adModel.landingPageUrl callBack:^(NSString * _Nonnull strAppstoreUrl)
+             {
+                [weakself.presentVC openAppWithUrl:strAppstoreUrl];
+                [weakself updateClickAndUpload:cpClick cpRe:cpReClick];
+            }];
         }
     }
 }
 
- 
+
 
 
 - (void)updateClickAndUpload:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
@@ -354,7 +339,7 @@
         [self updateReplaceDictionary:kCLICK_UP_Y value:strReCpY];
         
         [self updateReplaceDictionary:kEVENT_DURATION value:kStringFormat(@"%ld",(long)self.showDuration)];
-
+        
         self.adModel.statisticsModel.clicked = YES;
         [self uploadServer:self.adModel.reportVideoClickUrl];
     }
@@ -363,43 +348,9 @@
 
 /// 尾帧点击
 /// @param cpClick 点击坐标
-- (void)interstitialEndviewOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpRe
+- (void)interstitialEndviewOnClick:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
 {
-    if ([self.adView isMemberOfClass:[QuysIncentiveVideoWindow class]])
-    {
-        /*点击事件优先级：
-         1、deep:deepLink
-         2、isDownLoadType？Y：fileUrl：landingPageUrl（判断是否.ipa）。
-         */
-        if (self.adModel.isDownLoadType)
-        {
-            if (self.adModel.clickPosition == 1)
-            {
-                [self getRealDownUrl:self.adModel.fileUrl point:cpClick  cpRe:cpRe] ;
-            }else
-            {
-                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.fileUrl];
-                [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }
-            
-        }else
-        {
-            if ([self.adModel.landingPageUrl containsString:@"ipa"])
-            {
-                NSString *strMacroReplace = [[QuysAdviceManager shareManager] replaceSpecifiedString:self.adModel.landingPageUrl];
-                [self openUrl:strMacroReplace];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }else
-            {
-                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:self.adModel.landingPageUrl];
-                QuysIncentiveVideoWindow *window = (QuysIncentiveVideoWindow*)self.adView;
-                QuysNavigationController *nav= (QuysNavigationController*)window.rootViewController;
-                [nav pushViewController:webVC animated:YES];
-                [self updateClickAndUpload:cpClick cpRe:cpRe] ;
-            }
-        }
-    }
+    [self interstitialOnClick:cpClick cpRe:cpReClick];
 }
 
 
@@ -443,11 +394,7 @@
 }
 
 
-- (void)openUrl:(NSString*)strUrl
-{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
-    
-}
+
 
 
 - (void)getRealDownUrl:(NSString*)strWebUrl  point:(CGPoint)cpClick cpRe:(CGPoint)cpReClick
@@ -550,6 +497,26 @@
 }
 
 
+- (void)openUrl:(NSString*)strUrl
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+    
+}
+
+- (void)updateReplaceDictionary:(NSString *)replaceKey value:(NSString *)replaceVlue
+{
+    if (kISNullString(replaceKey) || kISNullString(replaceVlue)|| [replaceVlue isEqualToString:@"(null)"])
+    {
+        replaceVlue = @"";
+    }
+    [[[QuysAdviceManager shareManager] dicMReplace] setObject:replaceVlue forKey:replaceKey];
+}
+
+- (void)uploadServer:(NSArray*)uploadUrlArr
+{
+    [[QuysUploadApiTaskManager shareManager] addTaskUrls:uploadUrlArr];
+}
+
 - (void)updateClientTimeStamp
 {
     [self updateReplaceDictionary:kClientTimeStamp value:[NSDate quys_getNowTimeTimestamp]];
@@ -591,6 +558,15 @@
 - (NSString *)videoAlternateEndShowValue
 {
     return self.adModel.image;
+}
+
+-(UIViewController *)presentVC
+{
+    if (_presentVC == nil)
+    {
+        _presentVC = [(UIWindow*)self.adView rootViewController];
+    }
+    return _presentVC;
 }
 
 - (void)dealloc

@@ -19,17 +19,19 @@
 {
     
     NSString *strAppID = [self getStoreAppID:appIdUrl];
-    if (!kISNullString(strAppID))
-    {
-        [self openAppWithIdentifier:strAppID];
-    }else
-    {
-        QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:appIdUrl];
-                           [self quys_presentViewController:webVC animated:YES completion:^{
-                               
-                           }];
-    }
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+         if (!kISNullString(strAppID))
+            {
+                [self openAppWithIdentifier:strAppID];
+            }else
+            {
+                QuysWebViewController *webVC = [[QuysWebViewController alloc] initWithUrl:appIdUrl];
+                [self quys_presentViewController:webVC animated:YES completion:^{
+                    
+                }];
+            }
+            
+    });
 }
 
 
@@ -54,13 +56,10 @@
 /// @param appIdUrl app 网址
 - (NSString*)getStoreAppID:(NSString*)appIdUrl
 {
-    appIdUrl = @"itms-apps://itunes.apple.com/app/id930368978";
    __block NSString *strAppID = @"";
-    if ([appIdUrl containsString:@"https://"])
-    {
-        //1、在Safari浏览器打开链接
 
-    }else if ([appIdUrl containsString:@"itms-apps://"] || [appIdUrl containsString:@"itms://"])
+        
+    if ([appIdUrl containsString:@"itms-apps://"] ||[appIdUrl containsString:@"itms-appss://"]|| [appIdUrl containsString:@"itms://"]||([appIdUrl containsString:@"https://apps.apple.com"] && [appIdUrl containsString:@"/id"]))
     {
         //2、跳转到AppStore || 跳转到 iTunes Store
         NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"/&?"];
@@ -76,7 +75,13 @@
                 *stop = YES;
             }
         }];
+    }else if ([appIdUrl containsString:@"https://"])
+    {
+        //1、在Safari浏览器打开链接
+
     }
+    
+    //https://apps.apple.com====https://
 
     return strAppID;
 }
