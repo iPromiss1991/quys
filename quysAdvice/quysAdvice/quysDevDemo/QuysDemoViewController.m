@@ -176,8 +176,9 @@
 {
  
         if ([self.service isKindOfClass:[QuysIncentiveVideoService class]]) {
+            [self.service performSelector:@selector(showAdView)];
             self.adviceView = [self.service valueForKey:@"adviceView"];
-            
+
         }else
         {
             [self.service performSelector:@selector(showAdView)];
@@ -240,7 +241,7 @@
                    self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jlAdtest"
                                                                            key:@"1262DF2885ACB4EEC8FF0486502E7A6D"
                                                                    eventDelegate:self  ];
-                   [(QuysIncentiveVideoService*)self.service loadAdViewAndShow];
+                   [(QuysIncentiveVideoService*)self.service loadAdView];
                }
         }
     

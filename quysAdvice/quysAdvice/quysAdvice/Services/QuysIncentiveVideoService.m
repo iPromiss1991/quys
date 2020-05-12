@@ -49,7 +49,7 @@
 }
 
 
-- (void)loadAdViewAndShow
+- (void)loadAdView
 {
     [self loadAdViewNow];
 
@@ -85,7 +85,10 @@
 /// 展示视图
 - (void)showAdView
 {
-    self.adviceView.hidden = NO;
+    if (self.adviceView)
+    {
+         self.adviceView.hidden = NO;
+    }
 }
 
 
@@ -119,7 +122,6 @@
     {
         QuysIncentiveVideoDataModel *adviceModel = outerModel.data[0];
         [self configAdviceViewVM:adviceModel];
-        [self showAdView];
         if ([self.delegate respondsToSelector:@selector(quys_requestSuccess:)])
         {
             [self.delegate quys_requestSuccess:self];

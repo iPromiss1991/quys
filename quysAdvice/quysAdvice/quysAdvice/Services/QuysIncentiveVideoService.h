@@ -24,8 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
                        key:bussinessKey
               eventDelegate:(nonnull id<QuysIncentiveVideoDelegate>)delegate;
 
-/// 开始加载视图 & 并展示
-- (void)loadAdViewAndShow;
+/// 开始加载视图
+- (void)loadAdView;
+
+
+
+/// 开始展示视图
+- (void)showAdView;
+
 
 @end
 
