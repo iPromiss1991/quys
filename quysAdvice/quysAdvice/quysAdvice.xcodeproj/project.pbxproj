@@ -759,10 +759,10 @@
 		FBBA897A23AB77F500D0088C /* QuysManagers */ = {
 			isa = PBXGroup;
 			children = (
+				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
 				FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */,
 				FBBA893D23A7288000D0088C /* QuysUploadApiTaskManager.m */,
 				FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */,
-				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
 				FBBA897B23AB781300D0088C /* QuysFileManager.h */,
 				FBBA897C23AB781300D0088C /* QuysFileManager.m */,
 			);
