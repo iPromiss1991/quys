@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *strTitle;
 @property (nonatomic,strong) NSString *strImgUrl;//!> 单图展示
 @property (nonatomic,strong) NSArray *arrImgUrl;//!> 多图展示
-@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
+@property (nonatomic,strong) UIViewController *presentVC; 
 
 
 

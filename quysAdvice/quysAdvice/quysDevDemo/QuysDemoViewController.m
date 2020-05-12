@@ -47,7 +47,7 @@
                                                                    key:@"D0E8D293C79F627ABB15761662C65AB3"
                                                                 cgRect:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width , 200)
                                                          eventDelegate:self
-                                                            parentView:viewContain];
+                                                            presentVCiewController:self];
             }
             
             if ([strService isEqualToString:@"信息流"])
@@ -56,21 +56,20 @@
                                                                            key:@"AA47EC3568A2B24ABEF4996A739A8291"
                                                                         cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 200)
                                                                  eventDelegate:self
-                                                                    parentView:viewContain];
+                                                                    presentVCiewController:self];
             }
             
             if ([strService isEqualToString:@"插屏"])
             {
                 self.service = [[QuysAdSplashService alloc ]initWithID:@"cp_ios_qys_test"
                                                                    key:@"BA705F17304101A531E474CD8BBB5821"
-                                                                cgRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 200)
                                                          eventDelegate:self
-                                                            parentView:self.view];
+                                                            presentVCiewController:self];
             }
             
          
     }
-# else
+#else
     {
         //
            if ([strService isEqualToString:@"banner"])
@@ -231,7 +230,7 @@
                self.service = [[QuysIncentiveVideoService alloc]initWithID:@"jl_qys_ios_test"
                                                                        key:@"52C4305558DA476616E2B5B02C9DD315"
                                                                eventDelegate:self  ];
-               [(QuysIncentiveVideoService*)self.service loadAdViewAndShow];
+               [(QuysIncentiveVideoService*)self.service loadAdView];
            }
     }
 #else

@@ -44,11 +44,6 @@
 #endif
 }
 
-- (YTKRequestMethod)requestMethod
-{
-    return YTKRequestMethodGET;
-}
-
 
 
 

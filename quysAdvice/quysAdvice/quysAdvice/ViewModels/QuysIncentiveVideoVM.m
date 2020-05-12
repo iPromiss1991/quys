@@ -23,7 +23,7 @@
 @property (nonatomic,assign) CGRect cgFrame;
 @property (nonatomic,strong) UIView *adView;
 @property (nonatomic,strong) QuysIncentiveVideoService *service;
-@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
+@property (nonatomic,strong) UIViewController *presentVC; 
 
 
 @end

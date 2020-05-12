@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QuysAdSplashVM : NSObject<QuysAdSplashDelegate>
 //输出字段
 @property (nonatomic,strong) NSString *strImgUrl;
-@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
+@property (nonatomic,strong) UIViewController *presentVC; 
 
 
 

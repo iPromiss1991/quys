@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSString *materialUrl;
 @property (nonatomic,strong) NSString *title;
 
-@property (nonatomic,strong) UIViewController *presentVC;//TODO：赋值
+@property (nonatomic,strong) UIViewController *presentVC; 
 
 
 

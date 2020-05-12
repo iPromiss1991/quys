@@ -19,4 +19,9 @@
     return YTKRequestMethodPOST;
 }
 
+-(YTKRequestSerializerType)requestSerializerType
+{
+    return YTKRequestSerializerTypeJSON;
+}
+
 @end

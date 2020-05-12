@@ -48,8 +48,6 @@
 {
     QuysDisplayViewModelEvent *viewModelEvent = [QuysDisplayViewModelEvent new];
     self.viewModelEvent = viewModelEvent;
-    model.downUrl = @"https://apps.apple.com/cn/app/id930368978";
-    model.ldp = @"https://apps.apple.com/cn/app/id930368978";
     self.adModel = model;
     self.cgFrame = cgFrame;
     [self.viewModelEvent updateReplaceDictionary:kResponeAdWidth value:kStringFormat(@"%ld",(long)_adModel.width)];

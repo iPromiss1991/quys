@@ -422,7 +422,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
 ///自定义mac
 - (NSString*)quys_customMacAddress
 {
-    return [self quys_getUniqueID];//TODO:格式是否正确
+    return [self quys_getUniqueID];//格式是否正确?
 }
 
 
@@ -715,7 +715,7 @@ TT_FIX_CATEGORY_BUG(qys_Hardware)
     strUniqueID = [QuysSAMKeychain passwordForService:kBundleID account:kAdviceAdvertisingIdentifier];
     if (strUniqueID.length <= 0)
     {
-        if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled])//TODO
+        if ( [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) 
         {
             strUniqueID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
             [QuysSAMKeychain setPassword:strUniqueID forService:kBundleID account:kAdviceAdvertisingIdentifier];
