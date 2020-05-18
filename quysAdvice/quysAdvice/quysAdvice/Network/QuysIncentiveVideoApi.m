@@ -30,7 +30,7 @@
     }
 #else
     {
-        NSString *strRequestUrl = @"http://192.168.1.38/advert/sdktest.php";
+        NSString *strRequestUrl = @"http://192.168.1.12/advert/sdktest.php";
         NSString *strTimestam = [NSDate quys_getNowTimeTimestamp];
         NSString *strApiToken = [NSString stringWithFormat:@"%@%@%@",self.businessID,self.bussinessKey,strTimestam];
         NSString *strMd5ApiToken = [QuysMD5 md5EncryptStr:strApiToken bateNum:32 isLowercaseStr:YES];
