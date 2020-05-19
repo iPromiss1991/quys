@@ -41,7 +41,7 @@
 #ifdef IsReleaseVersion
     {
 
-         if ([strService isEqualToString:@"banner"])//banner
+         if ([strService isEqualToString:@"banner"])//bannerbanner
             {
                 self.service = [[QuysAdBannerService alloc ]initWithID:@"banner_ios_qys_test"
                                                                    key:@"D0E8D293C79F627ABB15761662C65AB3"
