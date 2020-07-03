@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB848CEB239DE2D50092A260"
-               BuildableName = "quysAdvice.framework"
-               BlueprintName = "quysAdvice"
+               BlueprintIdentifier = "FBC4CE6123B4570200AF86B1"
+               BuildableName = "quysBundle.bundle"
+               BlueprintName = "quysBundle"
                ReferencedContainer = "container:quysAdvice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,20 +28,10 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB848CF4239DE2D50092A260"
-               BuildableName = "quysAdviceTests.xctest"
-               BlueprintName = "quysAdviceTests"
-               ReferencedContainer = "container:quysAdvice.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -60,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB848CEB239DE2D50092A260"
-            BuildableName = "quysAdvice.framework"
-            BlueprintName = "quysAdvice"
+            BlueprintIdentifier = "FBC4CE6123B4570200AF86B1"
+            BuildableName = "quysBundle.bundle"
+            BlueprintName = "quysBundle"
             ReferencedContainer = "container:quysAdvice.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
