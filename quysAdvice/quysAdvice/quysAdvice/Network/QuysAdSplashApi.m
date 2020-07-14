@@ -87,6 +87,12 @@
     [dicM setObject:[device quys_preferredLanguage] forKey:@"language"];
     [dicM setObject:[NSString stringWithFormat:@"%@,%@",[device getWifiBSSID],[device getWifiSSID]] forKey:@"wifi"];
     [dicM setObject:[device getScreenInch] forKey:@"screenInch"];
+    
+    //经纬度
+    [dicM setObject:[[QuysAdviceManager shareManager] longitude] forKey:@"longitude"];
+    [dicM setObject:[[QuysAdviceManager shareManager] latitude] forKey:@"latitude"];
+
+    
     return dicM;
 }
 

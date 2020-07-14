@@ -21,10 +21,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL loadAdviceEnable;//!< 是否可以加载广告
 @property (nonatomic,assign) BOOL playVideoWithoutWifi;//!< 非wifi情况下自动播放视频
 
-
+//
 @property (nonatomic,strong) NSString *strUserAgent;//!<浏览器信息
 @property (nonatomic,strong) NSString *strIPAddress;//!<ip信息
 
+@property (nonatomic,strong) NSString *longitude;//!<经度
+@property (nonatomic,strong) NSString *latitude;//!<纬度
+
+
+//
 @property (nonatomic,assign) QuysNetworkReachabilityStatus networkReachabilityStatus;//!<  网络状态
 
 

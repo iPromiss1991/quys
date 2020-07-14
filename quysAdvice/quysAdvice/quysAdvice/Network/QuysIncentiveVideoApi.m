@@ -94,7 +94,9 @@
     [dicM setObject:[device quys_screenDensity] forKey:@"Dpi"];
     [dicM setObject:[NSString stringWithFormat:@"%@,%@",[device getWifiBSSID],[device getWifiSSID]] forKey:@"wifi"];
     [dicM setObject:[device getScreenInch] forKey:@"screenInch"];
-
+    //经纬度
+    [dicM setObject:[[QuysAdviceManager shareManager] longitude] forKey:@"Longitude"];
+    [dicM setObject:[[QuysAdviceManager shareManager] latitude] forKey:@"Longitude"];
     
     return dicM;
 }

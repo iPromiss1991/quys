@@ -35,6 +35,12 @@
 		FB1A0DFA23C57CA800EADB4D /* QuysBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A0DF823C57CA800EADB4D /* QuysBaseViewController.m */; };
 		FB22D0A4240E47D9005E0E44 /* QuysVideoContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = FB22D0A2240E47D9005E0E44 /* QuysVideoContentView.h */; };
 		FB22D0A5240E47D9005E0E44 /* QuysVideoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB22D0A3240E47D9005E0E44 /* QuysVideoContentView.m */; };
+		FB3E10AC24BDA461000AAFC8 /* HCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB3E10A824BDA461000AAFC8 /* HCLocationManager.m */; };
+		FB3E10AD24BDA461000AAFC8 /* HCCoordinateConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = FB3E10A924BDA461000AAFC8 /* HCCoordinateConvert.h */; };
+		FB3E10AE24BDA461000AAFC8 /* HCLocationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FB3E10AA24BDA461000AAFC8 /* HCLocationManager.h */; };
+		FB3E10AF24BDA461000AAFC8 /* HCCoordinateConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = FB3E10AB24BDA461000AAFC8 /* HCCoordinateConvert.m */; };
+		FB3E10B224BDA486000AAFC8 /* HCCommonTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FB3E10B024BDA486000AAFC8 /* HCCommonTool.m */; };
+		FB3E10B324BDA486000AAFC8 /* HCCommonTool.h in Headers */ = {isa = PBXBuildFile; fileRef = FB3E10B124BDA486000AAFC8 /* HCCommonTool.h */; };
 		FB4251F424626BDF00960FF9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4251F324626BDF00960FF9 /* ExternalAccessory.framework */; };
 		FB42525424664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = FB42525224664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h */; };
 		FB42525524664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m in Sources */ = {isa = PBXBuildFile; fileRef = FB42525324664E3D00960FF9 /* NSURLSessionDataTask+Redirect.m */; };
@@ -234,6 +240,12 @@
 		FB1A0DF823C57CA800EADB4D /* QuysBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysBaseViewController.m; sourceTree = "<group>"; };
 		FB22D0A2240E47D9005E0E44 /* QuysVideoContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuysVideoContentView.h; sourceTree = "<group>"; };
 		FB22D0A3240E47D9005E0E44 /* QuysVideoContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuysVideoContentView.m; sourceTree = "<group>"; };
+		FB3E10A824BDA461000AAFC8 /* HCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCLocationManager.m; sourceTree = "<group>"; };
+		FB3E10A924BDA461000AAFC8 /* HCCoordinateConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCCoordinateConvert.h; sourceTree = "<group>"; };
+		FB3E10AA24BDA461000AAFC8 /* HCLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCLocationManager.h; sourceTree = "<group>"; };
+		FB3E10AB24BDA461000AAFC8 /* HCCoordinateConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCCoordinateConvert.m; sourceTree = "<group>"; };
+		FB3E10B024BDA486000AAFC8 /* HCCommonTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCCommonTool.m; sourceTree = "<group>"; };
+		FB3E10B124BDA486000AAFC8 /* HCCommonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCCommonTool.h; sourceTree = "<group>"; };
 		FB4251F224626BDE00960FF9 /* quysDevDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = quysDevDemo.entitlements; sourceTree = "<group>"; };
 		FB4251F324626BDF00960FF9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		FB4251F52462730700960FF9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -455,6 +467,19 @@
 				FB8699E1240E546400FBE09B /* QuysVideoCoverView.m */,
 			);
 			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		FB3E10A724BDA461000AAFC8 /* HCLocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				FB3E10AA24BDA461000AAFC8 /* HCLocationManager.h */,
+				FB3E10A824BDA461000AAFC8 /* HCLocationManager.m */,
+				FB3E10B124BDA486000AAFC8 /* HCCommonTool.h */,
+				FB3E10B024BDA486000AAFC8 /* HCCommonTool.m */,
+				FB3E10A924BDA461000AAFC8 /* HCCoordinateConvert.h */,
+				FB3E10AB24BDA461000AAFC8 /* HCCoordinateConvert.m */,
+			);
+			path = HCLocationManager;
 			sourceTree = "<group>";
 		};
 		FB848CE2239DE2D50092A260 = {
@@ -758,6 +783,7 @@
 		FBBA897A23AB77F500D0088C /* QuysManagers */ = {
 			isa = PBXGroup;
 			children = (
+				FB3E10A724BDA461000AAFC8 /* HCLocationManager */,
 				FB848D0B239DE96E0092A260 /* QuysAdviceManager.h */,
 				FB848D0A239DE96E0092A260 /* QuysAdviceManager.m */,
 				FBBA893C23A7288000D0088C /* QuysUploadApiTaskManager.h */,
@@ -819,6 +845,7 @@
 				FB955A3F23B9EAB000AFA427 /* QuysIncentiveVideoService.h in Headers */,
 				FB955A3923B602F800AFA427 /* QuysAdBaseService.h in Headers */,
 				FB955A3C23B9E9E700AFA427 /* QuysIncentiveVideoDelegate.h in Headers */,
+				FB3E10AE24BDA461000AAFC8 /* HCLocationManager.h in Headers */,
 				FB955A6523BB54BF00AFA427 /* QuysAdviceOpeenScreenDelegate.h in Headers */,
 				FB848D4A239E24760092A260 /* QuysAdSplashDelegate.h in Headers */,
 				FB42525424664E3D00960FF9 /* NSURLSessionDataTask+Redirect.h in Headers */,
@@ -869,6 +896,7 @@
 				FB848D38239E1C820092A260 /* QuysAdviceConfigModel.h in Headers */,
 				FB8699E6240F4EBF00FBE09B /* QuysAdOpenScreenVideoView.h in Headers */,
 				FB6A1C8823B20B3600E29B75 /* QuysPictureViewController.h in Headers */,
+				FB3E10AD24BDA461000AAFC8 /* HCCoordinateConvert.h in Headers */,
 				FB22D0A4240E47D9005E0E44 /* QuysVideoContentView.h in Headers */,
 				FBBA892D23A216E000D0088C /* HLJViewTrackModel.h in Headers */,
 				FB848D13239DE9EC0092A260 /* QuysSAMKeychain.h in Headers */,
@@ -880,6 +908,7 @@
 				FB848D6E239E54B90092A260 /* QuysMD5.h in Headers */,
 				FBBA895023A7819E00D0088C /* QuysInformationFlowSmallPictureView.h in Headers */,
 				FB6A1C7723B1B95F00E29B75 /* QuysWebViewController.h in Headers */,
+				FB3E10B324BDA486000AAFC8 /* HCCommonTool.h in Headers */,
 				FB848D60239E2B270092A260 /* QuysAdviceOuterlayerDataModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1138,6 +1167,7 @@
 				FB955A5F23BB26D100AFA427 /* QuysIncentiveVideoOutLayerDataModel.m in Sources */,
 				FB955A3A23B602F800AFA427 /* QuysAdBaseService.m in Sources */,
 				FB42525D24668C2400960FF9 /* QuysDisplayViewModelEvent.m in Sources */,
+				FB3E10B224BDA486000AAFC8 /* HCCommonTool.m in Sources */,
 				FB6A1C7C23B1C20E00E29B75 /* QuysAppDownUrlApi.m in Sources */,
 				FBBA896B23AB18BC00D0088C /* QuysAdBanner.m in Sources */,
 				FB848D6F239E54B90092A260 /* QuysMD5.m in Sources */,
@@ -1173,6 +1203,7 @@
 				FB848D5D239E2AA50092A260 /* QuysAdviceModel.m in Sources */,
 				FB955A4423B9EB3200AFA427 /* QuysIncentiveVideoVM.m in Sources */,
 				FB6A1C8423B1E61000E29B75 /* QuysOpenScreenWindow.m in Sources */,
+				FB3E10AC24BDA461000AAFC8 /* HCLocationManager.m in Sources */,
 				FBBA895923A7889A00D0088C /* QuysInformationFlowDefaultView.m in Sources */,
 				FB6A1C8923B20B3600E29B75 /* QuysPictureViewController.m in Sources */,
 				FB848D58239E26CD0092A260 /* QuysAdSplashApi.m in Sources */,
@@ -1187,6 +1218,7 @@
 				FB848D30239DFC410092A260 /* QuysAdSplash.m in Sources */,
 				FBBA895123A7819E00D0088C /* QuysInformationFlowSmallPictureView.m in Sources */,
 				FB848D39239E1C820092A260 /* QuysAdviceConfigModel.m in Sources */,
+				FB3E10AF24BDA461000AAFC8 /* HCCoordinateConvert.m in Sources */,
 				FB955A5423B9ECA500AFA427 /* QuysIncentiveVideoWindow.m in Sources */,
 				FB848D77239E56540092A260 /* NSDate+QuysTimestamp.m in Sources */,
 				FB848D61239E2B270092A260 /* QuysAdviceOuterlayerDataModel.m in Sources */,

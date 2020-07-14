@@ -8,11 +8,11 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 #import <AFNetworking.h>
-#import <CoreLocation/CoreLocation.h>
 
 
 #import "QuysAdviceManager.h"
 #import "QuysAdviceConfigModel.h"
+#import "HCLocationManager.h"
 
 static  NSString *kGetNetworkIpUrl = @"http://pv.sohu.com/cityjson?ie=utf-8";
 static  NSString *kGetNetworkIpKey = @"cip";
@@ -20,7 +20,7 @@ static  NSString *kGetNetworkIpKey = @"cip";
 static  NSString *kNetworkIp = @"quys_kNetworkIp";
 static  NSString *kUserAgent = @"quys_kUserAgent";
 
-@interface QuysAdviceManager()
+@interface QuysAdviceManager()<HCLocationManagerDelegate>
 
 @property (nonatomic,strong) NSMapTable *mapTable;
 @property (nonatomic,strong) UIView *webViewTarget;
@@ -30,7 +30,6 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
 
 @property (nonatomic,assign) BOOL searchIpEnable;//!< 能否查询ip
 @property (nonatomic,assign) BOOL searchUser_AgentEnable;//!< 能否查询User_Agent
-@property (nonatomic,strong) CLLocationManager *locationManager;
 
 
 
@@ -77,17 +76,8 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     
     [self monitorNetworkStatus];
     [self addMainObserver];
-    
-    if (@available(iOS 13.0, *))
-        {
-        //如果是iOS13 未开启地理位置权限 需要提示一下
-            if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-            {
-                CLLocationManager* locationManager = [[CLLocationManager alloc] init];
-                [locationManager requestWhenInUseAuthorization];
-                self.locationManager = locationManager;
-            }
-        }
+    [HCLocationManager sharedManager].delegate = self;
+    [[HCLocationManager sharedManager] startLocate];
 }
 
 
@@ -364,6 +354,13 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     
 }
 
+#pragma mark HCLocationManagerDelegate
+
+- (void)loationMangerSuccessLocationWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
+{
+//    self.longitude = [NSString stringWithFormat:@"%lf",longitude];
+//    self.latitude = [NSString stringWithFormat:@"%lf",latitude];
+}
 
 
 #pragma mark - Init
@@ -417,5 +414,23 @@ static  NSString *kUserAgent = @"quys_kUserAgent";
     {
         return NO;
     }
+}
+
+
+#pragma mark 经纬度:初值
+
+
+-(NSString *)longitude
+{
+    if (_longitude == nil) {
+        _longitude = @"0.00";
+    }return _longitude;
+}
+
+-(NSString *)latitude
+{
+    if (_latitude == nil) {
+        _latitude = @"0.00";
+    }return _latitude;
 }
 @end
